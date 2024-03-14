@@ -1,0 +1,35 @@
+[
+  {
+    "id": "zed-gruvlight",
+    "image": "/zed-gruvlight.png",
+    "font": {
+      "name": "Zed Mono",
+      "url": "https://github.com/zed-industries/zed-fonts"
+    },
+    "theme": {
+      "name": "Gruvbox Light Hard",
+      "url": "https://marketplace.visualstudio.com/items?itemName=jdinhlife.gruvbox"
+    }
+  },
+  {
+    "id": "geist-aura-dark",
+    "image": "/geist-aura-dark.png",
+    "font": { "name": "Geist Mono", "url": "https://vercel.com/font/mono" },
+    "theme": {
+      "name": "Aura Dark",
+      "url": "https://marketplace.visualstudio.com/items?itemName=DaltonMenezes.aura-theme"
+    }
+  },
+  {
+    "id": "fira-palenight",
+    "image": "/fira-palenight.png",
+    "font": {
+      "name": "Fira Code",
+      "url": "https://github.com/tonsky/FiraCode"
+    },
+    "theme": {
+      "name": "Palenight Theme",
+      "url": "https://marketplace.visualstudio.com/items?itemName=whizkydee.material-palenight-theme"
+    }
+  }
+]
