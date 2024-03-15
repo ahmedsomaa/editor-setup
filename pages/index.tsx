@@ -1,51 +1,25 @@
-import Head from "next/head";
-import { Pair } from "./api/pairs";
+import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import PairCard from "@/components/PairCard";
-import { Bricolage_Grotesque } from "next/font/google";
+import Heading from "@/components/Heading";
+import { bricolageGrotesque } from "@/lib/fonts";
 
-const font = Bricolage_Grotesque({
-  subsets: ["latin"],
-});
-
-export default function Component({ pairs }: { pairs: Pair[] }) {
+export default function Landing() {
   return (
-    <div
-      className={`${font.className} flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen`}
-    >
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <title>VS Code Theme and Font Pair</title>
-      </Head>
-
-      <Header />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
-        <p className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out">
-          <b>{pairs.length}</b> pairs have been added so far
-        </p>
-        <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
-          Find the optimal theme and font for your next VS Code setup.
-        </h1>
-      </main>
-      <div className="my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4 lg:gap-6">
-        {pairs.map((pair) => (
-          <PairCard key={pair.id} pair={pair} />
-        ))}
+    <div className={bricolageGrotesque}>
+      <Heading />
+      <div className="fixed left-0 top-0 -z-10 h-full w-full">
+        <div className="absolute top-0 z-[-2] h-screen w-screen bg-[#007ACC] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
       </div>
-      <Footer />
+      <div className="mx-auto w-full max-w-screen-xl px-4 lg:px-20">
+        <main className="min-h-screen flex flex-col items-center">
+          <div className="w-full flex flex-col items-center">
+            <Navbar />
+            <Hero />
+          </div>
+        </main>
+        <Footer />
+      </div>
     </div>
   );
-}
-
-export async function getStaticProps() {
-  const req = await fetch(
-    "https://raw.githubusercontent.com/ahmedsomaa/theme-font-pair/main/data/pairs.json"
-  );
-  const pairs: Pair[] = await req.json();
-  return {
-    props: {
-      pairs,
-    },
-  };
 }
