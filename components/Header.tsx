@@ -10,7 +10,7 @@ export default function Header() {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/ahmedsomaa"
+            href="https://github.com/ahmedsomaa/theme-font-pair/issues"
           >
             Submit
           </a>
