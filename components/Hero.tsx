@@ -23,7 +23,7 @@ export default function Hero() {
               variant="outline"
               className="font-semibold text-[#007ACC] hover:text-[#007ACC]"
             >
-              <Link href="/explore">Explore Pairs</Link>
+              <Link href="/explore">Explore Available Pairs</Link>
             </Button>
           </div>
         </div>
