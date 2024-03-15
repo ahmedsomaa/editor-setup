@@ -43,5 +43,29 @@
       "name": "Nord",
       "url": "https://marketplace.visualstudio.com/items?itemName=arcticicestudio.nord-visual-studio-code"
     }
+  },
+  {
+    "id": "jetbrains-gruvdark",
+    "image": "/img/jetbrains-gruvdark.png",
+    "font": {
+      "name": "JetBrains Mono",
+      "url": "https://www.jetbrains.com/lp/mono/"
+    },
+    "theme": {
+      "name": "Gruvbox Dark Hard",
+      "url": "https://marketplace.visualstudio.com/items?itemName=jdinhlife.gruvbox"
+    }
+  },
+  {
+    "id": "geist-mono",
+    "image": "/img/geist-mono.png",
+    "font": {
+      "name": "Geist Mono",
+      "url": "https://vercel.com/font/mono"
+    },
+    "theme": {
+      "name": "Vesper",
+      "url": "https://marketplace.visualstudio.com/items?itemName=raunofreiberg.vesper"
+    }
   }
 ]
