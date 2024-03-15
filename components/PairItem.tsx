@@ -22,7 +22,7 @@ export default function PairItem({ url, name, variant }: PairItemProps) {
           className="border rounded bg-transparent p-0.5"
         />
       )}
-      <a href={url} target="_blank">
+      <a href={url} target="_blank" className="whitespace-nowrap">
         {name}
       </a>
     </p>
