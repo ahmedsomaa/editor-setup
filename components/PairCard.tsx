@@ -40,7 +40,7 @@ export default function PairCard({ pair }: PairCardProps) {
         </CardTitle>
         <CardDescription>
           <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex flex-col items-start text-justify">
               <PairItem
                 variant="font"
                 url={pair.font.url}
