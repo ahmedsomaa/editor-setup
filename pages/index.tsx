@@ -1,18 +1,18 @@
 import Head from "next/head";
 import { Pair } from "./api/pairs";
-import { Inter } from "next/font/google";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import PairCard from "@/components/PairCard";
+import { Bricolage_Grotesque } from "next/font/google";
 
-const inter = Inter({
+const font = Bricolage_Grotesque({
   subsets: ["latin"],
 });
 
 export default function Component({ pairs }: { pairs: Pair[] }) {
   return (
     <div
-      className={`${inter.className} flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen`}
+      className={`${font.className} flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen`}
     >
       <Head>
         <link rel="icon" href="/favicon.ico" />
