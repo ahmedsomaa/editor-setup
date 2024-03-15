@@ -13,8 +13,8 @@ export default function Hero() {
             Find your next optimal Visual Studio Code setup
           </h1>
           <p className="mt-6 text-md font-medium text-slate-100 md:text-lg">
-            Explore multiple font and theme pairings for Visual Studio Code that
-            just work!
+            Explore a curated list of font and theme pairings for Visual Studio
+            Code that just work!
           </p>
           <div className="mt-6 flex flex-col items-center justify-center   gap-y-8">
             <Button
