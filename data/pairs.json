@@ -1,7 +1,7 @@
 [
   {
     "id": "zed-gruvlight",
-    "image": "/zed-gruvlight.png",
+    "image": "/img/zed-gruvlight.png",
     "font": {
       "name": "Zed Mono",
       "url": "https://github.com/zed-industries/zed-fonts"
@@ -13,7 +13,7 @@
   },
   {
     "id": "geist-aura-dark",
-    "image": "/geist-aura-dark.png",
+    "image": "/img/geist-aura-dark.png",
     "font": { "name": "Geist Mono", "url": "https://vercel.com/font/mono" },
     "theme": {
       "name": "Aura Dark",
@@ -22,7 +22,7 @@
   },
   {
     "id": "fira-palenight",
-    "image": "/fira-palenight.png",
+    "image": "/img/fira-palenight.png",
     "font": {
       "name": "Fira Code",
       "url": "https://github.com/tonsky/FiraCode"
@@ -30,6 +30,18 @@
     "theme": {
       "name": "Palenight Theme",
       "url": "https://marketplace.visualstudio.com/items?itemName=whizkydee.material-palenight-theme"
+    }
+  },
+  {
+    "id": "input-nord",
+    "image": "/img/input-nord.png",
+    "font": {
+      "name": "Input Mono",
+      "url": "https://input.djr.com/"
+    },
+    "theme": {
+      "name": "Nord",
+      "url": "https://marketplace.visualstudio.com/items?itemName=arcticicestudio.nord-visual-studio-code"
     }
   }
 ]
