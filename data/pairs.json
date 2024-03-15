@@ -57,8 +57,8 @@
     }
   },
   {
-    "id": "geist-mono",
-    "image": "/img/geist-mono.png",
+    "id": "geist-vesper",
+    "image": "/img/geist-vesper.png",
     "font": {
       "name": "Geist Mono",
       "url": "https://vercel.com/font/mono"
