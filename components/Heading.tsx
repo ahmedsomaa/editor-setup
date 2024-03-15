@@ -9,8 +9,8 @@ export default function Heading() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta
         name="description"
-        content="Explore multiple font and theme pairings for Visual Studio Code that
-            just work!"
+        content="Explore a curated list of font and theme pairings for Visual Studio
+        Code that just work!"
       />
       <meta name="keywords" content="VS Code, Theme, Font" />
       <meta name="robots" content="index, follow" />
@@ -23,8 +23,8 @@ export default function Heading() {
       <meta property="og:title" content="EditorSetup" />
       <meta
         property="og:description"
-        content="Explore multiple font and theme pairings for Visual Studio Code that
-        just work!"
+        content="Explore a curated list of font and theme pairings for Visual Studio
+        Code that just work!"
       />
       <meta property="og:url" content="https://editorsetup.vercel.app" />
       <meta property="og:image" content="/img/og-image.png" />
@@ -36,8 +36,8 @@ export default function Heading() {
       <meta name="twitter:title" content="EditorSetup" />
       <meta
         name="twitter:description"
-        content="Explore multiple font and theme pairings for Visual Studio Code that
-        just work!"
+        content="Explore a curated list of font and theme pairings for Visual Studio
+        Code that just work!"
       />
       <meta name="twitter:image" content="/img/og-image.png" />
 
