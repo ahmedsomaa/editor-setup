@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import pairs from "@/data/pairs.json";
+import * as pairs from "@/data/pairs.json";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export type Pair = {
