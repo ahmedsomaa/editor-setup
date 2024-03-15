@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClipboardCheckIcon, ClipboardIcon } from "lucide-react";
 
 import PairItem from "./PairItem";
@@ -14,10 +14,14 @@ interface PairCardProps {
 export default function PairCard({ pair }: PairCardProps) {
   const [copied, setCopied] = useState(false);
 
+  useEffect(() => {
+    setTimeout(() => setCopied(false), 1000);
+  });
+
   const copyToClipboard = (font: string, theme: string) => {
     navigator.clipboard.writeText(`{
-      "editor.fontFamily": ${font},
-      "workbench.colorTheme": ${theme}
+      "editor.fontFamily": "${font}",
+      "workbench.colorTheme": "${theme}"
       }`);
     setCopied((prev) => !prev);
   };
