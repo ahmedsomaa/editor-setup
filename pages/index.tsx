@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { Pair } from "./api/pairs";
 import { Inter } from "next/font/google";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import PairCard from "@/components/PairCard";
-import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,9 +39,10 @@ export default function Component({ pairs }: { pairs: Pair[] }) {
 }
 
 export async function getStaticProps() {
-  const req = await fetch("http://localhost:3000/api/pairs");
+  const req = await fetch(
+    "https://raw.githubusercontent.com/ahmedsomaa/theme-font-pair/main/data/pairs.json"
+  );
   const pairs: Pair[] = await req.json();
-
   return {
     props: {
       pairs,
