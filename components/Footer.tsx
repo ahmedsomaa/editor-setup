@@ -15,7 +15,7 @@ const Footer = ({ bgColor, iconColor }: FooterProps) => {
   return (
     <footer
       className={cn(
-        "p-4 bg-[#007ACC] border-t border-slate-100  flex items-center justify-center",
+        "p-4 bg-[#007ACC] border-t flex items-center justify-center",
         bgColor
       )}
     >
