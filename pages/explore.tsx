@@ -46,7 +46,7 @@ export default function Explore({ pairs }: ExploreProps) {
 
 export async function getStaticProps() {
   const req = await fetch(
-    "https://raw.githubusercontent.com/ahmedsomaa/theme-font-pair/main/data/pairs.json"
+    "https://raw.githubusercontent.com/ahmedsomaa/editor-setup/main/data/pairs.json"
   );
   const pairs: Pair[] = await req.json();
   return {
