@@ -69,6 +69,18 @@
     }
   },
   {
+    "id": "dank-owl",
+    "image": "/img/dank-owl.png",
+    "font": {
+      "name": "Dank Mono",
+      "url": "https://philpl.gumroad.com/l/dank-mono"
+    },
+    "theme": {
+      "name": "Night Owl",
+      "url": "https://marketplace.visualstudio.com/items?itemName=sdras.night-owl"
+    }
+  },
+  {
     "id": "monolisa-houston",
     "image": "/img/monolisa-houston.png",
     "font": {
