@@ -16,14 +16,14 @@ export default function Hero() {
             Explore a curated list of font and theme pairings for Visual Studio
             Code that just work!
           </p>
-          <div className="mt-6 flex flex-col items-center justify-center   gap-y-8">
+          <div className="mt-6 flex flex-col items-center justify-center gap-y-8">
             <Button
               asChild
               size="lg"
               variant="outline"
               className="font-semibold text-[#007ACC] hover:text-[#007ACC]"
             >
-              <Link href="/explore">Explore Available Pairs</Link>
+              <Link href="/explore">Explore Pairs</Link>
             </Button>
           </div>
         </div>
