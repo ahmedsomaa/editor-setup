@@ -33,6 +33,8 @@ function PairCard({ pair }: { pair: Pair }) {
           width={640}
           height={360}
           src={pair.image}
+          placeholder="blur"
+          blurDataURL={pair.image}
           className="object-cover w-full aspect-none"
           alt={`Screenshot of ${pair.font} and ${pair.theme} on visual studio code`}
         />
