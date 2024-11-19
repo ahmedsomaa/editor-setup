@@ -37,7 +37,7 @@ function PairCard({ pair }: { pair: Pair }) {
           alt={`Screenshot of ${pair.font} and ${pair.theme} on visual studio code`}
         />
       </div>
-      <div className="p-4 md:p-6 grid gap-2 border-b border-border border-l border-r rounded-b-lg">
+      <div className="p-4 md:p-6 grid gap-2 border-b border-border border-l border-r rounded-b-lg shadow-sm">
         <h2 className="flex flex-col items-start justify-start gap-3 whitespace-nowrap font-bold text-xl">
           {pair.theme.name.split(" ")[0]}
           {pair.font.name.split(" ")[0]}
