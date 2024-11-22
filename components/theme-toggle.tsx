@@ -22,7 +22,7 @@ export function ThemeToggle() {
         aria-hidden="true"
       >
         <svg
-          className="hidden dark:block"
+          className="dark:hidden"
           width="16"
           height="16"
           xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export function ThemeToggle() {
           />
         </svg>
         <svg
-          className="dark:hidden"
+          className="hidden dark:block"
           width="16"
           height="16"
           xmlns="http://www.w3.org/2000/svg"
