@@ -45,11 +45,10 @@ export default function Home() {
             <div className="mb-12">
               <div className="mt-6 flex flex-col items-center justify-center gap-y-10">
                 <Link
-                  className="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-full bg-primary p-6 text-sm font-medium text-primary-foreground shadow-sm shadow-black/5 ring-offset-background transition-shadow hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                   href="/explore"
-                  target="_blank"
+                  className="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-full bg-primary p-6 text-sm font-medium text-primary-foreground shadow-sm shadow-black/5 ring-offset-background transition-shadow hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                 >
-                  Explore List
+                  Explore list
                   <ArrowRightIcon className="ml-1.5 h-4 w-4" />
                 </Link>
                 <HeroImage />
