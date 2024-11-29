@@ -12,7 +12,7 @@ export default function ExplorePage() {
 
       <div className="mt-16">
         <div className="my-16 text-center">
-          <h2 className="mb-3 text-3xl font-bold text-foreground">
+          <h2 className="mb-3 text-3xl font-display font-bold text-foreground">
             Got a good pair?
           </h2>
           <p className="mb-6 text-muted-foreground">
