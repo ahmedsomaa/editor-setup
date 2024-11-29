@@ -33,7 +33,7 @@ export default function Home() {
             </div>
 
             <div className="mb-16">
-              <h1 className="mx-auto mb-4 max-w-3xl text-4xl/[1.1] font-extrabold tracking-tight text-foreground md:text-5xl/[1.1]">
+              <h1 className="font-display mx-auto mb-4 max-w-3xl text-4xl/[1.1] font-extrabold tracking-tight text-foreground md:text-5xl/[1.1]">
                 Find your next optimal Visual Studio Code setup
               </h1>
               <p className="text-lg text-muted-foreground">

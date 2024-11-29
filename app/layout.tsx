@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Inter, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
 import Header from "@/components/header";
@@ -18,6 +19,16 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const fontDisplay = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
 // --------- METADATA ---------
 export const metadata: Metadata = {
   title: "Editor Setup",
@@ -34,7 +45,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} bg-background font-sans antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${fontDisplay.variable} ${fontSans.variable} bg-background font-sans antialiased`}
       >
         <ThemeProvider
           enableSystem

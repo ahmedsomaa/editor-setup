@@ -12,8 +12,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)"],
+        sans: ["var(--font-sans)"],
         mono: ["var(--font-geist-mono)"],
+        display: ['var(--font-display)'],
       },
       borderRadius: {
         lg: "var(--radius)",
