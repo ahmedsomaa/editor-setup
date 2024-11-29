@@ -13,7 +13,6 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)"],
-        mono: ["var(--font-geist-mono)"],
         display: ['var(--font-display)'],
       },
       borderRadius: {

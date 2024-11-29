@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { Inter, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
@@ -7,18 +6,6 @@ import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 
 // --------- FONTS ---------
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
 const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -45,7 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} ${fontDisplay.variable} ${fontSans.variable} bg-background font-sans antialiased`}
+        className={`${fontDisplay.variable} ${fontSans.variable} bg-background font-sans antialiased`}
       >
         <ThemeProvider
           enableSystem
