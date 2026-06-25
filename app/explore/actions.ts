@@ -1,5 +1,3 @@
-"use server";
-
 import { Pair } from "editor-setup";
 
 import pairs from "@/data/index.json";
