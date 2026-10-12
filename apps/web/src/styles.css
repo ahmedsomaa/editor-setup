@@ -145,6 +145,24 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+  /* Code-glyph pattern from .scratch/mp-cld-imp */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: var(--ring);
+    opacity: 0.1;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22260%22 viewBox=%220 0 260 260%22 font-family=%22Menlo, Consolas, monospace%22 font-weight=%22500%22 fill=%22%23000%22%3E%3Ctext x=%2218%22 y=%2244%22 font-size=%2222%22 transform=%22rotate(-4 18 44)%22%3E%7B %7D%3C/text%3E%3Ctext x=%22148%22 y=%2230%22 font-size=%2218%22 transform=%22rotate(-8 148 30)%22%3E%26lt;/%26gt;%3C/text%3E%3Ctext x=%22214%22 y=%22118%22 font-size=%2220%22 transform=%22rotate(5 214 118)%22%3E=%26gt;%3C/text%3E%3Ctext x=%2242%22 y=%22128%22 font-size=%2228%22 transform=%22rotate(6 42 128)%22%3EAa%3C/text%3E%3Ctext x=%22120%22 y=%2296%22 font-size=%2220%22 transform=%22rotate(0 120 96)%22%3E::%3C/text%3E%3Ctext x=%22146%22 y=%22198%22 font-size=%2214%22 transform=%22rotate(-3 146 198)%22%3E0xFF%3C/text%3E%3Ctext x=%2222%22 y=%22226%22 font-size=%2220%22 transform=%22rotate(4 22 226)%22%3E%5B %5D%3C/text%3E%3Ctext x=%2292%22 y=%22170%22 font-size=%2224%22 transform=%22rotate(-6 92 170)%22%3E%23%3C/text%3E%3Ctext x=%22228%22 y=%22214%22 font-size=%2226%22 transform=%22rotate(8 228 214)%22%3E;%3C/text%3E%3Ctext x=%22214%22 y=%2252%22 font-size=%2214%22 transform=%22rotate(10 214 52)%22%3Efn%3C/text%3E%3Ctext x=%2272%22 y=%2260%22 font-size=%2222%22 transform=%22rotate(0 72 60)%22%3E~%3C/text%3E%3Ctext x=%22196%22 y=%22176%22 font-size=%2213%22 transform=%22rotate(-7 196 176)%22%3E%26amp;%26amp;%3C/text%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22260%22 viewBox=%220 0 260 260%22 font-family=%22Menlo, Consolas, monospace%22 font-weight=%22500%22 fill=%22%23000%22%3E%3Ctext x=%2218%22 y=%2244%22 font-size=%2222%22 transform=%22rotate(-4 18 44)%22%3E%7B %7D%3C/text%3E%3Ctext x=%22148%22 y=%2230%22 font-size=%2218%22 transform=%22rotate(-8 148 30)%22%3E%26lt;/%26gt;%3C/text%3E%3Ctext x=%22214%22 y=%22118%22 font-size=%2220%22 transform=%22rotate(5 214 118)%22%3E=%26gt;%3C/text%3E%3Ctext x=%2242%22 y=%22128%22 font-size=%2228%22 transform=%22rotate(6 42 128)%22%3EAa%3C/text%3E%3Ctext x=%22120%22 y=%2296%22 font-size=%2220%22 transform=%22rotate(0 120 96)%22%3E::%3C/text%3E%3Ctext x=%22146%22 y=%22198%22 font-size=%2214%22 transform=%22rotate(-3 146 198)%22%3E0xFF%3C/text%3E%3Ctext x=%2222%22 y=%22226%22 font-size=%2220%22 transform=%22rotate(4 22 226)%22%3E%5B %5D%3C/text%3E%3Ctext x=%2292%22 y=%22170%22 font-size=%2224%22 transform=%22rotate(-6 92 170)%22%3E%23%3C/text%3E%3Ctext x=%22228%22 y=%22214%22 font-size=%2226%22 transform=%22rotate(8 228 214)%22%3E;%3C/text%3E%3Ctext x=%22214%22 y=%2252%22 font-size=%2214%22 transform=%22rotate(10 214 52)%22%3Efn%3C/text%3E%3Ctext x=%2272%22 y=%2260%22 font-size=%2222%22 transform=%22rotate(0 72 60)%22%3E~%3C/text%3E%3Ctext x=%22196%22 y=%22176%22 font-size=%2213%22 transform=%22rotate(-7 196 176)%22%3E%26amp;%26amp;%3C/text%3E%3C/svg%3E");
+    -webkit-mask-size: 260px 260px;
+    mask-size: 260px 260px;
+  }
+  .dark body::before,
+  html.dark body::before {
+    opacity: 0.13;
+  }
   h1,
   h2 {
     @apply font-heading font-semibold tracking-tight;
@@ -157,5 +175,65 @@
   }
   :focus-visible {
     outline: none;
+  }
+}
+
+@layer utilities {
+  .site-shell {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes landing-enter {
+    from {
+      opacity: 0;
+      filter: blur(4px);
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .landing-enter {
+    animation: landing-enter 300ms ease-out both;
+  }
+
+  .landing-enter-delay-1 {
+    animation-delay: 100ms;
+  }
+
+  .landing-enter-delay-2 {
+    animation-delay: 200ms;
+  }
+
+  .marquee-track {
+    animation: marquee-scroll 40s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landing-enter,
+    .landing-enter-delay-1,
+    .landing-enter-delay-2 {
+      animation: none;
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+
+    .marquee-track {
+      animation: none;
+    }
   }
 }
