@@ -1,0 +1,9 @@
+node_modules/
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/dist/
+apps/web/.vinext/
+apps/web/.cloudflare/
+.DS_Store
+*.log

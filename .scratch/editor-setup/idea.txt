@@ -1,0 +1,92 @@
+Main idea
+    - a registry or a directory of a monospaced font with a theme for code editors that just work!
+    - real setups from real developers.
+Suggested names
+    - editorSetup
+    - pimp my editor
+Suggested Hook
+    - your favorite editor in <theme> & <font> 
+      the theme word is styled in the theme & the font word should be styled in the font.
+Subhook
+    - Real setups from real developers, find yours and just copy the config.
+Suggested Fonts
+    - Display: Sora
+    - Body: Geist
+    - Mono & numbers: Geist Mono
+- Suggested app style
+    - Similar to the tweackcn with a different accent color
+      for the home page, we only need the navbar, hero and footer.
+    - the accent color should be: tailwind-`violet-600` or `sky-600` or `orange-600`
+    - design system should be similar to untitiledui or alignui (use the one that feels right for the project)
+Suggested logo
+    - use the `pencil-sparkels` icon from lucide-dev
+Suggested Limitations
+    - No live preview as there are paid fonts & themes.
+Suggested features
+    - Registry/community page to list all availble font-themes pairing 
+        has search with filters and pagination
+    - The pair page itself
+        - display the font name, links, free or paid
+        - display the theme name, links, free or paid
+        - an animated horizontal stack of snapshots
+        - the pair score rating
+        - ability to up/down vote (for score) or rate (for rating)
+        - submitted by <user> , this should be a link to the user profile
+        - sidebar layout with list of editors that has submission for the pair
+            the main area of the selected siedbar item shows two tabs: view and code
+            the view (open by default) displays the pair snapshot and the code shows the config with ability to copy 
+    - Sign in with GitHub
+    - User profile details like name/username & email fetched from github
+        a page to display their submissions with their status and tag filters
+        a page to submit a new setup
+    - the submit form:
+        - dropdown with a list of available fonts with an option to other
+        - dropdown with a list of available themes with an option to other
+        - text box (only links allowed) for the font home/purchase page
+        - text box (only links allowed) for teh theme home/purchase page
+        - optional radio button to say whether font is free or paid since the editorsetup team mostly add those
+        - optiona radio button to say whether theme is free or paid since the editorsetup team mostly add those
+        - a form data field to add one or more config (from aavailable options)
+            selecting/adding one provides form fields to upload a snapshot and config
+            for each editor setup (the text area should be sanitized for XSS &
+            other security issues). snapshots should have a certain size.
+            
+            font fields are required, same goes for the theme
+            one editor config must be at least edit. a valid editor config is both
+            the config and snapshot provided! 
+            [Future plan] -> failure to meet the correct size for the image fails
+            and failure to follow teh config schema for an editor fails as well.
+
+            recommend a tool that creates good snippets
+    - admin dashboard to check submitted requests for review and audit
+        a reviewer can accept or decline the pair
+        for decline, add a reason.
+    - Side-by-side compare with a drag slider, which works because of the reference snippets.
+    - Rotating hero. The hook cycles through combos, with the theme word in the theme’s colors and the 
+    font word in its font. Use only open fonts and themes in the rotation, so the hero is a live demo with no licensing risk.
+    - Trending this <week, month...etc.> filters with a hot icon badge displayed on the pair
+Suggested users
+    - user/devloper
+        - anyone can see the registry list and pair details page
+        - submitting a new pair requires having an account
+    - editorSetup team [admins] (1~2 accounts max for now probably 1) 
+        - see a list of submissions with their details and author
+        - review pair submission request (accept or decline with reason)
+        - can submit new pairs (for pairs added by them, we display submitted by EditorSetup team)
+        - can list available fonts/themes with links and details to appear in the fonts dropdown, 
+            they can add, edit, remove a font, theme (Probably not the name, we'll have to decide). same for the 
+        themes!
+        - can list available editors and add/edit/remove one.
+Reguirements
+    - there can only be one pair with the same font & theme
+    - a pair cannot exist without at least one editor config
+    - there can only be one config for an editor for the same pair 
+        meaning: user X submitted a config for VSCode for the pair (vitesse dark + inconsolate),
+        user Y cannot submit a config for VSCode as long as user X's submission is accepted. However, 
+        user Y can submit a config for Zed editor for the same theme if it's already exists!
+        if the pair doesn't exist, both can make a submission and the team would accept the one that 
+        was submitted first (maybe down the road we could consider adding both users as authors)
+    - the user can submit another config for an exisitng pair not through the same submission form
+    but through a differnt form that would provide a dropwdown with available pairs
+    and once the user selects one, a new multi-dorpdown menu appears with only the available 
+    editors to add.
