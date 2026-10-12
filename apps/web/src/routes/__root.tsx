@@ -29,8 +29,10 @@ export const Route = createRootRoute({
   }),
   notFoundComponent: () => (
     <main className="container mx-auto p-4 pt-16">
-      <h1 className="text-lg font-medium">Not found</h1>
-      <p className="text-muted-foreground text-sm">
+      <h1 className="text-display font-semibold tracking-[-0.02em]">
+        Not found
+      </h1>
+      <p className="text-muted-foreground text-body mt-2 max-w-[65ch]">
         The requested page could not be found.
       </p>
     </main>
@@ -44,7 +46,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="flex min-h-svh flex-col font-sans antialiased">
+      <body className="flex min-h-svh flex-col font-sans">
         <Header />
         <div className="site-shell flex-1">{children}</div>
         <Footer />

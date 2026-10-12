@@ -27,10 +27,10 @@ export function FeatureGrid() {
   return (
     <section className="mx-auto max-w-5xl px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-xl text-center">
-        <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+        <h2 className="text-heading font-semibold tracking-[-0.02em]">
           Built for finding a setup you can use
         </h2>
-        <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+        <p className="text-muted-foreground text-body mt-2 max-w-[65ch] mx-auto">
           A git-backed Registry of Font and Theme Pairs—browse, copy, compare,
           contribute.
         </p>
@@ -48,12 +48,10 @@ export function FeatureGrid() {
                 aria-hidden
               />
               <div>
-                <h3 className="font-heading text-base font-semibold tracking-tight">
+                <h3 className="text-heading font-semibold tracking-[-0.02em]">
                   {title}
                 </h3>
-                <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
-                  {body}
-                </p>
+                <p className="text-muted-foreground text-body mt-1">{body}</p>
               </div>
             </div>
           </li>

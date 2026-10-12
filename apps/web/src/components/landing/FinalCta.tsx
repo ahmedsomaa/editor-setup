@@ -6,10 +6,10 @@ export function FinalCta() {
   return (
     <section className="border-border border-t px-4 py-16 sm:py-20">
       <div className="border-border bg-card mx-auto flex max-w-3xl flex-col items-center rounded-[var(--radius-lg)] border px-6 py-12 text-center shadow-[var(--shadow-raised)] sm:px-10">
-        <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+        <h2 className="text-heading font-semibold tracking-[-0.02em]">
           Find a Pair, or add yours
         </h2>
-        <p className="text-muted-foreground mt-2 max-w-md text-sm leading-relaxed">
+        <p className="text-muted-foreground text-body mt-2 max-w-[65ch]">
           Browse the Registry for Settings you can copy, or open a pull request
           with a new Font and Theme Pair.
         </p>

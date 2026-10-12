@@ -2,12 +2,12 @@ import { MARQUEE_PAIRS } from '@/lib/site'
 
 function Chip({ theme, font }: { theme: string; font: string }) {
   return (
-    <span className="border-border bg-card text-secondary-foreground inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium shadow-[var(--shadow-raised)]">
+    <span className="border-border bg-card text-secondary-foreground text-body inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-medium shadow-[var(--shadow-raised)]">
       <span>{theme}</span>
       <span className="text-primary" aria-hidden>
         ·
       </span>
-      <span className="font-mono text-[0.8125rem] font-normal">{font}</span>
+      <span className="text-mono font-normal">{font}</span>
     </span>
   )
 }

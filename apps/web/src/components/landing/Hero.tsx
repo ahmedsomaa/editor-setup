@@ -63,7 +63,7 @@ export function Hero() {
       />
       <h1
         className={cn(
-          'landing-enter font-heading max-w-3xl text-[clamp(1.75rem,5.2vw,2.25rem)] leading-[1.15] font-semibold tracking-[-0.025em] text-balance',
+          'landing-enter text-display max-w-3xl font-semibold tracking-[-0.02em]',
           swapping && 'hook-swapping',
         )}
         aria-label={`Your favorite editor in ${pair.theme} and ${pair.font}.`}
@@ -86,7 +86,7 @@ export function Hero() {
           <span className="whitespace-nowrap">
             &amp;{' '}
             <span
-              className="hook-swap-target font-medium tracking-[-0.01em] underline decoration-[var(--ring)] decoration-[3px] underline-offset-[0.16em]"
+              className="hook-swap-target font-medium tracking-[-0.01em] underline decoration-[var(--ring)] underline-offset-[0.16em] [text-decoration-thickness:from-font] [text-underline-position:from-font]"
               style={{ fontFamily: pair.fontFamily }}
             >
               {pair.font}
@@ -94,7 +94,7 @@ export function Hero() {
           </span>
         </span>
       </h1>
-      <p className="landing-enter landing-enter-delay-1 text-muted-foreground mt-4 max-w-[52ch] text-base leading-[1.45] text-balance">
+      <p className="landing-enter landing-enter-delay-1 text-muted-foreground text-body mt-4 max-w-[65ch]">
         Real setups from real developers. Find yours and copy the config.
       </p>
       <div className="landing-enter landing-enter-delay-2 mt-6 flex flex-wrap items-center justify-center gap-3">

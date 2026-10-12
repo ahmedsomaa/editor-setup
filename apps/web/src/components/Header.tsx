@@ -10,12 +10,12 @@ export default function Header() {
       <nav className="mx-auto flex h-14 max-w-5xl items-center gap-4 px-4">
         <Link
           to="/"
-          className="font-heading text-foreground inline-flex items-center gap-2 text-sm font-semibold tracking-tight no-underline"
+          className="font-heading text-foreground text-body inline-flex items-center gap-2 font-semibold tracking-[-0.02em] no-underline"
         >
           <Mark className="size-4" />
           EditorSetup
         </Link>
-        <div className="text-muted-foreground flex items-center gap-3 text-sm font-medium">
+        <div className="text-muted-foreground text-body flex items-center gap-3 font-medium">
           <Link
             to="/"
             className="hover:text-foreground no-underline"

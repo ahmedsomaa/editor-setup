@@ -5,10 +5,10 @@ import { CONTRIBUTE_URL, GITHUB_URL } from '@/lib/site'
 export default function Footer() {
   return (
     <footer className="border-border site-shell border-t">
-      <div className="text-muted-foreground mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
+      <div className="text-muted-foreground text-body mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between">
         <Link
           to="/"
-          className="font-heading text-foreground inline-flex items-center gap-2 font-semibold tracking-tight no-underline"
+          className="font-heading text-foreground text-body inline-flex items-center gap-2 font-semibold tracking-[-0.02em] no-underline"
         >
           <Mark className="size-4" />
           EditorSetup

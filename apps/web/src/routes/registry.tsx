@@ -12,8 +12,10 @@ function RegistryPage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
       <div className="max-w-xl">
-        <h1 className="text-2xl font-semibold tracking-tight">Registry</h1>
-        <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+        <h1 className="text-display font-semibold tracking-[-0.02em]">
+          Registry
+        </h1>
+        <p className="text-muted-foreground text-body mt-2 max-w-[65ch]">
           Pairs on <code className="text-foreground">main</code> with at least
           one Config. Filters and search land in a later pass.
         </p>
@@ -24,21 +26,19 @@ function RegistryPage() {
             key={pair.slug}
             className="border-border bg-card rounded-[var(--radius-lg)] border px-4 py-4 shadow-[var(--shadow-raised)]"
           >
-            <p className="font-heading text-base font-semibold tracking-tight">
+            <p className="font-heading text-heading font-semibold tracking-[-0.02em]">
               {pair.theme.name}
               <span className="text-primary px-1.5 font-normal" aria-hidden>
                 ·
               </span>
-              <span className="font-mono text-sm font-medium">
-                {pair.font.name}
-              </span>
+              <span className="text-mono font-medium">{pair.font.name}</span>
             </p>
-            <p className="text-muted-foreground mt-1 text-sm">
+            <p className="text-muted-foreground text-body mt-1">
               {pair.theme.appearance} · {pair.editors.length} Editor
               {pair.editors.length === 1 ? '' : 's'} · {pair.font.license} /{' '}
               {pair.theme.license}
             </p>
-            <p className="text-muted-foreground mt-2 font-mono text-xs">
+            <p className="text-muted-foreground text-mono mt-2">
               {pair.editors.map((e) => e.id).join(', ')}
             </p>
           </li>

@@ -14,6 +14,17 @@
   --font-heading: "Sora Variable", ui-sans-serif, sans-serif;
   --font-sans: "Geist Variable", ui-sans-serif, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  /* Untitled UI type scale (apps/design/system.html) — rem + unitless lh */
+  --text-display: 1.875rem;
+  --text-display--line-height: 1.2;
+  --text-heading: 1.25rem;
+  --text-heading--line-height: 1.25;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.5;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.45;
+  --text-mono: 0.8125rem;
+  --text-mono--line-height: 1.55;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -142,10 +153,10 @@
     @apply border-border outline-ring/50;
   }
   html {
-    @apply font-sans text-sm;
+    @apply font-sans text-body antialiased;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
   }
   /* Code-glyph pattern from .scratch/mp-cld-imp */
   body::before {
@@ -165,15 +176,23 @@
   html.dark body::before {
     opacity: 0.13;
   }
-  h1,
+  h1 {
+    @apply font-heading text-display font-semibold tracking-[-0.02em] text-balance;
+  }
   h2 {
-    @apply font-heading font-semibold tracking-tight;
+    @apply font-heading text-heading font-semibold tracking-[-0.02em] text-balance;
+  }
+  h3 {
+    @apply font-heading text-heading font-semibold tracking-[-0.02em] text-balance;
+  }
+  p {
+    text-wrap: pretty;
   }
   code,
   kbd,
   samp,
   pre {
-    @apply font-mono;
+    @apply font-mono text-mono;
   }
   :focus-visible {
     outline: none;
