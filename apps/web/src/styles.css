@@ -4,6 +4,8 @@
 @import "@fontsource-variable/sora";
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
+@import "@fontsource/fira-code/500.css";
+@import "@fontsource/jetbrains-mono/500.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -222,6 +224,17 @@
     animation: marquee-scroll 40s linear infinite;
   }
 
+  .hook-swap-target {
+    transition-property: opacity, transform;
+    transition-duration: 280ms;
+    transition-timing-function: ease;
+  }
+
+  .hook-swapping .hook-swap-target {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .landing-enter,
     .landing-enter-delay-1,
@@ -234,6 +247,15 @@
 
     .marquee-track {
       animation: none;
+    }
+
+    .hook-swap-target {
+      transition: none;
+    }
+
+    .hook-swapping .hook-swap-target {
+      opacity: 1;
+      transform: none;
     }
   }
 }

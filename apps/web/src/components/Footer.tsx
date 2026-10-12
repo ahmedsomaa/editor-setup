@@ -11,7 +11,7 @@ export default function Footer() {
           className="font-heading text-foreground inline-flex items-center gap-2 font-semibold tracking-tight no-underline"
         >
           <Mark className="size-4" />
-          editorSetup
+          EditorSetup
         </Link>
         <nav className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <Link to="/registry" className="hover:text-foreground no-underline">

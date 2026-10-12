@@ -1,4 +1,4 @@
-# editorSetup web
+# EditorSetup web
 
 TanStack Start app with shadcn/ui (Nova + Lucide) and Cloudflare Workers deploy.
 

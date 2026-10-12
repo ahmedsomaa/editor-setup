@@ -4,9 +4,6 @@ export const CONTRIBUTE_URL =
 
 export const GITHUB_URL = 'https://github.com/ghanam/editor-setup'
 
-export const DEMO_THEME = 'Vitesse Dark'
-export const DEMO_FONT = 'Inconsolata'
-
 export const MARQUEE_PAIRS = [
   { theme: 'Vitesse Dark', font: 'Inconsolata' },
   { theme: 'Catppuccin Mocha', font: 'JetBrains Mono' },

@@ -13,7 +13,7 @@ export default function Header() {
           className="font-heading text-foreground inline-flex items-center gap-2 text-sm font-semibold tracking-tight no-underline"
         >
           <Mark className="size-4" />
-          editorSetup
+          EditorSetup
         </Link>
         <div className="text-muted-foreground flex items-center gap-3 text-sm font-medium">
           <Link
