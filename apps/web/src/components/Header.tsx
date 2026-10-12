@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
-import { FolderGit2, PencilSparkles } from 'lucide-react'
+import { FolderGit2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Mark } from '@/components/Mark'
 
 export default function Header() {
   return (
@@ -10,7 +11,7 @@ export default function Header() {
           to="/"
           className="font-heading text-foreground inline-flex items-center gap-2 text-sm font-semibold tracking-tight no-underline"
         >
-          <PencilSparkles className="size-4" aria-hidden />
+          <Mark className="size-4" />
           editorSetup
         </Link>
         <div className="text-muted-foreground flex items-center gap-3 text-sm">
