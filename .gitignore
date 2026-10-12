@@ -5,5 +5,6 @@ apps/web/out/
 apps/web/dist/
 apps/web/.vinext/
 apps/web/.cloudflare/
+.scratch/mp-cld-imp/
 .DS_Store
 *.log
