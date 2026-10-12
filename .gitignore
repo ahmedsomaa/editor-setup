@@ -1,10 +1,9 @@
 node_modules/
 apps/web/node_modules/
-apps/web/.next/
-apps/web/out/
 apps/web/dist/
-apps/web/.vinext/
-apps/web/.cloudflare/
+apps/web/.wrangler/
+apps/web/.tanstack/
+apps/web/.output/
 .scratch/mp-cld-imp/
 .DS_Store
 *.log

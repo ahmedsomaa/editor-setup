@@ -6,9 +6,9 @@ A git-backed registry of monospace font and color theme pairings for code editor
 
 ```text
 registry/                 # Pair JSON + Snapshots (PR surface)
-apps/web/                 # Next.js + shadcn + Zustand (Cloudflare via vinext)
+apps/web/                 # TanStack Start + shadcn (Cloudflare Workers)
 apps/design/              # Design handbook (reference)
-packages/registry-check/  # Schema + image checks (npm run check)
+packages/registry-check/  # Schema + image checks
 docs/                     # Agent conventions and ADRs
 .scratch/                 # Specs, issues, archived experiments
 ```
@@ -16,16 +16,15 @@ docs/                     # Agent conventions and ADRs
 ## Commands
 
 ```bash
-npm run check              # validate registry/
-npm run dev                # Next.js in apps/web
-npm run build              # Next.js production build
-npm run dev:vinext         # vinext / Vite Cloudflare-local
-npm run build:vinext       # Cloudflare Workers build
-npm run start:vinext       # preview the Worker locally
-npm run deploy:vinext      # deploy to Cloudflare Workers
+bun run check       # validate registry/
+bun run dev         # TanStack Start in apps/web
+bun run build       # production build
+bun run preview     # build + local Workers preview
+bun run deploy      # deploy to Cloudflare Workers
+bun run typecheck   # TypeScript check for apps/web
 ```
 
-Cloudflare deployment follows [Next.js on Workers with vinext](https://developers.cloudflare.com/workers/framework-guides/web-apps/nextjs/).
+Site stack and deploy notes: [apps/web/README.md](apps/web/README.md). Cloudflare guide: [TanStack Start on Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/tanstack-start/).
 
 ## Contributing
 

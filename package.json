@@ -4,12 +4,11 @@
   "type": "module",
   "scripts": {
     "check": "node packages/registry-check/check-registry.mjs",
-    "dev": "npm run dev --prefix apps/web",
-    "build": "npm run build --prefix apps/web",
-    "dev:vinext": "npm run dev:vinext --prefix apps/web",
-    "build:vinext": "npm run build:vinext --prefix apps/web",
-    "start:vinext": "npm run start:vinext --prefix apps/web",
-    "deploy:vinext": "npm run deploy:vinext --prefix apps/web"
+    "dev": "bun run --cwd apps/web dev",
+    "build": "bun run --cwd apps/web build",
+    "preview": "bun run --cwd apps/web preview",
+    "deploy": "bun run --cwd apps/web deploy",
+    "typecheck": "bun run --cwd apps/web typecheck"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

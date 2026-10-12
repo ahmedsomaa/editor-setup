@@ -1,23 +1,29 @@
 # editorSetup web
 
-Next.js 16 App Router app with [shadcn/ui](https://ui.shadcn.com/), Zustand, and [vinext](https://vinext.dev/) for [Cloudflare Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/nextjs/).
+TanStack Start app with shadcn/ui (Nova + Lucide) and Cloudflare Workers deploy.
 
-## Scripts
+## Commands
 
-| Script | Purpose |
-| --- | --- |
-| `npm run dev` | Next.js local (port 3000) |
-| `npm run build` / `start` | Next.js production |
-| `npm run dev:vinext` | vinext / Vite Workers-local (port 3001) |
-| `npm run build:vinext` | Build Cloudflare Worker output |
-| `npm run start:vinext` | Preview the Worker locally |
-| `npm run deploy:vinext` | Deploy with `@vinext/cloudflare` |
+```bash
+bun install
+bun run dev
+bun run build
+bun run deploy
+bun run typecheck
+```
 
-From the repo root you can use the same script names (`npm run deploy:vinext`, etc.).
+From the repo root: `bun run dev`, `bun run build`, `bun run deploy`.
+
+## Stack
+
+- [TanStack Start](https://tanstack.com/start)
+- [shadcn/ui](https://ui.shadcn.com/docs/installation/tanstack) (`base-nova`, Lucide)
+- [Cloudflare Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/tanstack-start/) via `@cloudflare/vite-plugin` and `wrangler.jsonc`
 
 ## Deploy
 
-1. `npm run build:vinext`
-2. `npm run deploy:vinext` (requires Cloudflare auth via `cf` / Wrangler)
+```bash
+bun run deploy
+```
 
-Config: `vite.config.ts`, `cloudflare.config.ts`.
+Requires Wrangler auth (`bunx wrangler login`).
