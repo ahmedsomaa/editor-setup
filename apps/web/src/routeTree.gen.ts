@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as RegistryRouteImport } from './routes/registry'
+import { Route as RegistrySlugRouteImport } from './routes/registry.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,43 @@ const RegistryRoute = RegistryRouteImport.update({
   path: '/registry',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegistrySlugRoute = RegistrySlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => RegistryRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/registry': typeof RegistryRoute
+  '/registry': typeof RegistryRouteWithChildren
+  '/registry/$slug': typeof RegistrySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/registry': typeof RegistryRoute
+  '/registry': typeof RegistryRouteWithChildren
+  '/registry/$slug': typeof RegistrySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/registry': typeof RegistryRoute
+  '/registry': typeof RegistryRouteWithChildren
+  '/registry/$slug': typeof RegistrySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/registry'
+  fullPaths: '/' | '/about' | '/registry' | '/registry/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/registry'
-  id: '__root__' | '/' | '/about' | '/registry'
+  to: '/' | '/about' | '/registry' | '/registry/$slug'
+  id: '__root__' | '/' | '/about' | '/registry' | '/registry/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  RegistryRoute: typeof RegistryRoute
+  RegistryRoute: typeof RegistryRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -82,13 +91,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegistryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/registry/$slug': {
+      id: '/registry/$slug'
+      path: '/$slug'
+      fullPath: '/registry/$slug'
+      preLoaderRoute: typeof RegistrySlugRouteImport
+      parentRoute: typeof RegistryRoute
+    }
   }
 }
+
+interface RegistryRouteChildren {
+  RegistrySlugRoute: typeof RegistrySlugRoute
+}
+
+const RegistryRouteChildren: RegistryRouteChildren = {
+  RegistrySlugRoute: RegistrySlugRoute,
+}
+
+const RegistryRouteWithChildren = RegistryRoute._addFileChildren(
+  RegistryRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  RegistryRoute: RegistryRoute,
+  RegistryRoute: RegistryRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

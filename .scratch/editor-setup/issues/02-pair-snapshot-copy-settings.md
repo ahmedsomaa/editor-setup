@@ -4,9 +4,9 @@
 
 **Blocked by:** 01: Registry lists Pairs from the repo
 
-**Status:** ready-for-agent
+**Status:** ready-for-human
 
-- [ ] Pair page shows Font, Theme, links, License, and Appearance
-- [ ] Only Editors with a Config appear; selecting one updates Snapshot and Settings
-- [ ] Snapshot is the contributed 16:9 image with no site-added frame
-- [ ] Visitor can copy Settings as plain text
+- [x] Pair page shows Font, Theme, links, License, and Appearance
+- [x] Only Editors with a Config appear; selecting one updates Snapshot and Settings
+- [x] Snapshot is the contributed 16:9 image with no site-added frame
+- [x] Visitor can copy Settings as plain text
