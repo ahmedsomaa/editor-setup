@@ -18,6 +18,7 @@ From the repo root: `bun run dev`, `bun run build`, `bun run deploy`.
 
 - [TanStack Start](https://tanstack.com/start)
 - [shadcn/ui](https://ui.shadcn.com/docs/installation/tanstack) (`base-nova`, Lucide)
+- Type: Sora (display), Geist (body), Geist Mono (code)
 - [Cloudflare Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/tanstack-start/) via `@cloudflare/vite-plugin` and `wrangler.jsonc`
 
 ## Deploy

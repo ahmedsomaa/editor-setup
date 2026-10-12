@@ -8,7 +8,7 @@ export default function Header() {
       <nav className="mx-auto flex h-14 max-w-5xl items-center gap-4 px-4">
         <Link
           to="/"
-          className="text-foreground inline-flex items-center gap-2 text-sm font-medium no-underline"
+          className="font-heading text-foreground inline-flex items-center gap-2 text-sm font-semibold tracking-tight no-underline"
         >
           <PencilSparkles className="size-4" aria-hidden />
           editorSetup
@@ -33,6 +33,7 @@ export default function Header() {
           <Button
             variant="ghost"
             size="icon"
+            nativeButton={false}
             render={
               <a
                 href="https://github.com"
