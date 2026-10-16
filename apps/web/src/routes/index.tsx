@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Check, Copy, Plus } from "@phosphor-icons/react";
+import { ArrowRight, Check, Copy, Pause, Play } from "@phosphor-icons/react";
 import { Directory } from "@/components/Directory";
 import { PairWindow } from "@/components/PairWindow";
+import { TokenWindow } from "@/components/TokenWindow";
+import { PLAYGROUND } from "@/lib/playground-tokens";
 import { Reveal } from "@/components/Reveal";
 import { Tag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
-import { EDITOR_IDS, EDITOR_LABELS, type EditorId, type PairRecord } from "@/lib/pairs";
-import { thumbnailUrl } from "@/lib/snapshots";
+import { EDITOR_IDS, EDITOR_LABELS, isPaid, type EditorId, type PairRecord } from "@/lib/pairs";
 import { linesToText, settingsFor } from "@/lib/settings-snippet";
 import { CONTRIBUTE_URL } from "@/lib/site";
 import { listPairsFn } from "@/server/pairs.functions";
@@ -17,6 +18,8 @@ export const Route = createFileRoute("/")({
   loader: () => listPairsFn({ data: {} }),
   component: HomePage,
 });
+
+const PLAYGROUND_ORDER = ["fira-code--palenight-theme", "geist-mono--aura-dark", "inconsolata--vitesse-dark"] as const;
 
 const FAQS = [
   {
@@ -44,44 +47,143 @@ const FAQS = [
 function HomePage() {
   const { pairs, total } = Route.useLoaderData();
   const shown = pairs.slice(0, 8);
+  const [heroSlug, setHeroSlug] = useState<string | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const holding = useRef(false);
+  // The playground offers three Pairs, only with Open or Free Fonts and Themes, each with its real Theme tokens.
+  const stagePairs = PLAYGROUND_ORDER.map((slug) => pairs.find((p) => p.slug === slug)).filter(
+    (p): p is PairRecord => Boolean(p) && !isPaid(p as PairRecord),
+  );
+
+  // Rotate through the Pairs unless the visitor prefers reduced motion. Pausing is always available,
+  // and the hero stops while it is hovered or focused.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setPlaying(true);
+  }, []);
+
+  useEffect(() => {
+    if (!playing || stagePairs.length < 2) return;
+    const id = window.setInterval(() => {
+      if (holding.current) return;
+      setHeroSlug((cur) => {
+        const i = stagePairs.findIndex((p) => p.slug === (cur ?? stagePairs[0]?.slug));
+        return stagePairs[(i + 1) % stagePairs.length]?.slug ?? null;
+      });
+    }, 3500);
+    return () => window.clearInterval(id);
+  }, [playing, stagePairs.length]);
+  const heroPair = stagePairs.find((p) => p.slug === heroSlug) ?? stagePairs[0];
+  // The hero is painted in the chosen Pair's own colours. Paid Fonts never load, so they keep the site's mono.
+  const stage = {
+    bg: (heroPair && PLAYGROUND[heroPair.slug]?.bg) || heroPair?.theme.bg || "#111111",
+    fg: (heroPair && PLAYGROUND[heroPair.slug]?.fg) || heroPair?.theme.fg || "#edeceb",
+    family: heroPair && !isPaid(heroPair) ? heroPair.font.fontFamily : undefined,
+  };
 
   return (
     <main id="main">
-      <section className="relative isolate flex min-h-[calc(100svh-4.5rem)] flex-col items-center justify-center overflow-hidden px-4 py-16 text-center">
+      <section
+        className="relative isolate flex min-h-[calc(100svh-4.5rem)] items-center overflow-hidden px-4 py-16"
+        onMouseEnter={() => (holding.current = true)}
+        onMouseLeave={() => (holding.current = false)}
+        onFocusCapture={() => (holding.current = true)}
+        onBlurCapture={() => (holding.current = false)}
+      >
         <div aria-hidden className="bg-pattern pointer-events-none absolute inset-0 -z-10" />
-        <h1 className="max-w-[22ch] text-balance text-[clamp(2.25rem,4.9vw,4.75rem)] sm:max-w-none sm:text-wrap">
-          Make the place you code feel like yours.
-        </h1>
-        <p className="text-muted-foreground mt-8 max-w-[52ch] text-lg">
-          Real setups by developers, for developers. Fonts and Themes that already work together, with the config one click away.
-        </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <Button size="lg" nativeButton={false} render={<Link to="/registry" />}>
-            Explore the Registry
-            <ArrowRight aria-hidden />
-          </Button>
-          <Button size="lg" variant="outline" nativeButton={false} render={<a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" />}>
-            <Plus aria-hidden />
-            Add a Pair
-          </Button>
-        </div>
-        <ul className="mt-16 flex max-w-5xl list-none flex-wrap justify-center gap-4 p-0">
-          {shown.slice(0, 5).map((pair) => {
-            const src = thumbnailUrl(pair.editors[0]?.thumbnail ?? "");
-            return src ? (
-              <li key={pair.slug}>
-                <Link
-                  to="/registry/$slug"
-                  params={{ slug: pair.slug }}
-                  className="lift border-border bg-card block rounded-xl border p-1.5 no-underline"
-                  aria-label={`${pair.theme.name} with ${pair.font.name}`}
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-2 lg:gap-10">
+          <div className="min-w-0">
+            <h1 className="relative mt-8 text-[clamp(2.5rem,4.6vw,4.25rem)]">
+              <span
+                aria-hidden="true"
+                className="border-border bg-card text-pastel-green-text absolute -top-9 right-4 rotate-6 rounded-full border px-2.5 pt-1 pb-0.5 font-sans text-xs leading-none font-medium tracking-[0.05em] uppercase shadow-[var(--shadow-overlay)] sm:right-10"
+              >
+                Free
+              </span>
+              Make the place you code{" "}
+              <span className="relative inline-block whitespace-nowrap">
+                <svg className="absolute h-0 w-0" aria-hidden="true">
+                  <defs>
+                    <filter id="hook-rough" x="-30%" y="-30%" width="160%" height="160%">
+                      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="n" />
+                      <feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G" />
+                    </filter>
+                  </defs>
+                </svg>
+                feel like yours.
+                <svg
+                  className="text-accent-text/35 pointer-events-none absolute bottom-[-0.12em] left-[-1%] h-[0.32em] w-[102%]"
+                  viewBox="0 0 140 10"
+                  fill="none"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
                 >
-                  <img src={src} alt="" width={400} height={225} className="aspect-video w-40 rounded-lg object-cover sm:w-44" />
-                </Link>
-              </li>
-            ) : null;
-          })}
-        </ul>
+                  <path d="M3,6 C40,3 100,3 137,5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" filter="url(#hook-rough)" />
+                </svg>
+              </span>
+            </h1>
+            <p className="text-muted-foreground mt-8 max-w-[46ch] text-xl leading-relaxed">
+              Real setups by developers for developers. Explore our list of setups that just work together, with the config one click away.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Button size="lg" nativeButton={false} render={<Link to="/registry" />}>
+                Browse setups
+                <ArrowRight aria-hidden />
+              </Button>
+              <Button size="lg" variant="outline" nativeButton={false} render={<a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" />}>
+                Share a pair
+              </Button>
+            </div>
+          </div>
+
+          <div className="min-w-0">
+            {heroPair && PLAYGROUND[heroPair.slug] ? (
+              <div aria-label={`${heroPair.theme.name} with ${heroPair.font.name}`} role="img">
+                <TokenWindow
+                  theme={PLAYGROUND[heroPair.slug]!}
+                  fontFamily={stage.family ?? "ui-monospace, monospace"}
+                  filename="pair.ts"
+                  className="min-h-[18rem]"
+                />
+              </div>
+            ) : null}
+            <div role="group" aria-label="Try a Pair" className="mt-6 flex flex-wrap items-center justify-center gap-2">
+              <button
+                type="button"
+                aria-pressed={playing}
+                aria-label={playing ? "Pause rotation" : "Play rotation"}
+                onClick={() => setPlaying((p) => !p)}
+                className="inline-flex size-9 items-center justify-center rounded-full border transition-colors hover:opacity-90"
+                style={{ background: stage.bg, color: stage.fg, borderColor: `color-mix(in srgb, ${stage.fg} 35%, ${stage.bg})` }}
+              >
+                {playing ? <Pause className="size-4" aria-hidden /> : <Play className="size-4" aria-hidden />}
+              </button>
+              {stagePairs.map((pair) => {
+                const on = pair.slug === heroPair?.slug;
+                return (
+                  <button
+                    key={pair.slug}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => {
+                      setPlaying(false);
+                      setHeroSlug(pair.slug);
+                    }}
+                    className="inline-flex h-9 items-center rounded-full px-4 text-sm transition-shadow"
+                    style={{
+                      background: PLAYGROUND[pair.slug]?.bg ?? pair.theme.bg,
+                      color: PLAYGROUND[pair.slug]?.fg ?? pair.theme.fg,
+                      fontFamily: pair.font.fontFamily,
+                      boxShadow: on ? "0 0 0 2px var(--background), 0 0 0 4px var(--foreground)" : "none",
+                    }}
+                  >
+                    {pair.theme.name} + {pair.font.name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </section>
 
       <ShowcaseSection pairs={shown} total={total} />

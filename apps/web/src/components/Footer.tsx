@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { EditorArt } from '@/components/EditorArt'
 import { Mark } from '@/components/Mark'
 import { ThemeSwitch } from '@/components/ThemeToggle'
 import { CONTRIBUTE_URL, GITHUB_URL } from '@/lib/site'
@@ -55,12 +56,12 @@ export default function Footer() {
         </div>
       </div>
 
-      <p
+      <div
         aria-hidden
-        className="font-heading text-foreground/[0.05] pointer-events-none -mb-[0.2em] text-center text-[clamp(4rem,17vw,15rem)] leading-none tracking-[-0.04em] select-none"
+        className="mx-auto mt-4 h-48 max-w-2xl overflow-hidden px-4 [mask-image:linear-gradient(to_bottom,#000_35%,transparent)] sm:h-56"
       >
-        EditorSetup
-      </p>
+        <EditorArt className="w-full" />
+      </div>
     </footer>
   )
 }

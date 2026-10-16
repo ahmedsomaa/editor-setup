@@ -165,7 +165,7 @@
 @layer utilities {
   /* A faint dot grid that fades out downward. Decoration only: it sits behind content. */
   .bg-pattern {
-    background-image: radial-gradient(color-mix(in srgb, var(--foreground) 16%, transparent) 1px, transparent 1.5px);
+    background-image: radial-gradient(color-mix(in srgb, var(--pattern-color, var(--foreground)) 16%, transparent) 1px, transparent 1.5px);
     background-size: 22px 22px;
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
     mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
