@@ -1,0 +1,25 @@
+{
+  "font": {
+    "name": "MonoLisa",
+    "links": [
+      "https://www.monolisa.dev/"
+    ],
+    "license": "paid"
+  },
+  "theme": {
+    "name": "Houston",
+    "links": [
+      "https://marketplace.visualstudio.com/items?itemName=astro-build.houston"
+    ],
+    "license": "open",
+    "appearance": "dark"
+  },
+  "editors": [
+    {
+      "id": "vscode",
+      "snapshot": "monolisa--houston--vscode.png",
+      "settings": "{\n  \"editor.fontFamily\": \"MonoLisa\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Houston\"\n}",
+      "thumbnail": "monolisa--houston--vscode.png"
+    }
+  ]
+}
