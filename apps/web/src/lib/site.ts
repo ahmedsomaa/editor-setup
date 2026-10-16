@@ -1,16 +1,7 @@
-/** Contribute CTA — update when the public repo URL is set. */
-export const CONTRIBUTE_URL =
-  'https://github.com/ghanam/editor-setup/blob/main/CONTRIBUTING.md'
+/** Public GitHub repo (owner/name). */
+export const GITHUB_REPO = 'ahmedsomaa/editor-setup'
 
-export const GITHUB_URL = 'https://github.com/ghanam/editor-setup'
+export const GITHUB_URL = `https://github.com/${GITHUB_REPO}`
 
-export const MARQUEE_PAIRS = [
-  { theme: 'Vitesse Dark', font: 'Inconsolata' },
-  { theme: 'Catppuccin Mocha', font: 'JetBrains Mono' },
-  { theme: 'Tokyo Night', font: 'Fira Code' },
-  { theme: 'One Dark Pro', font: 'Cascadia Code' },
-  { theme: 'Gruvbox Dark', font: 'Iosevka' },
-  { theme: 'Dracula', font: 'Source Code Pro' },
-  { theme: 'Nord', font: 'IBM Plex Mono' },
-  { theme: 'Rose Pine', font: 'Commit Mono' },
-] as const
+/** Contribute CTA — CONTRIBUTING.md on the public repo. */
+export const CONTRIBUTE_URL = `${GITHUB_URL}/blob/main/CONTRIBUTING.md`

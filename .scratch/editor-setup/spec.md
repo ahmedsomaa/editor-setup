@@ -41,7 +41,7 @@ editorSetup is a git-backed Registry of Pairs. A Pair is one Font combined with 
 27. As a contributor, I want a CONTRIBUTING.md that explains how to add a Pair, so that I know what files to open a pull request with.
 28. As a contributor, I want a new Pair to be one JSON file under `registry/pairs/` plus Snapshots under `registry/snapshots/`, so that I do not edit a central index.
 29. As a contributor, I want each Editor in the Pair file to carry Settings text and a Snapshot filename, so that one pull request holds the whole Config.
-30. As a contributor, I want to run `npm run check` locally, so that I catch schema and image mistakes before I open the pull request.
+30. As a contributor, I want to run `bun run check` locally, so that I catch schema and image mistakes before I open the pull request.
 31. As a contributor, I want the same check to run on the pull request, so that invalid files never merge.
 32. As a contributor, I want a new Pair pull request to allow several Editors at once, so that the first submission can cover more than one Editor.
 33. As a contributor, I want adding an Editor to an existing Pair to be its own pull request, so that the image diff stays to one Snapshot.
@@ -61,12 +61,12 @@ editorSetup is a git-backed Registry of Pairs. A Pair is one Font combined with 
 - Launch Editors: VS Code, Cursor, Zed, Neovim. JetBrains and other Editors are later; each app is its own Editor.
 - Visual direction: Untitled UI pills, violet primary `#7f56d9`, tweakcn-style home (header, hero, footer only). Type: Sora, Geist, Geist Mono. Mark: Lucide pencil-sparkles. Handbook lives in `apps/handbook/`.
 - Site (Next.js static pages) is later. Not in this pass.
-- Pull requests target `main`. `npm run check` is the local and CI check.
+- Pull requests target `main`. `bun run check` is the local and CI check.
 - Review by an LLM agent, and ratings via Convex or Supabase, are later and out of this pass.
 
 ## Testing Decisions
 
-- Test seam: the registry check (`npm run check`).
+- Test seam: the registry check (`bun run check`).
 - The check covers schema, non-empty Settings, 16:9 Snapshots, filename contract, one Config per Editor, and one Pair per Font and Theme.
 
 ## Out of Scope

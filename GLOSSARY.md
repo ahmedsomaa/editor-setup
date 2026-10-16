@@ -7,7 +7,7 @@ A git-backed registry of monospace font and color theme pairings for code editor
 ### Pairs and Configs
 
 **Pair**:
-One Font combined with one Theme, and at most one for any Font and Theme. It lives as one JSON file in the registry and appears on the site when that file is on `main` and has at least one Config.
+One Font combined with one Theme, and at most one for any Font and Theme. It lives as one JSON file in the registry and appears on the site when that file is on `main`, has its Snapshot, and has at least one Config.
 _Avoid_: Pairing, combo, setup
 
 **Font**:
@@ -27,7 +27,7 @@ One code editor app, such as VS Code, Cursor, Zed, or Neovim. Apps whose Setting
 _Avoid_: IDE, editor family
 
 **Config**:
-One Pair in one Editor, always with both Settings and a Snapshot. A Pair has at most one Config per Editor. The files on `main` are the Config; a later pull request updates or removes it.
+The Settings for one Pair in one Editor. A Pair has at most one Config per Editor. A later pull request updates or removes it.
 _Avoid_: Setup, editor setup, submission
 
 **Settings**:
@@ -35,7 +35,7 @@ The part of a Config that applies its Pair in its Editor: font family, size, wei
 _Avoid_: Code, snippet, personal setup
 
 **Snapshot**:
-An image of a Pair in one Editor, supplied in the pull request, stored at one standard 16:9 image size. The code it shows and the frame around that code are the contributor's choice. The site does not add a frame.
+An image of a Pair showing its Font and Theme together. It belongs to the Pair and has no Editor. One Pair has one Snapshot, at one standard 16:9 size.
 _Avoid_: Screenshot, preview, image
 
 ### License and Registry
@@ -45,13 +45,21 @@ The terms a Font or Theme is available under: Open (an open license such as OFL 
 _Avoid_: Free/paid, price
 
 **Registry**:
-The public list of every Pair whose file is on `main` with at least one Config. Built by scanning the pair JSON files in the repository.
+The public list of every Pair whose file is on `main` with its Snapshot and at least one Config. Built by scanning the pair JSON files in the repository.
 _Avoid_: Community page, directory, explore
+
+**Thumbnail**:
+The small version of a Snapshot, 400×225, shown in lists. It belongs to the same Pair and Editor as its Snapshot and shares its file name.
+_Avoid_: Preview, icon
+
+**Snapshot Studio**:
+The page on the site that makes a Snapshot and its Thumbnail from an Open or Free Font and Theme. Paid Fonts and Themes are never rendered live there or anywhere on the site.
+_Avoid_: Editor, generator
 
 **Compare**:
 Two Pairs shown side by side for one Editor, each through that Editor's Snapshot. A Pair with no Config for that Editor can't be compared there.
 _Avoid_: Slider, overlay
 
 **Contribution**:
-A pull request that adds or changes a Pair file and its Snapshots. There is no in-app form and no signed-in author on the site. Git history is the record.
+A pull request that adds or changes a Pair file and its Snapshot. There is no in-app form and no signed-in author on the site. Git history is the record.
 _Avoid_: Submission, Author, Admin

@@ -15,3 +15,20 @@ for (const [path, url] of Object.entries(snapshotModules)) {
 export function snapshotUrl(filename: string): string | undefined {
   return BY_FILENAME.get(filename);
 }
+
+const thumbnailModules = import.meta.glob(
+  "../../../../registry/thumbnails/*.png",
+  { eager: true, query: "?url", import: "default" },
+) as Record<string, string>;
+
+const THUMBS = new Map<string, string>();
+
+for (const [path, url] of Object.entries(thumbnailModules)) {
+  const file = path.split("/").pop();
+  if (file) THUMBS.set(file, url);
+}
+
+/** URL for a Thumbnail filename (400x225), or undefined when the file is not in the repo. */
+export function thumbnailUrl(filename: string): string | undefined {
+  return THUMBS.get(filename);
+}

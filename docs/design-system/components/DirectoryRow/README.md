@@ -1,0 +1,3 @@
+One Registry row, the unit of the list on the home page and the Registry. A full-width link: the Pair's 400×225 Thumbnail (80px wide, 1px border, `radius-md`), the Theme name (truncated, with `title`), the Font name in its own face, then Editors in `muted-foreground` and tags.
+
+The consumer provides the Pair, its Thumbnail and its route. Pointing at or focusing a row marks it active (`muted` fill) and shows that Pair's Snapshot in the pane beside the list. Without a Thumbnail the row shows an "Aa" chip in the Pair's colours. Rows are 64px or taller and divided by 1px `border` rules; there are no cards.

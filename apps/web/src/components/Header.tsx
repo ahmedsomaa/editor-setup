@@ -1,55 +1,53 @@
-import { Link } from '@tanstack/react-router'
-import { FolderGit2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Mark } from '@/components/Mark'
-import { GITHUB_URL } from '@/lib/site'
+import { Link } from "@tanstack/react-router";
+import { GitHubStars } from "@/components/GitHubStars";
+import { Mark } from "@/components/Mark";
+
+const NAV = [
+  { to: "/registry", label: "Registry" },
+  { to: "/studio", label: "Snapshot Studio" },
+  { to: "/about", label: "About" },
+] as const;
 
 export default function Header() {
   return (
-    <header className="border-border bg-background/80 site-shell sticky top-0 z-50 border-b backdrop-blur">
-      <nav className="mx-auto flex h-14 max-w-5xl items-center gap-4 px-4">
-        <Link
-          to="/"
-          className="font-heading text-foreground text-body inline-flex items-center gap-2 font-semibold tracking-[-0.02em] no-underline"
-        >
-          <Mark className="size-4" />
-          EditorSetup
-        </Link>
-        <div className="text-muted-foreground text-body flex items-center gap-3 font-medium">
-          <Link
-            to="/"
-            className="hover:text-foreground no-underline"
-            activeOptions={{ exact: true }}
-            activeProps={{ className: 'text-foreground no-underline' }}
-          >
-            Home
-          </Link>
-          <Link
-            to="/registry"
-            className="hover:text-foreground no-underline"
-            activeProps={{ className: 'text-foreground no-underline' }}
-          >
-            Registry
+    <header className="border-border bg-background/90 sticky top-0 z-40 border-b backdrop-blur-sm">
+      <nav aria-label="Main" className="mx-auto grid h-16 max-w-5xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:grid-cols-[1fr_auto_1fr]">
+        <div className="flex min-w-0 items-center">
+          <Link to="/" className="text-foreground inline-flex items-center gap-2.5 text-lg font-medium tracking-tighter no-underline">
+            <Mark className="size-6" />
+            EditorSetup
           </Link>
         </div>
-        <div className="ml-auto">
-          <Button
-            variant="ghost"
-            size="icon"
-            nativeButton={false}
-            render={
-              <a
-                href={GITHUB_URL}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
-              />
-            }
-          >
-            <FolderGit2 strokeWidth={2} />
-          </Button>
+        <ul className="hidden list-none items-center justify-center gap-1 p-0 sm:flex">
+          {NAV.map(({ to, label }) => (
+            <li key={to}>
+              <Link
+                to={to}
+                className="text-muted-foreground hover:text-foreground inline-flex h-9 items-center rounded-full px-3.5 text-sm font-medium no-underline transition-colors"
+                activeProps={{ className: "bg-muted text-accent-text hover:text-accent-text" }}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center justify-end">
+          <GitHubStars />
         </div>
       </nav>
+      <ul className="border-border mx-auto flex max-w-5xl list-none gap-1 overflow-x-auto border-t px-4 py-2 p-0 sm:hidden">
+        {NAV.map(({ to, label }) => (
+          <li key={to}>
+            <Link
+              to={to}
+              className="text-muted-foreground hover:text-foreground inline-flex h-9 items-center rounded-full px-3 text-sm font-medium no-underline"
+              activeProps={{ className: "bg-muted text-accent-text hover:text-accent-text" }}
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </header>
-  )
+  );
 }

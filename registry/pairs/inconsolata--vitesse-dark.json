@@ -1,12 +1,16 @@
 {
   "font": {
     "name": "Inconsolata",
-    "links": ["https://fonts.google.com/specimen/Inconsolata"],
+    "links": [
+      "https://fonts.google.com/specimen/Inconsolata"
+    ],
     "license": "open"
   },
   "theme": {
     "name": "Vitesse Dark",
-    "links": ["https://github.com/antfu/vscode-theme-vitesse"],
+    "links": [
+      "https://github.com/antfu/vscode-theme-vitesse"
+    ],
     "license": "open",
     "appearance": "dark"
   },
@@ -14,7 +18,8 @@
     {
       "id": "vscode",
       "snapshot": "inconsolata--vitesse-dark--vscode.png",
-      "settings": "{\n  \"editor.fontFamily\": \"Inconsolata\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Vitesse Dark\"\n}"
+      "settings": "{\n  \"editor.fontFamily\": \"Inconsolata\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Vitesse Dark\"\n}",
+      "thumbnail": "inconsolata--vitesse-dark--vscode.png"
     }
   ]
 }

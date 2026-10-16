@@ -2,8 +2,10 @@
   "name": "editor-setup",
   "private": true,
   "type": "module",
+  "packageManager": "bun@1.4.2",
   "scripts": {
     "check": "node packages/registry-check/check-registry.mjs",
+    "generate:submitters": "bun run scripts/resolve-pair-submitters.ts",
     "dev": "bun run --cwd apps/web dev",
     "build": "bun run --cwd apps/web build",
     "preview": "bun run --cwd apps/web preview",
@@ -13,5 +15,9 @@
   "devDependencies": {
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26"
   }
 }

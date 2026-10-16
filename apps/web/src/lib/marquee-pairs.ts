@@ -7,7 +7,7 @@ export type MarqueePair = {
   fg: string
 }
 
-/** All eight explore pairs, in site order. */
+/** Explore Pairs with an Open or Free Font, in site order. Paid Fonts are left out. */
 export const MARQUEE_PAIRS: readonly MarqueePair[] = [
   {
     theme: 'Gruvbox Light Hard',
@@ -31,13 +31,6 @@ export const MARQUEE_PAIRS: readonly MarqueePair[] = [
     fg: '#A6ACCD',
   },
   {
-    theme: 'Nord',
-    font: 'Input Mono',
-    fontFamily: '"Input Mono", "IBM Plex Mono", ui-monospace, monospace',
-    bg: '#2E3440',
-    fg: '#88C0D0',
-  },
-  {
     theme: 'Gruvbox Dark Hard',
     font: 'JetBrains Mono',
     fontFamily: '"JetBrains Mono", ui-monospace, monospace',
@@ -50,19 +43,5 @@ export const MARQUEE_PAIRS: readonly MarqueePair[] = [
     fontFamily: '"Geist Mono Variable", "Geist Mono", ui-monospace, monospace',
     bg: '#101010',
     fg: '#FFC799',
-  },
-  {
-    theme: 'Night Owl',
-    font: 'Dank Mono',
-    fontFamily: '"Dank Mono", "IBM Plex Mono", ui-monospace, monospace',
-    bg: '#011627',
-    fg: '#7fdbca',
-  },
-  {
-    theme: 'Houston',
-    font: 'MonoLisa',
-    fontFamily: '"MonoLisa", "IBM Plex Mono", ui-monospace, monospace',
-    bg: '#17191e',
-    fg: '#54b9ff',
   },
 ] as const

@@ -4,6 +4,13 @@ apps/web/dist/
 apps/web/.wrangler/
 apps/web/.tanstack/
 apps/web/.output/
+apps/snapshot/node_modules/
+apps/snapshot/dist/
+apps/snapshot/.wrangler/
+apps/snapshot/.tanstack/
+apps/snapshot/.output/
+.claude/skills/carbon-snapshot/scripts/node_modules/
+out/
 .scratch/mp-cld-imp/
 .DS_Store
 *.log

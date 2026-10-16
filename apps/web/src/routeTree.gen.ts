@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as RegistryRouteImport } from './routes/registry'
+import { Route as StudioRouteImport } from './routes/studio'
+import { Route as RegistryIndexRouteImport } from './routes/registry.index'
 import { Route as RegistrySlugRouteImport } from './routes/registry.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +31,16 @@ const RegistryRoute = RegistryRouteImport.update({
   path: '/registry',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudioRoute = StudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistryIndexRoute = RegistryIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RegistryRoute,
+} as any)
 const RegistrySlugRoute = RegistrySlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -39,33 +51,47 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/registry': typeof RegistryRouteWithChildren
+  '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
+  '/registry/': typeof RegistryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/registry': typeof RegistryRouteWithChildren
+  '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
+  '/registry': typeof RegistryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/registry': typeof RegistryRouteWithChildren
+  '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
+  '/registry/': typeof RegistryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/registry' | '/registry/$slug'
+  fullPaths:
+    '/' | '/about' | '/registry' | '/studio' | '/registry/$slug' | '/registry/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/registry' | '/registry/$slug'
-  id: '__root__' | '/' | '/about' | '/registry' | '/registry/$slug'
+  to: '/' | '/about' | '/studio' | '/registry/$slug' | '/registry'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/registry'
+    | '/studio'
+    | '/registry/$slug'
+    | '/registry/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   RegistryRoute: typeof RegistryRouteWithChildren
+  StudioRoute: typeof StudioRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -91,6 +117,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegistryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/studio': {
+      id: '/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof StudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registry/': {
+      id: '/registry/'
+      path: '/'
+      fullPath: '/registry/'
+      preLoaderRoute: typeof RegistryIndexRouteImport
+      parentRoute: typeof RegistryRoute
+    }
     '/registry/$slug': {
       id: '/registry/$slug'
       path: '/$slug'
@@ -103,10 +143,12 @@ declare module '@tanstack/react-router' {
 
 interface RegistryRouteChildren {
   RegistrySlugRoute: typeof RegistrySlugRoute
+  RegistryIndexRoute: typeof RegistryIndexRoute
 }
 
 const RegistryRouteChildren: RegistryRouteChildren = {
   RegistrySlugRoute: RegistrySlugRoute,
+  RegistryIndexRoute: RegistryIndexRoute,
 }
 
 const RegistryRouteWithChildren = RegistryRoute._addFileChildren(
@@ -117,16 +159,18 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   RegistryRoute: RegistryRouteWithChildren,
+  StudioRoute: StudioRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

@@ -1,62 +1,86 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import {
+  Await,
   createFileRoute,
   Link,
   notFound,
+  useNavigate,
 } from "@tanstack/react-router";
-import { Check, Copy, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Check, Copy } from "@phosphor-icons/react";
+import { Tag } from "@/components/Tag";
+import { Directory } from "@/components/Directory";
+import { PairWindow, textToLines } from "@/components/PairWindow";
 import { Button } from "@/components/ui/button";
 import {
   EDITOR_LABELS,
   LICENSE_LABELS,
   getEditorConfig,
-  getPairBySlug,
   resolveEditorId,
-  type EditorId,
   type License,
+  type PairRecord,
 } from "@/lib/pairs";
+import { pairSearchSchema } from "@/lib/registry-search";
+import { getPairFn, getRelatedPairsFn } from "@/server/pairs.functions";
 import { snapshotUrl } from "@/lib/snapshots";
 import { cn } from "cn";
 
 export const Route = createFileRoute("/registry/$slug")({
-  loader: ({ params }) => {
-    const pair = getPairBySlug(params.slug);
+  validateSearch: pairSearchSchema,
+  loader: async ({ params }) => {
+    const pair = await getPairFn({ data: { slug: params.slug } });
     if (!pair || pair.editors.length === 0) throw notFound();
-    return { pair };
+    // Not awaited: the page shell streams now, related Pairs follow in the same response.
+    const related = getRelatedPairsFn({ data: { slug: params.slug } });
+    return { pair, related };
+  },
+  // Per-Pair content worth indexing: full server render.
+  ssr: true,
+  head: ({ loaderData }) => {
+    const pair = loaderData?.pair;
+    if (!pair) return {};
+    return {
+      meta: [
+        { title: `${pair.theme.name} with ${pair.font.name} · EditorSetup` },
+        {
+          name: "description",
+          content: `${pair.theme.name} and ${pair.font.name}: Snapshot and copyable Settings.`,
+        },
+      ],
+    };
   },
   component: PairPage,
   notFoundComponent: PairNotFound,
 });
 
 function PairPage() {
-  const { pair } = Route.useLoaderData();
-  const [editorId, setEditorId] = useState<EditorId>(() =>
-    resolveEditorId(pair),
-  );
+  const { pair, related } = Route.useLoaderData();
+  const { editor: editorParam } = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
+  const editorId = resolveEditorId(pair, editorParam);
   const config = getEditorConfig(pair, editorId) ?? pair.editors[0]!;
   const snap = snapshotUrl(config.snapshot);
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-4 py-12 sm:py-16">
-      <nav className="text-muted-foreground mb-8 text-sm">
+    <main id="main" className="mx-auto w-full max-w-5xl px-4 py-12 sm:py-20">
+      <nav aria-label="Breadcrumb" className="text-muted-foreground mb-10 text-sm">
         <Link
           to="/registry"
-          className="hover:text-foreground underline-offset-4 hover:underline"
+          className="hover:text-foreground underline hover:no-underline"
         >
           Registry
         </Link>
         <span className="mx-2" aria-hidden>
           /
         </span>
-        <span className="text-foreground">{pair.theme.name}</span>
+        <span className="text-foreground" aria-current="page">{pair.theme.name}</span>
       </nav>
 
       <header className="max-w-3xl">
-        <h1 className="text-4xl font-bold tracking-[-0.03em] sm:text-5xl">
+        <h1>
           {pair.theme.name}
         </h1>
         <p
-          className="text-muted-foreground mt-2 font-mono text-xl tracking-tight sm:text-2xl"
+          className="text-muted-foreground mt-4 text-xl"
           style={{ fontFamily: pair.font.fontFamily }}
         >
           {pair.font.name}
@@ -89,16 +113,22 @@ function PairPage() {
                 <button
                   key={editor.id}
                   type="button"
-                  onClick={() => setEditorId(editor.id)}
+                  onClick={() =>
+                    void navigate({
+                      search: { editor: editor.id },
+                      replace: true,
+                      resetScroll: false,
+                    })
+                  }
                   aria-pressed={selected}
                   className={cn(
-                    "h-8 rounded-full border px-3 text-sm font-medium transition-[background-color,color,border-color] duration-150 ease-out motion-safe:enabled:active:scale-[0.96]",
+                    "h-9 rounded-full border px-4 text-sm font-medium transition-colors",
                     selected
-                      ? "border-transparent bg-accent text-accent-foreground"
+                      ? "border-foreground bg-card text-foreground"
                       : "border-border bg-card text-secondary-foreground hover:bg-muted",
                   )}
                 >
-                  {EDITOR_LABELS[editor.id]}
+                  {selected ? <Check className="me-1.5 inline size-3.5" aria-hidden /> : null}{EDITOR_LABELS[editor.id]}
                 </button>
               );
             })}
@@ -109,27 +139,19 @@ function PairPage() {
               <img
                 src={snap}
                 alt={`Snapshot of ${pair.font.name} and ${pair.theme.name} in ${EDITOR_LABELS[config.id]}`}
-                className="bg-muted aspect-video w-full object-cover"
+                className="border-border bg-muted aspect-video w-full rounded-xl border object-cover"
                 width={1600}
                 height={900}
               />
             ) : (
-              <div
-                className="border-border flex aspect-video w-full items-center justify-center rounded-[var(--radius-lg)] border"
-                style={{ background: pair.theme.bg, color: pair.theme.fg }}
-                role="img"
-                aria-label={`Preview colors for ${pair.theme.name}`}
-              >
-                <span
-                  className="text-4xl font-semibold tracking-tight"
-                  style={{ fontFamily: pair.font.fontFamily }}
-                >
-                  Aa
-                </span>
-              </div>
+              <PairWindow
+                pair={{ fontFamily: pair.font.fontFamily, bg: pair.theme.bg, fg: pair.theme.fg }}
+                filename={config.id === "neovim" ? "init.lua" : "settings.json"}
+                lines={textToLines(config.settings)}
+              />
             )}
             <figcaption className="text-muted-foreground mt-3 text-sm">
-              Snapshot · {EDITOR_LABELS[config.id]} · 16:9
+              {snap ? "Snapshot" : "Preview"} for {EDITOR_LABELS[config.id]}
             </figcaption>
           </figure>
         </div>
@@ -153,20 +175,35 @@ function PairPage() {
 
           <section className="min-w-0">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <h2 className="font-heading text-lg font-semibold tracking-tight">
-                Settings
-              </h2>
+              <h2 className="text-2xl">Settings</h2>
               <CopySettings settings={config.settings} />
             </div>
-            <pre className="border-border bg-muted/50 max-h-[28rem] overflow-auto rounded-[var(--radius-lg)] border p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
+            <pre className="border-border bg-muted max-h-[28rem] overflow-auto rounded-lg border p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
               {config.settings}
             </pre>
             <p className="text-muted-foreground mt-2 text-xs">
-              Plain text for {EDITOR_LABELS[config.id]}. Paste into your Editor.
+              Plain text for {EDITOR_LABELS[config.id]}. Paste it into your Editor.
             </p>
           </section>
         </aside>
       </div>
+
+      <section className="border-border mt-20 border-t pt-16" aria-labelledby="related-heading">
+        <h2 id="related-heading">More Pairs</h2>
+        <div className="mt-8">
+          <Suspense fallback={<p className="text-muted-foreground text-sm" role="status">Loading related Pairs</p>}>
+            <Await promise={related}>
+              {(pairs: PairRecord[]) =>
+                pairs.length === 0 ? (
+                  <p className="text-muted-foreground text-sm">No related Pairs yet.</p>
+                ) : (
+                  <Directory pairs={pairs} preview={false} />
+                )
+              }
+            </Await>
+          </Suspense>
+        </div>
+      </section>
     </main>
   );
 }
@@ -192,14 +229,9 @@ function MetaBlock({
 
   return (
     <section>
-      <h2 className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-        {title}
-      </h2>
+      <h2 className="text-muted-foreground text-sm font-medium">{title}</h2>
       <p
-        className={cn(
-          "mt-1 text-xl font-semibold tracking-tight",
-          mono ? "font-mono" : "font-heading",
-        )}
+        className={cn("mt-1 text-2xl font-medium tracking-tight", mono ? "font-mono" : "font-sans")}
         style={fontFamily ? { fontFamily } : undefined}
       >
         {name}
@@ -207,9 +239,7 @@ function MetaBlock({
       <div className="mt-2 flex flex-wrap items-center gap-2">
         <LicenseBadge license={license} />
         {appearance ? (
-          <span className="text-muted-foreground text-sm capitalize">
-            {appearance}
-          </span>
+          <Tag>{appearance}</Tag>
         ) : null}
       </div>
       {realLinks.length > 0 ? (
@@ -220,10 +250,10 @@ function MetaBlock({
                 href={href}
                 target="_blank"
                 rel="noreferrer"
-                className="text-primary inline-flex max-w-full items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+                className="text-foreground inline-flex min-h-6 max-w-full items-center gap-1.5 text-sm underline hover:no-underline"
               >
                 <span className="truncate">{linkLabel(href)}</span>
-                <ExternalLink className="size-3.5 shrink-0" strokeWidth={2} />
+                <ArrowUpRight className="size-3.5 shrink-0" aria-hidden />
               </a>
             </li>
           ))}
@@ -234,11 +264,7 @@ function MetaBlock({
 }
 
 function LicenseBadge({ license }: { license: License }) {
-  return (
-    <span className="bg-muted text-foreground inline-flex h-6 items-center rounded-full px-2.5 text-xs font-medium">
-      {LICENSE_LABELS[license]}
-    </span>
-  );
+  return <Tag tone={license === "open" ? "green" : "neutral"}>{LICENSE_LABELS[license]}</Tag>;
 }
 
 function linkLabel(href: string): string {
@@ -264,21 +290,17 @@ function CopySettings({ settings }: { settings: string }) {
   }
 
   return (
-    <Button type="button" size="sm" onClick={copy}>
-      {copied ? (
-        <Check className="size-4" strokeWidth={2} aria-hidden />
-      ) : (
-        <Copy className="size-4" strokeWidth={2} aria-hidden />
-      )}
-      {copied ? "Copied" : "Copy Settings"}
+    <Button type="button" size="sm" variant="outline" onClick={copy}>
+      {copied ? <Check aria-hidden /> : <Copy aria-hidden />}
+      <span role="status">{copied ? "Copied" : "Copy Settings"}</span>
     </Button>
   );
 }
 
 function PairNotFound() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-16">
-      <h1 className="text-4xl font-bold tracking-tight">Pair not found</h1>
+    <main id="main" className="mx-auto max-w-5xl px-4 py-24">
+      <h1>Pair not found</h1>
       <p className="text-muted-foreground mt-3 max-w-[65ch] text-lg">
         That Pair is not in the Registry, or it has no Config yet.
       </p>

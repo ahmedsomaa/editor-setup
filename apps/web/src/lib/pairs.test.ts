@@ -1,11 +1,30 @@
 import { describe, expect, test } from "bun:test";
 import {
+  filterPairs,
   getEditorConfig,
-  getPairBySlug,
-  listPairs,
   matchesLicenseFilter,
   resolveEditorId,
 } from "./pairs";
+import { mock } from "bun:test";
+import fira from "../../../../registry/pairs/fira-code--palenight-theme.json";
+import geistAura from "../../../../registry/pairs/geist-mono--aura-dark.json";
+import geistVesper from "../../../../registry/pairs/geist-mono--vesper.json";
+import inconsolata from "../../../../registry/pairs/inconsolata--vitesse-dark.json";
+import jetbrains from "../../../../registry/pairs/jetbrains-mono--gruvbox-dark-hard.json";
+import zed from "../../../../registry/pairs/zed-mono--gruvbox-light-hard.json";
+
+// import.meta.glob only exists under Vite, so feed the registry in by hand here.
+mock.module("../server/registry-files", () => ({
+  PAIR_FILES: {
+    "x/fira-code--palenight-theme.json": fira,
+    "x/geist-mono--aura-dark.json": geistAura,
+    "x/geist-mono--vesper.json": geistVesper,
+    "x/inconsolata--vitesse-dark.json": inconsolata,
+    "x/jetbrains-mono--gruvbox-dark-hard.json": jetbrains,
+    "x/zed-mono--gruvbox-light-hard.json": zed,
+  },
+}));
+const { getPairBySlug, listPairs, relatedPairs } = await import("../server/registry.server");
 
 describe("listPairs", () => {
   test("includes the real Pair from the registry", () => {
@@ -73,5 +92,32 @@ describe("matchesLicenseFilter", () => {
     expect(matchesLicenseFilter(pair, "free")).toBe(true);
     expect(matchesLicenseFilter(pair, "open")).toBe(true);
     expect(matchesLicenseFilter(pair, "paid")).toBe(false);
+  });
+});
+
+describe("filterPairs", () => {
+  test("no filters returns every Pair", () => {
+    expect(filterPairs(listPairs(), {})).toHaveLength(listPairs().length);
+  });
+
+  test("q matches Font or Theme name, case-insensitive", () => {
+    const hits = filterPairs(listPairs(), { q: "VITESSE" });
+    expect(hits.map((p) => p.slug)).toContain("inconsolata--vitesse-dark");
+  });
+
+  test("appearance narrows by Theme appearance", () => {
+    const light = filterPairs(listPairs(), { appearance: "light" });
+    expect(light.every((p) => p.theme.appearance === "light")).toBe(true);
+  });
+});
+
+describe("relatedPairs", () => {
+  test("never includes the Pair itself", () => {
+    const slug = "inconsolata--vitesse-dark";
+    expect(relatedPairs(slug).map((p) => p.slug)).not.toContain(slug);
+  });
+
+  test("returns nothing for an unknown slug", () => {
+    expect(relatedPairs("missing")).toEqual([]);
   });
 });
