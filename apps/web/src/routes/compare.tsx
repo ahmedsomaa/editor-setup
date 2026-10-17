@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { ComparePage } from "@/components/ComparePage";
+import { ComparePage } from "@/components/compare/ComparePage";
 import { listPairsFn } from "@/server/pairs.functions";
 
 export const compareSearchSchema = z.object({

@@ -1,6 +1,6 @@
 import "@tanstack/react-start/server-only";
-import type { FontFace, ThemeEditor } from "@/lib/schemas";
-import { checkThemeShape } from "@/lib/theme-schemas";
+import type { FontFace, ThemeEditor } from "@/lib/studio/schemas";
+import { checkThemeShape } from "@/lib/theme/theme-schemas";
 
 /**
  * Outbound fetches for fonts and themes. Server only: the browser cannot reach

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { EditorPage } from "@/components/EditorPage";
-import { DEFAULTS, snapshotSearchSchema } from "@/lib/schemas";
+import { StudioPage } from "@/components/studio/StudioPage";
+import { DEFAULTS, snapshotSearchSchema } from "@/lib/studio/schemas";
 import { fetchThemeFn, resolveFontFn } from "@/server/assets.functions";
 import { pageHead } from "@/lib/page-head";
 
@@ -26,5 +26,5 @@ export const Route = createFileRoute("/studio")({
     ]);
     return { font, theme };
   },
-  component: EditorPage,
+  component: StudioPage,
 });

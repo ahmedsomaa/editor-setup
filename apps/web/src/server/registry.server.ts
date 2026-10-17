@@ -1,8 +1,8 @@
 import "@tanstack/react-start/server-only";
 import pairSubmitters from "@/data/pair-submitters.json";
 import { PAIR_FILES } from "./registry-files";
-import { MARQUEE_PAIRS } from "@/lib/marquee-pairs";
-import type { PairRecord, Submitter } from "@/lib/pairs";
+import { MARQUEE_PAIRS } from "@/lib/registry/marquee-pairs";
+import type { PairRecord, Submitter } from "@/lib/registry/pairs";
 
 /**
  * Registry data. Server only: the Pair JSON and submitter map stay out of the

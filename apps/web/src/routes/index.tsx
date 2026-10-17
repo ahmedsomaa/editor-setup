@@ -5,12 +5,12 @@ import {
   FeatureSections,
   LicenseSection,
   SharePairSection,
-} from "@/components/HomeSections";
-import { GlyphPattern } from "@/components/GlyphPattern";
-import { TokenWindow } from "@/components/TokenWindow";
-import { PLAYGROUND } from "@/lib/playground-tokens";
+} from "@/components/home/HomeSections";
+import { GlyphPattern } from "@/components/home/GlyphPattern";
+import { TokenWindow } from "@/components/home/TokenWindow";
+import { PLAYGROUND } from "@/lib/studio/playground-tokens";
 import { Button } from "@/components/ui/button";
-import type { PairRecord } from "@/lib/pairs";
+import type { PairRecord } from "@/lib/registry/pairs";
 import { HOME_DESCRIPTION, HOME_TITLE, pageHead } from "@/lib/page-head";
 import { CONTRIBUTE_URL } from "@/lib/site";
 import { listPairsFn } from "@/server/pairs.functions";

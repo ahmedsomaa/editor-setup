@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import { PageHero } from "@/components/PagePattern";
-import { Reveal } from "@/components/Reveal";
-import { AppearanceTag, LicenseTag } from "@/components/Tag";
+import { PageHero } from "@/components/layout/PagePattern";
+import { Reveal } from "@/components/layout/Reveal";
+import { AppearanceTag, LicenseTag } from "@/components/common/Tag";
 import { Button } from "@/components/ui/button";
 import { GITHUB_URL } from "@/lib/site";
 import { pageHead } from "@/lib/page-head";

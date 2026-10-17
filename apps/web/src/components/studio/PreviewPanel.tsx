@@ -1,0 +1,135 @@
+import type { RefObject } from "react";
+import { ImageDown, LoaderCircle as Loader2 } from "lucide-react";
+import { cn } from "cn";
+import { Button } from "@/components/ui/button";
+import { Rendering } from "./chips";
+
+export type StudioTab = "preview" | "code";
+
+const TABS: readonly (readonly [StudioTab, string])[] = [
+  ["preview", "Preview"],
+  ["code", "Code"],
+];
+
+/** The live Snapshot window: a Preview / Code switch, Save PNG, errors and the frame. */
+export function PreviewPanel({
+  tab,
+  onTabChange,
+  srcDoc,
+  iframeRef,
+  code,
+  onCodeChange,
+  errors,
+  exporting,
+  exportDisabled,
+  onSavePng,
+}: {
+  tab: StudioTab;
+  onTabChange: (tab: StudioTab) => void;
+  srcDoc: string;
+  iframeRef: RefObject<HTMLIFrameElement | null>;
+  code: string;
+  onCodeChange: (code: string) => void;
+  errors: string[];
+  exporting: boolean;
+  exportDisabled: boolean;
+  onSavePng: () => void;
+}) {
+  return (
+    <section
+      aria-label="Preview"
+      className="bg-muted border-border relative flex min-w-0 flex-col gap-3 rounded-xl border p-3 sm:p-4 xl:sticky xl:top-20"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div
+          role="tablist"
+          aria-label="Editor view"
+          className="bg-card border-border inline-flex gap-1 rounded-full border p-1"
+          onKeyDown={(e) => {
+            if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+            e.preventDefault();
+            const next = tab === "preview" ? "code" : "preview";
+            onTabChange(next);
+            document.getElementById(`studio-tab-${next}`)?.focus();
+          }}
+        >
+          {TABS.map(([id, text]) => (
+            <button
+              key={id}
+              id={`studio-tab-${id}`}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              aria-controls="studio-panel"
+              tabIndex={tab === id ? 0 : -1}
+              onClick={() => onTabChange(id)}
+              className={cn(
+                "h-8 rounded-full px-4 text-sm font-medium transition-colors duration-150",
+                tab === id
+                  ? "bg-muted text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {text}
+            </button>
+          ))}
+        </div>
+        <Button size="sm" disabled={exportDisabled} onClick={onSavePng}>
+          {exporting ? (
+            <Loader2 className="animate-spin motion-reduce:animate-none" />
+          ) : (
+            <ImageDown />
+          )}
+          Save PNG
+        </Button>
+      </div>
+
+      {errors.map((msg) => (
+        <p
+          key={msg}
+          role="alert"
+          className="bg-pastel-red text-pastel-red-text rounded-xl px-4 py-3 text-sm"
+        >
+          {msg}
+        </p>
+      ))}
+
+      <div
+        id="studio-panel"
+        role="tabpanel"
+        aria-labelledby={`studio-tab-${tab}`}
+        className="border-border relative aspect-video w-full overflow-hidden rounded-xl border shadow-[var(--shadow-overlay)]"
+      >
+        {srcDoc ? (
+          // Kept on screen, only hidden, so the window is measured and ready for Save PNG while you write.
+          <iframe
+            ref={iframeRef}
+            title="Snapshot preview"
+            srcDoc={srcDoc}
+            sandbox="allow-scripts allow-same-origin"
+            className={cn(
+              "absolute inset-0 size-full border-0",
+              tab === "code" && "invisible",
+            )}
+          />
+        ) : (
+          <Rendering label="Snapshot" className="size-full" />
+        )}
+        {tab === "code" ? (
+          <textarea
+            data-lenis-prevent
+            aria-label="Code"
+            name="code"
+            value={code}
+            onChange={(e) => onCodeChange(e.target.value)}
+            placeholder="Paste or write your code here"
+            spellCheck={false}
+            wrap="off"
+            autoFocus
+            className="bg-card text-foreground placeholder:text-muted-foreground absolute inset-0 size-full resize-none border-0 p-5 font-mono text-sm leading-relaxed outline-none"
+          />
+        ) : null}
+      </div>
+    </section>
+  );
+}

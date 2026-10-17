@@ -4,11 +4,11 @@ import {
   createRootRoute,
   Link,
 } from "@tanstack/react-router";
-import { SmoothScroll } from "../components/SmoothScroll";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import { CompareTray } from "../components/CompareTray";
-import { themeInitScript } from "../components/ThemeToggle";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import { CompareTray } from "@/components/compare/CompareTray";
+import { themeInitScript } from "@/components/layout/ThemeToggle";
 
 import { HOME_DESCRIPTION, HOME_TITLE, OG_IMAGE } from "../lib/page-head";
 

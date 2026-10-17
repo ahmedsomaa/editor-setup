@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import {
   Await,
   createFileRoute,
@@ -6,30 +6,28 @@ import {
   notFound,
   useNavigate,
 } from "@tanstack/react-router";
-import { ArrowLeft, ArrowUpRight, Check, Copy } from "lucide-react";
-import { AppearanceTag, LicenseTag } from "@/components/Tag";
-import { Directory } from "@/components/Directory";
-import { PairWindow, textToLines } from "@/components/PairWindow";
-import { CompareToggle } from "@/components/CompareToggle";
-import { ShareButton } from "@/components/ShareButton";
-import { PageHero } from "@/components/PagePattern";
-import { Reveal } from "@/components/Reveal";
-import { SnapshotImage } from "@/components/SnapshotImage";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { Directory } from "@/components/registry/Directory";
+import { PairWindow, textToLines } from "@/components/registry/PairWindow";
+import { CompareToggle } from "@/components/compare/CompareToggle";
+import { ShareButton } from "@/components/common/ShareButton";
+import { PageHero } from "@/components/layout/PagePattern";
+import { Reveal } from "@/components/layout/Reveal";
+import { SnapshotImage } from "@/components/common/SnapshotImage";
+import { CopySettings } from "@/components/pair/CopySettings";
+import { EditorSwitch } from "@/components/pair/EditorSwitch";
+import { PairDetail } from "@/components/pair/PairDetail";
+import { PairNotFound } from "@/components/pair/PairNotFound";
 import {
   EDITOR_LABELS,
   getEditorConfig,
   pairLabel,
   resolveEditorId,
-  type Appearance,
-  type EditorId,
-  type License,
   type PairRecord,
-} from "@/lib/pairs";
-import { pairSearchSchema } from "@/lib/registry-search";
+} from "@/lib/registry/pairs";
+import { pairSearchSchema } from "@/lib/registry/registry-search";
 import { getPairFn, getRelatedPairsFn } from "@/server/pairs.functions";
-import { snapshotUrl } from "@/lib/snapshots";
-import { cn } from "cn";
+import { snapshotUrl } from "@/lib/registry/snapshots";
 import { fitTitle, pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/registry/$slug")({
@@ -61,43 +59,6 @@ export const Route = createFileRoute("/registry/$slug")({
   component: PairPage,
   notFoundComponent: PairNotFound,
 });
-
-function EditorSwitch({
-  editors,
-  selectedId,
-  onSelect,
-}: {
-  editors: PairRecord["editors"];
-  selectedId: EditorId;
-  onSelect: (id: EditorId) => void;
-}) {
-  return (
-    <div role="group" aria-label="Editor" className="flex flex-wrap gap-2">
-      {editors.map((editor) => {
-        const selected = editor.id === selectedId;
-        return (
-          <button
-            key={editor.id}
-            type="button"
-            onClick={() => onSelect(editor.id)}
-            aria-pressed={selected}
-            className={cn(
-              "h-9 rounded-full border px-4 text-sm font-medium transition-colors",
-              selected
-                ? "border-foreground bg-card text-foreground"
-                : "border-border bg-card text-secondary-foreground hover:bg-muted",
-            )}
-          >
-            {selected ? (
-              <Check className="me-1.5 inline size-3.5" aria-hidden />
-            ) : null}
-            {EDITOR_LABELS[editor.id]}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
 
 function PairPage() {
   const { pair, related } = Route.useLoaderData();
@@ -246,14 +207,14 @@ function PairPage() {
         >
           <h2 id="details-heading">Details</h2>
           <div className="border-border mt-6 grid border-y md:grid-cols-2 md:divide-x">
-            <Detail
+            <PairDetail
               title="Font"
               name={pair.font.name}
               license={pair.font.license}
               links={pair.font.links}
               className="md:pe-8"
             />
-            <Detail
+            <PairDetail
               title="Theme"
               name={pair.theme.name}
               license={pair.theme.license}
@@ -297,121 +258,3 @@ function PairPage() {
   );
 }
 
-function Detail({
-  title,
-  name,
-  license,
-  links,
-  appearance,
-  className,
-}: {
-  title: string;
-  name: string;
-  license: License;
-  links: string[];
-  appearance?: Appearance;
-  className?: string;
-}) {
-  const realLinks = links.filter((href) => href && href !== "#");
-
-  return (
-    <div className={cn("py-8", className)}>
-      <h3 className="text-muted-foreground font-sans text-sm font-normal tracking-normal">
-        {title}
-      </h3>
-      <p className="font-heading mt-2 text-3xl tracking-[-0.02em]">{name}</p>
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <LicenseTag license={license} />
-        {appearance ? <AppearanceTag appearance={appearance} /> : null}
-      </div>
-      {realLinks.length > 0 ? (
-        <ul className="mt-5 flex list-none flex-col gap-2 p-0">
-          {realLinks.map((href) => (
-            <li key={href}>
-              <a
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-foreground inline-flex min-h-6 max-w-full items-center gap-1.5 text-sm underline hover:no-underline"
-              >
-                <span className="break-all">{linkLabel(href)}</span>
-                <ArrowUpRight className="size-3.5 shrink-0" aria-hidden />
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-    </div>
-  );
-}
-
-function linkLabel(href: string): string {
-  try {
-    const url = new URL(href);
-    const item = url.searchParams.get("itemName");
-    return item
-      ? `${url.hostname.replace(/^www\./, "")} · ${item}`
-      : url.hostname.replace(/^www\./, "") + url.pathname.replace(/\/$/, "");
-  } catch {
-    return href;
-  }
-}
-
-function CopySettings({
-  settings,
-  variant,
-}: {
-  settings: string;
-  variant: "default" | "outline";
-}) {
-  const [state, setState] = useState<"done" | "failed" | null>(null);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(settings);
-      setState("done");
-    } catch {
-      setState("failed");
-    }
-    window.setTimeout(() => setState(null), 2000);
-  }
-
-  return (
-    <>
-      <Button type="button" size="sm" variant={variant} onClick={copy}>
-        {state === "done" ? <Check aria-hidden /> : <Copy aria-hidden />}
-        {state === "done"
-          ? "Copied"
-          : state === "failed"
-            ? "Unable to copy"
-            : "Copy Settings"}
-      </Button>
-      <span role="status" className="sr-only">
-        {state === "done"
-          ? "Settings copied"
-          : state === "failed"
-            ? "Unable to copy. Select the text and copy it yourself."
-            : ""}
-      </span>
-    </>
-  );
-}
-
-function PairNotFound() {
-  return (
-    <main id="main" className="mx-auto max-w-6xl px-4 py-24">
-      <h1>Pair not found</h1>
-      <p className="text-muted-foreground mt-3 max-w-[65ch] text-lg">
-        That Pair is not in the Registry, or it has no Config yet.
-      </p>
-      <Button
-        className="mt-8"
-        variant="outline"
-        nativeButton={false}
-        render={<Link to="/registry" />}
-      >
-        Back to Registry
-      </Button>
-    </main>
-  );
-}

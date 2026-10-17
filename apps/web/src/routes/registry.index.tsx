@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
-import { PairGrid } from "@/components/PairGrid";
-import { Pagination } from "@/components/Pagination";
-import { RegistryPattern } from "@/components/RegistryPattern";
+import { PairGrid } from "@/components/registry/PairGrid";
+import { Pagination } from "@/components/registry/Pagination";
+import { RegistryPattern } from "@/components/registry/RegistryPattern";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -17,8 +17,8 @@ import {
   type Appearance,
   type EditorId,
   type License,
-} from "@/lib/pairs";
-import { registrySearchSchema } from "@/lib/registry-search";
+} from "@/lib/registry/pairs";
+import { registrySearchSchema } from "@/lib/registry/registry-search";
 import { listPairsFn } from "@/server/pairs.functions";
 import { pageHead } from "@/lib/page-head";
 

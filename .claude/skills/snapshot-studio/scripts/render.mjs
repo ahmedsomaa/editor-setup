@@ -10,7 +10,7 @@ import { basename, dirname, resolve } from "node:path";
 import { createHighlighter, bundledThemes, bundledLanguages } from "shiki";
 import puppeteer from "puppeteer-core";
 // The window is the same one Snapshot Studio draws, so a Snapshot made here matches the site.
-import { buildSnapshotHtml } from "../../../../apps/web/src/lib/snapshot-html.ts";
+import { buildSnapshotHtml } from "../../../../apps/web/src/lib/theme/snapshot-html.ts";
 
 // ---------- args ----------
 const args = process.argv.slice(2);

@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { familyInput, themeUrlInput, type FontFace, type ThemeJson } from "@/lib/schemas";
+import { familyInput, themeUrlInput, type FontFace, type ThemeJson } from "@/lib/studio/schemas";
 import { UserFacingError, fetchTheme, resolveFont } from "./assets.server";
 
 /** Failures a visitor can fix come back as data, not as a thrown 500. */
