@@ -1,6 +1,5 @@
 import { SITE_URL } from "./site";
 
-export const SITE_NAME = "EditorSetup";
 export const OG_IMAGE = `${SITE_URL}/og.png`;
 
 export const HOME_TITLE = "EditorSetup: Font and Theme Pairs for VS Code and Zed";

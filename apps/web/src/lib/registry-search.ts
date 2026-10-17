@@ -26,6 +26,3 @@ export const pairSearchSchema = z.object({ editor });
 export const slugInputSchema = z.object({
   slug: z.string().min(1).max(200),
 });
-
-export type RegistrySearch = z.output<typeof registrySearchSchema>;
-export type RegistryFilters = z.output<typeof registryFilterSchema>;

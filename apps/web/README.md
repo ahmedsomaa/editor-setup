@@ -10,6 +10,7 @@ bun run dev
 bun run build
 bun run deploy
 bun run typecheck
+bun test
 ```
 
 From the repo root: `bun run dev`, `bun run build`, `bun run deploy`.
@@ -19,7 +20,7 @@ From the repo root: `bun run dev`, `bun run build`, `bun run deploy`.
 - [TanStack Start](https://tanstack.com/start)
 - [shadcn/ui](https://ui.shadcn.com/docs/installation/tanstack) (`base-nova`, Lucide)
 - Theme: warm monochrome with one teal accent, pill controls, hairline borders (see `docs/design-system`)
-- Type: Sora (display), Geist (body), Geist Mono (code)
+- Type: Instrument Serif (display), Geist (body), Geist Mono (code)
 - [Cloudflare Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/tanstack-start/) via `@cloudflare/vite-plugin` and `wrangler.jsonc`
 
 ## Deploy

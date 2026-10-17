@@ -23,6 +23,7 @@ bun run build       # production build
 bun run preview     # build + local Workers preview
 bun run deploy      # deploy to Cloudflare Workers
 bun run typecheck   # TypeScript check for apps/web
+bun run generate:submitters  # refresh apps/web/src/data/pair-submitters.json
 ```
 
 📦 Site stack and deploy notes: [apps/web/README.md](apps/web/README.md). Cloudflare guide: [TanStack Start on Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/tanstack-start/).
