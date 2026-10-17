@@ -23,12 +23,15 @@ import {
   type PairRecord,
 } from "@/lib/pairs";
 import { linesToText, settingsFor } from "@/lib/settings-snippet";
+import { HOME_DESCRIPTION, HOME_TITLE, pageHead } from "@/lib/page-head";
 import { CONTRIBUTE_URL } from "@/lib/site";
 import { listPairsFn } from "@/server/pairs.functions";
 import { cn } from "cn";
 
 export const Route = createFileRoute("/")({
   loader: () => listPairsFn({ data: {} }),
+  head: () =>
+    pageHead({ path: "/", title: HOME_TITLE, description: HOME_DESCRIPTION }),
   component: HomePage,
 });
 
