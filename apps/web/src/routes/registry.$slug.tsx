@@ -28,6 +28,7 @@ export const Route = createFileRoute("/registry/$slug")({
     const name = `${pair.theme.name} with ${pair.font.name}`;
     return pageHead({
       path: `/registry/${pair.slug}`,
+      name,
       title: fitTitle([
         `${name}: Font and Theme Pair · EditorSetup`,
         `${name} · EditorSetup Font and Theme Pair`,

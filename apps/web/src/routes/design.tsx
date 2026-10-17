@@ -16,6 +16,7 @@ export const Route = createFileRoute("/design")({
   head: () =>
     pageHead({
       path: "/design",
+      name: "Design system",
       title: "EditorSetup design system: colors, type, spacing, tags",
       description:
         "The colors, type, spacing and tags behind EditorSetup, a warm monochrome system where a Pair own colors are the only saturated surface on a page.",

@@ -57,5 +57,9 @@ Two or more Pairs shown side by side through their Snapshots.
 _Avoid_: Slider, overlay
 
 **Contribution**:
-A pull request that adds or changes a Pair file and its Snapshot. There is no in-app form and no signed-in author on the site. Git history is the record.
+A pull request that changes the project itself: site code, the registry check, scripts or docs. Adding a Pair is not a Contribution.
 _Avoid_: Submission, Author, Admin
+
+**Adding a Pair**:
+A pull request that adds a Pair file and its Snapshot, or adds an Editor to an existing Pair. There is no in-app form and no signed-in author on the site. Git history is the record.
+_Avoid_: Submission, Contribution, Author, Admin

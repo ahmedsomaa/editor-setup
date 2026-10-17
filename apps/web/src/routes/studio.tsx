@@ -9,6 +9,7 @@ export const Route = createFileRoute("/studio")({
   head: () =>
     pageHead({
       path: "/studio",
+      name: "Snapshot Studio",
       title: "Snapshot Studio: make a Snapshot of your Font and Theme",
       description:
         "Pick an Open or Free Font and Theme, paste your code and save a 1600x900 Snapshot of your editor setup for your Registry pull request.",

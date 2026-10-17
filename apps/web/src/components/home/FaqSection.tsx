@@ -5,7 +5,7 @@ const FAQS = [
   },
   {
     q: "Do I need an account?",
-    a: "No. Browse the Registry, open a Pair and copy its Settings. Contributions are pull requests on GitHub.",
+    a: "No. Browse the Registry, open a Pair and copy its Settings. Adding a Pair is a pull request on GitHub.",
   },
   {
     q: "Which Editors are supported?",

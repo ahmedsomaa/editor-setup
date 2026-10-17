@@ -11,6 +11,7 @@ export const Route = createFileRoute("/about")({
   head: () =>
     pageHead({
       path: "/about",
+      name: "About",
       title: "About EditorSetup: Pairs, Snapshots, Settings, Licenses",
       description:
         "EditorSetup is a curated list of Font and Theme Pairs. Learn what a Pair, a Snapshot and a Config are, and how each License works.",

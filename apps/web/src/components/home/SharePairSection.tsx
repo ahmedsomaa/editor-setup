@@ -1,25 +1,30 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Camera, FileText, GitPullRequest } from "lucide-react";
+import {
+  ArrowRight,
+  FileBracesCorner,
+  GitPullRequestArrow,
+  Image as ImageIcon,
+} from "lucide-react";
 import { SECTION } from "@/components/home/section-styles";
 import { Reveal } from "@/components/layout/Reveal";
 import { Button } from "@/components/ui/button";
-import { CONTRIBUTE_URL } from "@/lib/site";
+import { ADD_PAIR_URL } from "@/lib/site";
 
 /** Last ask before the footer: the Pair file is the whole submission, so show one. */
 export function SharePairSection() {
   const steps = [
     {
-      icon: Camera,
+      icon: ImageIcon,
       title: "Make the Snapshot",
       body: "Try your Font and Theme on your own code in Snapshot Studio, then save a 1600×900 image.",
     },
     {
-      icon: FileText,
+      icon: FileBracesCorner,
       title: "Add the Pair file",
       body: "One JSON file with the Font, the Theme and the Settings, next to your Snapshot in the Registry.",
     },
     {
-      icon: GitPullRequest,
+      icon: GitPullRequestArrow,
       title: "Open a pull request",
       body: "Send both files on GitHub. Once it is merged, your Pair is in the Registry for everyone.",
     },
@@ -74,10 +79,10 @@ export function SharePairSection() {
             variant="outline"
             nativeButton={false}
             render={
-              <a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" />
+              <a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" />
             }
           >
-            Read the contribution guide
+            Read the guide to adding a Pair
           </Button>
         </div>
       </div>

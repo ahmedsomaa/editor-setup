@@ -5,7 +5,7 @@ import { TokenWindow } from "@/components/home/TokenWindow";
 import type { HeroStage } from "@/components/home/useHeroStage";
 import { Button } from "@/components/ui/button";
 import type { PairRecord } from "@/lib/registry/pairs";
-import { CONTRIBUTE_URL } from "@/lib/site";
+import { ADD_PAIR_URL } from "@/lib/site";
 import { PLAYGROUND } from "@/lib/studio/playground-tokens";
 
 function PairChip({
@@ -137,7 +137,7 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
               className="h-13 px-6 text-base"
               nativeButton={false}
               render={
-                <a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" />
+                <a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" />
               }
             >
               Share a pair

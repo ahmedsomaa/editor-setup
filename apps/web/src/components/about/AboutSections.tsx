@@ -3,7 +3,7 @@ import { LicenseTag } from "@/components/common/Tag";
 import { TermList } from "@/components/common/TermList";
 import { Reveal } from "@/components/layout/Reveal";
 import { Button } from "@/components/ui/button";
-import { CONTRIBUTE_URL, GITHUB_URL } from "@/lib/site";
+import { ADD_PAIR_URL, GITHUB_URL } from "@/lib/site";
 
 const TERMS = [
   [
@@ -69,14 +69,14 @@ export function AddPairSection() {
       <p className="text-muted-foreground mt-6 max-w-[60ch]">
         Open a pull request with a Pair file and its Snapshot. Make the Snapshot
         in Snapshot Studio, using an Open or Free Font and Theme. The
-        contribution guide lists the fields and the image size.
+        guide to adding a Pair lists the fields and the image size.
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
         <Button
           nativeButton={false}
-          render={<a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" />}
+          render={<a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" />}
         >
-          Read the contribution guide
+          Read the guide to adding a Pair
           <ArrowUpRight aria-hidden />
         </Button>
         <Button
