@@ -31,10 +31,6 @@ const STYLES = new Map<string, { fontFamily: string; bg: string; fg: string }>([
     "inconsolata--vitesse-light",
     { fontFamily: '"Inconsolata", "IBM Plex Mono", ui-monospace, monospace', bg: "#ffffff", fg: "#393a34" },
   ],
-  [
-    "input-mono--nord",
-    { fontFamily: '"Input Mono", "IBM Plex Mono", ui-monospace, monospace', bg: "#2e3440", fg: "#d8dee9" },
-  ],
   ...MARQUEE_PAIRS.map(
     (p) => [`${slugify(p.font)}--${slugify(p.theme)}`, { fontFamily: p.fontFamily, bg: p.bg, fg: p.fg }] as const,
   ),

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Plus, X } from "@phosphor-icons/react";
+import { Plus, X } from "lucide-react";
 import { Route } from "@/routes/compare";
 import { ComparePicker } from "@/components/ComparePicker";
 import { PageHero } from "@/components/PagePattern";
@@ -184,7 +184,7 @@ function CompareTable({
                   ) : (
                     <div
                       className="border-border text-muted-foreground flex items-center justify-center rounded-[1.1rem] border border-dashed text-sm"
-                      style={{ aspectRatio: "1420 / 750" }}
+                      style={{ aspectRatio: "16 / 9" }}
                     >
                       No Snapshot to show
                     </div>
@@ -198,7 +198,7 @@ function CompareTable({
                   type="button"
                   onClick={onAdd}
                   className="border-border text-muted-foreground hover:text-foreground hover:border-foreground/40 hover:bg-muted/50 flex w-full flex-col items-center justify-center gap-2 rounded-[1.1rem] border border-dashed text-sm transition-colors duration-150"
-                  style={{ aspectRatio: "1420 / 750" }}
+                  style={{ aspectRatio: "16 / 9" }}
                 >
                   <Plus aria-hidden className="size-6" />
                   Add a Pair

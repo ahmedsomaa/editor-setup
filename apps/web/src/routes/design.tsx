@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/PagePattern";
 import { AppearanceTag, LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
@@ -25,8 +25,9 @@ const COLORS = [
   ["muted-foreground", "bg-muted-foreground", "Secondary text"],
   ["border", "bg-border", "The one hairline"],
   ["accent", "bg-accent", "Active nav label, selection"],
-  ["accent-soft", "bg-accent-soft", "Open License tag"],
-  ["pastel-green", "bg-pastel-green", "Paid License tag"],
+  ["accent-soft", "bg-accent-soft", "Selected rows"],
+  ["pastel-green", "bg-pastel-green", "Open License tag"],
+  ["pastel-amber", "bg-pastel-amber", "Free License tag"],
   ["destructive", "bg-destructive", "Errors"],
 ] as const;
 
@@ -149,7 +150,6 @@ function Design() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <LicenseTag license="open" />
             <LicenseTag license="free" />
-            <LicenseTag license="paid" />
             <AppearanceTag appearance="dark" />
             <AppearanceTag appearance="light" />
           </div>

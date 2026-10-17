@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/PagePattern";
 import { LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
@@ -83,15 +83,6 @@ function About() {
               </dt>
               <dd className="text-muted-foreground max-w-[60ch]">
                 No cost, with limits such as private use only.
-              </dd>
-            </div>
-            <div className="border-border grid items-start gap-2 border-b py-5 sm:grid-cols-[10rem_1fr] sm:gap-8">
-              <dt>
-                <LicenseTag license="paid" />
-              </dt>
-              <dd className="text-muted-foreground max-w-[60ch]">
-                Never rendered on the site. A developer who owns the license can
-                add a Snapshot of it.
               </dd>
             </div>
           </dl>

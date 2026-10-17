@@ -1,4 +1,4 @@
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "cn";
 
@@ -30,7 +30,7 @@ export function Pagination({
         disabled={page <= 1}
         onClick={() => onChange(page - 1)}
       >
-        <CaretLeft aria-hidden />
+        <ChevronLeft aria-hidden />
       </Button>
       {numbered ? (
         Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
@@ -58,7 +58,7 @@ export function Pagination({
         disabled={page >= pageCount}
         onClick={() => onChange(page + 1)}
       >
-        <CaretRight aria-hidden />
+        <ChevronRight aria-hidden />
       </Button>
     </nav>
   );

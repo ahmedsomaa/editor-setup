@@ -3,7 +3,6 @@ import { CompareToggle } from "@/components/CompareToggle";
 import {
   EDITOR_IDS,
   EDITOR_LABELS,
-  isPaid,
   pairLabel,
   type PairRecord,
 } from "@/lib/pairs";
@@ -76,10 +75,10 @@ function CardImage({ pair }: { pair: PairRecord }) {
       aria-hidden
       className="flex items-center justify-center text-2xl"
       style={{
-        aspectRatio: "1420 / 750",
+        aspectRatio: "16 / 9",
         background: pair.theme.bg,
         color: pair.theme.fg,
-        fontFamily: isPaid(pair) ? undefined : pair.font.fontFamily,
+        fontFamily: pair.font.fontFamily,
       }}
     >
       Aa

@@ -36,6 +36,8 @@
   --color-background: var(--background);
   --color-pastel-green: var(--pastel-green);
   --color-pastel-green-text: var(--pastel-green-text);
+  --color-pastel-amber: var(--pastel-amber);
+  --color-pastel-amber-text: var(--pastel-amber-text);
   --color-pastel-red: var(--pastel-red);
   --color-pastel-red-text: var(--pastel-red-text);
   --radius-sm: 4px;
@@ -69,6 +71,8 @@
   --accent-text: #00736f;
   --pastel-green: #edf3ec;
   --pastel-green-text: #346538;
+  --pastel-amber: #fbf3e0;
+  --pastel-amber-text: #8a5a00;
   --pastel-red: #fdebec;
   --pastel-red-text: #9f2f2d;
   --destructive: #9f2f2d;
@@ -99,6 +103,8 @@
   --accent-text: #5cd5c7;
   --pastel-green: #1b2a1c;
   --pastel-green-text: #8fcb94;
+  --pastel-amber: #2b2210;
+  --pastel-amber-text: #e8b660;
   --pastel-red: #331a1a;
   --pastel-red-text: #f0908e;
   --destructive: #f0908e;
@@ -162,6 +168,15 @@
   }
 }
 
+@layer base {
+  /* Icons default to the text size and a slightly bolder line; any size-* class still wins. */
+  :where(svg.lucide) {
+    width: 1em;
+    height: 1em;
+    stroke-width: 2.25;
+  }
+}
+
 @layer utilities {
   /* A faint dot grid that fades out downward. Decoration only: it sits behind content. */
   .bg-glyphs {
@@ -198,31 +213,78 @@
     border-color: color-mix(in srgb, var(--foreground) 20%, transparent);
   }
 
-  /* Scroll entry: only below-the-fold blocks are hidden, and only when motion is welcome. */
+  /* Scroll entry: only below-the-fold blocks are hidden, and only when motion is welcome.
+     Each block slides in from its own side on wide screens and rises on narrow ones. */
   @media (prefers-reduced-motion: no-preference) {
     .reveal-pending {
       opacity: 0;
-      transform: translateY(12px);
+      transform: translate3d(0, var(--ry, 12px), 0);
+    }
+    @media (min-width: 64rem) {
+      .reveal-pending {
+        transform: translate3d(var(--rx, 0px), var(--ry, 12px), 0);
+      }
     }
     .reveal-pending,
     .reveal-done {
       transition:
-        opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-        transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+        opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
       transition-delay: calc(var(--i, 0) * 80ms);
+    }
+  }
+
+  /* Hero entrance: title, text, buttons, then the window, 100ms apart. Content is plain if it never runs. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-in {
+      animation: hero-in 300ms cubic-bezier(0.23, 1, 0.32, 1) both;
+      animation-delay: calc(var(--i, 0) * 100ms);
+    }
+  }
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      filter: blur(4px);
+      transform: translateY(12px);
+    }
+  }
+
+  /* FAQ: the answer opens with the plus, where the browser can animate it. Elsewhere it opens at once. */
+  .faq-bar {
+    transform-origin: center;
+  }
+  details[open] > summary .faq-bar {
+    transform: scaleY(0);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .faq-bar {
+      transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .faq details {
+      interpolate-size: allow-keywords;
+    }
+    .faq details::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size 250ms cubic-bezier(0.23, 1, 0.32, 1),
+        content-visibility 250ms allow-discrete;
+    }
+    .faq details[open]::details-content {
+      block-size: auto;
     }
   }
 
   /* A new Pair in the playground comes out of a blur. */
   @media (prefers-reduced-motion: no-preference) {
     .pair-swap {
-      animation: pair-swap 500ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: pair-swap 300ms cubic-bezier(0.16, 1, 0.3, 1);
     }
   }
   @keyframes pair-swap {
     from {
       opacity: 0;
-      filter: blur(12px);
+      filter: blur(4px);
       transform: scale(0.98);
     }
   }
@@ -380,14 +442,20 @@
     }
   }
   @keyframes cmp-a {
-    0%, 38% { z-index: 4; transform: none; }
-    62%, 88% { z-index: 1; transform: translate(-1%, -3%) scale(0.94); }
-    100% { z-index: 4; transform: none; }
+    0%, 38% { transform: none; }
+    62%, 88% { transform: translate(-1%, -3%) scale(0.94); }
+    100% { transform: none; }
+    0%, 38%, 50% { z-index: 4; }
+    50.01%, 94% { z-index: 1; }
+    94.01%, 100% { z-index: 4; }
   }
   @keyframes cmp-b {
-    0%, 38% { z-index: 1; transform: translate(1%, 3%) scale(0.94); }
-    62%, 88% { z-index: 3; transform: none; }
-    100% { z-index: 1; transform: translate(1%, 3%) scale(0.94); }
+    0%, 38% { transform: translate(1%, 3%) scale(0.94); }
+    62%, 88% { transform: none; }
+    100% { transform: translate(1%, 3%) scale(0.94); }
+    0%, 38%, 50% { z-index: 1; }
+    50.01%, 94% { z-index: 3; }
+    94.01%, 100% { z-index: 1; }
   }
   @keyframes cmp-dim-a {
     0%, 38% { opacity: 0; }

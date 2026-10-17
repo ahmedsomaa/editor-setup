@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Pause, Play } from "@phosphor-icons/react";
+import { Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /**

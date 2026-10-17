@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { MagnifyingGlass, X } from "@phosphor-icons/react";
+import { Search, X } from "lucide-react";
 import { PairGrid } from "@/components/PairGrid";
 import { Pagination } from "@/components/Pagination";
 import { RegistryPattern } from "@/components/RegistryPattern";
@@ -43,7 +43,7 @@ export const Route = createFileRoute("/registry/")({
   component: RegistryPage,
 });
 
-type LicenseFilter = "free" | License;
+type LicenseFilter = License;
 
 const EDITOR_OPTIONS = Object.entries(EDITOR_LABELS) as [EditorId, string][];
 const APPEARANCE_OPTIONS: { id: Appearance; label: string }[] = [
@@ -51,9 +51,8 @@ const APPEARANCE_OPTIONS: { id: Appearance; label: string }[] = [
   { id: "light", label: "Light" },
 ];
 const LICENSE_OPTIONS: { id: LicenseFilter; label: string }[] = [
-  { id: "free", label: "Free to use" },
   { id: "open", label: "Open" },
-  { id: "paid", label: "Paid" },
+  { id: "free", label: "Free" },
 ];
 const SEARCH_DEBOUNCE_MS = 200;
 const PAGE_SIZE = 6;
@@ -160,7 +159,7 @@ function RegistryPage() {
           onSubmit={(e) => e.preventDefault()}
         >
           <label className="border-border bg-card focus-within:outline-ring flex h-11 min-w-0 shrink-0 items-center gap-2 rounded-full border px-4 md:flex-1 focus-within:outline-2 focus-within:outline-offset-2">
-            <MagnifyingGlass
+            <Search
               className="text-muted-foreground size-4 shrink-0"
               aria-hidden
             />

@@ -7,13 +7,27 @@ type RevealProps = {
   className?: string;
   /** Position in a group; delays the entry by 80ms per step. */
   index?: number;
+  /** Where it slides in from: below, or from the leading or trailing side on wide screens. */
+  from?: "up" | "start" | "end";
 };
+
+const OFFSETS = {
+  up: { x: "0px", y: "28px" },
+  start: { x: "-56px", y: "16px" },
+  end: { x: "56px", y: "16px" },
+} as const;
 
 /**
  * Fades a block in once as it scrolls into view. Blocks already on screen
  * are never hidden, and nothing is hidden at all under reduced motion.
  */
-export function Reveal({ children, as: Tag = "div", className, index = 0 }: RevealProps) {
+export function Reveal({
+  children,
+  as: Tag = "div",
+  className,
+  index = 0,
+  from = "up",
+}: RevealProps) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -37,7 +51,17 @@ export function Reveal({ children, as: Tag = "div", className, index = 0 }: Reve
   }, []);
 
   return (
-    <Tag ref={ref} className={cn(className)} style={{ "--i": index } as React.CSSProperties}>
+    <Tag
+      ref={ref}
+      className={cn(className)}
+      style={
+        {
+          "--i": index,
+          "--rx": OFFSETS[from].x,
+          "--ry": OFFSETS[from].y,
+        } as React.CSSProperties
+      }
+    >
       {children}
     </Tag>
   );

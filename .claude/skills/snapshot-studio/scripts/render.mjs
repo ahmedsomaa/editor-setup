@@ -9,6 +9,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 import { createHighlighter, bundledThemes, bundledLanguages } from "shiki";
 import puppeteer from "puppeteer-core";
+// The window is the same one Snapshot Studio draws, so a Snapshot made here matches the site.
+import { buildSnapshotHtml } from "../../../../apps/web/src/lib/snapshot-html.ts";
 
 // ---------- args ----------
 const args = process.argv.slice(2);
@@ -191,13 +193,6 @@ else {
   if (!faces)
     die(`could not find "${opt.font}" on Fontsource or Google Fonts. Download the font file(s) from its official page and pass --font-file <path|url> (repeat for bold/italic).`);
 }
-const fontFaceCss = faces
-  .map(
-    (f) =>
-      `@font-face{font-family:"SnapFont";font-weight:${f.weight};font-style:${f.style};src:url(data:${f.fmt[1]};base64,${f.buf.toString("base64")}) format("${f.fmt[0]}");}`,
-  )
-  .join("\n");
-
 // ---------- theme + tokens ----------
 let themeInput;
 let themeName;
@@ -218,85 +213,27 @@ const { tokens, bg, fg, themeName: resolvedName } = hl.codeToTokens(code, { lang
 const themeObj = hl.getTheme(themeName);
 const colors = themeObj.colors ?? {};
 
-const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-const lines = tokens
-  .map((line) =>
-    line
-      .map((t) => {
-        const st = [];
-        if (t.color && t.color.toLowerCase() !== fg.toLowerCase()) st.push(`color:${t.color}`);
-        if (t.fontStyle & 1) st.push("font-style:italic");
-        if (t.fontStyle & 2) st.push("font-weight:700");
-        if (t.fontStyle & 4) st.push("text-decoration:underline");
-        return st.length ? `<span style="${st.join(";")}">${esc(t.content)}</span>` : esc(t.content);
-      })
-      .join("") || " ",
-  )
-  .map((html, i) => `<div class="ln"><span class="no">${i + 1}</span><span class="tx">${html}</span></div>`)
-  .join("");
-
-// ---------- colors ----------
-const hex = (c) => {
+// ---------- colors (for the report) ----------
+const lum = (c) => {
   const h = c.replace("#", "");
   const full = h.length <= 4 ? [...h].map((x) => x + x).join("") : h;
-  return [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16));
-};
-const toHex = (rgb) => "#" + rgb.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
-const mix = (a, b, t) => toHex(hex(a).map((v, i) => v + (hex(b)[i] - v) * t));
-const lum = (c) => {
-  const [r, g, b] = hex(c);
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16));
   return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 };
 const dark = lum(bg) < 0.5;
-const backdrop = opt.backdrop ?? (dark ? mix(bg, "#ffffff", 0.14) : mix(bg, "#000000", 0.1));
-const chrome = colors["editorGroupHeader.tabsBackground"] ?? colors["titleBar.activeBackground"] ?? mix(bg, dark ? "#000000" : "#ffffff", 0.18);
-const dim = mix(bg, fg, 0.45);
-const gutter = mix(bg, fg, 0.3);
 const label = opt.title ?? `${fontLabel} · ${opt.theme ?? themeName}`;
 
 // ---------- html ----------
-const html = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(label)}</title>
-<style>
-${fontFaceCss}
-*{box-sizing:border-box;margin:0}
-html,body{height:100%;background:${backdrop};overflow:hidden}
-#stage{position:fixed;left:0;top:0;width:${W}px;height:${H}px;transform-origin:0 0;background:${backdrop};display:flex;align-items:center;justify-content:center;padding:70px 90px}
-#win{width:100%;max-height:100%;display:flex;flex-direction:column;background:${bg};color:${fg};border-radius:18px;overflow:hidden;box-shadow:0 40px 80px -20px rgba(0,0,0,.55),0 0 0 1px ${mix(bg, fg, 0.16)}}
-#bar{height:56px;flex:none;display:flex;align-items:center;gap:10px;padding:0 24px;background:${chrome};border-bottom:1px solid ${mix(bg, fg, 0.12)}}
-#bar i{width:14px;height:14px;border-radius:50%;background:${mix(chrome, fg, 0.28)}}
-#bar b{margin-left:14px;font:500 16px/1 "SnapFont",ui-monospace,monospace;color:${dim}}
-#code{padding:34px 40px 40px 28px;font-family:"SnapFont",ui-monospace,monospace;font-size:${fontSizeMax}px;line-height:1.55;white-space:pre;font-variant-ligatures:normal;font-feature-settings:"calt" 1,"liga" 1;tab-size:2;-webkit-font-smoothing:antialiased}
-.ln{display:flex}
-.no{flex:none;width:2.4em;padding-right:1.2em;text-align:right;color:${gutter};user-select:none}
-.tx{min-width:0}
-</style>
-</head>
-<body>
-<div id="stage"><div id="win"><div id="bar"><i></i><i></i><i></i><b>${esc(label)}</b></div><pre id="code">${lines}</pre></div></div>
-<script>
-// Pick the largest font size (<= ${fontSizeMax}px) at which the code fits the 16:9 window.
-(async function(){
-  await document.fonts.ready;
-  const code=document.getElementById('code'), win=document.getElementById('win'), stage=document.getElementById('stage');
-  const maxW=stage.clientWidth-180, maxH=stage.clientHeight-140-56;
-  let size=${fontSizeMax};
-  code.style.width='max-content';
-  const need=()=>code.getBoundingClientRect().width>maxW||code.getBoundingClientRect().height>maxH;
-  while(size>8&&need()){size-=0.5;code.style.fontSize=size+'px';}
-  code.style.width='';
-  window.__fontSize=size;
-  const fit=()=>{const s=Math.min(innerWidth/${W},innerHeight/${H});stage.style.transform='scale('+s+')';stage.style.left=((innerWidth-${W}*s)/2)+'px';stage.style.top=((innerHeight-${H}*s)/2)+'px';};
-  fit();addEventListener('resize',fit);
-  window.__ready=true;
-})();
-</script>
-</body>
-</html>`;
+const html = buildSnapshotHtml({
+  lines: tokens,
+  bg,
+  fg,
+  colors,
+  faces: faces.map((f) => ({ weight: f.weight, style: f.style, mime: f.fmt[1], format: f.fmt[0], base64: f.buf.toString("base64") })),
+  label,
+  lang,
+  fontSizeMax,
+});
 
 mkdirSync(outDir, { recursive: true });
 const htmlPath = resolve(outDir, `${name}.html`);

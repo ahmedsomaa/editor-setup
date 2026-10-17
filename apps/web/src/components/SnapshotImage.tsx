@@ -1,8 +1,8 @@
 import { cn } from "cn";
 
 /**
- * A Snapshot file keeps its backdrop. This shows only the code window: it is centred,
- * 1420 x 750 of the 1600 x 900 image, so crop to that and scale the image up.
+ * A Snapshot is the whole 16:9 code window, so it is shown whole. `object-cover` keeps it filling
+ * its box without stretching, and costs nothing here because the box and the image are both 16:9.
  */
 export function SnapshotImage({
   src,
@@ -20,8 +20,11 @@ export function SnapshotImage({
 }) {
   return (
     <div
-      className={cn("overflow-hidden", !bare && "ring-border ring-1", className)}
-      style={{ aspectRatio: "1420 / 750" }}
+      className={cn(
+        "aspect-video overflow-hidden",
+        !bare && "ring-border ring-1",
+        className,
+      )}
     >
       <img
         src={src}
@@ -29,7 +32,7 @@ export function SnapshotImage({
         loading={loading}
         width={1600}
         height={900}
-        className="block h-auto w-[112.68%] max-w-none -ms-[6.34%] -mt-[5.28%]"
+        className="block size-full object-cover"
       />
     </div>
   );

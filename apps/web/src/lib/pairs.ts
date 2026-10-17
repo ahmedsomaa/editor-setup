@@ -1,7 +1,7 @@
 
 export const EDITOR_IDS = ["vscode", "zed"] as const;
 export type EditorId = (typeof EDITOR_IDS)[number];
-export type License = "open" | "free" | "paid";
+export type License = "open" | "free";
 export type Appearance = "dark" | "light";
 
 export type Submitter = {
@@ -60,16 +60,12 @@ export const EDITOR_LABELS: Record<EditorId, string> = {
 export const LICENSE_LABELS: Record<License, string> = {
   open: "Open",
   free: "Free",
-  paid: "Paid",
 };
 
 export function matchesLicenseFilter(
   pair: PairRecord,
-  filter: "free" | License,
+  filter: License,
 ): boolean {
-  if (filter === "free") {
-    return pair.font.license !== "paid" && pair.theme.license !== "paid";
-  }
   return pair.font.license === filter || pair.theme.license === filter;
 }
 
@@ -77,7 +73,7 @@ export type PairFilters = {
   q?: string;
   editor?: EditorId;
   appearance?: Appearance;
-  license?: "free" | License;
+  license?: License;
 };
 
 /** Pure filter shared by the server function and tests. */
@@ -97,11 +93,6 @@ export function filterPairs(
     if (license && !matchesLicenseFilter(pair, license)) return false;
     return true;
   });
-}
-
-/** A paid Font or Theme is never rendered live on the site: only a developer's Snapshot shows it. */
-export function isPaid(pair: PairRecord): boolean {
-  return pair.font.license === "paid" || pair.theme.license === "paid";
 }
 
 /** How a Pair is named in dropdowns: Theme · Font. */

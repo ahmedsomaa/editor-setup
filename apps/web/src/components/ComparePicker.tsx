@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Check, MagnifyingGlass } from "@phosphor-icons/react";
+import { Check, Search } from "lucide-react";
 import { Pagination } from "@/components/Pagination";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/drawer";
 import {
   filterPairs,
-  isPaid,
   pairLabel,
   type PairRecord,
 } from "@/lib/pairs";
@@ -63,7 +62,7 @@ export function ComparePicker({
 
         <div className="px-6 pb-3">
           <div className="bg-muted border-border flex h-10 items-center gap-2 rounded-full border px-4">
-            <MagnifyingGlass aria-hidden className="text-muted-foreground size-4 shrink-0" />
+            <Search aria-hidden className="text-muted-foreground size-4 shrink-0" />
             <input
               value={q}
               onChange={(e) => {
@@ -111,7 +110,7 @@ export function ComparePicker({
                     style={{
                       background: p.theme.bg,
                       color: p.theme.fg,
-                      fontFamily: isPaid(p) ? undefined : p.font.fontFamily,
+                      fontFamily: p.font.fontFamily,
                     }}
                   >
                     Aa
@@ -126,7 +125,7 @@ export function ComparePicker({
                       on && "bg-accent border-accent text-accent-foreground",
                     )}
                   >
-                    {on ? <Check weight="bold" className="size-3.5" /> : null}
+                    {on ? <Check className="size-3.5" /> : null}
                   </span>
                 </button>
               </li>

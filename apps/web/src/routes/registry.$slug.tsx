@@ -6,7 +6,12 @@ import {
   notFound,
   useNavigate,
 } from "@tanstack/react-router";
-import { ArrowLeft, ArrowUpRight, Check, Copy } from "@phosphor-icons/react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Check,
+  Copy,
+} from "lucide-react";
 import { AppearanceTag, LicenseTag } from "@/components/Tag";
 import { Directory } from "@/components/Directory";
 import { PairWindow, textToLines } from "@/components/PairWindow";

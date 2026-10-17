@@ -1,20 +1,20 @@
 import type { ReactNode } from "react";
 import {
-  CurrencyDollar,
   Gift,
-  LockSimpleOpen,
+  LockOpen,
   Moon,
   Sun,
-} from "@phosphor-icons/react";
+} from "lucide-react";
 import type { Appearance, License } from "@/lib/pairs";
 import { LICENSE_LABELS } from "@/lib/pairs";
 import { cn } from "cn";
 
-type Tone = "neutral" | "green" | "accent";
+type Tone = "neutral" | "green" | "amber" | "accent";
 
 const TONES: Record<Tone, string> = {
   neutral: "bg-muted text-muted-foreground",
   green: "bg-pastel-green text-pastel-green-text",
+  amber: "bg-pastel-amber text-pastel-amber-text",
   accent: "bg-accent-soft text-accent-text",
 };
 
@@ -50,12 +50,11 @@ export function Tag({
 }
 
 const LICENSE_STYLE: Record<License, { tone: Tone; icon: ReactNode }> = {
-  open: { tone: "accent", icon: <LockSimpleOpen weight="bold" /> },
-  free: { tone: "neutral", icon: <Gift weight="bold" /> },
-  paid: { tone: "green", icon: <CurrencyDollar weight="bold" /> },
+  open: { tone: "green", icon: <LockOpen /> },
+  free: { tone: "amber", icon: <Gift /> },
 };
 
-/** Open is teal, Free is grey, Paid is money green. */
+/** Open is green, "go". Free is amber, "read the terms first". */
 export function LicenseTag({ license }: { license: License }) {
   const { tone, icon } = LICENSE_STYLE[license];
   return (
@@ -65,7 +64,7 @@ export function LicenseTag({ license }: { license: License }) {
   );
 }
 
-/** One License for a whole Pair: Paid if either side is Paid, Open only if both are Open. */
+/** One License for a whole Pair: Open only if both sides are Open. */
 export function PairLicenseTag({
   font,
   theme,
@@ -73,12 +72,7 @@ export function PairLicenseTag({
   font: License;
   theme: License;
 }) {
-  const license: License =
-    font === "paid" || theme === "paid"
-      ? "paid"
-      : font === "open" && theme === "open"
-        ? "open"
-        : "free";
+  const license: License = font === "open" && theme === "open" ? "open" : "free";
   return <LicenseTag license={license} />;
 }
 
@@ -86,7 +80,7 @@ export function AppearanceTag({ appearance }: { appearance: Appearance }) {
   return (
     <Tag
       icon={
-        appearance === "dark" ? <Moon weight="bold" /> : <Sun weight="bold" />
+        appearance === "dark" ? <Moon /> : <Sun />
       }
     >
       {appearance}

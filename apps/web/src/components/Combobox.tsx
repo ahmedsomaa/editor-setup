@@ -1,9 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
-import {
-  Check,
-  CaretUpDown as ChevronsUpDown,
-  MagnifyingGlass as Search,
-} from "@phosphor-icons/react";
+import { Check, ChevronsUpDown, Search } from "lucide-react";
 import { cn } from "cn";
 
 export type Option = {

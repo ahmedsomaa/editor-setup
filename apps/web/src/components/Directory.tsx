@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { PairWindow, textToLines } from "@/components/PairWindow";
 import { AppearanceTag, PairLicenseTag } from "@/components/Tag";
-import { EDITOR_LABELS, isPaid, type PairRecord } from "@/lib/pairs";
+import { EDITOR_LABELS, type PairRecord } from "@/lib/pairs";
 import { SnapshotImage } from "@/components/SnapshotImage";
 import { snapshotUrl } from "@/lib/snapshots";
 import { cn } from "cn";
@@ -90,8 +90,6 @@ export function Directory({
                 alt=""
                 className="rounded-[1.1rem]"
               />
-            ) : isPaid(active) ? (
-              <PaidSnapshot pair={active} />
             ) : (
               <PairWindow
                 pair={{
@@ -113,18 +111,6 @@ export function Directory({
   );
 }
 
-/** Paid Fonts and Themes appear only as the Snapshot a developer made with their own license. */
-function PaidSnapshot({ pair }: { pair: PairRecord }) {
-  const src = snapshotUrl(pair.snapshot);
-  return src ? (
-    <SnapshotImage src={src} alt="" className="rounded-[1.1rem]" />
-  ) : (
-    <div className="border-border text-muted-foreground flex aspect-video w-full items-center justify-center rounded-xl border border-dashed text-sm">
-      Snapshot only
-    </div>
-  );
-}
-
 /** The Pair's Snapshot, window only; falls back to an "Aa" chip in the Pair's colours until one exists. */
 function CardImage({ pair }: { pair: PairRecord }) {
   const src = snapshotUrl(pair.snapshot);
@@ -140,10 +126,10 @@ function CardImage({ pair }: { pair: PairRecord }) {
       aria-hidden
       className="row-span-2 flex w-20 items-center justify-center rounded-md text-sm sm:row-span-1"
       style={{
-        aspectRatio: "1420 / 750",
+        aspectRatio: "16 / 9",
         background: pair.theme.bg,
         color: pair.theme.fg,
-        fontFamily: isPaid(pair) ? undefined : pair.font.fontFamily,
+        fontFamily: pair.font.fontFamily,
       }}
     >
       Aa

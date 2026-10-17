@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ArrowsLeftRight, X } from "@phosphor-icons/react";
+import { ArrowLeftRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MAX_COMPARE, useCompare } from "@/lib/compare-store";
 
@@ -57,7 +57,7 @@ export function CompareTray() {
             />
           }
         >
-          <ArrowsLeftRight aria-hidden />
+          <ArrowLeftRight aria-hidden />
           Compare {selected.length}
         </Button>
       ) : (

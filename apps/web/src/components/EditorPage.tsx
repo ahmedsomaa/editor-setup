@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
-  CircleNotch as Loader2,
-  ImageSquare as ImageDown,
-  Link as Link2,
-  UploadSimple,
+  LoaderCircle as Loader2,
+  ImageDown,
+  Link2,
+  Upload,
   X,
-} from "@phosphor-icons/react";
+} from "lucide-react";
 import { Route } from "@/routes/studio";
 import {
   LANGUAGE_IDS,
@@ -436,7 +436,7 @@ export function EditorPage() {
                     <div className="flex flex-col gap-1.5">
                       <span className="flex items-center gap-2 text-sm font-medium">
                         <IconChip>
-                          <UploadSimple className="size-4" aria-hidden />
+                          <Upload className="size-4" aria-hidden />
                         </IconChip>{" "}
                         Your own font
                       </span>
@@ -485,7 +485,7 @@ export function EditorPage() {
                           variant="outline"
                           onClick={() => fontFileRef.current?.click()}
                         >
-                          <UploadSimple aria-hidden />
+                          <Upload aria-hidden />
                           Choose font files
                         </Button>
                       )}

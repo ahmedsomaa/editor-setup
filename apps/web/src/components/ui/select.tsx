@@ -1,5 +1,5 @@
 import { Select as SelectPrimitive } from "@base-ui/react/select"
-import { CaretDown, Check } from "@phosphor-icons/react"
+import { ChevronDown, Check } from "lucide-react";
 import { cn } from "cn"
 
 /** Same anatomy as the shadcn Base UI Select, drawn with this site's tokens. */
@@ -41,7 +41,7 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon
-        render={<CaretDown aria-hidden className="text-muted-foreground size-4" />}
+        render={<ChevronDown aria-hidden className="text-muted-foreground size-4" />}
       />
     </SelectPrimitive.Trigger>
   )

@@ -6,24 +6,21 @@ import {
   Copy,
   FileText,
   GitPullRequest,
-  MagnifyingGlass,
-  Scales,
+  Search,
+  Scale,
   Pause,
   Play,
-  type Icon,
-} from "@phosphor-icons/react";
+  type LucideIcon,
+} from "lucide-react";
 import { CompareArt } from "@/components/CompareArt";
+import { Reveal } from "@/components/Reveal";
 import { EditorArt, type Colors } from "@/components/EditorArt";
 import { SettingsArt } from "@/components/SettingsArt";
 import { RegistryArt } from "@/components/RegistryArt";
 import { LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
 import { MAX_COMPARE } from "@/lib/compare-store";
-import {
-  isPaid,
-  type License,
-  type PairRecord,
-} from "@/lib/pairs";
+import { type License, type PairRecord } from "@/lib/pairs";
 import { CONTRIBUTE_URL } from "@/lib/site";
 import { cn } from "cn";
 
@@ -33,7 +30,7 @@ const SECTION = "border-border border-t px-4 py-24 sm:py-32";
 export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
-  const open = pairs.filter((p) => !isPaid(p));
+  const open = pairs;
   const [i, setI] = useState(0);
   const [playing, setPlaying] = useState(false);
 
@@ -46,7 +43,9 @@ export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setActive(Boolean(e?.isIntersecting)));
+    const io = new IntersectionObserver(([e]) =>
+      setActive(Boolean(e?.isIntersecting)),
+    );
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -70,7 +69,10 @@ export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
           colors={{ bg: pair.theme.bg, fg: pair.theme.fg }}
         />
         <div key={i} className="pointer-events-none absolute inset-0">
-          <div className="snap-frame absolute inset-[3%]" style={{ color: pair.theme.fg }}>
+          <div
+            className="snap-frame absolute inset-[3%]"
+            style={{ color: pair.theme.fg }}
+          >
             {(
               [
                 "top-0 left-0 border-t-2 border-l-2 rounded-tl-lg",
@@ -79,7 +81,10 @@ export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
                 "bottom-0 right-0 border-r-2 border-b-2 rounded-br-lg",
               ] as const
             ).map((c) => (
-              <span key={c} className={cn("absolute size-6 border-current", c)} />
+              <span
+                key={c}
+                className={cn("absolute size-6 border-current", c)}
+              />
             ))}
           </div>
           <div className="snap-flash absolute inset-0 rounded-[14px] bg-white" />
@@ -108,7 +113,7 @@ export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
   );
 }
 
-const FEATURE = "border-border border-t px-4 py-24 sm:py-32";
+const FEATURE = "border-border overflow-x-clip border-t px-4 py-24 sm:py-32";
 
 /** One feature: words on the leading edge, one picture in a panel on the trailing edge. */
 function Feature({
@@ -122,7 +127,7 @@ function Feature({
 }: {
   id: string;
   flip?: boolean;
-  icon: Icon;
+  icon: LucideIcon;
   title: string;
   body: string;
   cta?: { label: string; to: "/registry" | "/compare" | "/studio" };
@@ -138,12 +143,17 @@ function Feature({
             : "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]",
         )}
       >
-        <div className={cn("min-w-0", flip && "lg:order-2")}>
+        <Reveal
+          from={flip ? "end" : "start"}
+          className={cn("min-w-0", flip && "lg:order-2")}
+        >
           <Icon aria-hidden className="size-8" />
           <h2 id={id} className="mt-6 max-w-md">
             {title}
           </h2>
-          <p className="text-muted-foreground mt-4 max-w-[44ch] text-lg">{body}</p>
+          <p className="text-muted-foreground mt-4 max-w-[44ch] text-lg">
+            {body}
+          </p>
           {cta ? (
             <Button
               className="mt-8"
@@ -155,10 +165,14 @@ function Feature({
               <ArrowRight aria-hidden />
             </Button>
           ) : null}
-        </div>
-        <div className={cn("min-w-0", flip && "lg:order-1")}>
-          {children}
-        </div>
+        </Reveal>
+        <Reveal
+          index={1}
+          from={flip ? "start" : "end"}
+          className={cn("min-w-0", flip && "lg:order-1")}
+        >
+          <div data-drift>{children}</div>
+        </Reveal>
       </div>
     </section>
   );
@@ -176,15 +190,16 @@ export function FeatureSections({
   /** Index of that Pair, so the Registry art moves with each change. */
   step?: number;
 }) {
-  const open = pairs.filter((p) => !isPaid(p));
+  const open = pairs;
   const darkArt = open.find((p) => p.theme.appearance === "dark") ?? open[0];
-  const lightArt = open.find((p) => p.theme.appearance === "light") ?? open[1] ?? open[0];
+  const lightArt =
+    open.find((p) => p.theme.appearance === "light") ?? open[1] ?? open[0];
 
   return (
     <>
       <Feature
         id="find"
-        icon={MagnifyingGlass}
+        icon={Search}
         title="Find a Pair"
         body="Skip the guesswork. Filter by Appearance, License or Editor, and see each Font and Theme together before you commit."
         cta={{ label: "Open Registry", to: "/registry" }}
@@ -194,7 +209,7 @@ export function FeatureSections({
       <Feature
         id="compare"
         flip
-        icon={Scales}
+        icon={Scale}
         title="Compare Pairs"
         body={`Can’t pick? Line up to ${MAX_COMPARE} Pairs side by side and keep the one you would look at all day.`}
         cta={{ label: "Open Compare", to: "/compare" }}
@@ -239,14 +254,9 @@ const LICENSES: Array<{ license: License; title: string; body: string }> = [
     title: "Free, with limits",
     body: "No cost, but restricted, for example to private use. Read its terms before you use it for work.",
   },
-  {
-    license: "paid",
-    title: "Buy it from its maker",
-    body: "Costs money. You get it from the foundry or the author. The site never loads a Paid Font or Theme.",
-  },
 ];
 
-/** The three Licenses, in plain words. A Pair shows the strictest of its Font and Theme. */
+/** The two Licenses, in plain words. A Pair shows the strictest of its Font and Theme. */
 export function LicenseSection() {
   return (
     <section className={cn(SECTION, "bg-muted/40")} aria-labelledby="license">
@@ -258,13 +268,18 @@ export function LicenseSection() {
           Each Font and each Theme has its own License. A Pair shows the
           strictest of the two.
         </p>
-        <ul className="border-border m-0 mt-14 grid list-none divide-y p-0 md:grid-cols-3 md:divide-x md:divide-y-0 border-y">
+        <ul className="border-border m-0 mt-14 grid list-none divide-y p-0 md:grid-cols-2 md:divide-x md:divide-y-0 border-y">
           {LICENSES.map(({ license, title, body }) => (
-            <li key={license} className="px-0 py-8 md:px-8 md:first:ps-0 md:last:pe-0">
+            <Reveal
+              as="li"
+              index={LICENSES.findIndex((l) => l.license === license)}
+              key={license}
+              className="px-0 py-8 md:px-8 md:first:ps-0 md:last:pe-0"
+            >
               <LicenseTag license={license} />
               <h3 className="mt-5">{title}</h3>
               <p className="text-muted-foreground mt-3 max-w-[40ch]">{body}</p>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>
@@ -303,7 +318,9 @@ export function SharePairSection() {
         </p>
         <ol className="m-0 mt-12 grid list-none gap-4 p-0 md:grid-cols-3">
           {steps.map(({ icon: Icon, title, body }, i) => (
-            <li
+            <Reveal
+              as="li"
+              index={i}
               key={title}
               className="group border-border bg-card relative isolate flex flex-col overflow-hidden rounded-2xl border p-6 sm:p-8"
             >
@@ -326,7 +343,7 @@ export function SharePairSection() {
               <Icon aria-hidden className="size-8" />
               <h3 className="mt-8">{title}</h3>
               <p className="text-muted-foreground mt-3">{body}</p>
-            </li>
+            </Reveal>
           ))}
         </ol>
         <div className="mt-10 flex flex-wrap gap-3">
@@ -338,7 +355,9 @@ export function SharePairSection() {
             size="lg"
             variant="outline"
             nativeButton={false}
-            render={<a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" />}
+            render={
+              <a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" />
+            }
           >
             Read the contribution guide
           </Button>

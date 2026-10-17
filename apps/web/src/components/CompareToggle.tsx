@@ -1,4 +1,4 @@
-import { Check, Plus } from "@phosphor-icons/react";
+import { Check, Plus } from "lucide-react";
 import { useCompare } from "@/lib/compare-store";
 import { cn } from "cn";
 
@@ -32,7 +32,7 @@ export function CompareToggle({
         className,
       )}
     >
-      {on ? <Check weight="bold" aria-hidden className="size-3.5" /> : <Plus weight="bold" aria-hidden className="size-3.5" />}
+      {on ? <Check aria-hidden className="size-3.5" /> : <Plus aria-hidden className="size-3.5" />}
       Compare
     </button>
   );

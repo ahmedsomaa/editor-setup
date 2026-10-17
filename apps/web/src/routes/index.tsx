@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Pause, Play } from "@phosphor-icons/react";
+import { ArrowRight, Pause, Play } from "lucide-react";
 import {
   FeatureSections,
   LicenseSection,
   SharePairSection,
 } from "@/components/HomeSections";
 import { GlyphPattern } from "@/components/GlyphPattern";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { TokenWindow } from "@/components/TokenWindow";
 import { PLAYGROUND } from "@/lib/playground-tokens";
 import { Button } from "@/components/ui/button";
-import { isPaid, type PairRecord } from "@/lib/pairs";
+import type { PairRecord } from "@/lib/pairs";
 import { HOME_DESCRIPTION, HOME_TITLE, pageHead } from "@/lib/page-head";
 import { CONTRIBUTE_URL } from "@/lib/site";
 import { listPairsFn } from "@/server/pairs.functions";
@@ -44,7 +45,7 @@ const FAQS = [
   },
   {
     q: "Is it free?",
-    a: "The site is free. Each Font and Theme has its own License, shown on every Pair as Open, Free or Paid.",
+    a: "The site is free. Each Font and Theme has its own License, shown on every Pair as Open or Free.",
   },
   {
     q: "How do I add a Pair?",
@@ -59,7 +60,7 @@ function HomePage() {
   // The playground offers four Pairs, only with Open or Free Fonts and Themes, each with its real Theme tokens.
   const stagePairs = PLAYGROUND_ORDER.map((slug) =>
     pairs.find((p) => p.slug === slug),
-  ).filter((p): p is PairRecord => Boolean(p) && !isPaid(p as PairRecord));
+  ).filter((p): p is PairRecord => Boolean(p));
 
   // Rotate through the Pairs unless the visitor prefers reduced motion. Pausing is always available,
   // and a click on a Pair stops the rotation.
@@ -81,7 +82,7 @@ function HomePage() {
     return () => window.clearInterval(id);
   }, [playing, stagePairs.length]);
   const heroPair = stagePairs.find((p) => p.slug === heroSlug) ?? stagePairs[0];
-  // The hero is painted in the chosen Pair's own colours. Paid Fonts never load, so they keep the site's mono.
+  // The hero is painted in the chosen Pair's own colours.
   const stage = {
     bg:
       (heroPair && PLAYGROUND[heroPair.slug]?.bg) ||
@@ -91,8 +92,7 @@ function HomePage() {
       (heroPair && PLAYGROUND[heroPair.slug]?.fg) ||
       heroPair?.theme.fg ||
       "#edeceb",
-    family:
-      heroPair && !isPaid(heroPair) ? heroPair.font.fontFamily : undefined,
+    family: heroPair?.font.fontFamily,
   };
 
   const chip = (pair: PairRecord, hidden: boolean) => {
@@ -107,7 +107,7 @@ function HomePage() {
           setPlaying(false);
           setHeroSlug(pair.slug);
         }}
-        className="inline-flex h-10 items-center rounded-full px-4 text-sm transition-shadow"
+        className="inline-flex h-10 items-center rounded-full px-4 text-sm transition-[box-shadow,transform] duration-150 ease-out motion-safe:active:scale-[0.96]"
         style={{
           background: PLAYGROUND[pair.slug]?.bg ?? pair.theme.bg,
           color: PLAYGROUND[pair.slug]?.fg ?? pair.theme.fg,
@@ -124,12 +124,22 @@ function HomePage() {
 
   return (
     <main id="main">
-      <section className="relative isolate flex min-h-[calc(100svh-4.5rem)] items-center overflow-hidden px-4 py-16">
+      <SmoothScroll />
+      <section
+        data-hero
+        className="relative isolate flex min-h-[calc(100svh-4.5rem)] items-center overflow-hidden px-4 py-16"
+      >
         <GlyphPattern className="bg-glyphs" />
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
+        <div
+          data-hero-scrub
+          className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12"
+        >
           <div className="min-w-0">
             <div className="w-fit max-w-full">
-              <h1 className="relative mt-8 text-balance text-[clamp(2.5rem,4.6vw,4.5rem)]">
+              <h1
+                style={{ "--i": 0 } as React.CSSProperties}
+                className="hero-in relative mt-8 text-balance text-[clamp(2.5rem,4.6vw,4.5rem)]"
+              >
                 <span
                   aria-hidden="true"
                   className="border-border bg-card text-pastel-green-text absolute -top-9 right-4 rotate-6 rounded-full border px-2.5 pt-1 pb-0.5 font-sans text-xs leading-none font-medium tracking-[0.05em] uppercase shadow-[var(--shadow-overlay)] sm:right-10"
@@ -183,13 +193,19 @@ function HomePage() {
                   </svg>
                 </span>
               </h1>
-              <p className="text-muted-foreground mt-6 w-0 min-w-full text-xl leading-relaxed">
+              <p
+                style={{ "--i": 1 } as React.CSSProperties}
+                className="hero-in text-muted-foreground mt-6 w-0 min-w-full text-xl leading-relaxed"
+              >
                 A curated list of font and theme pairings that just work.
                 Preview each setup before you try it, pick your favorite and
                 copy the config.
               </p>
             </div>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div
+              style={{ "--i": 2 } as React.CSSProperties}
+              className="hero-in mt-10 flex flex-wrap gap-3"
+            >
               <Button
                 size="lg"
                 className="h-13 px-6 text-base"
@@ -213,7 +229,10 @@ function HomePage() {
             </div>
           </div>
 
-          <div className="min-w-0">
+          <div
+            style={{ "--i": 3 } as React.CSSProperties}
+            className="hero-in min-w-0"
+          >
             {heroPair && PLAYGROUND[heroPair.slug] ? (
               <div
                 key={heroPair.slug}
@@ -240,7 +259,7 @@ function HomePage() {
                 aria-pressed={playing}
                 aria-label={playing ? "Pause rotation" : "Play rotation"}
                 onClick={() => setPlaying((p) => !p)}
-                className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border transition-colors hover:opacity-90"
+                className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border transition-[opacity,transform] duration-150 ease-out hover:opacity-90 motion-safe:active:scale-[0.96]"
                 style={{
                   background: stage.bg,
                   color: stage.fg,
@@ -262,7 +281,10 @@ function HomePage() {
       <FeatureSections
         pairs={pairs}
         colors={heroPair && { bg: stage.bg, fg: stage.fg }}
-        step={Math.max(0, stagePairs.findIndex((p) => p.slug === heroPair?.slug))}
+        step={Math.max(
+          0,
+          stagePairs.findIndex((p) => p.slug === heroPair?.slug),
+        )}
       />
 
       <LicenseSection />
@@ -286,7 +308,7 @@ function HomePage() {
             </p>
           </div>
           <div>
-            <ul className="border-border m-0 list-none border-t p-0">
+            <ul className="faq border-border m-0 list-none border-t p-0">
               {FAQS.map(({ q, a }) => (
                 <li key={q} className="border-border border-b">
                   <details className="group">
@@ -294,10 +316,10 @@ function HomePage() {
                       {q}
                       <span
                         aria-hidden
-                        className="text-muted-foreground font-mono text-xl leading-none"
+                        className="text-muted-foreground relative size-4 shrink-0"
                       >
-                        <span className="group-open:hidden">+</span>
-                        <span className="hidden group-open:inline">−</span>
+                        <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-current" />
+                        <span className="faq-bar absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-current" />
                       </span>
                     </summary>
                     <p className="text-muted-foreground max-w-[60ch] pb-5">

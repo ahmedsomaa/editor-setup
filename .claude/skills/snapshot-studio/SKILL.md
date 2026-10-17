@@ -55,6 +55,7 @@ Why this matters: the point of the image is that the colors are the theme's. Nev
 ## Fonts
 
 - Fontsource and Google Fonts cover most open-source code fonts (JetBrains Mono, Fira Code, Geist Mono, Inconsolata, IBM Plex Mono, Source Code Pro, ...).
+- Check the license before making a registry Snapshot. The registry shows the image publicly, so the font and the theme must allow that. A paid font, or one that is free for private use only, is left out.
 - Proprietary or foundry-only fonts (Input Mono, Berkeley Mono, Operator Mono, ...) fail with a clear error. Ask for a link or file, download the `.woff2/.ttf/.otf` files (extract zips first), and pass them with `--font-file`. Never substitute a different font without telling the user.
 - Ligatures are on, because the pair is usually judged on `=>`, `!==`, `->`.
 

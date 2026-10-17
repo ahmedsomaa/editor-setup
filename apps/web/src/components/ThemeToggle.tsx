@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Desktop, Moon, Sun } from '@phosphor-icons/react'
+import { Monitor, Moon, Sun } from "lucide-react";
 import { cn } from 'cn'
 
 type Choice = 'light' | 'dark' | 'system'
@@ -7,7 +7,7 @@ type Choice = 'light' | 'dark' | 'system'
 const OPTIONS: { id: Choice; label: string; Icon: typeof Sun }[] = [
   { id: 'light', label: 'Light', Icon: Sun },
   { id: 'dark', label: 'Dark', Icon: Moon },
-  { id: 'system', label: 'System', Icon: Desktop },
+  { id: 'system', label: 'System', Icon: Monitor },
 ]
 
 function stored(): Choice {

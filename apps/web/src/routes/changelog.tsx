@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/PagePattern";
 import { Button } from "@/components/ui/button";
 import { GITHUB_URL } from "@/lib/site";

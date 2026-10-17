@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Star } from '@phosphor-icons/react'
+import { Star } from "lucide-react";
 import { GITHUB_REPO, GITHUB_URL } from '@/lib/site'
 
 function formatStars(count: number): string {
@@ -82,7 +82,7 @@ export function GitHubStars() {
       <span className="max-sm:sr-only">GitHub</span>
       <span aria-hidden className="bg-border h-4 w-px" />
       <span className="inline-flex items-center gap-1.5 tabular-nums">
-        <Star weight="fill" className="size-4 text-[#e5a50a]" aria-hidden />
+        <Star className="size-4 fill-current text-[#e5a50a]" aria-hidden />
         {stars != null ? formatStars(stars) : '–'}
       </span>
     </a>
