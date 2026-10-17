@@ -23,7 +23,7 @@ Dark or light. Every Theme has one. The Registry filter uses this field; the The
 _Avoid_: Mode, color mode
 
 **Editor**:
-One code editor app, such as VS Code, Cursor, Zed, or Neovim. Apps whose Settings would be identical are still separate Editors, such as each VS Code fork and each JetBrains IDE. Launch Editors are VS Code, Cursor, Zed, and Neovim.
+One code editor app, such as VS Code or Cursor. Apps whose Settings would be identical are still separate Editors, such as each VS Code fork and each JetBrains IDE. The supported Editors are VS Code and Cursor for now.
 _Avoid_: IDE, editor family
 
 **Config**:
@@ -31,7 +31,7 @@ The Settings for one Pair in one Editor. A Pair has at most one Config per Edito
 _Avoid_: Setup, editor setup, submission
 
 **Settings**:
-The part of a Config that applies its Pair in its Editor: font family, size, weight, line height, ligatures, and the Theme, with no color overrides. Stored and shown as plain text with no allow-list. In JetBrains IDEs they are steps in the settings screen rather than text to paste, and in terminal editors such as Neovim they set only the Theme, because the terminal sets the Font.
+The part of a Config that applies its Pair in its Editor: font family, size, weight, line height, ligatures, and the Theme, with no color overrides. Stored and shown as plain text with no allow-list. In JetBrains IDEs they are steps in the settings screen rather than text to paste.
 _Avoid_: Code, snippet, personal setup
 
 **Snapshot**:
@@ -48,12 +48,8 @@ _Avoid_: Free/paid, price
 The public list of every Pair whose file is on `main` with its Snapshot and at least one Config. Built by scanning the pair JSON files in the repository.
 _Avoid_: Community page, directory, explore
 
-**Thumbnail**:
-The small version of a Snapshot, 400×225, shown in lists. It belongs to the same Pair and Editor as its Snapshot and shares its file name.
-_Avoid_: Preview, icon
-
 **Snapshot Studio**:
-The page on the site that makes a Snapshot and its Thumbnail from an Open or Free Font and Theme. Paid Fonts and Themes are never rendered live there or anywhere on the site.
+The page on the site that makes a Snapshot from an Open or Free Font and Theme. Paid Fonts and Themes are never rendered live there or anywhere on the site.
 _Avoid_: Editor, generator
 
 **Compare**:

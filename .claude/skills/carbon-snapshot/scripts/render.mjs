@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
-// Render a Carbon-style code image: a self-contained 16:9 HTML page plus a PNG
-// and a small thumbnail PNG. Colors come from a real VS Code theme (via Shiki),
+// Render a Carbon-style code image: a self-contained 16:9 HTML page plus a PNG.
+// Colors come from a real VS Code theme (via Shiki),
 // the typeface is embedded as base64 so the HTML looks the same everywhere.
 //
 // Usage: bun render.mjs --code-file snippet.py --lang python \
@@ -301,7 +301,6 @@ html,body{height:100%;background:${backdrop};overflow:hidden}
 mkdirSync(outDir, { recursive: true });
 const htmlPath = resolve(outDir, `${name}.html`);
 const pngPath = resolve(outDir, `${name}.png`);
-const thumbPath = resolve(outDir, `${name}.thumb.png`);
 writeFileSync(htmlPath, html);
 
 // ---------- screenshots ----------
@@ -326,11 +325,9 @@ try {
   await page.waitForFunction("window.__ready === true", { timeout: 15000 });
   fontSize = await page.evaluate("window.__fontSize");
   await page.screenshot({ path: pngPath, clip: { x: 0, y: 0, width: W, height: H } });
-  await page.setViewport({ width: W, height: H, deviceScaleFactor: 0.25 });
-  await page.screenshot({ path: thumbPath, clip: { x: 0, y: 0, width: W, height: H } });
 } finally {
   await browser.close();
 }
 
 if (fontSize < 14) console.error(`warning: code was shrunk to ${fontSize}px to fit 16:9; use a shorter snippet (<= ~20 lines, <= ~70 columns) for a more legible image`);
-console.log(JSON.stringify({ html: htmlPath, png: pngPath, thumbnail: thumbPath, size: [W, H], thumbSize: [W / 4, H / 4], theme: resolvedName ?? themeName, themeType: dark ? "dark" : "light", background: bg, foreground: fg, font: fontLabel, fontSizePx: fontSize, lines: tokens.length }, null, 2));
+console.log(JSON.stringify({ html: htmlPath, png: pngPath, size: [W, H], theme: resolvedName ?? themeName, themeType: dark ? "dark" : "light", background: bg, foreground: fg, font: fontLabel, fontSizePx: fontSize, lines: tokens.length }, null, 2));

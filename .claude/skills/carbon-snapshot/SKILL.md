@@ -1,6 +1,6 @@
 ---
 name: carbon-snapshot
-description: Generate a Carbon-style (carbon.now.sh) code image for a given font and theme, as a self-contained 16:9 HTML page, a 1600x900 PNG, and a small thumbnail PNG. Takes a font name and a theme name (or links to them) and writes its own code snippet in any language if none is given. Use this whenever the user wants a snapshot, screenshot, preview, "carbon" image, or showcase picture of a code font plus color theme, a Pair Snapshot for the registry, or says things like "render Fira Code with Nord", "make a Gruvbox preview image", or "generate the snapshot for this pair", even if they never mention Carbon.
+description: Generate a Carbon-style (carbon.now.sh) code image for a given font and theme, as a self-contained 16:9 HTML page, and a 1600x900 PNG. Takes a font name and a theme name (or links to them) and writes its own code snippet in any language if none is given. Use this whenever the user wants a snapshot, screenshot, preview, "carbon" image, or showcase picture of a code font plus color theme, a Pair Snapshot for the registry, or says things like "render Fira Code with Nord", "make a Gruvbox preview image", or "generate the snapshot for this pair", even if they never mention Carbon.
 ---
 
 # Carbon snapshot
@@ -13,9 +13,8 @@ Produce what carbon.now.sh produces (a code window on a colored backdrop) for on
 |---|---|
 | `<name>.html` | Self-contained 16:9 page (font embedded as base64). Scales to any window. |
 | `<name>.png` | 1600x900 screenshot of that page. |
-| `<name>.thumb.png` | 400x225 thumbnail of the same image. |
 
-Default output directory: the current directory. When the user wants a registry Snapshot for this repo, write the PNG to `registry/snapshots/<font-slug>--<theme-slug>--<editor-id>.png` (CONTRIBUTING.md: `<pair-slug>--<editor-id>.png`, 16:9) and keep the HTML and thumbnail beside it or in a scratch folder. Ask which Editor if it is not obvious. Do not edit pair JSON unless asked.
+Default output directory: the current directory. When the user wants a registry Snapshot for this repo, write the PNG to `registry/snapshots/<font-slug>--<theme-slug>--<editor-id>.png` (CONTRIBUTING.md: `<pair-slug>--<editor-id>.png`, 16:9) and keep the HTML beside it or in a scratch folder. Ask which Editor if it is not obvious. Do not edit pair JSON unless asked.
 
 ## Workflow
 
@@ -71,5 +70,5 @@ A pair is judged on how code reads in it, so the snippet should exercise the typ
 
 ## Notes
 
-- The HTML is the source of truth; the PNGs are screenshots of it at 1600x900 (thumbnail is the same page at 0.25 scale).
+- The HTML is the source of truth; the PNGs are screenshots of it at 1600x900.
 - Nothing leaves the machine except the font and theme downloads.

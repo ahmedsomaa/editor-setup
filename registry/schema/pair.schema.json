@@ -89,7 +89,6 @@
         "required": [
           "id",
           "snapshot",
-          "thumbnail",
           "settings"
         ],
         "properties": {
@@ -97,18 +96,12 @@
             "type": "string",
             "enum": [
               "vscode",
-              "cursor",
-              "zed",
-              "neovim"
+              "cursor"
             ]
           },
           "snapshot": {
             "type": "string",
-            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*--[a-z0-9]+(?:-[a-z0-9]+)*--(vscode|cursor|zed|neovim)\\.png$"
-          },
-          "thumbnail": {
-            "type": "string",
-            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*--[a-z0-9]+(?:-[a-z0-9]+)*--(vscode|cursor|zed|neovim)\\.png$"
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*--[a-z0-9]+(?:-[a-z0-9]+)*--(vscode|cursor)\\.png$"
           },
           "settings": {
             "type": "string",

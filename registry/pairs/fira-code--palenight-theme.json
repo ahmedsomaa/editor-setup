@@ -18,7 +18,6 @@
     {
       "id": "vscode",
       "snapshot": "fira-code--palenight-theme--vscode.png",
-      "thumbnail": "fira-code--palenight-theme--vscode.png",
       "settings": "{\n  \"editor.fontFamily\": \"Fira Code\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Palenight Theme\"\n}"
     }
   ]

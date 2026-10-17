@@ -5,14 +5,14 @@ A contribution is a pull request into `main`. An issue is optional and is not a 
 ## Before you start
 
 - Read [GLOSSARY.md](GLOSSARY.md) for Pair, Font, Theme, Editor, Config, Settings, and Snapshot.
-- A Pair is one Font and one Theme. Launch Editors are `vscode`, `cursor`, `zed`, and `neovim`.
+- A Pair is one Font and one Theme. Supported Editors are `vscode` and `cursor` for now.
 - One Pair per Font and Theme. One Config per Editor. Every Config needs both Settings and a Snapshot.
 
 ## Add a new Pair
 
 1. Fork the repository and create a branch from `main`.
 2. Add `registry/pairs/<font-slug>--<theme-slug>.json`.
-3. Add at least one Snapshot under `registry/snapshots/` named `<pair-slug>--<editor-id>.png`, and its Thumbnail under `registry/thumbnails/` with the same file name. Make both in [Snapshot Studio](https://editor-setup.pages.dev/studio) with an Open or Free Font and Theme: it saves a 16:9 PNG and a 400×225 thumbnail.
+3. Add at least one Snapshot under `registry/snapshots/` named `<pair-slug>--<editor-id>.png`. Make it in [Snapshot Studio](https://editor-setup.pages.dev/studio) with an Open or Free Font and Theme: it saves a 1600×900 PNG. In Claude Code, the `carbon-snapshot` skill in `.claude/skills/` makes it from a Font and a Theme.
 4. Several Editors may be included in this first pull request.
 5. Run `bun run check`.
 6. Open a pull request into `main`. Name the Font, the Theme, and the Editors in the description.
@@ -22,7 +22,6 @@ Example layout:
 ```text
 registry/pairs/inconsolata--vitesse-dark.json
 registry/snapshots/inconsolata--vitesse-dark--vscode.png
-registry/thumbnails/inconsolata--vitesse-dark--vscode.png
 ```
 
 Example Pair file:
@@ -44,7 +43,6 @@ Example Pair file:
     {
       "id": "vscode",
       "snapshot": "inconsolata--vitesse-dark--vscode.png",
-      "thumbnail": "inconsolata--vitesse-dark--vscode.png",
       "settings": "editor.fontFamily: Inconsolata\nworkbench.colorTheme: Vitesse Dark"
     }
   ]
@@ -55,7 +53,7 @@ Example Pair file:
 
 Open a separate pull request that:
 
-1. Adds one Snapshot and one Thumbnail, both named `<pair-slug>--<editor-id>.png`.
+1. Adds one Snapshot named `<pair-slug>--<editor-id>.png`.
 2. Adds one entry to the `editors` array in that Pair’s JSON file.
 3. Runs `bun run check`.
 
@@ -66,11 +64,10 @@ Do not mix an unrelated Pair into the same pull request.
 - `appearance` is `dark` or `light`.
 - License is `open`, `free`, or `paid` on the Font and on the Theme.
 - Font and Theme each need at least one publish link.
-- Settings are a non-empty plain-text string. Neovim Settings set only the Theme.
+- Settings are a non-empty plain-text string.
 - The Snapshot file is `<pair-slug>--<editor-id>.png`, aspect ratio 16:9.
-- `editors[].snapshot` and `editors[].thumbnail` must match that filename.
-- The Thumbnail is a PNG of exactly 400×225 in `registry/thumbnails/`.
-- Paid Fonts and Themes are never rendered live on the site. A developer who owns the license may add a Snapshot and Thumbnail made on their own machine; Snapshot Studio only offers Open and Free ones.
+- `editors[].snapshot` must match that filename.
+- Paid Fonts and Themes are never rendered live on the site. A developer who owns the license may add a Snapshot made on their own machine; Snapshot Studio only offers Open and Free ones.
 - One Config per Editor. One Pair per Font and Theme.
 - Do not edit a central index. The site builds the list by scanning `registry/pairs/*.json`.
 

@@ -18,7 +18,6 @@
     {
       "id": "vscode",
       "snapshot": "zed-mono--gruvbox-light-hard--vscode.png",
-      "thumbnail": "zed-mono--gruvbox-light-hard--vscode.png",
       "settings": "{\n  \"editor.fontFamily\": \"Zed Mono\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Gruvbox Light Hard\"\n}"
     }
   ]

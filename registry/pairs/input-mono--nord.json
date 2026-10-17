@@ -18,8 +18,7 @@
     {
       "id": "vscode",
       "snapshot": "input-mono--nord--vscode.png",
-      "settings": "{\n  \"editor.fontFamily\": \"Input Mono\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Nord\"\n}",
-      "thumbnail": "input-mono--nord--vscode.png"
+      "settings": "{\n  \"editor.fontFamily\": \"Input Mono\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Nord\"\n}"
     }
   ]
 }

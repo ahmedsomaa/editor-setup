@@ -18,7 +18,6 @@
     {
       "id": "vscode",
       "snapshot": "geist-mono--vesper--vscode.png",
-      "thumbnail": "geist-mono--vesper--vscode.png",
       "settings": "{\n  \"editor.fontFamily\": \"Geist Mono\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Vesper\"\n}"
     }
   ]

@@ -7,7 +7,6 @@ import addFormats from "ajv-formats";
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const pairsDir = join(root, "registry/pairs");
 const snapshotsDir = join(root, "registry/snapshots");
-const thumbnailsDir = join(root, "registry/thumbnails");
 const schemaPath = join(root, "registry/schema/pair.schema.json");
 
 const errors = [];
@@ -131,27 +130,6 @@ async function main() {
       if (!isSixteenByNine(size.width, size.height)) {
         fail(
           `${file}: ${editor.snapshot} must be 16:9 (got ${size.width}×${size.height})`,
-        );
-      }
-
-      if (editor.thumbnail !== expectedSnapshot) {
-        fail(
-          `${file}: editors[${editor.id}].thumbnail must be "${expectedSnapshot}"`,
-        );
-      }
-      let thumbBuffer;
-      try {
-        thumbBuffer = await readFile(join(thumbnailsDir, editor.thumbnail));
-      } catch {
-        fail(`${file}: missing Thumbnail registry/thumbnails/${editor.thumbnail}`);
-        continue;
-      }
-      const thumbSize = pngSize(thumbBuffer);
-      if (!thumbSize) {
-        fail(`${file}: Thumbnail ${editor.thumbnail} is not a valid PNG`);
-      } else if (thumbSize.width !== 400 || thumbSize.height !== 225) {
-        fail(
-          `${file}: Thumbnail ${editor.thumbnail} must be 400×225 (got ${thumbSize.width}×${thumbSize.height})`,
         );
       }
     }
