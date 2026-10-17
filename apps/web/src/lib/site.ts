@@ -1,3 +1,6 @@
+/** Production origin, used for absolute URLs in Open Graph tags. */
+export const SITE_URL = 'https://editorsetup.som3aware.workers.dev'
+
 /** Public GitHub repo (owner/name). */
 export const GITHUB_REPO = 'ahmedsomaa/editor-setup'
 

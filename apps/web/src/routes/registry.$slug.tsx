@@ -43,13 +43,16 @@ export const Route = createFileRoute("/registry/$slug")({
   head: ({ loaderData }) => {
     const pair = loaderData?.pair;
     if (!pair) return {};
+    const title = `${pair.theme.name} with ${pair.font.name} · EditorSetup`;
+    const description = `${pair.theme.name} and ${pair.font.name}: Snapshot and copyable Settings.`;
     return {
       meta: [
-        { title: `${pair.theme.name} with ${pair.font.name} · EditorSetup` },
-        {
-          name: "description",
-          content: `${pair.theme.name} and ${pair.font.name}: Snapshot and copyable Settings.`,
-        },
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
       ],
     };
   },
