@@ -19,7 +19,7 @@ const COLORS = [
   ["border", "bg-border", "The one hairline"],
   ["accent", "bg-accent", "Active nav label, selection"],
   ["accent-soft", "bg-accent-soft", "Open License tag"],
-  ["pastel-green", "bg-pastel-green", "Free badge"],
+  ["pastel-green", "bg-pastel-green", "Paid License tag"],
   ["destructive", "bg-destructive", "Errors"],
 ] as const;
 
@@ -142,6 +142,7 @@ function Design() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <LicenseTag license="open" />
             <LicenseTag license="free" />
+            <LicenseTag license="paid" />
             <AppearanceTag appearance="dark" />
             <AppearanceTag appearance="light" />
           </div>

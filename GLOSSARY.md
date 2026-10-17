@@ -41,15 +41,15 @@ _Avoid_: Screenshot, preview, image
 ### License and Registry
 
 **License**:
-The terms a Font or Theme is available under: Open (an open license such as OFL or MIT, free to use and embed) or Free (no cost but restricted, such as private use only).
-_Avoid_: price
+The terms a Font or Theme is available under: Open (an open license such as OFL or MIT, free to use and embed), Free (no cost but restricted, such as private use only), or Paid.
+_Avoid_: Free/paid, price
 
 **Registry**:
 The public list of every Pair whose file is on `main` with its Snapshot and at least one Config. Built by scanning the pair JSON files in the repository.
 _Avoid_: Community page, directory, explore
 
 **Snapshot Studio**:
-The page on the site that makes a Snapshot from an Open or Free Font and Theme.
+The page on the site that makes a Snapshot from an Open or Free Font and Theme. Paid Fonts and Themes are never rendered live there or anywhere on the site.
 _Avoid_: Editor, generator
 
 **Compare**:

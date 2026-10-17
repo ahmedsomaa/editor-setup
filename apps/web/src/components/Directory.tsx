@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { PairWindow, textToLines } from "@/components/PairWindow";
 import { AppearanceTag, PairLicenseTag } from "@/components/Tag";
-import { EDITOR_LABELS, type PairRecord } from "@/lib/pairs";
+import { EDITOR_LABELS, isPaid, type PairRecord } from "@/lib/pairs";
 import { SnapshotImage } from "@/components/SnapshotImage";
 import { snapshotUrl } from "@/lib/snapshots";
 import { cn } from "cn";
@@ -90,6 +90,8 @@ export function Directory({
                 alt=""
                 className="rounded-[1.1rem]"
               />
+            ) : isPaid(active) ? (
+              <PaidSnapshot pair={active} />
             ) : (
               <PairWindow
                 pair={{
@@ -107,6 +109,18 @@ export function Directory({
           </div>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+/** Paid Fonts and Themes appear only as the Snapshot a developer made with their own license. */
+function PaidSnapshot({ pair }: { pair: PairRecord }) {
+  const src = snapshotUrl(pair.editors[0]?.snapshot ?? "");
+  return src ? (
+    <SnapshotImage src={src} alt="" className="rounded-[1.1rem]" />
+  ) : (
+    <div className="border-border text-muted-foreground flex aspect-video w-full items-center justify-center rounded-xl border border-dashed text-sm">
+      Snapshot only
     </div>
   );
 }
@@ -129,7 +143,7 @@ function CardImage({ pair }: { pair: PairRecord }) {
         aspectRatio: "1420 / 750",
         background: pair.theme.bg,
         color: pair.theme.fg,
-        fontFamily: pair.font.fontFamily,
+        fontFamily: isPaid(pair) ? undefined : pair.font.fontFamily,
       }}
     >
       Aa

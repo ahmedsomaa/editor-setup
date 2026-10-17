@@ -44,14 +44,17 @@ export const Route = createFileRoute("/registry/")({
   component: RegistryPage,
 });
 
+type LicenseFilter = "free" | License;
+
 const EDITOR_OPTIONS = Object.entries(EDITOR_LABELS) as [EditorId, string][];
 const APPEARANCE_OPTIONS: { id: Appearance; label: string }[] = [
   { id: "dark", label: "Dark" },
   { id: "light", label: "Light" },
 ];
-const LICENSE_OPTIONS: { id: License; label: string }[] = [
+const LICENSE_OPTIONS: { id: LicenseFilter; label: string }[] = [
+  { id: "free", label: "Free to use" },
   { id: "open", label: "Open" },
-  { id: "free", label: "Free" },
+  { id: "paid", label: "Paid" },
 ];
 const SEARCH_DEBOUNCE_MS = 200;
 
@@ -210,7 +213,7 @@ function RegistryPage() {
               value={license}
               onChange={(v) =>
                 setParam({
-                  license: (v || undefined) as License | undefined,
+                  license: (v || undefined) as LicenseFilter | undefined,
                 })
               }
               options={[

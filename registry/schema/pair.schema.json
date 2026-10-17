@@ -35,7 +35,8 @@
           "type": "string",
           "enum": [
             "open",
-            "free"
+            "free",
+            "paid"
           ]
         }
       }
@@ -66,7 +67,8 @@
           "type": "string",
           "enum": [
             "open",
-            "free"
+            "free",
+            "paid"
           ]
         },
         "appearance": {
