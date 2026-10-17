@@ -200,8 +200,10 @@ export function PageHero({
   className?: string;
 }) {
   return (
-    <div className="relative isolate overflow-hidden">
-      <PagePattern variant={variant} className="bg-glyphs" />
+    <div className="relative isolate z-10">
+      <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
+        <PagePattern variant={variant} className="bg-glyphs" />
+      </div>
       <div
         className={cn(
           "mx-auto w-full max-w-6xl px-4 pt-16 pb-14 sm:pt-24 sm:pb-16",

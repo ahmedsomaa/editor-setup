@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { PairGrid } from "@/components/PairGrid";
+import { Pagination } from "@/components/Pagination";
 import { RegistryPattern } from "@/components/RegistryPattern";
 import { Button } from "@/components/ui/button";
 import {
@@ -55,6 +56,7 @@ const LICENSE_OPTIONS: { id: LicenseFilter; label: string }[] = [
   { id: "paid", label: "Paid" },
 ];
 const SEARCH_DEBOUNCE_MS = 200;
+const PAGE_SIZE = 6;
 
 function RegistryPage() {
   const search = Route.useSearch();
@@ -80,7 +82,7 @@ function RegistryPage() {
     const id = window.setTimeout(() => {
       pushedQ.current = next;
       void navigate({
-        search: (prev) => ({ ...prev, q: next }),
+        search: (prev) => ({ ...prev, q: next, page: undefined }),
         replace: true,
       });
     }, SEARCH_DEBOUNCE_MS);
@@ -107,9 +109,17 @@ function RegistryPage() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Any change to the filters goes back to page 1.
   function setParam(patch: Partial<typeof search>) {
-    void navigate({ search: (prev) => ({ ...prev, ...patch }), replace: true });
+    void navigate({
+      search: (prev) => ({ ...prev, page: undefined, ...patch }),
+      replace: true,
+    });
   }
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const current = Math.min(search.page ?? 1, pageCount);
+  const visible = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
 
   const hasFilters =
     query.trim().length > 0 ||
@@ -146,7 +156,7 @@ function RegistryPage() {
           className="flex flex-col gap-3 md:flex-row"
           onSubmit={(e) => e.preventDefault()}
         >
-          <label className="border-border bg-card focus-within:outline-ring flex h-11 min-w-0 flex-1 items-center gap-2 rounded-full border px-4 focus-within:outline-2 focus-within:outline-offset-2">
+          <label className="border-border bg-card focus-within:outline-ring flex h-11 min-w-0 shrink-0 items-center gap-2 rounded-full border px-4 md:flex-1 focus-within:outline-2 focus-within:outline-offset-2">
             <MagnifyingGlass
               className="text-muted-foreground size-4 shrink-0"
               aria-hidden
@@ -178,7 +188,7 @@ function RegistryPage() {
               </kbd>
             )}
           </label>
-          <div className="flex flex-wrap gap-3">
+          <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap [&>:last-child]:col-span-2 md:[&>:last-child]:col-span-1">
             <FilterSelect
               label="Editor"
               value={editor}
@@ -251,7 +261,18 @@ function RegistryPage() {
             </Button>
           </div>
         ) : (
-          <PairGrid pairs={filtered} />
+          <>
+            <PairGrid pairs={visible} />
+            <Pagination
+              className="mt-10"
+              page={current}
+              pageCount={pageCount}
+              onChange={(page) => {
+                setParam({ page: page > 1 ? page : undefined });
+                window.scrollTo({ top: 0 });
+              }}
+            />
+          </>
         )}
       </div>
     </main>
@@ -281,7 +302,7 @@ function FilterSelect({
     >
       <SelectTrigger
         aria-label={label}
-        className="h-11 w-auto min-w-40 font-medium"
+        className="h-11 w-full font-medium md:w-auto md:min-w-40"
       >
         <SelectValue />
       </SelectTrigger>

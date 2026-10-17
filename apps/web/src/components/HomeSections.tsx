@@ -196,7 +196,7 @@ export function FeatureSections({
         flip
         icon={Scales}
         title="Compare Pairs"
-        body={`Line up to ${MAX_COMPARE} Pairs side by side and crown a favorite.`}
+        body={`Can’t pick? Line up to ${MAX_COMPARE} Pairs side by side and keep the one you would look at all day.`}
         cta={{ label: "Open Compare", to: "/compare" }}
       >
         {darkArt && lightArt ? (

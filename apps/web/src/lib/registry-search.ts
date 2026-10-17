@@ -18,6 +18,7 @@ export const registryFilterSchema = z.object({
 
 export const registrySearchSchema = registryFilterSchema.extend({
   view: z.enum(["grid", "list"]).optional().catch(undefined),
+  page: z.coerce.number().int().min(1).max(999).optional().catch(undefined),
 });
 
 export const pairSearchSchema = z.object({ editor });
