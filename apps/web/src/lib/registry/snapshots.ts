@@ -1,6 +1,6 @@
 /** Snapshot PNGs under registry/snapshots — keyed by filename from Pair Config. */
 const snapshotModules = import.meta.glob(
-  "../../../../registry/snapshots/*.png",
+  "../../../../../registry/snapshots/*.png",
   { eager: true, query: "?url", import: "default" },
 ) as Record<string, string>;
 
