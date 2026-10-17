@@ -33,6 +33,19 @@ const ENTRIES = [
   },
   {
     date: "2026-10-17",
+    title: "Landing sections and motion",
+    changes: [
+      "Rebuilt landing sections with animated art for Compare and Snapshot.",
+      "A Compare drawer picker, and pagination in the Registry.",
+      "A reworked Snapshot Studio with swatches in its menus, plus new Snapshots.",
+      "Paid licenses dropped, and icons moved to Lucide.",
+      "A page transition, site-wide smooth scroll and scroll motion.",
+      "Open Graph image, canonical URLs and tighter page titles for sharing and search.",
+      "Fixed the Registry search on mobile.",
+    ],
+  },
+  {
+    date: "2026-10-17",
     title: "A rebuilt Registry",
     changes: [
       "New home, Registry, Pair, Compare and Snapshot Studio pages.",
@@ -74,7 +87,7 @@ function Changelog() {
           {ENTRIES.map((entry) => (
             <Reveal
               as="li"
-              key={entry.date}
+              key={`${entry.date}-${entry.title}`}
               className="border-border grid gap-2 border-b py-8 sm:grid-cols-[10rem_1fr] sm:gap-8"
             >
               <time
