@@ -78,15 +78,6 @@ function About() {
                 No cost, with limits such as private use only.
               </dd>
             </div>
-            <div className="border-border grid items-start gap-2 border-b py-5 sm:grid-cols-[10rem_1fr] sm:gap-8">
-              <dt>
-                <LicenseTag license="paid" />
-              </dt>
-              <dd className="text-muted-foreground max-w-[60ch]">
-                Never rendered on the site. A developer who owns the license can
-                add a Snapshot of it.
-              </dd>
-            </div>
           </dl>
         </section>
 

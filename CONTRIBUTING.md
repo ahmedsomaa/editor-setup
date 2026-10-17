@@ -62,12 +62,12 @@ Do not mix an unrelated Pair into the same pull request.
 ## ✅ Rules the check enforces
 
 - `appearance` is `dark` or `light`.
-- License is `open`, `free`, or `paid` on the Font and on the Theme.
+- License is `open` or `free` on the Font and on the Theme.
 - Font and Theme each need at least one publish link.
 - Settings are a non-empty plain-text string.
 - The Snapshot file is `<pair-slug>--<editor-id>.png`, aspect ratio 16:9.
 - `editors[].snapshot` must match that filename.
-- Paid Fonts and Themes are never rendered live on the site. A developer who owns the license may add a Snapshot made on their own machine; Snapshot Studio only offers Open and Free ones.
+- Only Open and Free Fonts and Themes are accepted. Paid ones are not listed on the site.
 - One Config per Editor. One Pair per Font and Theme.
 - Do not edit a central index. The site builds the list by scanning `registry/pairs/*.json`.
 

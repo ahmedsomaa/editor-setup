@@ -18,7 +18,6 @@ import {
 import {
   EDITOR_LABELS,
   getEditorConfig,
-  isPaid,
   pairLabel,
   type EditorId,
   type PairRecord,
@@ -103,7 +102,7 @@ function PairFace({ pair, editor }: { pair: PairRecord; editor: EditorId }) {
       />
     );
   }
-  if (!isPaid(pair) && config) {
+  if (config) {
     return (
       <PairWindow
         pair={{
@@ -126,8 +125,7 @@ function PairFace({ pair, editor }: { pair: PairRecord; editor: EditorId }) {
 /** One Pair file beside the page it becomes. */
 export function OneFileSection({ pairs }: { pairs: PairRecord[] }) {
   const pair =
-    pairs.find((p) => p.slug === "inconsolata--vitesse-dark") ??
-    pairs.find((p) => !isPaid(p));
+    pairs.find((p) => p.slug === "inconsolata--vitesse-dark") ?? pairs[0];
   const config = pair?.editors[0];
   if (!pair || !config) return null;
 
@@ -245,9 +243,7 @@ function PairSelect({
 
 /** Two Pairs side by side through one shared Editor. */
 export function CompareSection({ pairs }: { pairs: PairRecord[] }) {
-  const options = pairs.filter(
-    (p) => !isPaid(p) || p.editors.some((e) => snapshotUrl(e.snapshot)),
-  );
+  const options = pairs;
   const [aSlug, setASlug] = useState(options[0]?.slug ?? "");
   const [bSlug, setBSlug] = useState(
     options[1]?.slug ?? options[0]?.slug ?? "",
@@ -418,16 +414,12 @@ export function GapSection({ pairs }: { pairs: PairRecord[] }) {
                               params={{ slug: pair.slug }}
                               aria-label={`${pair.theme.name} with ${pair.font.name}`}
                               className="flex h-12 items-center justify-center rounded-md border text-sm no-underline"
-                              style={
-                                isPaid(pair)
-                                  ? undefined
-                                  : {
-                                      background: pair.theme.bg,
-                                      color: pair.theme.fg,
-                                      fontFamily: pair.font.fontFamily,
-                                      borderColor: `color-mix(in srgb, ${pair.theme.fg} 20%, ${pair.theme.bg})`,
-                                    }
-                              }
+                              style={{
+                                background: pair.theme.bg,
+                                color: pair.theme.fg,
+                                fontFamily: pair.font.fontFamily,
+                                borderColor: `color-mix(in srgb, ${pair.theme.fg} 20%, ${pair.theme.bg})`,
+                              }}
                             >
                               Aa
                             </Link>

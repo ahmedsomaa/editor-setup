@@ -18,7 +18,6 @@ import { LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
 import {
   EDITOR_LABELS,
-  isPaid,
   type EditorId,
   type PairRecord,
 } from "@/lib/pairs";
@@ -63,10 +62,6 @@ const LICENSES = [
     license: "free",
     text: "No cost, with limits such as private use only.",
   },
-  {
-    license: "paid",
-    text: "Shown only as a Snapshot from a developer who owns the License.",
-  },
 ] as const;
 
 /** Editors with Settings to copy for now; Cursor shares the VS Code format. */
@@ -90,7 +85,7 @@ const FAQS = [
   },
   {
     q: "Is it free?",
-    a: "The site is free. Each Font and Theme has its own License, shown on every Pair as Open, Free or Paid.",
+    a: "The site is free. Each Font and Theme has its own License, shown on every Pair as Open or Free.",
   },
   {
     q: "How do I add a Pair?",
@@ -102,10 +97,10 @@ function HomePage() {
   const { pairs } = Route.useLoaderData();
   const [heroSlug, setHeroSlug] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
-  // The playground offers four Pairs, only with Open or Free Fonts and Themes, each with its real Theme tokens.
+  // The playground offers four Pairs, each with its real Theme tokens.
   const stagePairs = PLAYGROUND_ORDER.map((slug) =>
     pairs.find((p) => p.slug === slug),
-  ).filter((p): p is PairRecord => Boolean(p) && !isPaid(p as PairRecord));
+  ).filter((p): p is PairRecord => Boolean(p));
 
   // Rotate through the Pairs unless the visitor prefers reduced motion. Pausing is always available,
   // and a click on a Pair stops the rotation.
@@ -127,7 +122,7 @@ function HomePage() {
     return () => window.clearInterval(id);
   }, [playing, stagePairs.length]);
   const heroPair = stagePairs.find((p) => p.slug === heroSlug) ?? stagePairs[0];
-  // The hero is painted in the chosen Pair's own colours. Paid Fonts never load, so they keep the site's mono.
+  // The hero is painted in the chosen Pair's own colours.
   const stage = {
     bg:
       (heroPair && PLAYGROUND[heroPair.slug]?.bg) ||
@@ -137,8 +132,7 @@ function HomePage() {
       (heroPair && PLAYGROUND[heroPair.slug]?.fg) ||
       heroPair?.theme.fg ||
       "#edeceb",
-    family:
-      heroPair && !isPaid(heroPair) ? heroPair.font.fontFamily : undefined,
+    family: heroPair?.font.fontFamily,
   };
 
   const chip = (pair: PairRecord, hidden: boolean) => {

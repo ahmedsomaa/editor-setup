@@ -88,10 +88,8 @@ describe("getEditorConfig / resolveEditorId", () => {
 describe("matchesLicenseFilter", () => {
   const pair = getPairBySlug("inconsolata--vitesse-dark")!;
 
-  test("free includes open licenses", () => {
-    expect(matchesLicenseFilter(pair, "free")).toBe(true);
+  test("matches a license on either the Font or the Theme", () => {
     expect(matchesLicenseFilter(pair, "open")).toBe(true);
-    expect(matchesLicenseFilter(pair, "paid")).toBe(false);
   });
 });
 

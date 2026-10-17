@@ -4,7 +4,7 @@ Status: ready-for-agent
 
 ## Problem Statement
 
-A developer finds a monospace Font and a Theme that look good together, then has to reconstruct the Settings for their own Editor. Screenshots on social sites are personal, inconsistent, and missing the Settings. Paid Fonts and Themes cannot be rendered live on a public site.
+A developer finds a monospace Font and a Theme that look good together, then has to reconstruct the Settings for their own Editor. Screenshots on social sites are personal, inconsistent, and missing the Settings.
 
 ## Solution
 
@@ -22,7 +22,7 @@ editorSetup is a git-backed Registry of Pairs. A Pair is one Font combined with 
 8. As a visitor, I want to search by Font name and Theme name, so that I can find a Pair I already have in mind.
 9. As a visitor, I want to filter the Registry by Editor, so that I only see Pairs that have a Config for the Editor I use.
 10. As a visitor, I want to filter the Registry by Appearance, so that I can choose dark or light Themes.
-11. As a visitor, I want to filter the Registry by License, so that I can hide Paid Fonts and Themes.
+11. As a visitor, I want to filter the Registry by License, so that I can see only Open or only Free ones.
 12. As a visitor, I want a "free" License filter to include Open and Free, so that no-cost Fonts and Themes show up together.
 13. As a visitor, I want to filter the Registry by Font and by Theme, so that I can see every Pair that uses one I already like.
 14. As a visitor, I want the default order to be Font name, then Theme name, so that the list has a stable order without votes.
@@ -54,7 +54,7 @@ editorSetup is a git-backed Registry of Pairs. A Pair is one Font combined with 
 - Pair file: `registry/pairs/<font-slug>--<theme-slug>.json`.
 - Snapshot file: `registry/snapshots/<pair-slug>--<editor-id>.png`.
 - Pair JSON holds Font, Theme, and an `editors` array. Each entry has `id`, `snapshot`, and `settings`.
-- `appearance` is `dark` or `light` on the Theme. License is `open`, `free`, or `paid` on the Font and on the Theme. Each needs at least one publish link.
+- `appearance` is `dark` or `light` on the Theme. License is `open` or `free` on the Font and on the Theme. Each needs at least one publish link.
 - One Pair per Font and Theme. One Config per Editor. Both Settings and Snapshot required.
 - Settings are plain text with no allow-list. Neovim Settings set only the Theme.
 - Snapshots are 16:9. The contributor chooses the code and the frame. The site does not add a frame.
@@ -75,7 +75,6 @@ editorSetup is a git-backed Registry of Pairs. A Pair is one Font combined with 
 - Upvotes, Score, hot badge, trending tabs
 - NestJS, Postgres, object storage
 - Drag-slider Compare
-- Live preview of Paid Fonts
 - Email
 - JetBrains and Helix screens at launch
 - Import of the old v1 image set without Settings

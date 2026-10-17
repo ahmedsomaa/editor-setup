@@ -3,7 +3,6 @@ import { CompareToggle } from "@/components/CompareToggle";
 import {
   EDITOR_IDS,
   EDITOR_LABELS,
-  isPaid,
   pairLabel,
   type PairRecord,
 } from "@/lib/pairs";
@@ -79,7 +78,7 @@ function CardImage({ pair }: { pair: PairRecord }) {
         aspectRatio: "1420 / 750",
         background: pair.theme.bg,
         color: pair.theme.fg,
-        fontFamily: isPaid(pair) ? undefined : pair.font.fontFamily,
+        fontFamily: pair.font.fontFamily,
       }}
     >
       Aa

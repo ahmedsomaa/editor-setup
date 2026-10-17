@@ -405,8 +405,7 @@ export function EditorPage() {
                 </ol>
                 <p className="text-muted-foreground mt-3">
                   Only Open and Free Fonts and Themes can be picked from the
-                  lists. If you own the license to a Paid Font, upload its file
-                  and make the Snapshot yourself.
+                  lists.
                 </p>
               </PopoverContent>
             </Popover>

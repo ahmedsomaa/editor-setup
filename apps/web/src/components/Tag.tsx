@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import {
-  CurrencyDollar,
   Gift,
   LockSimpleOpen,
   Moon,
@@ -52,10 +51,9 @@ export function Tag({
 const LICENSE_STYLE: Record<License, { tone: Tone; icon: ReactNode }> = {
   open: { tone: "accent", icon: <LockSimpleOpen weight="bold" /> },
   free: { tone: "neutral", icon: <Gift weight="bold" /> },
-  paid: { tone: "green", icon: <CurrencyDollar weight="bold" /> },
 };
 
-/** Open is teal, Free is grey, Paid is money green. */
+/** Open is teal, Free is grey. */
 export function LicenseTag({ license }: { license: License }) {
   const { tone, icon } = LICENSE_STYLE[license];
   return (
@@ -65,7 +63,7 @@ export function LicenseTag({ license }: { license: License }) {
   );
 }
 
-/** One License for a whole Pair: Paid if either side is Paid, Open only if both are Open. */
+/** One License for a whole Pair: Open only if both are Open. */
 export function PairLicenseTag({
   font,
   theme,
@@ -73,12 +71,7 @@ export function PairLicenseTag({
   font: License;
   theme: License;
 }) {
-  const license: License =
-    font === "paid" || theme === "paid"
-      ? "paid"
-      : font === "open" && theme === "open"
-        ? "open"
-        : "free";
+  const license: License = font === "open" && theme === "open" ? "open" : "free";
   return <LicenseTag license={license} />;
 }
 

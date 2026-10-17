@@ -1,9 +1,4 @@
 {
-  "dank-mono--night-owl": {
-    "name": "ahmedsomaa",
-    "url": "https://github.com/ahmedsomaa",
-    "source": "git_author"
-  },
   "fira-code--palenight-theme": {
     "name": "ahmedsomaa",
     "url": "https://github.com/ahmedsomaa",
@@ -38,11 +33,6 @@
     "name": "ahmedsomaa",
     "url": "https://github.com/ahmedsomaa",
     "source": "commit_author"
-  },
-  "monolisa--houston": {
-    "name": "ahmedsomaa",
-    "url": "https://github.com/ahmedsomaa",
-    "source": "git_author"
   },
   "zed-mono--gruvbox-light-hard": {
     "name": "ahmedsomaa",
