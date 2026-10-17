@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as DesignRouteImport } from './routes/design'
 import { Route as RegistryRouteImport } from './routes/registry'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as RegistryIndexRouteImport } from './routes/registry.index'
@@ -27,9 +29,19 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompareRoute = CompareRouteImport.update({
   id: '/compare',
   path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesignRoute = DesignRouteImport.update({
+  id: '/design',
+  path: '/design',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegistryRoute = RegistryRouteImport.update({
@@ -56,7 +68,9 @@ const RegistrySlugRoute = RegistrySlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
+  '/design': typeof DesignRoute
   '/registry': typeof RegistryRouteWithChildren
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
@@ -65,7 +79,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
+  '/design': typeof DesignRoute
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
   '/registry': typeof RegistryIndexRoute
@@ -74,7 +90,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
+  '/design': typeof DesignRoute
   '/registry': typeof RegistryRouteWithChildren
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
@@ -85,18 +103,30 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/changelog'
     | '/compare'
+    | '/design'
     | '/registry'
     | '/studio'
     | '/registry/$slug'
     | '/registry/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/compare' | '/studio' | '/registry/$slug' | '/registry'
+  to:
+    | '/'
+    | '/about'
+    | '/changelog'
+    | '/compare'
+    | '/design'
+    | '/studio'
+    | '/registry/$slug'
+    | '/registry'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/changelog'
     | '/compare'
+    | '/design'
     | '/registry'
     | '/studio'
     | '/registry/$slug'
@@ -106,7 +136,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ChangelogRoute: typeof ChangelogRoute
   CompareRoute: typeof CompareRoute
+  DesignRoute: typeof DesignRoute
   RegistryRoute: typeof RegistryRouteWithChildren
   StudioRoute: typeof StudioRoute
 }
@@ -127,11 +159,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compare': {
       id: '/compare'
       path: '/compare'
       fullPath: '/compare'
       preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/design': {
+      id: '/design'
+      path: '/design'
+      fullPath: '/design'
+      preLoaderRoute: typeof DesignRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/registry': {
@@ -182,7 +228,9 @@ const RegistryRouteWithChildren = RegistryRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ChangelogRoute: ChangelogRoute,
   CompareRoute: CompareRoute,
+  DesignRoute: DesignRoute,
   RegistryRoute: RegistryRouteWithChildren,
   StudioRoute: StudioRoute,
 }
