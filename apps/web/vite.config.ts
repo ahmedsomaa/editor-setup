@@ -32,7 +32,12 @@ const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
     devtools(),
-    cloudflare({ viteEnvironment: { name: 'ssr' } }),
+    // The deploy step runs `wrangler preview` against the generated dist/server/wrangler.json,
+    // which drops the `previews` block from wrangler.jsonc, so add it back here.
+    cloudflare({
+      viteEnvironment: { name: 'ssr' },
+      config: { previews: {} },
+    }),
     tailwindcss(),
     tanstackStart(),
     viteReact(),

@@ -2,6 +2,7 @@ node_modules/
 apps/web/node_modules/
 apps/web/dist/
 apps/web/.wrangler/
+.wrangler/
 apps/web/.tanstack/
 apps/web/.output/
 apps/snapshot/node_modules/
