@@ -20,6 +20,19 @@ export const Route = createFileRoute("/changelog")({
 const ENTRIES = [
   {
     date: "2026-10-17",
+    title: "Pair updates",
+    changes: [
+      "Updated Pair: Fira Code with Palenight Theme.",
+      "Updated Pair: Geist Mono with Aura Dark.",
+      "Updated Pair: Geist Mono with Vesper.",
+      "Updated Pair: Inconsolata with Vitesse Dark.",
+      "Updated Pair: Inconsolata with Vitesse Light.",
+      "Updated Pair: JetBrains Mono with Gruvbox Dark Hard.",
+      "Updated Pair: Zed Mono with Gruvbox Light Hard.",
+    ],
+  },
+  {
+    date: "2026-10-17",
     title: "Landing sections and motion",
     changes: [
       "Rebuilt landing sections with animated art for Compare and Snapshot.",
