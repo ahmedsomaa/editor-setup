@@ -1,9 +1,9 @@
 ---
-name: carbon-snapshot
+name: snapshot-studio
 description: Generate a Carbon-style (carbon.now.sh) code image for a given font and theme, as a self-contained 16:9 HTML page, and a 1600x900 PNG. Takes a font name and a theme name (or links to them) and writes its own code snippet in any language if none is given. Use this whenever the user wants a snapshot, screenshot, preview, "carbon" image, or showcase picture of a code font plus color theme, a Pair Snapshot for the registry, or says things like "render Fira Code with Nord", "make a Gruvbox preview image", or "generate the snapshot for this pair", even if they never mention Carbon.
 ---
 
-# Carbon snapshot
+# Snapshot Studio
 
 Produce what carbon.now.sh produces (a code window on a colored backdrop) for one **font + theme** pair, headless, with no website involved. Colors come from the real VS Code theme and the typeface is embedded in the HTML, so the image shows the actual pair rather than an approximation.
 
@@ -27,10 +27,10 @@ Default output directory: the current directory. When the user wants a registry 
 
 ## Running
 
-First use only: `bun install --cwd .claude/skills/carbon-snapshot/scripts` (installs shiki and puppeteer-core; needs Chrome or Chromium, set `CHROME_PATH` if it is not in a standard location).
+First use only: `bun install --cwd .claude/skills/snapshot-studio/scripts` (installs shiki and puppeteer-core; needs Chrome or Chromium, set `CHROME_PATH` if it is not in a standard location).
 
 ```bash
-bun .claude/skills/carbon-snapshot/scripts/render.mjs \
+bun .claude/skills/snapshot-studio/scripts/render.mjs \
   --code-file snippet.ts --lang typescript \
   --font "JetBrains Mono" --theme "Gruvbox Dark Hard" \
   --out ./out --name jetbrains-mono--gruvbox-dark-hard

@@ -1,5 +1,5 @@
 {
-  "name": "carbon-snapshot-scripts",
+  "name": "snapshot-studio-scripts",
   "private": true,
   "type": "module",
   "dependencies": {

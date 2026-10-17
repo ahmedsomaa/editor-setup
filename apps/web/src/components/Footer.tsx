@@ -37,6 +37,7 @@ export default function Footer() {
               <li><Link to="/registry" className={linkClass}>Registry</Link></li>
               <li><Link to="/studio" className={linkClass}>Snapshot Studio</Link></li>
               <li><Link to="/about" className={linkClass}>About</Link></li>
+              <li><Link to="/changelog" className={linkClass}>Changelog</Link></li>
             </ul>
           </nav>
 
@@ -54,7 +55,7 @@ export default function Footer() {
             <ul className="mt-3 flex list-none flex-col p-0">
               <li><a href={GITHUB_URL} target="_blank" rel="noreferrer" className={linkClass}>GitHub</a></li>
               <li><a href={`${GITHUB_URL}/blob/main/GLOSSARY.md`} target="_blank" rel="noreferrer" className={linkClass}>Glossary</a></li>
-              <li><a href={`${GITHUB_URL}/tree/main/docs/design-system`} target="_blank" rel="noreferrer" className={linkClass}>Design system</a></li>
+              <li><Link to="/design" className={linkClass}>Design system</Link></li>
             </ul>
           </nav>
         </div>

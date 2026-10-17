@@ -94,7 +94,7 @@ const FAQS = [
   },
   {
     q: "How do I add a Pair?",
-    a: "Open a pull request with a Pair file and its Snapshot. Make the Snapshot in Snapshot Studio, or with the carbon-snapshot skill in Claude Code. There is no form on the site.",
+    a: "Open a pull request with a Pair file and its Snapshot. Make the Snapshot in Snapshot Studio, or with the snapshot-studio skill in Claude Code. There is no form on the site.",
   },
 ] as const;
 

@@ -7,7 +7,6 @@ A git-backed registry of monospace font and color theme pairings for code editor
 ```text
 registry/                 # Pair JSON + Snapshots (PR surface)
 apps/web/                 # TanStack Start + shadcn (Cloudflare Workers)
-apps/design/              # Design handbook (reference)
 packages/registry-check/  # Schema + image checks
 docs/                     # Agent conventions and ADRs
 .scratch/                 # Specs, issues, archived experiments

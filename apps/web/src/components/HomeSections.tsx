@@ -533,7 +533,7 @@ export function AddPairSection() {
                   Snapshot Studio
                 </Link>
                 , or run the{" "}
-                <code className="font-mono text-sm">carbon-snapshot</code> skill
+                <code className="font-mono text-sm">snapshot-studio</code> skill
                 in Claude Code.
               </>,
               <>Check your files with the command below.</>,

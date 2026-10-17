@@ -12,7 +12,7 @@ A contribution is a pull request into `main`. An issue is optional and is not a 
 
 1. Fork the repository and create a branch from `main`.
 2. Add `registry/pairs/<font-slug>--<theme-slug>.json`.
-3. Add at least one Snapshot under `registry/snapshots/` named `<pair-slug>--<editor-id>.png`. Make it in [Snapshot Studio](https://editor-setup.pages.dev/studio) with an Open or Free Font and Theme: it saves a 1600×900 PNG. In Claude Code, the `carbon-snapshot` skill in `.claude/skills/` makes it from a Font and a Theme.
+3. Add at least one Snapshot under `registry/snapshots/` named `<pair-slug>--<editor-id>.png`. Make it in [Snapshot Studio](https://editor-setup.pages.dev/studio) with an Open or Free Font and Theme: it saves a 1600×900 PNG. In Claude Code, the `snapshot-studio` skill in `.claude/skills/` makes it from a Font and a Theme.
 4. Several Editors may be included in this first pull request.
 5. Run `bun run check`.
 6. Open a pull request into `main`. Name the Font, the Theme, and the Editors in the description.

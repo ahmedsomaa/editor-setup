@@ -9,7 +9,7 @@ apps/snapshot/dist/
 apps/snapshot/.wrangler/
 apps/snapshot/.tanstack/
 apps/snapshot/.output/
-.claude/skills/carbon-snapshot/scripts/node_modules/
+.claude/skills/snapshot-studio/scripts/node_modules/
 out/
 .scratch/mp-cld-imp/
 .DS_Store
