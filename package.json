@@ -7,7 +7,7 @@
     "check": "node packages/registry-check/check-registry.mjs",
     "generate:submitters": "bun run scripts/resolve-pair-submitters.ts",
     "dev": "bun run --cwd apps/web dev",
-    "build": "bun run --cwd apps/web build",
+    "build": "bun install --frozen-lockfile --cwd apps/web && bun run --cwd apps/web build",
     "preview": "bun run --cwd apps/web preview",
     "deploy": "bun run --cwd apps/web deploy",
     "typecheck": "bun run --cwd apps/web typecheck"
