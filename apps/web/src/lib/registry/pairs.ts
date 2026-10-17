@@ -9,6 +9,9 @@ export type Submitter = {
   url: string;
 };
 
+/** The Settings text for one Editor. */
+export type EditorConfig = { id: EditorId; settings: string };
+
 export type PairRecord = {
   slug: string;
   /** Set only when resolved from the merged PR (or git fallback) for a real Pair file. */
@@ -29,13 +32,13 @@ export type PairRecord = {
   };
   /** Filename under registry/snapshots. One image for the Pair, whatever the Editor. */
   snapshot: string;
-  editors: Array<{ id: EditorId; settings: string }>;
+  editors: EditorConfig[];
 };
 
 export function getEditorConfig(
   pair: PairRecord,
   editorId: EditorId,
-): PairRecord["editors"][number] | undefined {
+): EditorConfig | undefined {
   return pair.editors.find((editor) => editor.id === editorId);
 }
 
