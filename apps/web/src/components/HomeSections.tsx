@@ -186,7 +186,7 @@ export function FeatureSections({
         id="find"
         icon={MagnifyingGlass}
         title="Find a Pair"
-        body="Filter the Registry by Appearance, License or Editor. Every entry is one Font and one Theme that work together, with a Snapshot to check."
+        body="Skip the guesswork. Filter by Appearance, License or Editor, and see each Font and Theme together before you commit."
         cta={{ label: "Open Registry", to: "/registry" }}
       >
         <RegistryArt colors={colors} step={step} />
@@ -196,7 +196,7 @@ export function FeatureSections({
         flip
         icon={Scales}
         title="Compare Pairs"
-        body={`Put up to ${MAX_COMPARE} Pairs side by side. Weigh Font, Theme, Appearance and License before you pick one.`}
+        body={`Can’t pick? Line up to ${MAX_COMPARE} Pairs side by side and keep the one you would look at all day.`}
         cta={{ label: "Open Compare", to: "/compare" }}
       >
         {darkArt && lightArt ? (
@@ -210,7 +210,7 @@ export function FeatureSections({
         id="copy"
         icon={Copy}
         title="Copy the Settings"
-        body="Plain text for VS Code and Zed. Paste it into your editor. It sets the Font and names the Theme, and changes no colors."
+        body="Plain-text Settings for your editor. Paste a few lines and the look is yours."
       >
         <SettingsArt colors={colors} />
       </Feature>
@@ -219,7 +219,7 @@ export function FeatureSections({
         flip
         icon={Camera}
         title="Make your own Snapshot"
-        body="Try an Open or Free Font and Theme on your own code, then save a 1600×900 Snapshot for your pull request."
+        body="Pick a Font and Theme, see how your own code looks in them, then save a Snapshot in Snapshot Studio to share."
         cta={{ label: "Open Snapshot Studio", to: "/studio" }}
       >
         <StudioVisual pairs={pairs} />
