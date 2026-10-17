@@ -9,7 +9,7 @@ type RevealProps = {
   index?: number;
   /** Where it slides in from: below, or from the leading or trailing side on wide screens. */
   from?: "up" | "start" | "end";
-};
+} & Omit<React.HTMLAttributes<HTMLElement>, "children" | "className">;
 
 const OFFSETS = {
   up: { x: "0px", y: "28px" },
@@ -27,6 +27,7 @@ export function Reveal({
   className,
   index = 0,
   from = "up",
+  ...rest
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
 
@@ -52,6 +53,7 @@ export function Reveal({
 
   return (
     <Tag
+      {...rest}
       ref={ref}
       className={cn(className)}
       style={

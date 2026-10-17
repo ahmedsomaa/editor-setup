@@ -88,7 +88,7 @@ export function Directory({
               <SnapshotImage
                 src={snapshotUrl(active.snapshot) ?? ""}
                 alt=""
-                className="rounded-[1.1rem]"
+                className="rounded-xl"
               />
             ) : (
               <PairWindow

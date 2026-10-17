@@ -179,11 +179,11 @@ function CompareTable({
                     <SnapshotImage
                       src={src}
                       alt={`${pair.theme.name} with ${pair.font.name}`}
-                      className="rounded-[1.1rem]"
+                      className="rounded-xl"
                     />
                   ) : (
                     <div
-                      className="border-border text-muted-foreground flex items-center justify-center rounded-[1.1rem] border border-dashed text-sm"
+                      className="border-border text-muted-foreground flex items-center justify-center rounded-xl border border-dashed text-sm"
                       style={{ aspectRatio: "16 / 9" }}
                     >
                       No Snapshot to show
@@ -197,7 +197,7 @@ function CompareTable({
                 <button
                   type="button"
                   onClick={onAdd}
-                  className="border-border text-muted-foreground hover:text-foreground hover:border-foreground/40 hover:bg-muted/50 flex w-full flex-col items-center justify-center gap-2 rounded-[1.1rem] border border-dashed text-sm transition-colors duration-150"
+                  className="border-border text-muted-foreground hover:text-foreground hover:border-foreground/40 hover:bg-muted/50 flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed text-sm transition-colors duration-150"
                   style={{ aspectRatio: "16 / 9" }}
                 >
                   <Plus aria-hidden className="size-6" />

@@ -4,6 +4,7 @@ import {
   createRootRoute,
   Link,
 } from "@tanstack/react-router";
+import { SmoothScroll } from "../components/SmoothScroll";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { CompareTray } from "../components/CompareTray";
@@ -74,6 +75,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         >
           Skip to content
         </a>
+        <SmoothScroll />
         <Header />
         <div className="flex-1">{children}</div>
         <Footer />

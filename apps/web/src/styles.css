@@ -234,6 +234,46 @@
     }
   }
 
+  /* Page transition: the header stays put and the rest of the screen changes underneath it. The old
+     page leaves quickly and the new one settles in. Only what is on screen is captured, so tall pages
+     cost nothing extra. Browsers without View Transitions just swap pages. */
+  .site-header {
+    view-transition-name: site-header;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root) {
+      animation: page-out 160ms cubic-bezier(0.23, 1, 0.32, 1) both;
+    }
+    ::view-transition-new(root) {
+      animation: page-in 380ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
+    }
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      mix-blend-mode: normal;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+  @keyframes page-out {
+    to {
+      opacity: 0;
+      transform: translateY(-8px);
+      filter: blur(4px);
+    }
+  }
+  @keyframes page-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(4px);
+    }
+  }
+
   /* Hero entrance: title, text, buttons, then the window, 100ms apart. Content is plain if it never runs. */
   @media (prefers-reduced-motion: no-preference) {
     .hero-in {

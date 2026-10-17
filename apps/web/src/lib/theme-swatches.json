@@ -1,0 +1,587 @@
+{
+ "andromeeda": {
+  "bg": "#23262E",
+  "dots": [
+   "#C74DED",
+   "#96E072",
+   "#FFE66D",
+   "#F39C12"
+  ]
+ },
+ "aurora-x": {
+  "bg": "#07090F",
+  "dots": [
+   "#C792EA",
+   "#C3E88D",
+   "#82AAFF",
+   "#F78C6C"
+  ]
+ },
+ "ayu-dark": {
+  "bg": "#0d1017",
+  "dots": [
+   "#FF8F40",
+   "#AAD94C",
+   "#FFB454",
+   "#D2A6FF"
+  ]
+ },
+ "ayu-light": {
+  "bg": "#f8f9fa",
+  "dots": [
+   "#FA8532",
+   "#86B300",
+   "#EBA400",
+   "#A37ACC"
+  ]
+ },
+ "ayu-mirage": {
+  "bg": "#1f2430",
+  "dots": [
+   "#FFA659",
+   "#D5FF80",
+   "#FFCD66",
+   "#DFBFFF"
+  ]
+ },
+ "catppuccin-frappe": {
+  "bg": "#303446",
+  "dots": [
+   "#CA9EE6",
+   "#A6D189",
+   "#8CAAEE",
+   "#EF9F76"
+  ]
+ },
+ "catppuccin-latte": {
+  "bg": "#eff1f5",
+  "dots": [
+   "#8839EF",
+   "#40A02B",
+   "#1E66F5",
+   "#FE640B"
+  ]
+ },
+ "catppuccin-macchiato": {
+  "bg": "#24273a",
+  "dots": [
+   "#C6A0F6",
+   "#A6DA95",
+   "#8AADF4",
+   "#F5A97F"
+  ]
+ },
+ "catppuccin-mocha": {
+  "bg": "#1e1e2e",
+  "dots": [
+   "#CBA6F7",
+   "#A6E3A1",
+   "#89B4FA",
+   "#FAB387"
+  ]
+ },
+ "dark-plus": {
+  "bg": "#1E1E1E",
+  "dots": [
+   "#569CD6",
+   "#CE9178",
+   "#DCDCAA",
+   "#B5CEA8"
+  ]
+ },
+ "dracula": {
+  "bg": "#282A36",
+  "dots": [
+   "#FF79C6",
+   "#F1FA8C",
+   "#50FA7B",
+   "#BD93F9"
+  ]
+ },
+ "dracula-soft": {
+  "bg": "#282A36",
+  "dots": [
+   "#F286C4",
+   "#E7EE98",
+   "#62E884",
+   "#BF9EEE"
+  ]
+ },
+ "everforest-dark": {
+  "bg": "#2d353b",
+  "dots": [
+   "#E69875",
+   "#DBBC7F",
+   "#A7C080",
+   "#D699B6"
+  ]
+ },
+ "everforest-light": {
+  "bg": "#fdf6e3",
+  "dots": [
+   "#F57D26",
+   "#DFA000",
+   "#8DA101",
+   "#DF69BA"
+  ]
+ },
+ "github-dark": {
+  "bg": "#24292e",
+  "dots": [
+   "#F97583",
+   "#9ECBFF",
+   "#B392F0",
+   "#79B8FF"
+  ]
+ },
+ "github-dark-default": {
+  "bg": "#0d1117",
+  "dots": [
+   "#FF7B72",
+   "#A5D6FF",
+   "#D2A8FF",
+   "#79C0FF"
+  ]
+ },
+ "github-dark-dimmed": {
+  "bg": "#22272e",
+  "dots": [
+   "#F47067",
+   "#96D0FF",
+   "#DCBDFB",
+   "#6CB6FF"
+  ]
+ },
+ "github-dark-high-contrast": {
+  "bg": "#0a0c10",
+  "dots": [
+   "#FF9492",
+   "#ADDCFF",
+   "#DBB7FF",
+   "#91CBFF"
+  ]
+ },
+ "github-light": {
+  "bg": "#fff",
+  "dots": [
+   "#D73A49",
+   "#032F62",
+   "#6F42C1",
+   "#005CC5"
+  ]
+ },
+ "github-light-default": {
+  "bg": "#ffffff",
+  "dots": [
+   "#CF222E",
+   "#0A3069",
+   "#8250DF",
+   "#0550AE"
+  ]
+ },
+ "github-light-high-contrast": {
+  "bg": "#ffffff",
+  "dots": [
+   "#A0111F",
+   "#032563",
+   "#622CBC",
+   "#023B95"
+  ]
+ },
+ "gruvbox-dark-hard": {
+  "bg": "#1d2021",
+  "dots": [
+   "#FE8019",
+   "#B8BB26",
+   "#FABD2F",
+   "#D3869B"
+  ]
+ },
+ "gruvbox-dark-medium": {
+  "bg": "#282828",
+  "dots": [
+   "#FE8019",
+   "#B8BB26",
+   "#FABD2F",
+   "#D3869B"
+  ]
+ },
+ "gruvbox-dark-soft": {
+  "bg": "#32302f",
+  "dots": [
+   "#FE8019",
+   "#B8BB26",
+   "#FABD2F",
+   "#D3869B"
+  ]
+ },
+ "gruvbox-light-hard": {
+  "bg": "#f9f5d7",
+  "dots": [
+   "#AF3A03",
+   "#79740E",
+   "#B57614",
+   "#8F3F71"
+  ]
+ },
+ "gruvbox-light-medium": {
+  "bg": "#fbf1c7",
+  "dots": [
+   "#AF3A03",
+   "#79740E",
+   "#B57614",
+   "#8F3F71"
+  ]
+ },
+ "gruvbox-light-soft": {
+  "bg": "#f2e5bc",
+  "dots": [
+   "#AF3A03",
+   "#79740E",
+   "#B57614",
+   "#8F3F71"
+  ]
+ },
+ "horizon": {
+  "bg": "#1C1E26",
+  "dots": [
+   "#B877DBE6",
+   "#FAB795E6",
+   "#25B0BCE6",
+   "#F09483E6"
+  ]
+ },
+ "horizon-bright": {
+  "bg": "#FDF0ED",
+  "dots": [
+   "#8A31B9",
+   "#F6661E",
+   "#1D8991",
+   "#DC3318"
+  ]
+ },
+ "houston": {
+  "bg": "#17191e",
+  "dots": [
+   "#54B9FF",
+   "#FFD493",
+   "#00DAEF",
+   "#FFD493"
+  ]
+ },
+ "kanagawa-dragon": {
+  "bg": "#181616",
+  "dots": [
+   "#8992A7",
+   "#8A9A7B",
+   "#8BA4B0",
+   "#A292A3"
+  ]
+ },
+ "kanagawa-lotus": {
+  "bg": "#F2ECBC",
+  "dots": [
+   "#624C83",
+   "#6F894E",
+   "#4D699B",
+   "#B35B79"
+  ]
+ },
+ "kanagawa-wave": {
+  "bg": "#1F1F28",
+  "dots": [
+   "#957FB8",
+   "#98BB6C",
+   "#7E9CD8",
+   "#D27E99"
+  ]
+ },
+ "laserwave": {
+  "bg": "#27212e",
+  "dots": [
+   "#A96BC0",
+   "#B4DCE7",
+   "#EB64B9",
+   "#B381C5"
+  ]
+ },
+ "light-plus": {
+  "bg": "#FFFFFF",
+  "dots": [
+   "#0000FF",
+   "#A31515",
+   "#795E26",
+   "#098658"
+  ]
+ },
+ "material-theme": {
+  "bg": "#263238",
+  "dots": [
+   "#C792EA",
+   "#C3E88D",
+   "#82AAFF",
+   "#F78C6C"
+  ]
+ },
+ "material-theme-darker": {
+  "bg": "#212121",
+  "dots": [
+   "#C792EA",
+   "#C3E88D",
+   "#82AAFF",
+   "#F78C6C"
+  ]
+ },
+ "material-theme-lighter": {
+  "bg": "#FAFAFA",
+  "dots": [
+   "#9C3EDA",
+   "#91B859",
+   "#6182B8",
+   "#F76D47"
+  ]
+ },
+ "material-theme-ocean": {
+  "bg": "#0F111A",
+  "dots": [
+   "#C792EA",
+   "#C3E88D",
+   "#82AAFF",
+   "#F78C6C"
+  ]
+ },
+ "material-theme-palenight": {
+  "bg": "#292D3E",
+  "dots": [
+   "#C792EA",
+   "#C3E88D",
+   "#82AAFF",
+   "#F78C6C"
+  ]
+ },
+ "min-dark": {
+  "bg": "#1f1f1f",
+  "dots": [
+   "#F97583",
+   "#FFAB70",
+   "#B392F0",
+   "#F8F8F8"
+  ]
+ },
+ "min-light": {
+  "bg": "#ffffff",
+  "dots": [
+   "#D32F2F",
+   "#22863A",
+   "#6F42C1",
+   "#1976D2"
+  ]
+ },
+ "monokai": {
+  "bg": "#272822",
+  "dots": [
+   "#66D9EF",
+   "#E6DB74",
+   "#A6E22E",
+   "#AE81FF"
+  ]
+ },
+ "night-owl": {
+  "bg": "#011627",
+  "dots": [
+   "#C792EA",
+   "#ECC48D",
+   "#82AAFF",
+   "#F78C6C"
+  ]
+ },
+ "night-owl-light": {
+  "bg": "#FBFBFB",
+  "dots": [
+   "#994CC3",
+   "#C96765",
+   "#4876D6",
+   "#AA0982"
+  ]
+ },
+ "nord": {
+  "bg": "#2e3440ff",
+  "dots": [
+   "#81A1C1",
+   "#A3BE8C",
+   "#88C0D0",
+   "#B48EAD"
+  ]
+ },
+ "one-dark-pro": {
+  "bg": "#282c34",
+  "dots": [
+   "#C678DD",
+   "#98C379",
+   "#61AFEF",
+   "#D19A66"
+  ]
+ },
+ "one-light": {
+  "bg": "#FAFAFA",
+  "dots": [
+   "#A626A4",
+   "#50A14F",
+   "#4078F2",
+   "#986801"
+  ]
+ },
+ "plastic": {
+  "bg": "#21252B",
+  "dots": [
+   "#61AFEF",
+   "#98C379",
+   "#B57EDC",
+   "#56B6C2"
+  ]
+ },
+ "poimandres": {
+  "bg": "#1b1e28",
+  "dots": [
+   "#91B4D5",
+   "#5DE4C7",
+   "#E4F0FBD0",
+   "#5DE4C7"
+  ]
+ },
+ "red": {
+  "bg": "#390000",
+  "dots": [
+   "#FF6262FF",
+   "#CD8D8DFF",
+   "#FEC758FF",
+   "#994646FF"
+  ]
+ },
+ "rose-pine": {
+  "bg": "#191724",
+  "dots": [
+   "#31748F",
+   "#F6C177",
+   "#EBBCBA",
+   "#EBBCBA"
+  ]
+ },
+ "rose-pine-dawn": {
+  "bg": "#faf4ed",
+  "dots": [
+   "#286983",
+   "#EA9D34",
+   "#D7827E",
+   "#D7827E"
+  ]
+ },
+ "rose-pine-moon": {
+  "bg": "#232136",
+  "dots": [
+   "#3E8FB0",
+   "#F6C177",
+   "#EA9A97",
+   "#EA9A97"
+  ]
+ },
+ "slack-dark": {
+  "bg": "#222222",
+  "dots": [
+   "#569CD6",
+   "#CE9178",
+   "#DCDCAA",
+   "#B5CEA8"
+  ]
+ },
+ "slack-ochin": {
+  "bg": "#FFF",
+  "dots": [
+   "#0991B6",
+   "#A44185",
+   "#7EB233",
+   "#174781"
+  ]
+ },
+ "snazzy-light": {
+  "bg": "#FAFBFC",
+  "dots": [
+   "#F767BB",
+   "#CF9C00",
+   "#09A1ED",
+   "#FF5C57"
+  ]
+ },
+ "solarized-dark": {
+  "bg": "#002B36",
+  "dots": [
+   "#93A1A1",
+   "#2AA198",
+   "#268BD2",
+   "#D33682"
+  ]
+ },
+ "solarized-light": {
+  "bg": "#FDF6E3",
+  "dots": [
+   "#586E75",
+   "#2AA198",
+   "#268BD2",
+   "#D33682"
+  ]
+ },
+ "synthwave-84": {
+  "bg": "#262335",
+  "dots": [
+   "#FEDE5D",
+   "#FF8B39",
+   "#36F9F6",
+   "#F97E72"
+  ]
+ },
+ "tokyo-night": {
+  "bg": "#1a1b26",
+  "dots": [
+   "#9D7CD8",
+   "#9ECE6A",
+   "#7AA2F7",
+   "#FF9E64"
+  ]
+ },
+ "vesper": {
+  "bg": "#101010",
+  "dots": [
+   "#A0A0A0",
+   "#99FFE4",
+   "#FFC799",
+   "#FFC799"
+  ]
+ },
+ "vitesse-black": {
+  "bg": "#000",
+  "dots": [
+   "#CB7676",
+   "#C98A7D",
+   "#80A665",
+   "#4C9A91"
+  ]
+ },
+ "vitesse-dark": {
+  "bg": "#121212",
+  "dots": [
+   "#CB7676",
+   "#C98A7D",
+   "#80A665",
+   "#4C9A91"
+  ]
+ },
+ "vitesse-light": {
+  "bg": "#ffffff",
+  "dots": [
+   "#AB5959",
+   "#B56959",
+   "#59873A",
+   "#2F798A"
+  ]
+ }
+}

@@ -1,4 +1,11 @@
-import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { Check, ChevronsUpDown, Search } from "lucide-react";
 import { cn } from "cn";
 
@@ -47,7 +54,8 @@ export function Combobox({
   const trigger = useRef<HTMLButtonElement>(null);
   const list = useRef<HTMLUListElement>(null);
 
-  const isPicked = (id: string) => (multiple ? multiple.values.includes(id) : id === value);
+  const isPicked = (id: string) =>
+    multiple ? multiple.values.includes(id) : id === value;
   const full = Boolean(multiple?.max && multiple.values.length >= multiple.max);
   const isLocked = (id: string) => full && !isPicked(id);
   const selected = multiple ? undefined : options.find((o) => o.id === value);
@@ -152,7 +160,10 @@ export function Combobox({
         <span
           className={cn(
             "flex min-w-0 items-center gap-2",
-            !selected && !display && !multiple?.values.length && "text-muted-foreground",
+            !selected &&
+              !display &&
+              !multiple?.values.length &&
+              "text-muted-foreground",
           )}
         >
           {selected?.icon}
@@ -200,6 +211,7 @@ export function Combobox({
             role="listbox"
             aria-multiselectable={multiple ? true : undefined}
             aria-label={label}
+            data-lenis-prevent
             className="max-h-64 overflow-y-auto p-1.5"
           >
             {filtered.length === 0 ? (

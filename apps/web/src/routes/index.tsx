@@ -7,7 +7,6 @@ import {
   SharePairSection,
 } from "@/components/HomeSections";
 import { GlyphPattern } from "@/components/GlyphPattern";
-import { SmoothScroll } from "@/components/SmoothScroll";
 import { TokenWindow } from "@/components/TokenWindow";
 import { PLAYGROUND } from "@/lib/playground-tokens";
 import { Button } from "@/components/ui/button";
@@ -124,7 +123,6 @@ function HomePage() {
 
   return (
     <main id="main">
-      <SmoothScroll />
       <section
         data-hero
         className="relative isolate flex min-h-[calc(100svh-4.5rem)] items-center overflow-hidden px-4 py-16"

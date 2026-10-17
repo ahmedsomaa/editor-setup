@@ -4,6 +4,8 @@ import {
   LoaderCircle as Loader2,
   ImageDown,
   Link2,
+  Moon,
+  Sun,
   Upload,
   X,
 } from "lucide-react";
@@ -19,6 +21,7 @@ import { EDITOR_IDS, EDITOR_LABELS, type EditorId } from "@/lib/pairs";
 import { EditorLogo } from "@/components/EditorLogo";
 import { zedToVscodeTheme, zedVariants } from "@/lib/zed-theme";
 import { sampleFor, SAMPLES } from "@/lib/samples";
+import SWATCHES from "@/lib/theme-swatches.json";
 import { buildSnapshotHtml } from "@/lib/snapshot-html";
 import { download, renderPngs } from "@/lib/export";
 import { Combobox, type Option } from "@/components/Combobox";
@@ -265,8 +268,22 @@ export function EditorPage() {
 
   const fontOptions = useMemo<Option[]>(
     () => [
-      ...FONT_PRESETS.map((f) => ({ id: f, label: f, group: "Fonts" })),
-      { id: OTHER, label: "Other", group: "Your own" },
+      ...FONT_PRESETS.map((f) => ({
+        id: f,
+        label: f,
+        group: "Fonts",
+        icon: <OptionChip className="font-mono">Aa</OptionChip>,
+      })),
+      {
+        id: OTHER,
+        label: "Other",
+        group: "Your own",
+        icon: (
+          <OptionChip>
+            <Upload className="size-3.5" />
+          </OptionChip>
+        ),
+      },
     ],
     [],
   );
@@ -276,13 +293,24 @@ export function EditorPage() {
         id: t.id,
         label: t.name,
         group: "Dark",
+        icon: <ThemeSwatch id={t.id} dark />,
       })),
       ...THEMES.filter((t) => t.type === "light").map((t) => ({
         id: t.id,
         label: t.name,
         group: "Light",
+        icon: <ThemeSwatch id={t.id} />,
       })),
-      { id: OTHER, label: "Other", group: "Your own" },
+      {
+        id: OTHER,
+        label: "Other",
+        group: "Your own",
+        icon: (
+          <OptionChip>
+            <Link2 className="size-3.5" />
+          </OptionChip>
+        ),
+      },
     ],
     [],
   );
@@ -361,7 +389,7 @@ export function EditorPage() {
         <header>
           <h1>Snapshot Studio</h1>
           <p className="text-muted-foreground mt-3 max-w-[60ch] text-lg">
-            See your own code in any font and theme.
+            See your own code in any open or free font and theme.
           </p>
         </header>
       </PageHero>
@@ -600,6 +628,11 @@ export function EditorPage() {
                 </div>
               </fieldset>
             </div>
+            <p className="text-muted-foreground border-border m-0 border-t px-4 py-3 text-xs">
+              Use an Open or Free Font and Theme. Snapshots go in a public
+              Registry, so a license that asks for payment, or does not allow
+              public images, can&rsquo;t be used.
+            </p>
             <button type="submit" className="sr-only">
               Apply
             </button>
@@ -692,6 +725,7 @@ export function EditorPage() {
               )}
               {tab === "code" ? (
                 <textarea
+                  data-lenis-prevent
                   aria-label="Code"
                   name="code"
                   value={code}
@@ -708,6 +742,59 @@ export function EditorPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+/** A Theme's own colors: its background with four dots for keywords, strings, functions and numbers. */
+function ThemeSwatch({ id, dark }: { id: string; dark?: boolean }) {
+  const swatch = (SWATCHES as Record<string, { bg: string; dots: string[] }>)[
+    id
+  ];
+  if (!swatch)
+    return (
+      <OptionChip
+        className={
+          dark ? "bg-foreground text-background border-transparent" : undefined
+        }
+      >
+        {dark ? <Moon className="size-3.5" /> : <Sun className="size-3.5" />}
+      </OptionChip>
+    );
+  return (
+    <span
+      aria-hidden
+      className="border-border flex h-6 shrink-0 items-center gap-1 rounded-md border px-1.5"
+      style={{ background: swatch.bg }}
+    >
+      {swatch.dots.map((color, i) => (
+        <span
+          key={i}
+          className="size-1.5 rounded-full"
+          style={{ background: color }}
+        />
+      ))}
+    </span>
+  );
+}
+
+/** A small tile in front of an option: "Aa" for a Font, an icon for the "Other" choices. */
+function OptionChip({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "bg-card text-foreground border-border flex size-6 shrink-0 items-center justify-center rounded-md border text-[11px] leading-none",
+        className,
+      )}
+    >
+      {children}
+    </span>
   );
 }
 

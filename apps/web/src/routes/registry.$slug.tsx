@@ -6,18 +6,14 @@ import {
   notFound,
   useNavigate,
 } from "@tanstack/react-router";
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  Check,
-  Copy,
-} from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, Copy } from "lucide-react";
 import { AppearanceTag, LicenseTag } from "@/components/Tag";
 import { Directory } from "@/components/Directory";
 import { PairWindow, textToLines } from "@/components/PairWindow";
 import { CompareToggle } from "@/components/CompareToggle";
 import { ShareButton } from "@/components/ShareButton";
 import { PageHero } from "@/components/PagePattern";
+import { Reveal } from "@/components/Reveal";
 import { SnapshotImage } from "@/components/SnapshotImage";
 import { Button } from "@/components/ui/button";
 import {
@@ -183,7 +179,7 @@ function PairPage() {
               <SnapshotImage
                 src={snap}
                 alt={`Snapshot of ${pair.font.name} and ${pair.theme.name}`}
-                className="rounded-[1.1rem]"
+                className="rounded-xl"
               />
             ) : (
               <PairWindow
@@ -212,7 +208,8 @@ function PairPage() {
           </figure>
         </div>
 
-        <section
+        <Reveal
+          as="section"
           id="settings"
           aria-labelledby="settings-heading"
           className="mt-16 scroll-mt-32"
@@ -239,9 +236,10 @@ function PairPage() {
             Plain text for {EDITOR_LABELS[config.id]}. Paste it into your
             Editor.
           </p>
-        </section>
+        </Reveal>
 
-        <section
+        <Reveal
+          as="section"
           id="details"
           aria-labelledby="details-heading"
           className="mt-16 scroll-mt-32"
@@ -264,9 +262,10 @@ function PairPage() {
               className="border-border max-md:border-t md:ps-8"
             />
           </div>
-        </section>
+        </Reveal>
 
-        <section
+        <Reveal
+          as="section"
           className="border-border mt-20 border-t pt-16"
           aria-labelledby="related-heading"
         >
@@ -292,7 +291,7 @@ function PairPage() {
               </Await>
             </Suspense>
           </div>
-        </section>
+        </Reveal>
       </div>
     </main>
   );

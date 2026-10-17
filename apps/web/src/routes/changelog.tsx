@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/PagePattern";
+import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
 import { GITHUB_URL } from "@/lib/site";
 import { pageHead } from "@/lib/page-head";
@@ -52,14 +53,14 @@ function Changelog() {
       <PageHero variant="about" className="pb-4 sm:pb-6">
         <h1>Changelog</h1>
         <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-          What changed on the site, newest first. Every change is a commit in
-          Git.
+          Every change, newest first.
         </p>
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
         <ol className="border-border mt-16 list-none border-t p-0">
           {ENTRIES.map((entry) => (
-            <li
+            <Reveal
+              as="li"
               key={entry.date}
               className="border-border grid gap-2 border-b py-8 sm:grid-cols-[10rem_1fr] sm:gap-8"
             >
@@ -77,7 +78,7 @@ function Changelog() {
                   ))}
                 </ul>
               </div>
-            </li>
+            </Reveal>
           ))}
         </ol>
         <div className="mt-8">

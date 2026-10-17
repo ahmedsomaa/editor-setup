@@ -11,11 +11,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import {
-  filterPairs,
-  pairLabel,
-  type PairRecord,
-} from "@/lib/pairs";
+import { filterPairs, pairLabel, type PairRecord } from "@/lib/pairs";
 import { cn } from "cn";
 
 const PAGE_SIZE = 6;
@@ -47,7 +43,9 @@ export function ComparePicker({
 
   const toggle = (slug: string) =>
     onChange(
-      values.includes(slug) ? values.filter((s) => s !== slug) : [...values, slug],
+      values.includes(slug)
+        ? values.filter((s) => s !== slug)
+        : [...values, slug],
     );
 
   return (
@@ -62,7 +60,10 @@ export function ComparePicker({
 
         <div className="px-6 pb-3">
           <div className="bg-muted border-border flex h-10 items-center gap-2 rounded-full border px-4">
-            <Search aria-hidden className="text-muted-foreground size-4 shrink-0" />
+            <Search
+              aria-hidden
+              className="text-muted-foreground size-4 shrink-0"
+            />
             <input
               value={q}
               onChange={(e) => {
@@ -80,6 +81,7 @@ export function ComparePicker({
 
         <ul
           aria-label="Pairs"
+          data-lenis-prevent
           className="m-0 min-h-0 flex-1 list-none overflow-y-auto overscroll-contain px-3 pb-3"
         >
           {shown.length === 0 ? (
@@ -101,7 +103,8 @@ export function ComparePicker({
                   className={cn(
                     "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-start transition-colors duration-150",
                     on ? "bg-accent-soft" : "hover:bg-muted",
-                    locked && "cursor-not-allowed opacity-50 hover:bg-transparent",
+                    locked &&
+                      "cursor-not-allowed opacity-50 hover:bg-transparent",
                   )}
                 >
                   <span
@@ -116,7 +119,9 @@ export function ComparePicker({
                     Aa
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium">{pairLabel(p)}</span>
+                    <span className="block truncate text-sm font-medium">
+                      {pairLabel(p)}
+                    </span>
                   </span>
                   <span
                     aria-hidden

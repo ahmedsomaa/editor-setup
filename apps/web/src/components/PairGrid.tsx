@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { CompareToggle } from "@/components/CompareToggle";
+import { Reveal } from "@/components/Reveal";
 import {
   EDITOR_IDS,
   EDITOR_LABELS,
@@ -13,15 +14,20 @@ import { snapshotUrl } from "@/lib/snapshots";
 export function PairGrid({ pairs }: { pairs: PairRecord[] }) {
   return (
     <ul className="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2">
-      {pairs.map((pair) => (
-        <li key={pair.slug} className="relative min-w-0">
+      {pairs.map((pair, i) => (
+        <Reveal
+          as="li"
+          index={i % 2}
+          key={pair.slug}
+          className="relative min-w-0"
+        >
           <PairCard pair={pair} />
           <CompareToggle
             slug={pair.slug}
             label={pairLabel(pair)}
             className="absolute end-3 top-3 z-10"
           />
-        </li>
+        </Reveal>
       ))}
     </ul>
   );

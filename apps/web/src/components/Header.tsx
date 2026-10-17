@@ -11,7 +11,7 @@ const NAV = [
 
 export default function Header() {
   return (
-    <header className="border-border bg-background/90 sticky top-0 z-40 border-b backdrop-blur-sm">
+    <header className="site-header border-border bg-background/90 sticky top-0 z-40 border-b backdrop-blur-sm">
       <nav
         aria-label="Main"
         className="mx-auto grid h-16 max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:grid-cols-[1fr_auto_1fr]"
