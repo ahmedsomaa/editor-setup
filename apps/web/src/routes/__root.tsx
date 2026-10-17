@@ -5,25 +5,21 @@ import Header from '../components/Header'
 import { CompareTray } from '../components/CompareTray'
 import { themeInitScript } from '../components/ThemeToggle'
 
-import { SITE_URL } from '../lib/site'
+import { HOME_DESCRIPTION, HOME_TITLE, OG_IMAGE } from '../lib/page-head'
 
 import appCss from '../styles.css?url'
-
-const DESCRIPTION =
-  'Font and Theme Pairs from real setups, shown in their own colors, with Settings you can copy for VS Code and Cursor.'
-const OG_IMAGE = `${SITE_URL}/og.png`
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'EditorSetup' },
-      { name: 'description', content: DESCRIPTION },
+      { title: HOME_TITLE },
+      { name: 'description', content: HOME_DESCRIPTION },
       { property: 'og:site_name', content: 'EditorSetup' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:title', content: 'EditorSetup' },
-      { property: 'og:description', content: DESCRIPTION },
+      { property: 'og:title', content: HOME_TITLE },
+      { property: 'og:description', content: HOME_DESCRIPTION },
       { property: 'og:image', content: OG_IMAGE },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
@@ -33,8 +29,8 @@ export const Route = createRootRoute({
           'EditorSetup home page: a code window in the Vesper Theme with Geist Mono.',
       },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'EditorSetup' },
-      { name: 'twitter:description', content: DESCRIPTION },
+      { name: 'twitter:title', content: HOME_TITLE },
+      { name: 'twitter:description', content: HOME_DESCRIPTION },
       { name: 'twitter:image', content: OG_IMAGE },
     ],
     links: [

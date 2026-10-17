@@ -3,9 +3,16 @@ import { ArrowUpRight } from "@phosphor-icons/react";
 import { PageHero } from "@/components/PagePattern";
 import { Button } from "@/components/ui/button";
 import { GITHUB_URL } from "@/lib/site";
+import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/changelog")({
-  head: () => ({ meta: [{ title: "Changelog · EditorSetup" }] }),
+  head: () =>
+    pageHead({
+      path: "/changelog",
+      title: "EditorSetup Changelog: new Pairs, pages and Editors",
+      description:
+        "Release notes for EditorSetup: new Pairs, pages and Editors, with the date of each change. See what is new in the Registry and Snapshot Studio.",
+    }),
   component: Changelog,
 });
 

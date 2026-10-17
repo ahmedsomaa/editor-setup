@@ -19,6 +19,7 @@ import {
 } from "@/lib/pairs";
 import { registrySearchSchema } from "@/lib/registry-search";
 import { listPairsFn } from "@/server/pairs.functions";
+import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/registry/")({
   validateSearch: registrySearchSchema,
@@ -31,16 +32,13 @@ export const Route = createFileRoute("/registry/")({
   loader: ({ deps }) => listPairsFn({ data: deps }),
   // Crawlable listing whose state lives in the URL: render fully on the server.
   ssr: true,
-  head: () => ({
-    meta: [
-      { title: "Registry · EditorSetup" },
-      {
-        name: "description",
-        content:
-          "Font and Theme Pairs with Settings you can copy for VS Code and Cursor.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/registry",
+      title: "Registry: Font and Theme Pairs for VS Code and Cursor",
+      description:
+        "Browse Font and Theme Pairs from real editor setups. Filter by Appearance, License or Editor, open a Pair to see its Snapshot and copy its Settings.",
+    }),
   component: RegistryPage,
 });
 

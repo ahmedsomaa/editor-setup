@@ -4,9 +4,16 @@ import { PageHero } from "@/components/PagePattern";
 import { LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
 import { CONTRIBUTE_URL, GITHUB_URL } from "@/lib/site";
+import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({ meta: [{ title: "About · EditorSetup" }] }),
+  head: () =>
+    pageHead({
+      path: "/about",
+      title: "About EditorSetup: Pairs, Snapshots, Settings, Licenses",
+      description:
+        "EditorSetup is a curated list of Font and Theme Pairs. Learn what a Pair, a Snapshot and a Config are, and how each License works.",
+    }),
   component: About,
 });
 

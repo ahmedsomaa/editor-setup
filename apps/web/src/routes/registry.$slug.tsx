@@ -28,6 +28,7 @@ import { pairSearchSchema } from "@/lib/registry-search";
 import { getPairFn, getRelatedPairsFn } from "@/server/pairs.functions";
 import { snapshotUrl } from "@/lib/snapshots";
 import { cn } from "cn";
+import { fitTitle, pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/registry/$slug")({
   validateSearch: pairSearchSchema,
@@ -43,18 +44,17 @@ export const Route = createFileRoute("/registry/$slug")({
   head: ({ loaderData }) => {
     const pair = loaderData?.pair;
     if (!pair) return {};
-    const title = `${pair.theme.name} with ${pair.font.name} · EditorSetup`;
-    const description = `${pair.theme.name} and ${pair.font.name}: Snapshot and copyable Settings.`;
-    return {
-      meta: [
-        { title },
-        { name: "description", content: description },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description },
-        { name: "twitter:title", content: title },
-        { name: "twitter:description", content: description },
-      ],
-    };
+    const name = `${pair.theme.name} with ${pair.font.name}`;
+    return pageHead({
+      path: `/registry/${pair.slug}`,
+      title: fitTitle([
+        `${name}: Font and Theme Pair · EditorSetup`,
+        `${name} · EditorSetup Font and Theme Pair`,
+        `${name}: Font and Theme Pair`,
+        `${name} · EditorSetup`,
+      ]),
+      description: `See ${name} in a real editor Snapshot, then copy the Settings for VS Code and Cursor. A Font and Theme Pair from EditorSetup.`,
+    });
   },
   component: PairPage,
   notFoundComponent: PairNotFound,

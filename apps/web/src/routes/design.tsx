@@ -4,9 +4,16 @@ import { PageHero } from "@/components/PagePattern";
 import { AppearanceTag, LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
 import { GITHUB_URL } from "@/lib/site";
+import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/design")({
-  head: () => ({ meta: [{ title: "Design system · EditorSetup" }] }),
+  head: () =>
+    pageHead({
+      path: "/design",
+      title: "EditorSetup design system: colors, type, spacing, tags",
+      description:
+        "The colors, type, spacing and tags behind EditorSetup, a warm monochrome system where a Pair own colors are the only saturated surface on a page.",
+    }),
   component: Design,
 });
 
