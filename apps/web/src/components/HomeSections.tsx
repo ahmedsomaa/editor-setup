@@ -329,8 +329,9 @@ export function CompareSection({ pairs }: { pairs: PairRecord[] }) {
   );
 }
 
-/** Every Font by Theme combination: filled where a Pair exists, empty where nobody has paired them. */
-export function GapSection({ pairs }: { pairs: PairRecord[] }) {
+/** Every Font by Theme combination: filled where a Pair exists, empty where nobody has paired them. Paid Fonts are left out. */
+export function GapSection({ pairs: allPairs }: { pairs: PairRecord[] }) {
+  const pairs = allPairs.filter((p) => p.font.license !== "paid");
   const fonts = [...new Set(pairs.map((p) => p.font.name))].sort();
   const themes = [
     ...new Map(pairs.map((p) => [p.theme.name, p.theme.appearance])).entries(),
