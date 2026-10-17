@@ -81,4 +81,3 @@ Do not mix an unrelated Pair into the same pull request.
 ## 🤖 What happens after you open a pull request
 
 - The **Registry check** runs on every pull request. A workflow from a first-time fork needs the maintainer to approve it first.
-- After a Pair is merged, a bot opens a pull request with a draft changelog entry. The maintainer edits and merges it.
