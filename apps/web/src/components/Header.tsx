@@ -4,6 +4,7 @@ import { Mark } from "@/components/Mark";
 
 const NAV = [
   { to: "/registry", label: "Registry" },
+  { to: "/compare", label: "Compare" },
   { to: "/studio", label: "Snapshot Studio" },
   { to: "/about", label: "About" },
 ] as const;
@@ -11,9 +12,15 @@ const NAV = [
 export default function Header() {
   return (
     <header className="border-border bg-background/90 sticky top-0 z-40 border-b backdrop-blur-sm">
-      <nav aria-label="Main" className="mx-auto grid h-16 max-w-5xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:grid-cols-[1fr_auto_1fr]">
+      <nav
+        aria-label="Main"
+        className="mx-auto grid h-16 max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 sm:grid-cols-[1fr_auto_1fr]"
+      >
         <div className="flex min-w-0 items-center">
-          <Link to="/" className="text-foreground inline-flex items-center gap-2.5 text-lg font-medium tracking-tighter no-underline">
+          <Link
+            to="/"
+            className="text-foreground inline-flex items-center gap-2.5 text-lg font-medium tracking-tighter no-underline"
+          >
             <Mark className="size-6" />
             EditorSetup
           </Link>
@@ -24,7 +31,9 @@ export default function Header() {
               <Link
                 to={to}
                 className="text-muted-foreground hover:text-foreground inline-flex h-9 items-center rounded-full px-3.5 text-sm font-medium no-underline transition-colors"
-                activeProps={{ className: "bg-muted text-accent-text hover:text-accent-text" }}
+                activeProps={{
+                  className: "bg-muted text-accent-text hover:text-accent-text",
+                }}
               >
                 {label}
               </Link>
@@ -35,13 +44,15 @@ export default function Header() {
           <GitHubStars />
         </div>
       </nav>
-      <ul className="border-border mx-auto flex max-w-5xl list-none gap-1 overflow-x-auto border-t px-4 py-2 p-0 sm:hidden">
+      <ul className="border-border mx-auto flex max-w-6xl list-none gap-1 overflow-x-auto border-t px-4 py-2 p-0 sm:hidden">
         {NAV.map(({ to, label }) => (
           <li key={to}>
             <Link
               to={to}
               className="text-muted-foreground hover:text-foreground inline-flex h-9 items-center rounded-full px-3 text-sm font-medium no-underline"
-              activeProps={{ className: "bg-muted text-accent-text hover:text-accent-text" }}
+              activeProps={{
+                className: "bg-muted text-accent-text hover:text-accent-text",
+              }}
             >
               {label}
             </Link>

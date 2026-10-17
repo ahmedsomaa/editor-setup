@@ -164,8 +164,24 @@
 
 @layer utilities {
   /* A faint dot grid that fades out downward. Decoration only: it sits behind content. */
+  .bg-glyphs {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+  }
+  .bg-glyphs-up {
+    -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+    mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+  }
   .bg-pattern {
-    background-image: radial-gradient(color-mix(in srgb, var(--pattern-color, var(--foreground)) 16%, transparent) 1px, transparent 1.5px);
+    background-image: radial-gradient(
+      color-mix(
+          in srgb,
+          var(--pattern-color, var(--foreground)) 16%,
+          transparent
+        )
+        1px,
+      transparent 1.5px
+    );
     background-size: 22px 22px;
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
     mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
@@ -194,6 +210,20 @@
         opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
         transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
       transition-delay: calc(var(--i, 0) * 80ms);
+    }
+  }
+
+  /* A new Pair in the playground comes out of a blur. */
+  @media (prefers-reduced-motion: no-preference) {
+    .pair-swap {
+      animation: pair-swap 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+  @keyframes pair-swap {
+    from {
+      opacity: 0;
+      filter: blur(12px);
+      transform: scale(0.98);
     }
   }
 

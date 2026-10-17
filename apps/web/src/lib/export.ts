@@ -20,11 +20,10 @@ async function canvasBlob(canvas: HTMLCanvasElement): Promise<Blob> {
 }
 
 /**
- * Rasterise the fitted stage inside the preview iframe at 1600x900 plus a 400x225
- * thumbnail. The page is self-contained (inline CSS, base64 font), so it can ride
+ * Rasterise the fitted stage inside the preview iframe at 1600x900. The page is self-contained (inline CSS, base64 font), so it can ride
  * in an SVG foreignObject without any dependency.
  */
-export async function renderPngs(iframe: HTMLIFrameElement): Promise<{ png: Blob; thumb: Blob }> {
+export async function renderPngs(iframe: HTMLIFrameElement): Promise<{ png: Blob }> {
   const doc = iframe.contentDocument;
   const win = iframe.contentWindow as (Window & { __ready?: boolean }) | null;
   if (!doc || !win) throw new Error("Preview is not ready yet.");
@@ -60,6 +59,6 @@ export async function renderPngs(iframe: HTMLIFrameElement): Promise<{ png: Blob
       ctx.drawImage(img, 0, 0, w, h);
       return canvasBlob(canvas);
     };
-    return { png: await make(STAGE_W, STAGE_H), thumb: await make(STAGE_W / 4, STAGE_H / 4) };
+    return { png: await make(STAGE_W, STAGE_H) };
   }
 }

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { PairWindow, textToLines } from "@/components/PairWindow";
-import { Tag } from "@/components/Tag";
-import { EDITOR_LABELS, LICENSE_LABELS, isPaid, type PairRecord } from "@/lib/pairs";
-import { snapshotUrl, thumbnailUrl } from "@/lib/snapshots";
+import { AppearanceTag, PairLicenseTag } from "@/components/Tag";
+import { EDITOR_LABELS, isPaid, type PairRecord } from "@/lib/pairs";
+import { SnapshotImage } from "@/components/SnapshotImage";
+import { snapshotUrl } from "@/lib/snapshots";
 import { cn } from "cn";
 
 /**
@@ -31,7 +32,12 @@ export function Directory({
   const active = pairs.find((p) => p.slug === activeSlug) ?? pairs[0];
 
   return (
-    <div className={cn("grid grid-cols-[minmax(0,1fr)] gap-10", preview && "lg:grid-cols-[minmax(0,1fr)_25rem]")}>
+    <div
+      className={cn(
+        "grid grid-cols-[minmax(0,1fr)] gap-10",
+        preview && "lg:grid-cols-[minmax(0,1fr)_25rem]",
+      )}
+    >
       <ul className="border-border m-0 list-none border-t p-0">
         {pairs.map((pair) => (
           <li key={pair.slug} className="border-border border-b">
@@ -45,12 +51,18 @@ export function Directory({
                 pair.slug === active?.slug ? "bg-muted" : "hover:bg-muted",
               )}
             >
-              <Thumb pair={pair} />
+              <CardImage pair={pair} />
               <span className="min-w-0">
-                <span className="block truncate font-medium" title={pair.theme.name}>
+                <span
+                  className="block truncate font-medium"
+                  title={pair.theme.name}
+                >
                   {pair.theme.name}
                 </span>
-                <span className="text-muted-foreground block truncate text-sm" style={{ fontFamily: isPaid(pair) ? undefined : pair.font.fontFamily }} title={pair.font.name}>
+                <span
+                  className="text-muted-foreground block truncate text-sm"
+                  title={pair.font.name}
+                >
                   {pair.font.name}
                 </span>
               </span>
@@ -58,12 +70,11 @@ export function Directory({
                 <span className="text-muted-foreground hidden text-xs md:inline">
                   {pair.editors.map((e) => EDITOR_LABELS[e.id]).join(", ")}
                 </span>
-                <Tag>{pair.theme.appearance}</Tag>
-                {isPaid(pair) ? (
-                  <Tag>{LICENSE_LABELS.paid}</Tag>
-                ) : pair.font.license === "open" && pair.theme.license === "open" ? (
-                  <Tag tone="green">{LICENSE_LABELS.open}</Tag>
-                ) : null}
+                <AppearanceTag appearance={pair.theme.appearance} />
+                <PairLicenseTag
+                  font={pair.font.license}
+                  theme={pair.theme.license}
+                />
               </span>
             </Link>
           </li>
@@ -74,17 +85,21 @@ export function Directory({
         <div className="hidden lg:block" aria-hidden>
           <div className="sticky top-24">
             {snapshotUrl(active.editors[0]?.snapshot ?? "") ? (
-              <img
-                src={snapshotUrl(active.editors[0]?.snapshot ?? "")}
+              <SnapshotImage
+                src={snapshotUrl(active.editors[0]?.snapshot ?? "") ?? ""}
                 alt=""
-                className="border-border aspect-video w-full rounded-xl border object-cover"
+                className="rounded-[1.1rem]"
               />
             ) : isPaid(active) ? (
               <PaidSnapshot pair={active} />
             ) : (
               <PairWindow
-                pair={{ fontFamily: active.font.fontFamily, bg: active.theme.bg, fg: active.theme.fg }}
-                filename={active.editors[0]?.id === "neovim" ? "init.lua" : "settings.json"}
+                pair={{
+                  fontFamily: active.font.fontFamily,
+                  bg: active.theme.bg,
+                  fg: active.theme.fg,
+                }}
+                filename="settings.json"
                 lines={textToLines(active.editors[0]?.settings ?? "")}
               />
             )}
@@ -102,7 +117,7 @@ export function Directory({
 function PaidSnapshot({ pair }: { pair: PairRecord }) {
   const src = snapshotUrl(pair.editors[0]?.snapshot ?? "");
   return src ? (
-    <img src={src} alt="" className="border-border aspect-video w-full rounded-xl border object-cover" />
+    <SnapshotImage src={src} alt="" className="rounded-[1.1rem]" />
   ) : (
     <div className="border-border text-muted-foreground flex aspect-video w-full items-center justify-center rounded-xl border border-dashed text-sm">
       Snapshot only
@@ -110,22 +125,26 @@ function PaidSnapshot({ pair }: { pair: PairRecord }) {
   );
 }
 
-/** The Pair's Thumbnail; falls back to an "Aa" chip in the Pair's colours until one exists. */
-function Thumb({ pair }: { pair: PairRecord }) {
-  const src = thumbnailUrl(pair.editors[0]?.thumbnail ?? "");
+/** The Pair's Snapshot, window only; falls back to an "Aa" chip in the Pair's colours until one exists. */
+function CardImage({ pair }: { pair: PairRecord }) {
+  const src = snapshotUrl(pair.editors[0]?.snapshot ?? "");
   return src ? (
-    <img
+    <SnapshotImage
       src={src}
       alt=""
-      width={400}
-      height={225}
-      className="border-border row-span-2 aspect-video w-20 rounded-md border object-cover sm:row-span-1"
+      loading="lazy"
+      className="row-span-2 w-20 rounded-md sm:row-span-1"
     />
   ) : (
     <span
       aria-hidden
-      className="row-span-2 flex aspect-video w-20 items-center justify-center rounded-md text-sm sm:row-span-1"
-      style={{ background: pair.theme.bg, color: pair.theme.fg, fontFamily: isPaid(pair) ? undefined : pair.font.fontFamily }}
+      className="row-span-2 flex w-20 items-center justify-center rounded-md text-sm sm:row-span-1"
+      style={{
+        aspectRatio: "1420 / 750",
+        background: pair.theme.bg,
+        color: pair.theme.fg,
+        fontFamily: isPaid(pair) ? undefined : pair.font.fontFamily,
+      }}
     >
       Aa
     </span>

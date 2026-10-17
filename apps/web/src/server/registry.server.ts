@@ -27,6 +27,22 @@ const STYLES = new Map<string, { fontFamily: string; bg: string; fg: string }>([
     "inconsolata--vitesse-dark",
     { fontFamily: '"Inconsolata", "IBM Plex Mono", ui-monospace, monospace', bg: "#121212", fg: "#bd976a" },
   ],
+  [
+    "inconsolata--vitesse-light",
+    { fontFamily: '"Inconsolata", "IBM Plex Mono", ui-monospace, monospace', bg: "#ffffff", fg: "#393a34" },
+  ],
+  [
+    "input-mono--nord",
+    { fontFamily: '"Input Mono", "IBM Plex Mono", ui-monospace, monospace', bg: "#2e3440", fg: "#d8dee9" },
+  ],
+  [
+    "dank-mono--night-owl",
+    { fontFamily: '"Dank Mono", "IBM Plex Mono", ui-monospace, monospace', bg: "#011627", fg: "#d6deeb" },
+  ],
+  [
+    "monolisa--houston",
+    { fontFamily: '"MonoLisa", "IBM Plex Mono", ui-monospace, monospace', bg: "#17191e", fg: "#eef0f9" },
+  ],
   ...MARQUEE_PAIRS.map(
     (p) => [`${slugify(p.font)}--${slugify(p.theme)}`, { fontFamily: p.fontFamily, bg: p.bg, fg: p.fg }] as const,
   ),
@@ -58,7 +74,7 @@ function toRecord(path: string, file: PairFile): PairRecord {
       bg: style.bg,
       fg: style.fg,
     },
-    editors: file.editors.map((e) => ({ id: e.id, snapshot: e.snapshot, thumbnail: e.thumbnail, settings: e.settings })),
+    editors: file.editors.map((e) => ({ id: e.id, snapshot: e.snapshot, settings: e.settings })),
   };
 }
 

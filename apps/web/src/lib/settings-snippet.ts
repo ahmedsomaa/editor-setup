@@ -5,38 +5,11 @@ export type CodeLine = ReadonlyArray<readonly [string, TokenKind]>;
 
 type SnippetPair = { theme: string; font: string };
 
-/** Illustrative Settings for the landing page; real Configs live in the Registry. */
+/** Illustrative Settings for the landing page; real Configs live in the Registry. VS Code and Cursor share one format. */
 export function settingsFor(
-  editor: EditorId,
+  _editor: EditorId,
   { theme, font }: SnippetPair,
 ): { filename: string; lines: CodeLine[] } {
-  if (editor === "neovim") {
-    return {
-      filename: "init.lua",
-      lines: [
-        [[`-- the terminal sets the Font: ${font}`, "p"]],
-        [
-          ["vim.cmd.colorscheme(", "k"],
-          [`"${theme.toLowerCase().replace(/\s+/g, "-")}"`, "s"],
-          [")", "k"],
-        ],
-      ],
-    };
-  }
-
-  if (editor === "zed") {
-    return {
-      filename: "settings.json",
-      lines: [
-        [["{", "p"]],
-        [["  ", "p"], ['"buffer_font_family"', "k"], [": ", "p"], [`"${font}"`, "s"], [",", "p"]],
-        [["  ", "p"], ['"buffer_font_size"', "k"], [": ", "p"], ["14", "s"], [",", "p"]],
-        [["  ", "p"], ['"theme"', "k"], [": ", "p"], [`"${theme}"`, "s"]],
-        [["}", "p"]],
-      ],
-    };
-  }
-
   return {
     filename: "settings.json",
     lines: [

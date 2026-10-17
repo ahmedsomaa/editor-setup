@@ -73,7 +73,7 @@ describe("getEditorConfig / resolveEditorId", () => {
   });
 
   test("returns undefined when the Pair has no Config for that Editor", () => {
-    expect(getEditorConfig(pair, "neovim")).toBeUndefined();
+    expect(getEditorConfig(pair, "cursor")).toBeUndefined();
   });
 
   test("resolveEditorId prefers a Config that exists", () => {
@@ -81,7 +81,7 @@ describe("getEditorConfig / resolveEditorId", () => {
   });
 
   test("resolveEditorId falls back when preferred has no Config", () => {
-    expect(resolveEditorId(pair, "neovim")).toBe("vscode");
+    expect(resolveEditorId(pair, "cursor")).toBe("vscode");
   });
 });
 

@@ -10,11 +10,42 @@ function formatStars(count: number): string {
   return String(count)
 }
 
+const CACHE_KEY = 'editorsetup:stars'
+const FRESH_MS = 30 * 60 * 1000
+
+function readCache(): { count: number; at: number } | null {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(CACHE_KEY) ?? 'null')
+    return typeof parsed?.count === 'number' && typeof parsed?.at === 'number'
+      ? parsed
+      : null
+  } catch {
+    return null
+  }
+}
+
+function writeCache(count: number) {
+  try {
+    window.localStorage.setItem(CACHE_KEY, JSON.stringify({ count, at: Date.now() }))
+  } catch {
+    /* Storage blocked: the count just is not remembered. */
+  }
+}
+
+/**
+ * The repo's star count. GitHub allows only 60 anonymous requests an hour per IP, so the last
+ * count is kept in the browser: it shows at once, is refreshed at most every 30 minutes, and
+ * stays on screen when GitHub refuses a request.
+ */
 export function GitHubStars() {
   const [stars, setStars] = useState<number | null>(null)
 
   useEffect(() => {
     let cancelled = false
+    const cached = readCache()
+    if (cached) setStars(cached.count)
+    if (cached && Date.now() - cached.at < FRESH_MS) return
+
     fetch(`https://api.github.com/repos/${GITHUB_REPO}`, {
       headers: { Accept: 'application/vnd.github+json' },
     })
@@ -28,8 +59,9 @@ export function GitHubStars() {
             'number'
             ? (data as { stargazers_count: number }).stargazers_count
             : null
-        if (!cancelled && count !== null) {
-          setStars(count)
+        if (count !== null) {
+          writeCache(count)
+          if (!cancelled) setStars(count)
         }
       })
       .catch(() => {})

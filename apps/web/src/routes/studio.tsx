@@ -7,14 +7,15 @@ export const Route = createFileRoute("/studio")({
   validateSearch: snapshotSearchSchema,
   head: () => ({ meta: [{ title: "Snapshot Studio · EditorSetup" }] }),
   // Only inputs that need the server drive the loader; theme id and language stay client-side.
-  loaderDeps: ({ search: { font, themeUrl } }) => ({
+  loaderDeps: ({ search: { font, themeUrl, themeEditor } }) => ({
     font: font?.trim() || DEFAULTS.font,
     themeUrl: themeUrl?.trim() || undefined,
+    themeEditor,
   }),
   loader: async ({ deps }) => {
     const [font, theme] = await Promise.all([
       resolveFontFn({ data: { family: deps.font } }),
-      deps.themeUrl ? fetchThemeFn({ data: { url: deps.themeUrl } }) : null,
+      deps.themeUrl ? fetchThemeFn({ data: { url: deps.themeUrl, editor: deps.themeEditor } }) : null,
     ]);
     return { font, theme };
   },

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as RegistryRouteImport } from './routes/registry'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as RegistryIndexRouteImport } from './routes/registry.index'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegistryRoute = RegistryRouteImport.update({
@@ -50,6 +56,7 @@ const RegistrySlugRoute = RegistrySlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/compare': typeof CompareRoute
   '/registry': typeof RegistryRouteWithChildren
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/compare': typeof CompareRoute
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
   '/registry': typeof RegistryIndexRoute
@@ -66,6 +74,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/compare': typeof CompareRoute
   '/registry': typeof RegistryRouteWithChildren
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
@@ -74,13 +83,20 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/about' | '/registry' | '/studio' | '/registry/$slug' | '/registry/'
+    | '/'
+    | '/about'
+    | '/compare'
+    | '/registry'
+    | '/studio'
+    | '/registry/$slug'
+    | '/registry/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/studio' | '/registry/$slug' | '/registry'
+  to: '/' | '/about' | '/compare' | '/studio' | '/registry/$slug' | '/registry'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/compare'
     | '/registry'
     | '/studio'
     | '/registry/$slug'
@@ -90,6 +106,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CompareRoute: typeof CompareRoute
   RegistryRoute: typeof RegistryRouteWithChildren
   StudioRoute: typeof StudioRoute
 }
@@ -108,6 +125,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/registry': {
@@ -158,6 +182,7 @@ const RegistryRouteWithChildren = RegistryRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CompareRoute: CompareRoute,
   RegistryRoute: RegistryRouteWithChildren,
   StudioRoute: StudioRoute,
 }

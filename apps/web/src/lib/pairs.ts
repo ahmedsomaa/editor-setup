@@ -1,5 +1,5 @@
 
-export const EDITOR_IDS = ["vscode", "cursor", "zed", "neovim"] as const;
+export const EDITOR_IDS = ["vscode", "cursor"] as const;
 export type EditorId = (typeof EDITOR_IDS)[number];
 export type License = "open" | "free" | "paid";
 export type Appearance = "dark" | "light";
@@ -27,7 +27,7 @@ export type PairRecord = {
     bg: string;
     fg: string;
   };
-  editors: Array<{ id: EditorId; snapshot: string; thumbnail: string; settings: string }>;
+  editors: Array<{ id: EditorId; snapshot: string; settings: string }>;
 };
 
 export function getEditorConfig(
@@ -53,8 +53,6 @@ export function resolveEditorId(
 export const EDITOR_LABELS: Record<EditorId, string> = {
   vscode: "VS Code",
   cursor: "Cursor",
-  zed: "Zed",
-  neovim: "Neovim",
 };
 
 export const LICENSE_LABELS: Record<License, string> = {
@@ -102,4 +100,9 @@ export function filterPairs(
 /** A paid Font or Theme is never rendered live on the site: only a developer's Snapshot shows it. */
 export function isPaid(pair: PairRecord): boolean {
   return pair.font.license === "paid" || pair.theme.license === "paid";
+}
+
+/** How a Pair is named in dropdowns: Theme · Font. */
+export function pairLabel(pair: PairRecord): string {
+  return `${pair.theme.name} · ${pair.font.name}`;
 }

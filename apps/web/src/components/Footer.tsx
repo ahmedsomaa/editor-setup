@@ -7,10 +7,19 @@ import { CONTRIBUTE_URL, GITHUB_URL } from '@/lib/site'
 const linkClass =
   'text-muted-foreground hover:text-foreground inline-flex min-h-8 items-center text-sm no-underline transition-colors'
 
+const AUTHOR = 'ahmedsomaa'
+const AUTHOR_URL = `https://github.com/${AUTHOR}`
+const LAST_UPDATED = new Date(__LAST_UPDATED__).toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+
 export default function Footer() {
   return (
     <footer className="border-border relative overflow-hidden border-t">
-      <div className="mx-auto max-w-5xl px-4 pt-16">
+      <div className="mx-auto max-w-6xl px-4 pt-16">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="max-w-xs">
             <Link to="/" className="text-foreground inline-flex items-center gap-2 text-lg font-medium tracking-tighter no-underline">
@@ -51,7 +60,26 @@ export default function Footer() {
         </div>
 
         <div className="border-border mt-14 flex flex-wrap items-center justify-between gap-4 border-t py-6">
-          <p className="text-muted-foreground text-sm">© {new Date().getFullYear()} EditorSetup. Fonts and Themes belong to their makers.</p>
+          <p className="text-muted-foreground flex flex-wrap items-center gap-x-2 text-sm">
+            <span>
+              Built in public by{" "}
+              <a
+                href={AUTHOR_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="text-foreground underline hover:no-underline"
+              >
+                {AUTHOR}
+              </a>
+            </span>
+            <span aria-hidden>·</span>
+            <span>© {new Date().getFullYear()}</span>
+            <span aria-hidden>·</span>
+            <span>
+              Last updated{" "}
+              <time dateTime={__LAST_UPDATED__}>{LAST_UPDATED}</time>
+            </span>
+          </p>
           <ThemeSwitch />
         </div>
       </div>

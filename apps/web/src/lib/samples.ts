@@ -1,18 +1,19 @@
-/** One idiomatic ~13-line sample per language, written to stress a code font and a theme. */
+/** A short intro to EditorSetup in each of a few languages, then longer samples that stress a code font and a theme. */
 export const SAMPLES: Record<string, string> = {
-  typescript: `type Pair = { font: string; theme: string; ligatures?: boolean };
+  typescript: `// EditorSetup: Font and Theme Pairs you can preview and copy.
+const pair = {
+  project: "EditorSetup",
+  font: "Geist Mono",
+  theme: "Vesper",
+  editor: "VS Code",
+  functions: ["browse", "preview", "copy", "compare"],
+};
 
-const RETRIES = 3; // 0O 1lI
-
-export async function loadPairs(url: string): Promise<Pair[]> {
-  for (let i = 0; i <= RETRIES; i++) {
-    const res = await fetch(\`\${url}?page=\${i}\`);
-    if (res.status !== 200) continue;
-    const data = (await res.json()) as Pair[];
-    return data.filter((p) => p.font !== "" && p.theme !== "");
-  }
-  throw new Error("no pairs => give up");
-}`,
+console.log(pair.project, "-> preview a Pair, then copy it");
+console.log(pair.functions);
+// => ["browse", "preview", "copy", "compare"]
+const ok = pair.functions.length >= 4 && pair.theme !== "";
+console.log(ok); // => true`,
   tsx: `type Props = { name: string; count?: number };
 
 export function Badge({ name, count = 0 }: Props) {
@@ -25,79 +26,76 @@ export function Badge({ name, count = 0 }: Props) {
     </button>
   );
 }`,
-  javascript: `const RETRIES = 3; // 0O 1lI
+  javascript: `// EditorSetup: Font and Theme Pairs you can preview and copy.
+const pair = {
+  project: "EditorSetup",
+  font: "Geist Mono",
+  theme: "Vesper",
+  editor: "VS Code",
+  functions: ["browse", "preview", "copy", "compare"],
+};
 
-export async function loadPairs(url) {
-  for (let i = 0; i <= RETRIES; i++) {
-    const res = await fetch(\`\${url}?page=\${i}\`);
-    if (res.status !== 200) continue;
-    const data = await res.json();
-    return data.filter((p) => p.font !== "" && p.theme !== "");
-  }
-  throw new Error("no pairs => give up");
-}`,
-  python: `from dataclasses import dataclass
-
-@dataclass
-class Pair:
-    font: str
-    theme: str
-
-RETRIES = 3  # 0O 1lI
-
-def describe(pairs: list[Pair]) -> str:
-    names = [f"{p.theme} / {p.font}" for p in pairs if p.font and p.theme]
-    if len(names) >= 1 and names != []:
-        return ", ".join(sorted(names))
-    return "none -> empty"`,
-  rust: `use std::collections::BTreeMap;
-
-#[derive(Debug, Clone)]
-struct Pair {
-    font: String,
-    theme: String,
+console.log(pair.project, "-> preview a Pair, then copy it");
+console.log(pair.functions);
+// => ["browse", "preview", "copy", "compare"]
+const ok = pair.functions.length >= 4 && pair.theme !== "";
+console.log(ok); // => true`,
+  python: `# EditorSetup: Font and Theme Pairs you can preview and copy.
+pair = {
+    "project": "EditorSetup",
+    "font": "Geist Mono",
+    "theme": "Vesper",
+    "editor": "VS Code",
+    "functions": ["browse", "preview", "copy", "compare"],
 }
 
-fn group(pairs: &[Pair]) -> BTreeMap<&str, Vec<&str>> {
-    let mut out = BTreeMap::new();
-    for p in pairs.iter().filter(|p| p.font != "" && p.theme != "") {
-        out.entry(p.font.as_str()).or_insert_with(Vec::new).push(p.theme.as_str());
-    }
-    out // 0O 1lI => -> !== <=
-}`,
-  go: `package main
+print(pair["project"], "-> preview a Pair, then copy it")
+print(pair["functions"])
+# => ['browse', 'preview', 'copy', 'compare']
+ok = len(pair["functions"]) >= 4 and pair["theme"] != ""
+print(ok)  # => True`,
+  rust: `// EditorSetup: Font and Theme Pairs you can preview and copy.
+let pair = Pair {
+    project: "EditorSetup",
+    font: "Geist Mono",
+    theme: "Vesper",
+    editor: "VS Code",
+    functions: ["browse", "preview", "copy", "compare"],
+};
 
-import "fmt"
-
-type Pair struct {
-	Font  string
-	Theme string
+println!("{} -> preview a Pair, then copy it", pair.project);
+println!("{:?}", pair.functions);
+// => ["browse", "preview", "copy", "compare"]
+let ok = pair.functions.len() >= 4 && pair.theme != "";
+println!("{ok}"); // => true`,
+  go: `// EditorSetup: Font and Theme Pairs you can preview and copy.
+pair := Pair{
+	Project:   "EditorSetup",
+	Font:      "Geist Mono",
+	Theme:     "Vesper",
+	Editor:    "VS Code",
+	Functions: []string{"browse", "preview", "copy", "compare"},
 }
 
-func describe(pairs []Pair) map[string][]string {
-	out := make(map[string][]string) // 0O 1lI
-	for _, p := range pairs {
-		if p.Font != "" && p.Theme != "" {
-			out[p.Font] = append(out[p.Font], p.Theme)
-		}
-	}
-	return out
-}`,
-  lua: `local M = {}
+fmt.Println(pair.Project, "-> preview a Pair, then copy it")
+fmt.Println(pair.Functions)
+// => [browse preview copy compare]
+ok := len(pair.Functions) >= 4 && pair.Theme != ""
+fmt.Println(ok) // => true`,
+  lua: `-- EditorSetup: Font and Theme Pairs you can preview and copy.
+local pair = {
+  project = "EditorSetup",
+  font = "Geist Mono",
+  theme = "Vesper",
+  editor = "VS Code",
+  functions = { "browse", "preview", "copy", "compare" },
+}
 
--- 0O 1lI => -> ~= <=
-function M.group(pairs)
-  local out = {}
-  for _, p in ipairs(pairs) do
-    if p.font ~= "" and p.theme ~= "" then
-      out[p.font] = out[p.font] or {}
-      table.insert(out[p.font], p.theme)
-    end
-  end
-  return out
-end
-
-return M`,
+print(pair.project, "-> preview a Pair, then copy it")
+print(table.concat(pair.functions, ", "))
+-- => browse, preview, copy, compare
+local ok = #pair.functions >= 4 and pair.theme ~= ""
+print(ok) -- => true`,
   bash: `#!/usr/bin/env bash
 set -euo pipefail
 

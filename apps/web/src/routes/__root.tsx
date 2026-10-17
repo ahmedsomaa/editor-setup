@@ -2,6 +2,7 @@ import { HeadContent, Scripts, createRootRoute, Link } from '@tanstack/react-rou
 import { IconContext } from '@phosphor-icons/react'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import { CompareTray } from '../components/CompareTray'
 import { themeInitScript } from '../components/ThemeToggle'
 
 import appCss from '../styles.css?url'
@@ -15,7 +16,7 @@ export const Route = createRootRoute({
       {
         name: 'description',
         content:
-          'Font and Theme Pairs from real setups, shown in their own colors, with Settings you can copy for VS Code, Cursor, Zed, and Neovim.',
+          'Font and Theme Pairs from real setups, shown in their own colors, with Settings you can copy for VS Code and Cursor.',
       },
     ],
     links: [
@@ -56,6 +57,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <Header />
           <div className="flex-1">{children}</div>
           <Footer />
+          <CompareTray />
         </IconContext.Provider>
         <Scripts />
       </body>

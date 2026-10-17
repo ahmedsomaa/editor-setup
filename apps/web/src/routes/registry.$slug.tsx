@@ -6,16 +6,21 @@ import {
   notFound,
   useNavigate,
 } from "@tanstack/react-router";
-import { ArrowUpRight, Check, Copy } from "@phosphor-icons/react";
-import { Tag } from "@/components/Tag";
+import { ArrowLeft, ArrowUpRight, Check, Copy } from "@phosphor-icons/react";
+import { AppearanceTag, LicenseTag, PairLicenseTag } from "@/components/Tag";
 import { Directory } from "@/components/Directory";
 import { PairWindow, textToLines } from "@/components/PairWindow";
+import { CompareToggle } from "@/components/CompareToggle";
+import { ShareButton } from "@/components/ShareButton";
+import { PageHero } from "@/components/PagePattern";
+import { SnapshotImage } from "@/components/SnapshotImage";
 import { Button } from "@/components/ui/button";
 import {
   EDITOR_LABELS,
-  LICENSE_LABELS,
   getEditorConfig,
+  pairLabel,
   resolveEditorId,
+  type Appearance,
   type License,
   type PairRecord,
 } from "@/lib/pairs";
@@ -61,189 +66,249 @@ function PairPage() {
   const snap = snapshotUrl(config.snapshot);
 
   return (
-    <main id="main" className="mx-auto w-full max-w-5xl px-4 py-12 sm:py-20">
-      <nav aria-label="Breadcrumb" className="text-muted-foreground mb-10 text-sm">
-        <Link
-          to="/registry"
-          className="hover:text-foreground underline hover:no-underline"
-        >
-          Registry
-        </Link>
-        <span className="mx-2" aria-hidden>
-          /
-        </span>
-        <span className="text-foreground" aria-current="page">{pair.theme.name}</span>
-      </nav>
-
-      <header className="max-w-3xl">
-        <h1>
-          {pair.theme.name}
-        </h1>
-        <p
-          className="text-muted-foreground mt-4 text-xl"
-          style={{ fontFamily: pair.font.fontFamily }}
-        >
-          {pair.font.name}
-        </p>
-        {pair.submittedBy ? (
-          <p className="text-muted-foreground mt-4 text-sm">
-            Submitted by{" "}
-            <a
-              href={pair.submittedBy.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-foreground font-medium underline-offset-4 hover:underline"
-            >
-              @{pair.submittedBy.name}
-            </a>
-          </p>
-        ) : null}
-      </header>
-
-      <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
-        <div className="min-w-0 lg:col-span-7">
-          <div
-            role="group"
-            aria-label="Editor"
-            className="mb-4 flex flex-wrap gap-2"
+    <main id="main">
+      <div className="border-border bg-background/90 z-30 border-b backdrop-blur-sm sm:sticky sm:top-16">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
+          <Link
+            to="/registry"
+            className="text-foreground inline-flex items-center gap-2 text-sm font-medium no-underline hover:underline"
           >
-            {pair.editors.map((editor) => {
-              const selected = editor.id === config.id;
-              return (
-                <button
-                  key={editor.id}
-                  type="button"
-                  onClick={() =>
-                    void navigate({
-                      search: { editor: editor.id },
-                      replace: true,
-                      resetScroll: false,
-                    })
-                  }
-                  aria-pressed={selected}
-                  className={cn(
-                    "h-9 rounded-full border px-4 text-sm font-medium transition-colors",
-                    selected
-                      ? "border-foreground bg-card text-foreground"
-                      : "border-border bg-card text-secondary-foreground hover:bg-muted",
-                  )}
-                >
-                  {selected ? <Check className="me-1.5 inline size-3.5" aria-hidden /> : null}{EDITOR_LABELS[editor.id]}
-                </button>
-              );
-            })}
+            <ArrowLeft aria-hidden className="size-4" />
+            <span className="max-sm:sr-only">Registry</span>
+          </Link>
+          <nav
+            aria-label="On this page"
+            className="text-muted-foreground hidden items-center gap-6 text-sm md:flex"
+          >
+            <a href="#snapshot" className="hover:text-foreground no-underline">
+              Snapshot
+            </a>
+            <a href="#settings" className="hover:text-foreground no-underline">
+              Settings
+            </a>
+            <a href="#details" className="hover:text-foreground no-underline">
+              Details
+            </a>
+          </nav>
+          <div className="flex items-center gap-2">
+            <CompareToggle
+              slug={pair.slug}
+              label={pairLabel(pair)}
+              className="h-9 px-4 text-sm"
+            />
+            <CopySettings settings={config.settings} variant="default" />
           </div>
-
-          <figure className="min-w-0">
-            {snap ? (
-              <img
-                src={snap}
-                alt={`Snapshot of ${pair.font.name} and ${pair.theme.name} in ${EDITOR_LABELS[config.id]}`}
-                className="border-border bg-muted aspect-video w-full rounded-xl border object-cover"
-                width={1600}
-                height={900}
-              />
-            ) : (
-              <PairWindow
-                pair={{ fontFamily: pair.font.fontFamily, bg: pair.theme.bg, fg: pair.theme.fg }}
-                filename={config.id === "neovim" ? "init.lua" : "settings.json"}
-                lines={textToLines(config.settings)}
-              />
-            )}
-            <figcaption className="text-muted-foreground mt-3 text-sm">
-              {snap ? "Snapshot" : "Preview"} for {EDITOR_LABELS[config.id]}
-            </figcaption>
-          </figure>
         </div>
-
-        <aside className="flex min-w-0 flex-col gap-8 lg:col-span-5">
-          <MetaBlock
-            title="Font"
-            name={pair.font.name}
-            license={pair.font.license}
-            links={pair.font.links}
-            mono
-            fontFamily={pair.font.fontFamily}
-          />
-          <MetaBlock
-            title="Theme"
-            name={pair.theme.name}
-            license={pair.theme.license}
-            links={pair.theme.links}
-            appearance={pair.theme.appearance}
-          />
-
-          <section className="min-w-0">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <h2 className="text-2xl">Settings</h2>
-              <CopySettings settings={config.settings} />
-            </div>
-            <pre className="border-border bg-muted max-h-[28rem] overflow-auto rounded-lg border p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
-              {config.settings}
-            </pre>
-            <p className="text-muted-foreground mt-2 text-xs">
-              Plain text for {EDITOR_LABELS[config.id]}. Paste it into your Editor.
-            </p>
-          </section>
-        </aside>
       </div>
 
-      <section className="border-border mt-20 border-t pt-16" aria-labelledby="related-heading">
-        <h2 id="related-heading">More Pairs</h2>
-        <div className="mt-8">
-          <Suspense fallback={<p className="text-muted-foreground text-sm" role="status">Loading related Pairs</p>}>
-            <Await promise={related}>
-              {(pairs: PairRecord[]) =>
-                pairs.length === 0 ? (
-                  <p className="text-muted-foreground text-sm">No related Pairs yet.</p>
-                ) : (
-                  <Directory pairs={pairs} preview={false} />
-                )
+      <PageHero variant="pair" className="pt-12 pb-6 sm:pt-16 sm:pb-8">
+        <header>
+          <h1>
+            {pair.theme.name}
+            <span className="sr-only"> with </span>
+            <span aria-hidden className="text-muted-foreground mx-[0.35em]">
+              ·
+            </span>
+            {pair.font.name}
+          </h1>
+          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <AppearanceTag appearance={pair.theme.appearance} />
+            <PairLicenseTag
+              font={pair.font.license}
+              theme={pair.theme.license}
+            />
+            {pair.submittedBy ? (
+              <span className="text-muted-foreground text-sm">
+                Added by{" "}
+                <a
+                  href={pair.submittedBy.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-foreground font-medium underline-offset-4 hover:underline"
+                >
+                  @{pair.submittedBy.name}
+                </a>
+              </span>
+            ) : null}
+            <ShareButton title={pairLabel(pair)} className="sm:ms-auto" />
+          </div>
+        </header>
+      </PageHero>
+
+      <div className="mx-auto w-full max-w-6xl px-4 pb-12 sm:pb-20">
+        <figure id="snapshot" className="mt-10 min-w-0 scroll-mt-32">
+          {snap ? (
+            <SnapshotImage
+              src={snap}
+              alt={`Snapshot of ${pair.font.name} and ${pair.theme.name} in ${EDITOR_LABELS[config.id]}`}
+              className="rounded-[1.1rem]"
+            />
+          ) : (
+            <PairWindow
+              pair={{
+                fontFamily: pair.font.fontFamily,
+                bg: pair.theme.bg,
+                fg: pair.theme.fg,
+              }}
+              filename="settings.json"
+              lines={textToLines(config.settings)}
+            />
+          )}
+          <figcaption className="text-muted-foreground mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
+            <span>
+              {snap ? "Snapshot" : "Preview"} for {EDITOR_LABELS[config.id]}
+            </span>
+            {snap ? (
+              <a
+                href={snap}
+                target="_blank"
+                rel="noreferrer"
+                className="text-foreground font-medium underline hover:no-underline"
+              >
+                Open full size
+              </a>
+            ) : null}
+          </figcaption>
+        </figure>
+
+        <section
+          id="settings"
+          aria-labelledby="settings-heading"
+          className="mt-16 scroll-mt-32"
+        >
+          <h2 id="settings-heading">Settings</h2>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+            <div
+              role="group"
+              aria-label="Editor"
+              className="flex flex-wrap gap-2"
+            >
+              {pair.editors.map((editor) => {
+                const selected = editor.id === config.id;
+                return (
+                  <button
+                    key={editor.id}
+                    type="button"
+                    onClick={() =>
+                      void navigate({
+                        search: { editor: editor.id },
+                        replace: true,
+                        resetScroll: false,
+                      })
+                    }
+                    aria-pressed={selected}
+                    className={cn(
+                      "h-9 rounded-full border px-4 text-sm font-medium transition-colors",
+                      selected
+                        ? "border-foreground bg-card text-foreground"
+                        : "border-border bg-card text-secondary-foreground hover:bg-muted",
+                    )}
+                  >
+                    {selected ? (
+                      <Check className="me-1.5 inline size-3.5" aria-hidden />
+                    ) : null}
+                    {EDITOR_LABELS[editor.id]}
+                  </button>
+                );
+              })}
+            </div>
+            <CopySettings settings={config.settings} variant="outline" />
+          </div>
+          <pre className="border-border bg-muted mt-4 max-h-[28rem] overflow-auto rounded-lg border p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
+            {config.settings}
+          </pre>
+          <p className="text-muted-foreground mt-2 text-xs">
+            Plain text for {EDITOR_LABELS[config.id]}. Paste it into your
+            Editor.
+          </p>
+        </section>
+
+        <section
+          id="details"
+          aria-labelledby="details-heading"
+          className="mt-16 scroll-mt-32"
+        >
+          <h2 id="details-heading">Details</h2>
+          <div className="border-border mt-6 grid border-y md:grid-cols-2 md:divide-x">
+            <Detail
+              title="Font"
+              name={pair.font.name}
+              license={pair.font.license}
+              links={pair.font.links}
+              className="md:pe-8"
+            />
+            <Detail
+              title="Theme"
+              name={pair.theme.name}
+              license={pair.theme.license}
+              links={pair.theme.links}
+              appearance={pair.theme.appearance}
+              className="border-border max-md:border-t md:ps-8"
+            />
+          </div>
+        </section>
+
+        <section
+          className="border-border mt-20 border-t pt-16"
+          aria-labelledby="related-heading"
+        >
+          <h2 id="related-heading">More Pairs</h2>
+          <div className="mt-8">
+            <Suspense
+              fallback={
+                <p className="text-muted-foreground text-sm" role="status">
+                  Loading related Pairs
+                </p>
               }
-            </Await>
-          </Suspense>
-        </div>
-      </section>
+            >
+              <Await promise={related}>
+                {(pairs: PairRecord[]) =>
+                  pairs.length === 0 ? (
+                    <p className="text-muted-foreground text-sm">
+                      No related Pairs yet.
+                    </p>
+                  ) : (
+                    <Directory pairs={pairs} preview={false} />
+                  )
+                }
+              </Await>
+            </Suspense>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
 
-function MetaBlock({
+function Detail({
   title,
   name,
   license,
   links,
   appearance,
-  mono,
-  fontFamily,
+  className,
 }: {
   title: string;
   name: string;
   license: License;
   links: string[];
-  appearance?: string;
-  mono?: boolean;
-  fontFamily?: string;
+  appearance?: Appearance;
+  className?: string;
 }) {
   const realLinks = links.filter((href) => href && href !== "#");
 
   return (
-    <section>
-      <h2 className="text-muted-foreground text-sm font-medium">{title}</h2>
-      <p
-        className={cn("mt-1 text-2xl font-medium tracking-tight", mono ? "font-mono" : "font-sans")}
-        style={fontFamily ? { fontFamily } : undefined}
-      >
-        {name}
-      </p>
-      <div className="mt-2 flex flex-wrap items-center gap-2">
-        <LicenseBadge license={license} />
-        {appearance ? (
-          <Tag>{appearance}</Tag>
-        ) : null}
+    <div className={cn("py-8", className)}>
+      <h3 className="text-muted-foreground font-sans text-sm font-normal tracking-normal">
+        {title}
+      </h3>
+      <p className="font-heading mt-2 text-3xl tracking-[-0.02em]">{name}</p>
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <LicenseTag license={license} />
+        {appearance ? <AppearanceTag appearance={appearance} /> : null}
       </div>
       {realLinks.length > 0 ? (
-        <ul className="mt-3 flex list-none flex-col gap-1.5 p-0">
+        <ul className="mt-5 flex list-none flex-col gap-2 p-0">
           {realLinks.map((href) => (
             <li key={href}>
               <a
@@ -252,54 +317,72 @@ function MetaBlock({
                 rel="noreferrer"
                 className="text-foreground inline-flex min-h-6 max-w-full items-center gap-1.5 text-sm underline hover:no-underline"
               >
-                <span className="truncate">{linkLabel(href)}</span>
+                <span className="break-all">{linkLabel(href)}</span>
                 <ArrowUpRight className="size-3.5 shrink-0" aria-hidden />
               </a>
             </li>
           ))}
         </ul>
       ) : null}
-    </section>
+    </div>
   );
-}
-
-function LicenseBadge({ license }: { license: License }) {
-  return <Tag tone={license === "open" ? "green" : "neutral"}>{LICENSE_LABELS[license]}</Tag>;
 }
 
 function linkLabel(href: string): string {
   try {
     const url = new URL(href);
-    return url.hostname.replace(/^www\./, "") + url.pathname.replace(/\/$/, "");
+    const item = url.searchParams.get("itemName");
+    return item
+      ? `${url.hostname.replace(/^www\./, "")} · ${item}`
+      : url.hostname.replace(/^www\./, "") + url.pathname.replace(/\/$/, "");
   } catch {
     return href;
   }
 }
 
-function CopySettings({ settings }: { settings: string }) {
-  const [copied, setCopied] = useState(false);
+function CopySettings({
+  settings,
+  variant,
+}: {
+  settings: string;
+  variant: "default" | "outline";
+}) {
+  const [state, setState] = useState<"done" | "failed" | null>(null);
 
   async function copy() {
     try {
       await navigator.clipboard.writeText(settings);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      setState("done");
     } catch {
-      setCopied(false);
+      setState("failed");
     }
+    window.setTimeout(() => setState(null), 2000);
   }
 
   return (
-    <Button type="button" size="sm" variant="outline" onClick={copy}>
-      {copied ? <Check aria-hidden /> : <Copy aria-hidden />}
-      <span role="status">{copied ? "Copied" : "Copy Settings"}</span>
-    </Button>
+    <>
+      <Button type="button" size="sm" variant={variant} onClick={copy}>
+        {state === "done" ? <Check aria-hidden /> : <Copy aria-hidden />}
+        {state === "done"
+          ? "Copied"
+          : state === "failed"
+            ? "Unable to copy"
+            : "Copy Settings"}
+      </Button>
+      <span role="status" className="sr-only">
+        {state === "done"
+          ? "Settings copied"
+          : state === "failed"
+            ? "Unable to copy. Select the text and copy it yourself."
+            : ""}
+      </span>
+    </>
   );
 }
 
 function PairNotFound() {
   return (
-    <main id="main" className="mx-auto max-w-5xl px-4 py-24">
+    <main id="main" className="mx-auto max-w-6xl px-4 py-24">
       <h1>Pair not found</h1>
       <p className="text-muted-foreground mt-3 max-w-[65ch] text-lg">
         That Pair is not in the Registry, or it has no Config yet.
