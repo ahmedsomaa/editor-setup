@@ -14,7 +14,7 @@ Produce what carbon.now.sh produces (a code window on a colored backdrop) for on
 | `<name>.html` | Self-contained 16:9 page (font embedded as base64). Scales to any window. |
 | `<name>.png` | 1600x900 screenshot of that page. |
 
-Default output directory: the current directory. When the user wants a registry Snapshot for this repo, write the PNG to `registry/snapshots/<font-slug>--<theme-slug>--<editor-id>.png` (CONTRIBUTING.md: `<pair-slug>--<editor-id>.png`, 16:9) and keep the HTML beside it or in a scratch folder. Ask which Editor if it is not obvious. Do not edit pair JSON unless asked.
+Default output directory: the current directory. When the user wants a registry Snapshot for this repo, write the PNG to `registry/snapshots/<font-slug>--<theme-slug>.png` (CONTRIBUTING.md: `<pair-slug>.png`, 16:9) and keep the HTML beside it or in a scratch folder. Do not edit pair JSON unless asked.
 
 ## Workflow
 

@@ -105,32 +105,27 @@ async function main() {
       if (!editor.settings.trim()) {
         fail(`${file}: editors[${editor.id}].settings must be non-empty`);
       }
+    }
 
-      const expectedSnapshot = `${stem}--${editor.id}.png`;
-      if (editor.snapshot !== expectedSnapshot) {
-        fail(
-          `${file}: editors[${editor.id}].snapshot must be "${expectedSnapshot}"`,
-        );
-      }
-
-      const snapshotPath = join(snapshotsDir, editor.snapshot);
+    const expectedSnapshot = `${stem}.png`;
+    if (data.snapshot !== expectedSnapshot) {
+      fail(`${file}: snapshot must be "${expectedSnapshot}"`);
+    } else {
+      const snapshotPath = join(snapshotsDir, data.snapshot);
+      let found = true;
       try {
         await access(snapshotPath);
       } catch {
-        fail(`${file}: missing Snapshot ${editor.snapshot}`);
-        continue;
+        fail(`${file}: missing Snapshot ${data.snapshot}`);
+        found = false;
       }
-
-      const buffer = await readFile(snapshotPath);
-      const size = pngSize(buffer);
-      if (!size) {
-        fail(`${file}: ${editor.snapshot} is not a valid PNG`);
-        continue;
-      }
-      if (!isSixteenByNine(size.width, size.height)) {
-        fail(
-          `${file}: ${editor.snapshot} must be 16:9 (got ${size.width}×${size.height})`,
-        );
+      if (found) {
+        const size = pngSize(await readFile(snapshotPath));
+        if (!size) {
+          fail(`${file}: ${data.snapshot} is not a valid PNG`);
+        } else if (!isSixteenByNine(size.width, size.height)) {
+          fail(`${file}: ${data.snapshot} must be 16:9 (got ${size.width}×${size.height})`);
+        }
       }
     }
   }

@@ -14,11 +14,15 @@
     "license": "open",
     "appearance": "dark"
   },
+  "snapshot": "inconsolata--vitesse-dark.png",
   "editors": [
     {
       "id": "vscode",
-      "snapshot": "inconsolata--vitesse-dark--vscode.png",
       "settings": "{\n  \"editor.fontFamily\": \"Inconsolata\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Vitesse Dark\"\n}"
+    },
+    {
+      "id": "zed",
+      "settings": "{\n  \"buffer_font_family\": \"Inconsolata\",\n  \"buffer_font_size\": 14,\n  \"buffer_font_weight\": 400,\n  \"buffer_line_height\": {\n    \"custom\": 1.5\n  },\n  \"buffer_font_features\": {\n    \"calt\": true\n  },\n  \"theme\": \"Vitesse Dark\"\n}"
     }
   ]
 }

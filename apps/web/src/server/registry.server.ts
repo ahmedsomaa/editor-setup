@@ -66,7 +66,8 @@ function toRecord(path: string, file: PairFile): PairRecord {
       bg: style.bg,
       fg: style.fg,
     },
-    editors: file.editors.map((e) => ({ id: e.id, snapshot: e.snapshot, settings: e.settings })),
+    snapshot: file.snapshot,
+    editors: file.editors.map((e) => ({ id: e.id, settings: e.settings })),
   };
 }
 

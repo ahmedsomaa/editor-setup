@@ -34,10 +34,12 @@ type PairWindowProps = {
   className?: string;
   /** Smaller type for dense layouts. */
   compact?: boolean;
+  /** Wrap long lines instead of scrolling sideways, so nothing hides past the edge on a narrow screen. */
+  wrap?: boolean;
 };
 
 /** A window painted in one Pair's own colours and Font: the only saturated thing on a page. */
-export function PairWindow({ pair, filename, lines, className, compact = false }: PairWindowProps) {
+export function PairWindow({ pair, filename, lines, className, compact = false, wrap = false }: PairWindowProps) {
   const mix = (pct: number) => `color-mix(in srgb, ${pair.fg} ${pct}%, ${pair.bg})`;
   const tone = { k: mix(78), s: pair.fg, p: mix(45) } as const;
 
@@ -66,13 +68,16 @@ export function PairWindow({ pair, filename, lines, className, compact = false }
         className={cn("m-0 overflow-x-auto leading-[1.75]", compact ? "px-3 py-3 text-[11px]" : "px-4 py-5 text-[13px] sm:text-sm")}
         style={{ fontFamily: pair.fontFamily, background: "transparent" }}
       >
-        <code className="block w-max min-w-full bg-transparent p-0 text-[length:inherit]" style={{ fontFamily: "inherit" }}>
+        <code
+          className={cn("block bg-transparent p-0 text-[length:inherit]", wrap ? "w-full whitespace-pre-wrap break-words" : "w-max min-w-full")}
+          style={{ fontFamily: "inherit" }}
+        >
           {lines.map((line, i) => (
             <span key={i} className="flex">
               <span aria-hidden className="w-6 shrink-0 pe-3 text-end tabular-nums select-none" style={{ color: mix(32) }}>
                 {i + 1}
               </span>
-              <span>
+              <span className="min-w-0">
                 {line.map(([text, kind], j) => (
                   <span key={j} style={{ color: tone[kind] }}>
                     {text}

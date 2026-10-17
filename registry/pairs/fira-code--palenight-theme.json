@@ -14,11 +14,15 @@
     "license": "open",
     "appearance": "dark"
   },
+  "snapshot": "fira-code--palenight-theme.png",
   "editors": [
     {
       "id": "vscode",
-      "snapshot": "fira-code--palenight-theme--vscode.png",
       "settings": "{\n  \"editor.fontFamily\": \"Fira Code\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Palenight Theme\"\n}"
+    },
+    {
+      "id": "zed",
+      "settings": "{\n  \"buffer_font_family\": \"Fira Code\",\n  \"buffer_font_size\": 14,\n  \"buffer_font_weight\": 400,\n  \"buffer_line_height\": {\n    \"custom\": 1.5\n  },\n  \"buffer_font_features\": {\n    \"calt\": true\n  },\n  \"theme\": \"Palenight Theme\"\n}"
     }
   ]
 }

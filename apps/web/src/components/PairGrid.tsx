@@ -62,7 +62,7 @@ function PairCard({ pair }: { pair: PairRecord }) {
 
 /** The Pair's Snapshot, window only; an "Aa" tile in the Pair's colours until one exists. */
 function CardImage({ pair }: { pair: PairRecord }) {
-  const src = snapshotUrl(pair.editors[0]?.snapshot ?? "");
+  const src = snapshotUrl(pair.snapshot);
   return src ? (
     <SnapshotImage
       src={src}

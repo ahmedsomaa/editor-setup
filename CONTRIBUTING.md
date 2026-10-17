@@ -5,15 +5,15 @@ A contribution is a pull request into `main`. An issue is optional and is not a 
 ## 📚 Before you start
 
 - Read [GLOSSARY.md](GLOSSARY.md) for Pair, Font, Theme, Editor, Config, Settings, and Snapshot.
-- A Pair is one Font and one Theme. Supported Editors are `vscode` and `cursor` for now.
-- One Pair per Font and Theme. One Config per Editor. Every Config needs both Settings and a Snapshot.
+- A Pair is one Font and one Theme. Supported Editors are `vscode` and `zed` for now.
+- One Pair per Font and Theme. One Snapshot per Pair. One Config per Editor, each with its Settings.
 
 ## ➕ Add a new Pair
 
 1. Fork the repository and create a branch from `main`.
 2. Add `registry/pairs/<font-slug>--<theme-slug>.json`.
-3. Add at least one Snapshot under `registry/snapshots/` named `<pair-slug>--<editor-id>.png`. Make it in [Snapshot Studio](https://editorsetup.som3aware.workers.dev/studio) with an Open or Free Font and Theme: it saves a 1600×900 PNG. In Claude Code, the `snapshot-studio` skill in `.claude/skills/` makes it from a Font and a Theme.
-4. Several Editors may be included in this first pull request.
+3. Add one Snapshot under `registry/snapshots/` named `<pair-slug>.png`. Make it in [Snapshot Studio](https://editorsetup.som3aware.workers.dev/studio) with an Open or Free Font and Theme: it saves a 1600×900 PNG. In Claude Code, the `snapshot-studio` skill in `.claude/skills/` makes it from a Font and a Theme.
+4. Several Editors may be included in this first pull request, each with its own Settings.
 5. Run `bun run check`.
 6. Open a pull request into `main`. Name the Font, the Theme, and the Editors in the description.
 
@@ -21,7 +21,7 @@ Example layout:
 
 ```text
 registry/pairs/inconsolata--vitesse-dark.json
-registry/snapshots/inconsolata--vitesse-dark--vscode.png
+registry/snapshots/inconsolata--vitesse-dark.png
 ```
 
 Example Pair file:
@@ -39,10 +39,10 @@ Example Pair file:
     "license": "open",
     "appearance": "dark"
   },
+  "snapshot": "inconsolata--vitesse-dark.png",
   "editors": [
     {
       "id": "vscode",
-      "snapshot": "inconsolata--vitesse-dark--vscode.png",
       "settings": "editor.fontFamily: Inconsolata\nworkbench.colorTheme: Vitesse Dark"
     }
   ]
@@ -53,9 +53,10 @@ Example Pair file:
 
 Open a separate pull request that:
 
-1. Adds one Snapshot named `<pair-slug>--<editor-id>.png`.
-2. Adds one entry to the `editors` array in that Pair’s JSON file.
-3. Runs `bun run check`.
+1. Adds one entry to the `editors` array in that Pair’s JSON file.
+2. Runs `bun run check`.
+
+The Pair keeps its one Snapshot.
 
 Do not mix an unrelated Pair into the same pull request.
 
@@ -65,8 +66,8 @@ Do not mix an unrelated Pair into the same pull request.
 - License is `open`, `free`, or `paid` on the Font and on the Theme.
 - Font and Theme each need at least one publish link.
 - Settings are a non-empty plain-text string.
-- The Snapshot file is `<pair-slug>--<editor-id>.png`, aspect ratio 16:9.
-- `editors[].snapshot` must match that filename.
+- The Snapshot file is `<pair-slug>.png`, aspect ratio 16:9.
+- `snapshot` must match that filename.
 - Paid Fonts and Themes are never rendered live on the site. A developer who owns the license may add a Snapshot made on their own machine; Snapshot Studio only offers Open and Free ones.
 - One Config per Editor. One Pair per Font and Theme.
 - Do not edit a central index. The site builds the list by scanning `registry/pairs/*.json`.

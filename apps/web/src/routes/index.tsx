@@ -1,32 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Check, Copy, Pause, Play } from "@phosphor-icons/react";
+import { ArrowRight, Pause, Play } from "@phosphor-icons/react";
 import {
-  AddPairSection,
-  CompareSection,
-  GapSection,
-  IntroSection,
-  OneFileSection,
+  FeatureSections,
+  LicenseSection,
+  SharePairSection,
 } from "@/components/HomeSections";
 import { GlyphPattern } from "@/components/GlyphPattern";
-import { PairWindow } from "@/components/PairWindow";
 import { TokenWindow } from "@/components/TokenWindow";
 import { PLAYGROUND } from "@/lib/playground-tokens";
-import { SETTINGS_TOKENS } from "@/lib/settings-tokens";
-import { Reveal } from "@/components/Reveal";
-import { LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
-import {
-  EDITOR_LABELS,
-  isPaid,
-  type EditorId,
-  type PairRecord,
-} from "@/lib/pairs";
-import { linesToText, settingsFor } from "@/lib/settings-snippet";
+import { isPaid, type PairRecord } from "@/lib/pairs";
 import { HOME_DESCRIPTION, HOME_TITLE, pageHead } from "@/lib/page-head";
 import { CONTRIBUTE_URL } from "@/lib/site";
 import { listPairsFn } from "@/server/pairs.functions";
-import { cn } from "cn";
 
 export const Route = createFileRoute("/")({
   loader: () => listPairsFn({ data: {} }),
@@ -42,42 +29,6 @@ const PLAYGROUND_ORDER = [
   "inconsolata--vitesse-light",
 ] as const;
 
-const STEPS = [
-  {
-    title: "Find a Pair",
-    body: "Browse the Registry by Appearance, License or Editor, and open any row to see the whole Pair.",
-  },
-  {
-    title: "Check the Snapshot",
-    body: "Every Pair has one 16:9 image of its Font and Theme together, so you see it before you change anything.",
-  },
-  {
-    title: "Copy the Settings",
-    body: "Plain text, one Config per Editor, with no color overrides. In terminal editors only the Theme is set, because the terminal owns the Font.",
-  },
-] as const;
-
-const LICENSES = [
-  {
-    license: "open",
-    text: "An open license such as OFL or MIT. Free to use and embed.",
-  },
-  {
-    license: "free",
-    text: "No cost, with limits such as private use only.",
-  },
-  {
-    license: "paid",
-    text: "Shown only as a Snapshot from a developer who owns the License.",
-  },
-] as const;
-
-/** Editors with Settings to copy for now; Cursor shares the VS Code format. */
-const COPY_EDITORS = [
-  "vscode",
-  "cursor",
-] as const satisfies readonly EditorId[];
-
 const FAQS = [
   {
     q: "What is EditorSetup?",
@@ -89,7 +40,7 @@ const FAQS = [
   },
   {
     q: "Which Editors are supported?",
-    a: "VS Code and Cursor for now. A Pair can have a Config for one or both.",
+    a: "VS Code and Zed for now. A Pair can have a Config for one or both.",
   },
   {
     q: "Is it free?",
@@ -308,118 +259,20 @@ function HomePage() {
         </div>
       </section>
 
-      {heroPair ? (
-        <IntroSection
-          slug={heroPair.slug}
-          bg={stage.bg}
-          fg={stage.fg}
-          fontFamily={heroPair.font.fontFamily}
-        />
-      ) : null}
+      <FeatureSections
+        pairs={pairs}
+        colors={heroPair && { bg: stage.bg, fg: stage.fg }}
+        step={Math.max(0, stagePairs.findIndex((p) => p.slug === heroPair?.slug))}
+      />
+
+      <LicenseSection />
 
       <section
-        className="border-border border-t px-4 py-16 sm:py-24"
-        aria-labelledby="how"
-      >
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-12">
-            <Reveal className="min-w-0">
-              <h2 id="how" className="max-w-md">
-                Find a Pair, then paste its Settings.
-              </h2>
-              <ol className="mt-10 flex list-none flex-col gap-8 p-0">
-                {STEPS.map(({ title, body }, i) => (
-                  <li
-                    key={title}
-                    className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2"
-                  >
-                    <span
-                      aria-hidden
-                      className="text-muted-foreground pt-1 font-mono text-sm tabular-nums"
-                    >
-                      {i + 1}
-                    </span>
-                    <div>
-                      <h3>{title}</h3>
-                      <p className="text-muted-foreground mt-2 max-w-[48ch]">
-                        {body}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </Reveal>
-            <Reveal className="min-w-0 lg:pt-3" index={1}>
-              <CopyPanel
-                pair={
-                  heroPair && {
-                    slug: heroPair.slug,
-                    theme: {
-                      name: heroPair.theme.name,
-                      bg: stage.bg,
-                      fg: stage.fg,
-                    },
-                    font: {
-                      name: heroPair.font.name,
-                      fontFamily: heroPair.font.fontFamily,
-                    },
-                  }
-                }
-              />
-            </Reveal>
-          </div>
-
-          <div className="border-border mt-16 grid gap-12 border-t pt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-12">
-            <Reveal className="min-w-0">
-              <h3>Know the License</h3>
-              <dl className="mt-6 flex flex-col gap-4">
-                {LICENSES.map(({ license, text }) => (
-                  <div
-                    key={license}
-                    className="grid grid-cols-[4.5rem_minmax(0,1fr)] items-baseline gap-x-4"
-                  >
-                    <dt>
-                      <LicenseTag license={license} />
-                    </dt>
-                    <dd className="text-muted-foreground max-w-[48ch] text-sm">
-                      {text}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
-            <Reveal className="min-w-0" index={1}>
-              <h3>Make a Snapshot</h3>
-              <p className="text-muted-foreground mt-4 max-w-[52ch]">
-                Pick an Open or Free Font and Theme, paste your code and save a
-                1600×900 Snapshot for your pull request.
-              </p>
-              <Button
-                className="mt-6"
-                variant="outline"
-                nativeButton={false}
-                render={<Link to="/studio" />}
-              >
-                Open Snapshot Studio
-                <ArrowRight aria-hidden />
-              </Button>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <OneFileSection pairs={pairs} />
-
-      <CompareSection pairs={pairs} />
-
-      <GapSection pairs={pairs} />
-
-      <section
-        className="border-border border-t px-4 py-16 sm:py-24"
+        className="border-border border-t px-4 py-24 sm:py-32"
         aria-labelledby="faq"
       >
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-20">
-          <Reveal>
+          <div>
             <h2 id="faq">Questions</h2>
             <p className="text-muted-foreground mt-4 text-sm">
               Something else? Write to{" "}
@@ -431,8 +284,8 @@ function HomePage() {
               </a>
               .
             </p>
-          </Reveal>
-          <Reveal>
+          </div>
+          <div>
             <ul className="border-border m-0 list-none border-t p-0">
               {FAQS.map(({ q, a }) => (
                 <li key={q} className="border-border border-b">
@@ -454,106 +307,11 @@ function HomePage() {
                 </li>
               ))}
             </ul>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      <AddPairSection />
+      <SharePairSection />
     </main>
-  );
-}
-
-function CopyPanel({
-  pair,
-}: {
-  pair?: {
-    slug?: string;
-    theme: { name: string; bg: string; fg: string };
-    font: { name: string; fontFamily: string };
-  };
-}) {
-  const [editor, setEditor] = useState<EditorId>("vscode");
-  const [copied, setCopied] = useState<"done" | "failed" | null>(null);
-  const sample = pair ?? {
-    theme: { name: "Vitesse Dark", bg: "#121212", fg: "#dbd7ca" },
-    font: {
-      name: "Inconsolata",
-      fontFamily: '"IBM Plex Mono", ui-monospace, monospace',
-    },
-  };
-  const tokens = pair?.slug ? SETTINGS_TOKENS[pair.slug] : undefined;
-  const snippet = settingsFor(editor, {
-    theme: sample.theme.name,
-    font: sample.font.name,
-  });
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(linesToText(snippet.lines));
-      setCopied("done");
-    } catch {
-      setCopied("failed");
-    }
-    window.setTimeout(() => setCopied(null), 2000);
-  }
-
-  return (
-    <div>
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div
-          role="group"
-          aria-label="Editor"
-          className="bg-muted border-border inline-flex gap-1 rounded-full border p-1"
-        >
-          {COPY_EDITORS.map((id) => (
-            <button
-              key={id}
-              type="button"
-              aria-pressed={editor === id}
-              onClick={() => setEditor(id)}
-              className={cn(
-                "h-8 rounded-full px-3.5 text-sm font-medium transition-colors",
-                editor === id
-                  ? "bg-card text-foreground border-border border"
-                  : "text-muted-foreground hover:text-foreground border border-transparent",
-              )}
-            >
-              {EDITOR_LABELS[id]}
-            </button>
-          ))}
-        </div>
-        <Button variant="outline" size="sm" onClick={copy}>
-          {copied === "done" ? <Check aria-hidden /> : <Copy aria-hidden />}
-          {copied === "done" ? "Copied" : "Copy"}
-        </Button>
-        <span
-          role="status"
-          className="text-muted-foreground w-full text-sm empty:hidden"
-        >
-          {copied === "failed"
-            ? "Unable to copy. Select the text below and copy it yourself."
-            : ""}
-        </span>
-      </div>
-      {tokens ? (
-        <TokenWindow
-          className="mt-4"
-          theme={{ bg: sample.theme.bg, fg: sample.theme.fg, lines: tokens }}
-          fontFamily={sample.font.fontFamily}
-          filename={snippet.filename}
-        />
-      ) : (
-        <PairWindow
-          className="mt-4"
-          pair={{
-            bg: sample.theme.bg,
-            fg: sample.theme.fg,
-            fontFamily: sample.font.fontFamily,
-          }}
-          filename={snippet.filename}
-          lines={snippet.lines}
-        />
-      )}
-    </div>
   );
 }

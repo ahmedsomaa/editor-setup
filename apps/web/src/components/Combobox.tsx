@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Check,
   CaretUpDown as ChevronsUpDown,
@@ -11,6 +11,7 @@ export type Option = {
   label: string;
   group?: string;
   hint?: string;
+  icon?: ReactNode;
 };
 
 type Props = {
@@ -134,11 +135,14 @@ export function Combobox({
       >
         <span
           className={cn(
-            "truncate",
+            "flex min-w-0 items-center gap-2",
             !selected && !display && "text-muted-foreground",
           )}
         >
-          {display ?? selected?.label ?? placeholder ?? "Select…"}
+          {selected?.icon}
+          <span className="truncate">
+            {display ?? selected?.label ?? placeholder ?? "Select…"}
+          </span>
         </span>
         <ChevronsUpDown
           className="text-muted-foreground size-4 shrink-0"
@@ -210,7 +214,10 @@ export function Combobox({
                           : "",
                     )}
                   >
-                    <span className="truncate">{o.label}</span>
+                    <span className="flex min-w-0 items-center gap-2">
+                      {o.icon}
+                      <span className="truncate">{o.label}</span>
+                    </span>
                     <span className="flex shrink-0 items-center gap-2">
                       {o.hint ? (
                         <span className="text-muted-foreground text-xs">

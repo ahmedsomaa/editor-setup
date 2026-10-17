@@ -17,7 +17,10 @@ import {
   highlight,
   type Highlighted,
 } from "@/lib/highlight";
-import { DEFAULTS, type FontFace, type ThemeEditor } from "@/lib/schemas";
+import { DEFAULTS, type FontFace } from "@/lib/schemas";
+import { EDITOR_IDS, EDITOR_LABELS, type EditorId } from "@/lib/pairs";
+import { EditorLogo } from "@/components/EditorLogo";
+import { zedToVscodeTheme, zedVariants } from "@/lib/zed-theme";
 import { sampleFor, SAMPLES } from "@/lib/samples";
 import { buildSnapshotHtml } from "@/lib/snapshot-html";
 import { download, renderPngs } from "@/lib/export";
@@ -49,10 +52,11 @@ const panel = "bg-card border-border rounded-xl border p-5";
 const NO_FACES: FontFace[] = [];
 
 const OTHER = "__other";
-const THEME_EDITOR_OPTIONS: Option[] = [
-  { id: "vscode", label: "VS Code" },
-  { id: "cursor", label: "Cursor" },
-];
+const EDITOR_OPTIONS: Option[] = EDITOR_IDS.map((id) => ({
+  id,
+  label: EDITOR_LABELS[id],
+  icon: <EditorLogo id={id} />,
+}));
 /** Monospace families on Fontsource and Google Fonts. Anything else goes through "Other". */
 const FONT_PRESETS = [
   "JetBrains Mono",
@@ -156,15 +160,16 @@ export function EditorPage() {
   const themeId = search.theme ?? DEFAULTS.theme;
   const lang = search.lang ?? DEFAULTS.lang;
   const themeUrl = search.themeUrl?.trim() ?? "";
-  const themeEditor = search.themeEditor;
+  const editor: EditorId = search.editor ?? "vscode";
+  // Presets are VS Code themes, so a Zed theme always comes from a link.
+  const linkOnly = editor === "zed";
 
   const [fontDraft, setFontDraft] = useState(fontName);
   const [fontOther, setFontOther] = useState(
     () => !FONT_PRESETS.includes(fontName),
   );
-  const [themeOther, setThemeOther] = useState(
-    Boolean(themeUrl || themeEditor),
-  );
+  const [themeOther, setThemeOther] = useState(Boolean(themeUrl));
+  const showLink = linkOnly || themeOther;
   const [custom, setCustom] = useState<{
     name: string;
     faces: FontFace[];
@@ -205,7 +210,16 @@ export function EditorPage() {
       ? fontResult.data
       : NO_FACES;
   const displayFont = custom?.name.trim() || fontName;
-  const customTheme = themeResult && themeResult.ok ? themeResult.data : null;
+  const themeData = themeResult && themeResult.ok ? themeResult.data : null;
+  // A Zed file holds a family of themes; the rest are already in the shape Shiki reads.
+  const zedFamily = themeData && editor === "zed" ? themeData : null;
+  const variants = useMemo(() => (zedFamily ? zedVariants(zedFamily) : []), [zedFamily]);
+  const variant = variants.includes(search.themeVariant ?? "") ? search.themeVariant! : variants[0];
+  // Stable identity: the preview effect depends on this.
+  const customTheme = useMemo(
+    () => (zedFamily ? zedToVscodeTheme(zedFamily, variant) : themeData),
+    [zedFamily, themeData, variant],
+  );
   const loaderError = [
     !custom && !fontResult.ok ? fontResult.error : "",
     themeResult && !themeResult.ok ? themeResult.error : "",
@@ -228,7 +242,7 @@ export function EditorPage() {
       .then((h) => {
         if (cancelled) return;
         setMeta({ themeName: h.themeName });
-        setSrcDoc(buildSnapshotHtml({ ...h, faces, label, showBar }));
+        setSrcDoc(buildSnapshotHtml({ ...h, faces, label, showBar, lang }));
         setStatus("idle");
         setError("");
       })
@@ -394,12 +408,8 @@ export function EditorPage() {
                   </li>
                   <li>Paste about 18 lines of your own code.</li>
                   <li>
-                    Save the PNG. Name it{" "}
-                    <code className="text-foreground">
-                      {baseName}--&lt;editor-id&gt;.png
-                    </code>
-                    , for example{" "}
-                    <code className="text-foreground">--vscode</code>.
+                    Save the PNG. It is named{" "}
+                    <code className="text-foreground">{baseName}.png</code>.
                   </li>
                   <li>Add the PNG to your pull request, with the Pair file.</li>
                 </ol>
@@ -412,8 +422,8 @@ export function EditorPage() {
             </Popover>
           </div>
           <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-            Make a 1600×900 Snapshot of any Font and Theme, then save it as a
-            PNG.
+            Try your pair before changing your editor settings. Make a 1600×900
+            Snapshot of any Font and Theme, then save it as a PNG.
           </p>
         </header>
       </PageHero>
@@ -431,6 +441,25 @@ export function EditorPage() {
             }}
           >
             <div className="flex flex-col gap-5 px-4 py-4">
+              <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
+                <legend className="mb-2 text-sm font-medium">Editor</legend>
+                <Combobox
+                  label="Editor"
+                  value={editor}
+                  options={EDITOR_OPTIONS}
+                  onChange={(id) => {
+                    if (id === editor) return;
+                    setThemeOther(false);
+                    setUrlDraft("");
+                    setParam({
+                      editor: id as EditorId,
+                      themeUrl: undefined,
+                      themeVariant: undefined,
+                    });
+                  }}
+                />
+              </fieldset>
+
               <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
                 <legend className="mb-2 text-sm font-medium">
                   Font family
@@ -540,54 +569,37 @@ export function EditorPage() {
 
               <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
                 <legend className="mb-2 text-sm font-medium">
-                  Theme preset
+                  {linkOnly ? "Theme" : "Theme preset"}
                 </legend>
-                <div className="flex flex-col gap-1.5">
-                  <Combobox
-                    label="Theme"
-                    value={themeOther ? OTHER : themeId}
-                    options={themeOptions}
-                    display={
-                      themeOther && themeUrl
-                        ? `Other (${meta.themeName})`
-                        : undefined
-                    }
-                    onChange={(id) => {
-                      if (id === OTHER) {
-                        setThemeOther(true);
-                        return;
+                {linkOnly ? null : (
+                  <div className="flex flex-col gap-1.5">
+                    <Combobox
+                      label="Theme"
+                      value={themeOther ? OTHER : themeId}
+                      options={themeOptions}
+                      display={
+                        themeOther && themeUrl
+                          ? `Other (${meta.themeName})`
+                          : undefined
                       }
-                      setThemeOther(false);
-                      setUrlDraft("");
-                      setParam({
-                        theme: id,
-                        themeUrl: undefined,
-                        themeEditor: undefined,
-                      });
-                    }}
-                  />
-                </div>
-                {themeOther ? (
+                      onChange={(id) => {
+                        if (id === OTHER) {
+                          setThemeOther(true);
+                          return;
+                        }
+                        setThemeOther(false);
+                        setUrlDraft("");
+                        setParam({
+                          theme: id,
+                          themeUrl: undefined,
+                          themeVariant: undefined,
+                        });
+                      }}
+                    />
+                  </div>
+                )}
+                {showLink ? (
                   <>
-                    <div className="flex flex-col gap-1.5">
-                      <span className="text-[13px] font-medium">
-                        Editor the theme is for
-                      </span>
-                      <Combobox
-                        label="Theme editor"
-                        value={themeEditor ?? ""}
-                        options={THEME_EDITOR_OPTIONS}
-                        placeholder="Choose an Editor"
-                        onChange={(id) => {
-                          setUrlDraft("");
-                          setParam({
-                            themeEditor: id as ThemeEditor,
-                            themeUrl: undefined,
-                          });
-                        }}
-                      />
-                    </div>
-                    {themeEditor ? (
                       <label className="flex flex-col gap-1.5">
                         <span className="flex items-center gap-2 text-[13px] font-medium">
                           <IconChip>
@@ -602,17 +614,31 @@ export function EditorPage() {
                           onChange={(e) => setUrlDraft(e.target.value)}
                           onBlur={() =>
                             urlDraft.trim() !== themeUrl &&
-                            setParam({ themeUrl: urlDraft.trim() || undefined })
+                            setParam({
+                              themeUrl: urlDraft.trim() || undefined,
+                              themeVariant: undefined,
+                            })
                           }
                           placeholder="https://github.com/…/my-theme.json"
                           autoComplete="off"
                           spellCheck={false}
                         />
                         <span className="text-muted-foreground text-[11px]">
-                          Raw or GitHub/GitLab link to a VS Code theme JSON.
-                          Cursor uses the same files.
+                          {editor === "zed"
+                            ? "Raw or GitHub/GitLab link to a Zed theme JSON."
+                            : "Raw or GitHub/GitLab link to a VS Code theme JSON."}
                         </span>
                       </label>
+                    {variants.length > 1 ? (
+                      <div className="flex flex-col gap-1.5">
+                        <span className="text-[13px] font-medium">Theme in this file</span>
+                        <Combobox
+                          label="Zed theme"
+                          value={variant ?? ""}
+                          options={variants.map((v) => ({ id: v, label: v }))}
+                          onChange={(id) => setParam({ themeVariant: id })}
+                        />
+                      </div>
                     ) : null}
                   </>
                 ) : null}

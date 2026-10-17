@@ -1,8 +1,9 @@
 import { z } from "zod";
+import { EDITOR_IDS, type EditorId } from "./pairs";
 
 export const familyInput = z.object({ family: z.string().trim().min(1).max(80) });
-export const THEME_EDITORS = ["vscode", "cursor"] as const;
-export type ThemeEditor = (typeof THEME_EDITORS)[number];
+export const THEME_EDITORS = EDITOR_IDS;
+export type ThemeEditor = EditorId;
 export const themeUrlInput = z.object({
   url: z.string().trim().url().max(500),
   /** The Editor the theme file is for; it decides how the file is read. */
@@ -15,7 +16,9 @@ export const snapshotSearchSchema = z.object({
   theme: z.string().max(80).optional().catch(undefined),
   lang: z.string().max(40).optional().catch(undefined),
   themeUrl: z.string().max(500).optional().catch(undefined),
-  themeEditor: z.enum(THEME_EDITORS).optional().catch(undefined),
+  editor: z.enum(THEME_EDITORS).optional().catch(undefined),
+  /** Which theme of a Zed theme family to use; unset means the first. */
+  themeVariant: z.string().max(80).optional().catch(undefined),
 });
 
 export const DEFAULTS = {

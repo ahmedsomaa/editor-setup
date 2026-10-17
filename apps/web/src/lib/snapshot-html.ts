@@ -34,10 +34,18 @@ export type SnapshotInput = {
   colors: Record<string, string>;
   faces: FontFace[];
   label: string;
-  /** Title bar with the window dots and label. */
+  /** Window around the code: title bar with the dots and label, a tab bar and a breadcrumb. */
   showBar?: boolean;
   fontSizeMax?: number;
+  /** Language id: names the open file in the window. */
+  lang?: string;
 };
+
+const EXTENSIONS: Record<string, string> = {
+  typescript: "ts", tsx: "tsx", javascript: "js", jsx: "jsx", python: "py", rust: "rs", ruby: "rb",
+  bash: "sh", shellscript: "sh", markdown: "md", yaml: "yml", csharp: "cs", kotlin: "kt",
+};
+const fileFor = (lang: string) => `main.${EXTENSIONS[lang] ?? lang}`;
 
 export function isDarkBg(bg: string) {
   return lum(bg) < 0.5;
@@ -59,6 +67,13 @@ export function buildSnapshotHtml(i: SnapshotInput): string {
   );
   const dim = mix(bg, fg, 0.45);
   const gutter = mix(bg, fg, 0.3);
+  const file = fileFor(i.lang ?? "typescript");
+  const sideFg = safeHex(colors["foreground"], fg);
+  const tabBg = safeHex(colors["editorGroupHeader.tabsBackground"], chrome);
+  const tabOn = safeHex(colors["tab.activeBackground"], bg);
+  const line = safeHex(colors["panel.border"], mix(bg, fg, 0.12));
+  const pad = showBar ? 28 : 60;
+  const padX = showBar ? 40 : 80;
 
   const fontFaceCss = i.faces
     .map(
@@ -99,8 +114,14 @@ html,body{height:100%;background:${bg};overflow:hidden}
 #stage{position:fixed;left:0;top:0;width:${STAGE_W}px;height:${STAGE_H}px;transform-origin:0 0;background:${bg};color:${fg};display:flex;flex-direction:column}
 #bar{height:56px;flex:none;display:flex;align-items:center;gap:10px;padding:0 28px;background:${chrome};border-bottom:1px solid ${mix(bg, fg, 0.12)}}
 #bar i{width:14px;height:14px;border-radius:50%;background:${mix(chrome, fg, 0.28)}}
-#bar b{margin-left:14px;font:500 16px/1 "SnapFont",ui-monospace,monospace;color:${dim}}
-#area{flex:1;min-height:0;display:flex;align-items:flex-start;padding:${showBar ? 44 : 60}px 80px 0}
+#bar b{margin-left:14px;font:500 16px/1 "SnapFont",ui-monospace,monospace;color:${sideFg}}
+#area{flex:1;min-height:0;display:flex;align-items:flex-start;padding:${pad}px ${padX}px 0}
+#body{flex:1;min-height:0;display:flex}
+#main{flex:1;min-width:0;display:flex;flex-direction:column}
+#tabs{height:52px;flex:none;display:flex;background:${tabBg};border-bottom:1px solid ${line};font:400 18px/1 "SnapFont",ui-monospace,monospace;color:${dim}}
+#tabs span{display:flex;align-items:center;padding:0 26px}
+#tabs .on{background:${tabOn};color:${sideFg}}
+#crumb{flex:none;padding:18px ${padX}px 0;font:400 17px/1 "SnapFont",ui-monospace,monospace;color:${dim}}
 #code{font-family:"SnapFont",ui-monospace,monospace;font-size:${fontSizeMax}px;line-height:1.55;white-space:pre;font-variant-ligatures:normal;font-feature-settings:"calt" 1,"liga" 1;tab-size:2;-webkit-font-smoothing:antialiased}
 .ln{display:flex}
 .no{flex:none;width:2.4em;padding-right:1.2em;text-align:right;color:${gutter};user-select:none}
@@ -108,12 +129,16 @@ html,body{height:100%;background:${bg};overflow:hidden}
 </style>
 </head>
 <body>
-<div id="stage">${showBar ? `<div id="bar"><i></i><i></i><i></i><b>${esc(label)}</b></div>` : ""}<div id="area"><pre id="code">${lines}</pre></div></div>
+<div id="stage">${
+    showBar
+      ? `<div id="bar"><i></i><i></i><i></i><b>${esc(label)}</b></div><div id="body"><div id="main"><div id="tabs"><span class="on">${esc(file)}</span><span>package.json</span></div><div id="crumb">src &gt; ${esc(file)}</div><div id="area"><pre id="code">${lines}</pre></div></div></div>`
+      : `<div id="area"><pre id="code">${lines}</pre></div>`
+  }</div>
 <script>
 (async function(){
   await document.fonts.ready;
   const code=document.getElementById('code'), area=document.getElementById('area'), stage=document.getElementById('stage');
-  const maxW=area.clientWidth-160, maxH=area.clientHeight-${showBar ? 44 : 60}-48;
+  const maxW=area.clientWidth-${padX * 2}, maxH=area.clientHeight-${pad}-48;
   let size=${fontSizeMax};
   const need=()=>{const r=code.getBoundingClientRect();return r.width>maxW||r.height>maxH;};
   while(size>8&&need()){size-=0.5;code.style.fontSize=size+'px';}

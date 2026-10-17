@@ -84,9 +84,9 @@ export function Directory({
       {active && preview ? (
         <div className="hidden lg:block" aria-hidden>
           <div className="sticky top-24">
-            {snapshotUrl(active.editors[0]?.snapshot ?? "") ? (
+            {snapshotUrl(active.snapshot) ? (
               <SnapshotImage
-                src={snapshotUrl(active.editors[0]?.snapshot ?? "") ?? ""}
+                src={snapshotUrl(active.snapshot) ?? ""}
                 alt=""
                 className="rounded-[1.1rem]"
               />
@@ -115,7 +115,7 @@ export function Directory({
 
 /** Paid Fonts and Themes appear only as the Snapshot a developer made with their own license. */
 function PaidSnapshot({ pair }: { pair: PairRecord }) {
-  const src = snapshotUrl(pair.editors[0]?.snapshot ?? "");
+  const src = snapshotUrl(pair.snapshot);
   return src ? (
     <SnapshotImage src={src} alt="" className="rounded-[1.1rem]" />
   ) : (
@@ -127,7 +127,7 @@ function PaidSnapshot({ pair }: { pair: PairRecord }) {
 
 /** The Pair's Snapshot, window only; falls back to an "Aa" chip in the Pair's colours until one exists. */
 function CardImage({ pair }: { pair: PairRecord }) {
-  const src = snapshotUrl(pair.editors[0]?.snapshot ?? "");
+  const src = snapshotUrl(pair.snapshot);
   return src ? (
     <SnapshotImage
       src={src}

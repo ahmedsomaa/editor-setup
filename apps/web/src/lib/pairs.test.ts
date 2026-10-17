@@ -64,24 +64,26 @@ describe("getPairBySlug", () => {
 
 describe("getEditorConfig / resolveEditorId", () => {
   const pair = getPairBySlug("inconsolata--vitesse-dark")!;
+  const vscodeOnly = { ...pair, editors: pair.editors.filter((e) => e.id === "vscode") };
 
   test("returns the Config for vscode", () => {
     const config = getEditorConfig(pair, "vscode");
     expect(config?.id).toBe("vscode");
     expect(config?.settings.length).toBeGreaterThan(0);
-    expect(config?.snapshot).toBe("inconsolata--vitesse-dark--vscode.png");
+    expect(pair.snapshot).toBe("inconsolata--vitesse-dark.png");
   });
 
   test("returns undefined when the Pair has no Config for that Editor", () => {
-    expect(getEditorConfig(pair, "cursor")).toBeUndefined();
+    expect(getEditorConfig(vscodeOnly, "zed")).toBeUndefined();
   });
 
   test("resolveEditorId prefers a Config that exists", () => {
+    expect(resolveEditorId(pair, "zed")).toBe("zed");
     expect(resolveEditorId(pair, "vscode")).toBe("vscode");
   });
 
   test("resolveEditorId falls back when preferred has no Config", () => {
-    expect(resolveEditorId(pair, "cursor")).toBe("vscode");
+    expect(resolveEditorId(vscodeOnly, "zed")).toBe("vscode");
   });
 });
 

@@ -12,14 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  EDITOR_IDS,
-  EDITOR_LABELS,
-  getEditorConfig,
-  pairLabel,
-  type EditorId,
-  type PairRecord,
-} from "@/lib/pairs";
+import { EDITOR_LABELS, pairLabel, type PairRecord } from "@/lib/pairs";
 import { snapshotUrl } from "@/lib/snapshots";
 import { MAX_COMPARE } from "@/lib/compare-store";
 
@@ -48,11 +41,6 @@ export function ComparePage() {
       replace: true,
       resetScroll: false,
     });
-
-  const shared: EditorId[] = EDITOR_IDS.filter((id) =>
-    picked.every((p) => getEditorConfig(p, id)),
-  );
-  const editor = shared[0];
 
   return (
     <main id="main">
@@ -111,19 +99,8 @@ export function ComparePage() {
           </div>
         ) : (
           <>
-            {!editor ? (
-              <p
-                role="status"
-                className="bg-pastel-red text-pastel-red-text mt-6 rounded-xl px-4 py-3 text-sm"
-              >
-                These Pairs share no Editor, so their Snapshots cannot be
-                compared. Remove one to continue.
-              </p>
-            ) : null}
-
             <CompareTable
               pairs={picked}
-              editor={editor}
               onRemove={(slug) => setSlugs(slugs.filter((s) => s !== slug))}
             />
             {picked.length === 1 ? (
@@ -140,11 +117,9 @@ export function ComparePage() {
 
 function CompareTable({
   pairs,
-  editor,
   onRemove,
 }: {
   pairs: PairRecord[];
-  editor?: EditorId;
   onRemove: (slug: string) => void;
 }) {
   const rows: { label: string; cell: (p: PairRecord) => React.ReactNode }[] = [
@@ -197,14 +172,13 @@ function CompareTable({
               <span className="block pt-1">Snapshot</span>
             </th>
             {pairs.map((pair) => {
-              const config = editor ? getEditorConfig(pair, editor) : undefined;
-              const src = config ? snapshotUrl(config.snapshot) : undefined;
+              const src = snapshotUrl(pair.snapshot);
               return (
                 <td key={pair.slug} className="ps-3 pb-4 align-top first:ps-0">
                   {src ? (
                     <SnapshotImage
                       src={src}
-                      alt={`${pair.theme.name} with ${pair.font.name} in ${EDITOR_LABELS[editor!]}`}
+                      alt={`${pair.theme.name} with ${pair.font.name}`}
                       className="rounded-[1.1rem]"
                     />
                   ) : (

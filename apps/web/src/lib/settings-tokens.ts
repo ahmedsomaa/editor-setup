@@ -1,4 +1,4 @@
-/* Generated once from the real Themes with Shiki (JSON of the VS Code and Cursor Settings snippet). Do not edit by hand.
+/* Generated once from the real Themes with Shiki (JSON of the VS Code Settings snippet). Do not edit by hand.
    Each token is [text, color, fontStyle] where fontStyle 1 is italic. Keep in step with settingsFor in settings-snippet.ts. */
 import type { PlaygroundToken } from "@/lib/playground-tokens";
 

@@ -35,7 +35,7 @@ export const Route = createFileRoute("/registry/")({
   head: () =>
     pageHead({
       path: "/registry",
-      title: "Registry: Font and Theme Pairs for VS Code and Cursor",
+      title: "Registry: Font and Theme Pairs for VS Code and Zed",
       description:
         "Browse Font and Theme Pairs from real editor setups. Filter by Appearance, License or Editor, open a Pair to see its Snapshot and copy its Settings.",
     }),
