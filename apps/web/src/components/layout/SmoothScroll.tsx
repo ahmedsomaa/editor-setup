@@ -38,8 +38,8 @@ export function SmoothScroll() {
 
       // A lower lerp glides longer; a wheelMultiplier under 1 shortens each wheel step.
       const lenis = new Lenis({
-        lerp: 0.075,
-        wheelMultiplier: 0.7,
+        lerp: 0.05,
+        wheelMultiplier: 0.6,
         smoothWheel: true,
       });
       lenis.on("scroll", ScrollTrigger.update);
