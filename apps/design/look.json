@@ -1,0 +1,45 @@
+{
+  "source": "custom",
+  "description": "Design system stays close to Untitled UI: pill controls, one violet primary (#7f56d9), hairline borders, and quiet elevation. Type is Sora for headlines only, Geist for UI, and Geist Mono for Settings, scores, and other machine text, in light and dark. Screens start from .scratch/mp-cld-imp (violet-tinted neutrals, snapshot-led Pair pages, raised pills, pencil-sparkles wordmark) and must diverge in layout, hierarchy, and detail so they are not a reskin of that prototype. Take the straight category-standard craft of Zed extensions, tweakcn, design.how, and Portfolios Hub. Refuse the dark emission-line rail, the old zinc gradient hero, and a default SaaS kit. Product words follow GLOSSARY.md: Pair, Font, Theme, Editor, Config, Settings, Snapshot, Registry, Compare, Contribution.",
+  "logo": {
+    "mode": "user",
+    "notes": "Lucide pencil-sparkles (https://lucide.dev/icons/pencil-sparkles). Pencil stroke in ink, sparkle strokes in violet #7F56D9. Library mark: link the icon, no local download set."
+  },
+  "name": "EditorSetup",
+  "platform": "website-first",
+  "product": "A git-backed Registry of Font and Theme Pairs, each with Settings and a Snapshot for an Editor.",
+  "who": "Visitors. Contributors and maintainers work through pull requests, not a signed-in product role.",
+  "features": [
+    {
+      "id": "home",
+      "name": "Home",
+      "screens": [{ "id": "home", "name": "Home" }]
+    },
+    {
+      "id": "registry",
+      "name": "Registry",
+      "screens": [{ "id": "registry", "name": "Registry" }]
+    },
+    {
+      "id": "pair",
+      "name": "Pair",
+      "screens": [{ "id": "pair", "name": "Pair" }]
+    },
+    {
+      "id": "compare",
+      "name": "Compare",
+      "screens": [{ "id": "compare", "name": "Compare" }]
+    }
+  ],
+  "pilotFeature": "registry",
+  "outOfScope": [
+    "Sign-in, account, profile, and admin",
+    "In-app Contribution form",
+    "Score, votes, and trending",
+    "Live preview of Paid Fonts",
+    "Drag-slider Compare",
+    "JetBrains and Helix",
+    "Email"
+  ],
+  "status": "kit"
+}

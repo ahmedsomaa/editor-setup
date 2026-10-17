@@ -1,0 +1,24 @@
+{
+  "font": {
+    "name": "Zed Mono",
+    "links": [
+      "https://github.com/zed-industries/zed-fonts"
+    ],
+    "license": "open"
+  },
+  "theme": {
+    "name": "Gruvbox Light Hard",
+    "links": [
+      "https://github.com/morhetz/gruvbox"
+    ],
+    "license": "open",
+    "appearance": "light"
+  },
+  "editors": [
+    {
+      "id": "vscode",
+      "snapshot": "zed-mono--gruvbox-light-hard--vscode.png",
+      "settings": "{\n  \"editor.fontFamily\": \"Zed Mono\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Gruvbox Light Hard\"\n}"
+    }
+  ]
+}

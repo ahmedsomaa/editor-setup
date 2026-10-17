@@ -1,0 +1,1 @@
+The mark: a caret between two braces, 24px, drawn with a 2px round stroke in `foreground`, followed by "EditorSetup" in `brand`. There is no background shape, no circle and no tile. It inherits colour, so it works in both themes. Do not recolour it or add sparkles.

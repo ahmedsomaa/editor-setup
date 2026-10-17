@@ -1,0 +1,24 @@
+{
+  "font": {
+    "name": "Fira Code",
+    "links": [
+      "https://github.com/tonsky/FiraCode"
+    ],
+    "license": "open"
+  },
+  "theme": {
+    "name": "Palenight Theme",
+    "links": [
+      "https://github.com/whizkydee/vscode-palenight-theme"
+    ],
+    "license": "open",
+    "appearance": "dark"
+  },
+  "editors": [
+    {
+      "id": "vscode",
+      "snapshot": "fira-code--palenight-theme--vscode.png",
+      "settings": "{\n  \"editor.fontFamily\": \"Fira Code\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Palenight Theme\"\n}"
+    }
+  ]
+}

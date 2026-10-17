@@ -1,0 +1,2229 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Design system · EditorSetup Design Handbook</title>
+    <meta
+      name="description"
+      content="Brand, foundations, Registry components, and tokens for EditorSetup."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Inconsolata:wght@500&family=Sora:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="handbook.css" />
+    <style>
+      .es {
+        --background: #f9fafb;
+        --foreground: #101828;
+        --card: #ffffff;
+        --primary: #7f56d9;
+        --primary-foreground: #ffffff;
+        --secondary: #ffffff;
+        --secondary-foreground: #344054;
+        --muted: #f2f4f7;
+        --muted-foreground: #475467;
+        --accent: #f4ebff;
+        --accent-foreground: #6941c6;
+        --border: #d0d5dd;
+        --ring: #9e77ed;
+        --success: #067647;
+        --warning: #b54708;
+        --radius: 8px;
+        --radius-sm: calc(var(--radius) / 1.618);
+        --radius-lg: calc(var(--radius) * 1.618);
+        --radius-pill: 999px;
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-5: 24px;
+        --space-6: 32px;
+        --space-7: 48px;
+        --space-8: 64px;
+        --font-display: "Sora", sans-serif;
+        --font-body: "Geist", sans-serif;
+        --font-mono: "Geist Mono", ui-monospace, monospace;
+        --shadow-rest: none;
+        --shadow-raised: 0px 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-overlay:
+          0px 12px 16px -4px rgba(0, 0, 0, 0.08),
+          0px 4px 6px -2px rgba(0, 0, 0, 0.03),
+          0px 2px 2px -1px rgba(0, 0, 0, 0.04);
+        --focus: 0 0 0 4px color-mix(in srgb, var(--ring) 24%, transparent);
+        background: var(--background);
+        color: var(--foreground);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      [data-theme="dark"] .es {
+        --background: #0c111d;
+        --foreground: #f5f5f6;
+        --card: #161b26;
+        --primary: #7f56d9;
+        --primary-foreground: #ffffff;
+        --secondary: #161b26;
+        --secondary-foreground: #cecfd2;
+        --muted: #1f242f;
+        --muted-foreground: #94969c;
+        --accent: #2c1c5f;
+        --accent-foreground: #e9d7fe;
+        --border: #333741;
+        --ring: #9e77ed;
+        --success: #75e0a7;
+        --warning: #fec84b;
+        --shadow-rest: none;
+        --shadow-raised: 0px 1px 2px rgba(0, 0, 0, 0.45);
+        --shadow-overlay:
+          0px 12px 16px -4px rgba(0, 0, 0, 0.5),
+          0px 4px 6px -2px rgba(0, 0, 0, 0.35);
+      }
+      .handbook-content .es a {
+        text-decoration: none;
+        font-weight: 400;
+      }
+      .handbook-content .es a:hover {
+        font-weight: 400;
+      }
+      .es-stage {
+        padding: var(--space-5);
+        border-radius: var(--radius-lg);
+      }
+      .pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin: 0 0 8px;
+      }
+      .swatch {
+        min-height: 132px;
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        border-radius: 10px;
+      }
+      .swatch strong {
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+      .swatch code,
+      .es code {
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 0.75rem;
+      }
+      .swatch p {
+        margin: 4px 0 0;
+        font-size: 0.8125rem;
+      }
+      .plates {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .plate {
+        padding: 20px;
+        border-radius: 13px;
+        border: 1px solid var(--hb-border);
+      }
+      .plate-light {
+        background: #f9fafb;
+        color: #101828;
+      }
+      .plate-dark {
+        background: #0c111d;
+        color: #f5f5f6;
+      }
+      .es-display {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(3rem, 7vw, 4.5rem);
+        line-height: 1;
+        letter-spacing: -0.025em;
+      }
+      .es-heading {
+        margin: 8px 0 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(1.875rem, 4vw, 3rem);
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+      }
+      .es-body {
+        margin: 8px 0 0;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+      .es-caption {
+        margin: 8px 0 0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.25;
+        color: var(--muted-foreground);
+      }
+      .es-mono {
+        margin: 8px 0 0;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        line-height: 1.25;
+        white-space: pre-wrap;
+      }
+      .es-theme {
+        color: var(--accent-foreground);
+      }
+      .es-font {
+        font-family: "Inconsolata", ui-monospace, monospace;
+        font-weight: 500;
+        letter-spacing: 0;
+      }
+      .meta-note {
+        margin: 8px 0 0;
+        color: var(--hb-muted);
+        font-size: 0.8125rem;
+      }
+      .ladder {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .ladder div {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .ladder i {
+        display: block;
+        height: 12px;
+        background: var(--hb-text);
+        border-radius: 2px;
+      }
+      .radius-row,
+      .elev-row,
+      .icon-row,
+      .state-row,
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: flex-end;
+      }
+      .radius-box {
+        width: 72px;
+        height: 72px;
+        background: var(--card);
+        border: 1px solid var(--border);
+      }
+      .state {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-start;
+      }
+      .state span,
+      .spec-label {
+        color: var(--muted-foreground);
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      .es-btn {
+        height: 36px;
+        padding: 0 14px;
+        border-radius: var(--radius-pill);
+        border: 1px solid transparent;
+        font: inherit;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--shadow-raised);
+      }
+      .es-btn:focus-visible,
+      .es-btn.is-focus,
+      .es-search:focus-within,
+      .es-search.is-focus,
+      .es-filter:focus-visible,
+      .es-filter.is-focus,
+      .es-pager button:focus-visible {
+        outline: none;
+        box-shadow: var(--shadow-raised), var(--focus);
+      }
+      .es-btn-primary {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .es-btn-primary:hover,
+      .es-btn-primary.is-hover {
+        background: #6941c6;
+      }
+      .es-btn-secondary {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+        border-color: var(--border);
+      }
+      .es-btn-secondary:hover,
+      .es-btn-secondary.is-hover {
+        background: var(--muted);
+      }
+      .es-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .es-search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
+        width: min(100%, 360px);
+        padding: 0 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-pill);
+        background: var(--card);
+        box-shadow: var(--shadow-raised);
+        color: var(--muted-foreground);
+      }
+      .es-search input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        color: var(--foreground);
+        font: inherit;
+      }
+      .es-search input:focus {
+        outline: none;
+      }
+      .es-search input::placeholder {
+        color: var(--muted-foreground);
+      }
+      .es-sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+      .es-filter {
+        height: 32px;
+        padding: 0 12px;
+        border-radius: var(--radius-pill);
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--secondary-foreground);
+        font: inherit;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--shadow-rest);
+      }
+      .es-filter:hover {
+        background: var(--muted);
+      }
+      .es-filter.is-selected {
+        background: var(--accent);
+        border-color: transparent;
+        color: var(--accent-foreground);
+      }
+      .es-card {
+        display: block;
+        width: min(100%, 320px);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--card);
+        box-shadow: var(--shadow-raised);
+        color: inherit;
+      }
+      .es-card:hover {
+        border-color: var(--muted-foreground);
+      }
+      .es-card img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        background: var(--muted);
+      }
+      .es-card-body {
+        padding: 12px 14px 14px;
+      }
+      .es-card-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+      }
+      .es-card-font {
+        margin: 4px 0 0;
+      }
+      .es-card-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .es-badge {
+        display: inline-flex;
+        align-items: center;
+        height: 22px;
+        padding: 0 8px;
+        border-radius: var(--radius-pill);
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      .es-badge-open {
+        background: color-mix(in srgb, var(--success) 14%, var(--card));
+        color: var(--success);
+      }
+      .es-badge-free {
+        background: var(--muted);
+        color: var(--muted-foreground);
+      }
+      .es-badge-paid {
+        background: color-mix(in srgb, var(--warning) 16%, var(--card));
+        color: var(--warning);
+      }
+      .es-pager {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .es-pager button {
+        min-width: 32px;
+        height: 32px;
+        padding: 0 10px;
+        border-radius: var(--radius-pill);
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--secondary-foreground);
+        font: inherit;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .es-pager button[aria-current="page"] {
+        background: var(--accent);
+        border-color: transparent;
+        color: var(--accent-foreground);
+      }
+      .es-pager button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .elev {
+        width: 140px;
+        height: 88px;
+        border-radius: var(--radius-lg);
+        background: var(--card);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: flex-end;
+        padding: 10px;
+      }
+      .elev span {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--muted-foreground);
+      }
+      .elev-rest {
+        box-shadow: var(--shadow-rest);
+      }
+      .elev-raised {
+        box-shadow: var(--shadow-raised);
+      }
+      .elev-overlay {
+        box-shadow: var(--shadow-overlay);
+      }
+      .icon-row svg {
+        color: var(--foreground);
+      }
+      .logo-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .logo-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+      }
+      .mark {
+        width: 72px;
+        height: 72px;
+        display: block;
+      }
+      .mark .spark,
+      .mark .pencil {
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .mark .spark {
+        stroke: var(--spark);
+      }
+      .mark .pencil {
+        stroke: var(--ink);
+      }
+      .mark-colored {
+        --ink: #101828;
+        --spark: #7f56d9;
+      }
+      .plate-dark .mark-colored {
+        --ink: #f5f5f6;
+        --spark: #d6bbfb;
+      }
+      .mark-mono {
+        --ink: #101828;
+        --spark: #101828;
+      }
+      .plate-dark .mark-mono {
+        --ink: #f5f5f6;
+        --spark: #f5f5f6;
+      }
+      .mark-duo {
+        --ink: #344054;
+        --spark: #7f56d9;
+      }
+      .plate-dark .mark-duo {
+        --ink: #cecfd2;
+        --spark: #d6bbfb;
+      }
+      .lockup {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        border-radius: 13px;
+        border: 1px solid var(--hb-border);
+      }
+      .lockup .mark {
+        width: 28px;
+        height: 28px;
+      }
+      .word {
+        font-family: "Sora", sans-serif;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        letter-spacing: -0.02em;
+      }
+      .appicon {
+        width: 64px;
+        height: 64px;
+        display: grid;
+        place-items: center;
+        border-radius: 13px;
+        background: #7f56d9;
+      }
+      .appicon .mark {
+        width: 36px;
+        height: 36px;
+        --ink: #f5f5f6;
+        --spark: #f5f5f6;
+      }
+      .downloads {
+        margin: 0;
+        padding-left: 1.2rem;
+      }
+      .downloads li {
+        margin: 0.3rem 0;
+      }
+      .plate-light.es {
+        --background: #f9fafb;
+        --foreground: #101828;
+        --accent-foreground: #6941c6;
+        --muted-foreground: #475467;
+        --card: #ffffff;
+        --border: #d0d5dd;
+      }
+      .plate-dark.es {
+        --background: #0c111d;
+        --foreground: #f5f5f6;
+        --accent-foreground: #e9d7fe;
+        --muted-foreground: #94969c;
+        --card: #161b26;
+        --border: #333741;
+      }
+      .handbook-content .es p {
+        margin: 8px 0 0;
+      }
+      .handbook-content .es .es-display,
+      .handbook-content .es .es-card-title {
+        margin: 0;
+      }
+      .handbook-content .es .es-heading {
+        margin: 8px 0 0;
+      }
+      .handbook-content .es .es-card-title + .es-card-font {
+        margin-top: 4px;
+      }
+      .handbook-content .swatch p {
+        margin: 4px 0 0;
+      }
+      @media (max-width: 720px) {
+        .pair,
+        .plates,
+        .logo-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="handbook">
+      <aside class="handbook-sidebar">
+        <header class="handbook-brand">
+          <div>
+            <a href="index.html">EditorSetup</a>
+            <p>Design Handbook</p>
+          </div>
+          <button
+            type="button"
+            class="handbook-theme"
+            aria-label="Switch to dark theme"
+          >
+            <svg
+              class="is-moon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+            <svg
+              class="is-sun"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </button>
+        </header>
+        <button
+          type="button"
+          class="handbook-cmd-trigger"
+          aria-haspopup="dialog"
+          aria-controls="handbook-cmd"
+          aria-keyshortcuts="Meta+K Control+K"
+        >
+          <span>Search handbook…</span>
+          <kbd>⌘K</kbd>
+        </button>
+        <hr class="handbook-sep" />
+        <nav class="handbook-nav" aria-label="Handbook">
+          <ul>
+            <li>
+              <a href="brief.html">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+                  />
+                  <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                  <path d="M10 9H8" />
+                  <path d="M16 13H8" />
+                  <path d="M16 17H8" />
+                </svg>
+                Brief
+              </a>
+            </li>
+            <li>
+              <a href="system.html" aria-current="page">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+                  <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+                  <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+                  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+                  <path
+                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"
+                  />
+                </svg>
+                Design system
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="handbook-main">
+        <div class="handbook-content">
+          <h1>Design system</h1>
+          <p class="handbook-lead">
+            Untitled UI color, type roles, and pill controls, built for a
+            Registry of Font and Theme Pairs.
+          </p>
+
+          <section id="brand">
+            <h2>Brand</h2>
+            <h3 id="guidelines">Guidelines</h3>
+            <p>
+              The mark is
+              <a href="https://lucide.dev/icons/pencil-sparkles"
+                >Lucide pencil-sparkles</a
+              >. The pencil is ink. The sparkles are violet
+              <code>#7F56D9</code>. It sits in the site header and as the app
+              icon. The wordmark is Sora, and only in that lockup.
+            </p>
+            <ul>
+              <li>
+                Do use the Lucide paths. Pencil in foreground, sparkles in
+                primary.
+              </li>
+              <li>Do keep the wordmark in Sora.</li>
+              <li>
+                Don’t redraw the icon, and don’t set the wordmark in Geist.
+              </li>
+            </ul>
+            <h3 id="logo">Logo</h3>
+            <div class="logo-grid">
+              <div class="logo-cell">
+                <div class="plate plate-light">
+                  <svg
+                    class="mark mark-colored"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    aria-label="Colored mark on a light surface"
+                  >
+                    <g class="spark">
+                      <path d="M10 3H8" />
+                      <path d="M20 15v4" />
+                      <path d="M22 17h-4" />
+                      <path d="M4 5v4" />
+                      <path d="M6 7H2" />
+                      <path d="M9 2v2" />
+                    </g>
+                    <g class="pencil">
+                      <path d="m15.007 5.008 3.987 3.986" />
+                      <path
+                        d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <div class="plate plate-dark">
+                  <svg
+                    class="mark mark-colored"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    aria-label="Colored mark on a dark surface"
+                  >
+                    <g class="spark">
+                      <path d="M10 3H8" />
+                      <path d="M20 15v4" />
+                      <path d="M22 17h-4" />
+                      <path d="M4 5v4" />
+                      <path d="M6 7H2" />
+                      <path d="M9 2v2" />
+                    </g>
+                    <g class="pencil">
+                      <path d="m15.007 5.008 3.987 3.986" />
+                      <path
+                        d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <p class="meta-note">Colored</p>
+              </div>
+              <div class="logo-cell">
+                <div class="plate plate-light">
+                  <svg
+                    class="mark mark-mono"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    aria-label="Monochrome mark on a light surface"
+                  >
+                    <g class="spark">
+                      <path d="M10 3H8" />
+                      <path d="M20 15v4" />
+                      <path d="M22 17h-4" />
+                      <path d="M4 5v4" />
+                      <path d="M6 7H2" />
+                      <path d="M9 2v2" />
+                    </g>
+                    <g class="pencil">
+                      <path d="m15.007 5.008 3.987 3.986" />
+                      <path
+                        d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <div class="plate plate-dark">
+                  <svg
+                    class="mark mark-mono"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    aria-label="Monochrome mark on a dark surface"
+                  >
+                    <g class="spark">
+                      <path d="M10 3H8" />
+                      <path d="M20 15v4" />
+                      <path d="M22 17h-4" />
+                      <path d="M4 5v4" />
+                      <path d="M6 7H2" />
+                      <path d="M9 2v2" />
+                    </g>
+                    <g class="pencil">
+                      <path d="m15.007 5.008 3.987 3.986" />
+                      <path
+                        d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <p class="meta-note">Monochrome</p>
+              </div>
+              <div class="logo-cell">
+                <div class="plate plate-light">
+                  <svg
+                    class="mark mark-duo"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    aria-label="Duotone mark on a light surface"
+                  >
+                    <g class="spark">
+                      <path d="M10 3H8" />
+                      <path d="M20 15v4" />
+                      <path d="M22 17h-4" />
+                      <path d="M4 5v4" />
+                      <path d="M6 7H2" />
+                      <path d="M9 2v2" />
+                    </g>
+                    <g class="pencil">
+                      <path d="m15.007 5.008 3.987 3.986" />
+                      <path
+                        d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <div class="plate plate-dark">
+                  <svg
+                    class="mark mark-duo"
+                    viewBox="0 0 24 24"
+                    role="img"
+                    aria-label="Duotone mark on a dark surface"
+                  >
+                    <g class="spark">
+                      <path d="M10 3H8" />
+                      <path d="M20 15v4" />
+                      <path d="M22 17h-4" />
+                      <path d="M4 5v4" />
+                      <path d="M6 7H2" />
+                      <path d="M9 2v2" />
+                    </g>
+                    <g class="pencil">
+                      <path d="m15.007 5.008 3.987 3.986" />
+                      <path
+                        d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                      />
+                    </g>
+                  </svg>
+                </div>
+                <p class="meta-note">Duotone</p>
+              </div>
+            </div>
+            <div class="plates" style="margin-top: 12px">
+              <div class="lockup plate-light">
+                <svg
+                  class="mark mark-colored"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <g class="spark">
+                    <path d="M10 3H8" />
+                    <path d="M20 15v4" />
+                    <path d="M22 17h-4" />
+                    <path d="M4 5v4" />
+                    <path d="M6 7H2" />
+                    <path d="M9 2v2" />
+                  </g>
+                  <g class="pencil">
+                    <path d="m15.007 5.008 3.987 3.986" />
+                    <path
+                      d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                    />
+                  </g>
+                </svg>
+                <span class="word">EditorSetup</span>
+              </div>
+              <div class="lockup plate-dark">
+                <svg
+                  class="mark mark-colored"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <g class="spark">
+                    <path d="M10 3H8" />
+                    <path d="M20 15v4" />
+                    <path d="M22 17h-4" />
+                    <path d="M4 5v4" />
+                    <path d="M6 7H2" />
+                    <path d="M9 2v2" />
+                  </g>
+                  <g class="pencil">
+                    <path d="m15.007 5.008 3.987 3.986" />
+                    <path
+                      d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                    />
+                  </g>
+                </svg>
+                <span class="word">EditorSetup</span>
+              </div>
+            </div>
+            <p class="meta-note">
+              Header lockup. App icon below, violet field, monochrome mark.
+            </p>
+            <div class="appicon" style="margin-top: 12px">
+              <svg
+                class="mark"
+                viewBox="0 0 24 24"
+                role="img"
+                aria-label="EditorSetup app icon"
+              >
+                <g class="spark">
+                  <path d="M10 3H8" />
+                  <path d="M20 15v4" />
+                  <path d="M22 17h-4" />
+                  <path d="M4 5v4" />
+                  <path d="M6 7H2" />
+                  <path d="M9 2v2" />
+                </g>
+                <g class="pencil">
+                  <path d="m15.007 5.008 3.987 3.986" />
+                  <path
+                    d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                  />
+                </g>
+              </svg>
+            </div>
+            <h3 id="source">Source</h3>
+            <p>
+              Library mark. Use the icon from Lucide and recolor the strokes. No
+              local download set.
+            </p>
+            <p>
+              <a href="https://lucide.dev/icons/pencil-sparkles"
+                >pencil-sparkles on Lucide</a
+              >
+            </p>
+          </section>
+
+          <hr class="handbook-dash" />
+
+          <section id="foundations">
+            <h2>Foundations</h2>
+            <p>
+              Neutrals are Untitled UI gray. Violet is the action, the selected
+              filter, and the sparkles. The Snapshot is the colored object.
+            </p>
+
+            <h3 id="color">Color</h3>
+            <p>
+              Same role names in light and dark. The handbook theme toggle does
+              not recolor these pairs; each row is the role on both surfaces.
+            </p>
+            <div class="pair">
+              <div class="swatch" style="background: #f9fafb; color: #101828">
+                <strong>background</strong><code>#F9FAFB</code
+                ><code>--background</code>
+                <p>Page behind the Registry.</p>
+              </div>
+              <div class="swatch" style="background: #0c111d; color: #f5f5f6">
+                <strong>background</strong><code>#0C111D</code
+                ><code>--background</code>
+                <p>Page behind the Registry.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #101828; color: #f5f5f6">
+                <strong>foreground</strong><code>#101828</code
+                ><code>--foreground</code>
+                <p>Titles and body text.</p>
+              </div>
+              <div class="swatch" style="background: #f5f5f6; color: #101828">
+                <strong>foreground</strong><code>#F5F5F6</code
+                ><code>--foreground</code>
+                <p>Titles and body text.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div
+                class="swatch"
+                style="
+                  background: #ffffff;
+                  color: #101828;
+                  box-shadow: inset 0 0 0 1px #d0d5dd;
+                "
+              >
+                <strong>card</strong><code>#FFFFFF</code><code>--card</code>
+                <p>Pair card surface.</p>
+              </div>
+              <div class="swatch" style="background: #161b26; color: #f5f5f6">
+                <strong>card</strong><code>#161B26</code><code>--card</code>
+                <p>Pair card surface.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #7f56d9; color: #ffffff">
+                <strong>primary</strong><code>#7F56D9</code
+                ><code>--primary</code>
+                <p>Primary button fill and sparkles.</p>
+              </div>
+              <div class="swatch" style="background: #7f56d9; color: #ffffff">
+                <strong>primary</strong><code>#7F56D9</code
+                ><code>--primary</code>
+                <p>Primary button fill and sparkles.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div
+                class="swatch"
+                style="
+                  background: #ffffff;
+                  color: #101828;
+                  box-shadow: inset 0 0 0 1px #d0d5dd;
+                "
+              >
+                <strong>primary-foreground</strong><code>#FFFFFF</code
+                ><code>--primary-foreground</code>
+                <p>Label on a primary button.</p>
+              </div>
+              <div
+                class="swatch"
+                style="
+                  background: #ffffff;
+                  color: #101828;
+                  box-shadow: inset 0 0 0 1px #333741;
+                "
+              >
+                <strong>primary-foreground</strong><code>#FFFFFF</code
+                ><code>--primary-foreground</code>
+                <p>Label on a primary button.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div
+                class="swatch"
+                style="
+                  background: #ffffff;
+                  color: #101828;
+                  box-shadow: inset 0 0 0 1px #d0d5dd;
+                "
+              >
+                <strong>secondary</strong><code>#FFFFFF</code
+                ><code>--secondary</code>
+                <p>Secondary button surface.</p>
+              </div>
+              <div class="swatch" style="background: #161b26; color: #f5f5f6">
+                <strong>secondary</strong><code>#161B26</code
+                ><code>--secondary</code>
+                <p>Secondary button surface.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #344054; color: #f5f5f6">
+                <strong>secondary-foreground</strong><code>#344054</code
+                ><code>--secondary-foreground</code>
+                <p>Label on a secondary button.</p>
+              </div>
+              <div class="swatch" style="background: #cecfd2; color: #101828">
+                <strong>secondary-foreground</strong><code>#CECFD2</code
+                ><code>--secondary-foreground</code>
+                <p>Label on a secondary button.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #f2f4f7; color: #101828">
+                <strong>muted</strong><code>#F2F4F7</code><code>--muted</code>
+                <p>Hover fill for an unselected filter.</p>
+              </div>
+              <div class="swatch" style="background: #1f242f; color: #f5f5f6">
+                <strong>muted</strong><code>#1F242F</code><code>--muted</code>
+                <p>Hover fill for an unselected filter.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #475467; color: #f5f5f6">
+                <strong>muted-foreground</strong><code>#475467</code
+                ><code>--muted-foreground</code>
+                <p>Meta under a Pair title.</p>
+              </div>
+              <div class="swatch" style="background: #94969c; color: #101828">
+                <strong>muted-foreground</strong><code>#94969C</code
+                ><code>--muted-foreground</code>
+                <p>Meta under a Pair title.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #f4ebff; color: #101828">
+                <strong>accent</strong><code>#F4EBFF</code><code>--accent</code>
+                <p>Selected filter fill.</p>
+              </div>
+              <div class="swatch" style="background: #2c1c5f; color: #e9d7fe">
+                <strong>accent</strong><code>#2C1C5F</code><code>--accent</code>
+                <p>Selected filter fill.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #6941c6; color: #ffffff">
+                <strong>accent-foreground</strong><code>#6941C6</code
+                ><code>--accent-foreground</code>
+                <p>Selected filter label and text links.</p>
+              </div>
+              <div class="swatch" style="background: #e9d7fe; color: #101828">
+                <strong>accent-foreground</strong><code>#E9D7FE</code
+                ><code>--accent-foreground</code>
+                <p>Selected filter label and text links.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #d0d5dd; color: #101828">
+                <strong>border</strong><code>#D0D5DD</code><code>--border</code>
+                <p>Hairline on cards, fields, and filters.</p>
+              </div>
+              <div class="swatch" style="background: #333741; color: #f5f5f6">
+                <strong>border</strong><code>#333741</code><code>--border</code>
+                <p>Hairline on cards, fields, and filters.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #9e77ed; color: #101828">
+                <strong>ring</strong><code>#9E77ED</code><code>--ring</code>
+                <p>Focus ring on fields and buttons.</p>
+              </div>
+              <div class="swatch" style="background: #9e77ed; color: #101828">
+                <strong>ring</strong><code>#9E77ED</code><code>--ring</code>
+                <p>Focus ring on fields and buttons.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #067647; color: #ffffff">
+                <strong>success</strong><code>#067647</code
+                ><code>--success</code>
+                <p>Open license.</p>
+              </div>
+              <div class="swatch" style="background: #75e0a7; color: #101828">
+                <strong>success</strong><code>#75E0A7</code
+                ><code>--success</code>
+                <p>Open license.</p>
+              </div>
+            </div>
+            <div class="pair">
+              <div class="swatch" style="background: #b54708; color: #ffffff">
+                <strong>warning</strong><code>#B54708</code
+                ><code>--warning</code>
+                <p>Paid license.</p>
+              </div>
+              <div class="swatch" style="background: #fec84b; color: #101828">
+                <strong>warning</strong><code>#FEC84B</code
+                ><code>--warning</code>
+                <p>Paid license.</p>
+              </div>
+            </div>
+
+            <h3 id="typography">Typography</h3>
+            <p>
+              Sora 600 is the hook and the Pair title. Geist is the UI. Geist
+              Mono is Settings and slugs. Inconsolata in the hook is that Pair’s
+              Font, not the UI mono.
+            </p>
+            <div class="plates">
+              <div
+                class="plate plate-light es"
+                style="background: #f9fafb; color: #101828"
+              >
+                <p class="es-display">
+                  Your favorite editor in
+                  <span class="es-theme">Vitesse Dark</span> &amp;
+                  <span class="es-font">Inconsolata</span>
+                </p>
+                <p class="es-heading">Vitesse Dark</p>
+                <p class="es-body">
+                  Font and theme pairs from real developers. Find yours and copy
+                  the settings.
+                </p>
+                <p class="es-caption">Open · VS Code</p>
+                <p class="es-mono">
+                  editor.fontFamily: Inconsolata workbench.colorTheme: Vitesse
+                  Dark
+                </p>
+              </div>
+              <div
+                class="plate plate-dark es"
+                style="background: #0c111d; color: #f5f5f6"
+              >
+                <p class="es-display">
+                  Your favorite editor in
+                  <span class="es-theme">Vitesse Dark</span> &amp;
+                  <span class="es-font">Inconsolata</span>
+                </p>
+                <p class="es-heading">Vitesse Dark</p>
+                <p class="es-body">
+                  Font and theme pairs from real developers. Find yours and copy
+                  the settings.
+                </p>
+                <p class="es-caption">Open · VS Code</p>
+                <p class="es-mono">
+                  editor.fontFamily: Inconsolata workbench.colorTheme: Vitesse
+                  Dark
+                </p>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Role</th>
+                  <th>Family</th>
+                  <th>Weight</th>
+                  <th>Size</th>
+                  <th>Line height</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Display</td>
+                  <td>Sora</td>
+                  <td>600</td>
+                  <td>30px</td>
+                  <td>1.2, tracking −0.02em</td>
+                </tr>
+                <tr>
+                  <td>Heading</td>
+                  <td>Sora</td>
+                  <td>600</td>
+                  <td>20px</td>
+                  <td>1.25, tracking −0.02em</td>
+                </tr>
+                <tr>
+                  <td>Body</td>
+                  <td>Geist</td>
+                  <td>400</td>
+                  <td>14px</td>
+                  <td>1.5</td>
+                </tr>
+                <tr>
+                  <td>Caption</td>
+                  <td>Geist</td>
+                  <td>500</td>
+                  <td>12px</td>
+                  <td>1.45</td>
+                </tr>
+                <tr>
+                  <td>Mono</td>
+                  <td>Geist Mono</td>
+                  <td>400</td>
+                  <td>13px</td>
+                  <td>1.55</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="meta-note">
+              Sora and Geist from Google Fonts. Inconsolata loads only where a
+              Pair’s Font is the subject.
+            </p>
+
+            <h3 id="spacing">Spacing</h3>
+            <p>A 4px scale. Registry cards use 12, 16, and 24.</p>
+            <div class="es es-stage">
+              <div class="ladder">
+                <div>
+                  <i style="width: 4px; background: var(--foreground)"></i
+                  ><span>space-1 · 4px</span>
+                </div>
+                <div>
+                  <i style="width: 8px; background: var(--foreground)"></i
+                  ><span>space-2 · 8px</span>
+                </div>
+                <div>
+                  <i style="width: 12px; background: var(--foreground)"></i
+                  ><span>space-3 · 12px</span>
+                </div>
+                <div>
+                  <i style="width: 16px; background: var(--foreground)"></i
+                  ><span>space-4 · 16px</span>
+                </div>
+                <div>
+                  <i style="width: 24px; background: var(--foreground)"></i
+                  ><span>space-5 · 24px</span>
+                </div>
+                <div>
+                  <i style="width: 32px; background: var(--foreground)"></i
+                  ><span>space-6 · 32px</span>
+                </div>
+                <div>
+                  <i style="width: 48px; background: var(--foreground)"></i
+                  ><span>space-7 · 48px</span>
+                </div>
+                <div>
+                  <i style="width: 64px; background: var(--foreground)"></i
+                  ><span>space-8 · 64px</span>
+                </div>
+              </div>
+            </div>
+
+            <h3 id="radius">Radius</h3>
+            <p>
+              Base <code>--radius</code> is 8px. Steps divide and multiply by φ.
+              Buttons, search, filters, badges, and pagination are pills. Cards
+              use the large step so a 16:9 Snapshot has a corner, not a capsule.
+            </p>
+            <div class="es es-stage">
+              <div class="radius-row">
+                <div class="state">
+                  <div
+                    class="radius-box"
+                    style="border-radius: var(--radius-sm)"
+                  ></div>
+                  <span>sm · 4.9px</span>
+                </div>
+                <div class="state">
+                  <div
+                    class="radius-box"
+                    style="border-radius: var(--radius)"
+                  ></div>
+                  <span>radius · 8px</span>
+                </div>
+                <div class="state">
+                  <div
+                    class="radius-box"
+                    style="border-radius: var(--radius-lg)"
+                  ></div>
+                  <span>lg · 12.9px</span>
+                </div>
+                <div class="state">
+                  <div
+                    class="radius-box"
+                    style="border-radius: var(--radius-pill)"
+                  ></div>
+                  <span>pill</span>
+                </div>
+              </div>
+            </div>
+
+            <h3 id="elevation">Elevation</h3>
+            <p>
+              Rest is a hairline. Raised is Untitled’s shadow-xs, for cards and
+              fields. Overlay is shadow-lg, for a menu. Dark shadows get
+              heavier; they are not flipped.
+            </p>
+            <div class="es es-stage">
+              <div class="elev-row">
+                <div class="elev elev-rest"><span>rest</span></div>
+                <div class="elev elev-raised"><span>raised</span></div>
+                <div class="elev elev-overlay"><span>overlay</span></div>
+              </div>
+            </div>
+
+            <h3 id="icons">Icons</h3>
+            <p>
+              Lucide, one set. The mark is in that stroke family, and the
+              Registry needs search, filter, and pager chevrons.
+              <a href="https://lucide.dev/icons/">Lucide icons</a>.
+            </p>
+            <div class="es es-stage">
+              <div class="icon-row">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <polygon
+                    points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+                  />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </div>
+            </div>
+
+            <h3 id="anti-slop">Anti-slop</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Don’t</th>
+                  <th>Do</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Violet-tint the page, or lay a code-glyph pattern under it.
+                  </td>
+                  <td>
+                    Keep the page gray. Violet marks the action, the selected
+                    filter, and the sparkles.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Put Sora on filters, badges, and meta.</td>
+                  <td>Keep Sora on the hook and the Pair title.</td>
+                </tr>
+                <tr>
+                  <td>Nest a card around the Snapshot, or lift it on hover.</td>
+                  <td>One card. Hover only darkens the hairline.</td>
+                </tr>
+                <tr>
+                  <td>Use emoji, a score, or an upvote arrow.</td>
+                  <td>Say the License: Open, Free, or Paid.</td>
+                </tr>
+                <tr>
+                  <td>Write “Awesome theme!!!”.</td>
+                  <td>Use the real names: Vitesse Dark, Inconsolata.</td>
+                </tr>
+                <tr>
+                  <td>Put two primary buttons in one view.</td>
+                  <td>
+                    One primary action. On an empty Registry, that action is
+                    Clear filters.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <hr class="handbook-dash" />
+
+          <section id="components">
+            <h2>Components</h2>
+            <p>
+              Pilot: Registry. Later: header, hero, footer, editor switch,
+              Settings block, and Compare columns. Loading and inline errors are
+              not Registry controls.
+            </p>
+
+            <h3 id="button">Button</h3>
+            <p>
+              The primary action. On the Registry it clears filters when a
+              search returns nothing.
+            </p>
+            <div class="handbook-switch">
+              <div class="handbook-switch-track">
+                <label
+                  ><input type="radio" name="ex-button" checked /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  Preview</label
+                >
+                <label
+                  ><input type="radio" name="ex-button" /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m18 16 4-4-4-4" />
+                    <path d="m6 8-4 4 4 4" />
+                    <path d="m14.5 4-5 16" />
+                  </svg>
+                  Code</label
+                >
+              </div>
+              <div class="handbook-preview">
+                <div class="es es-stage">
+                  <div class="state-row">
+                    <div class="state">
+                      <button class="es-btn es-btn-primary" type="button">
+                        Clear filters</button
+                      ><span>Default</span>
+                    </div>
+                    <div class="state">
+                      <button
+                        class="es-btn es-btn-primary is-hover"
+                        type="button"
+                      >
+                        Clear filters</button
+                      ><span>Hover</span>
+                    </div>
+                    <div class="state">
+                      <button
+                        class="es-btn es-btn-primary is-focus"
+                        type="button"
+                      >
+                        Clear filters</button
+                      ><span>Focus</span>
+                    </div>
+                    <div class="state">
+                      <button
+                        class="es-btn es-btn-primary"
+                        type="button"
+                        disabled
+                      >
+                        Clear filters</button
+                      ><span>Disabled</span>
+                    </div>
+                    <div class="state">
+                      <button class="es-btn es-btn-secondary" type="button">
+                        Next</button
+                      ><span>Secondary</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="handbook-code">
+                <pre><code>.es-btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-raised);
+}</code></pre>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Don’t</th>
+                  <th>Do</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Use primary for every filter.</td>
+                  <td>
+                    Keep primary for one action. Filters use the filter pill.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3 id="search">Search</h3>
+            <p>Finds a Pair by Font name or Theme name.</p>
+            <div class="handbook-switch">
+              <div class="handbook-switch-track">
+                <label
+                  ><input type="radio" name="ex-search" checked /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  Preview</label
+                >
+                <label
+                  ><input type="radio" name="ex-search" /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m18 16 4-4-4-4" />
+                    <path d="m6 8-4 4 4 4" />
+                    <path d="m14.5 4-5 16" />
+                  </svg>
+                  Code</label
+                >
+              </div>
+              <div class="handbook-preview">
+                <div class="es es-stage">
+                  <div class="state-row">
+                    <label class="es-search">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                      </svg>
+                      <span class="es-sr">Search by Font or Theme</span>
+                      <input
+                        type="search"
+                        placeholder="Search by Font or Theme"
+                      />
+                    </label>
+                    <label class="es-search is-focus">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                      </svg>
+                      <span class="es-sr"
+                        >Search by Font or Theme, focused</span
+                      >
+                      <input type="search" value="Vitesse" />
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="handbook-code">
+                <pre><code>.es-search {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-raised);
+}
+.es-search:focus-within { box-shadow: var(--shadow-raised), var(--focus); }</code></pre>
+              </div>
+            </div>
+
+            <h3 id="filter">Filter</h3>
+            <p>
+              One Editor, Appearance, License, Font, or Theme. Selected is the
+              accent pill, not a second primary button.
+            </p>
+            <div class="handbook-switch">
+              <div class="handbook-switch-track">
+                <label
+                  ><input type="radio" name="ex-filter" checked /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  Preview</label
+                >
+                <label
+                  ><input type="radio" name="ex-filter" /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m18 16 4-4-4-4" />
+                    <path d="m6 8-4 4 4 4" />
+                    <path d="m14.5 4-5 16" />
+                  </svg>
+                  Code</label
+                >
+              </div>
+              <div class="handbook-preview">
+                <div class="es es-stage">
+                  <div class="state-row" role="group" aria-label="Editor">
+                    <button
+                      class="es-filter is-selected"
+                      type="button"
+                      aria-pressed="true"
+                    >
+                      VS Code
+                    </button>
+                    <button
+                      class="es-filter"
+                      type="button"
+                      aria-pressed="false"
+                    >
+                      Cursor
+                    </button>
+                    <button class="es-filter is-focus" type="button">
+                      Dark
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="handbook-code">
+                <pre><code>.es-filter.is-selected {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}</code></pre>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Don’t</th>
+                  <th>Do</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Turn the selected Editor into a solid violet button.</td>
+                  <td>Use the accent fill and accent label.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3 id="card">Card</h3>
+            <p>
+              One Pair in the Registry. The Snapshot is 16:9 and unframed. The
+              title is the Theme, in Sora.
+            </p>
+            <div class="handbook-switch">
+              <div class="handbook-switch-track">
+                <label
+                  ><input type="radio" name="ex-card" checked /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  Preview</label
+                >
+                <label
+                  ><input type="radio" name="ex-card" /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m18 16 4-4-4-4" />
+                    <path d="m6 8-4 4 4 4" />
+                    <path d="m14.5 4-5 16" />
+                  </svg>
+                  Code</label
+                >
+              </div>
+              <div class="handbook-preview">
+                <div class="es es-stage">
+                  <a class="es-card" href="#card">
+                    <img
+                      src="samples/inconsolata--vitesse-dark--vscode.png"
+                      alt="Snapshot of Inconsolata and Vitesse Dark in VS Code"
+                    />
+                    <div class="es-card-body">
+                      <p class="es-card-title">Vitesse Dark</p>
+                      <p class="es-card-font">Inconsolata</p>
+                      <div class="es-card-meta">
+                        <span class="es-badge es-badge-open">Open</span>
+                        <span class="es-caption" style="margin: 0"
+                          >VS Code</span
+                        >
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="handbook-code">
+                <pre><code>.es-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
+}</code></pre>
+              </div>
+            </div>
+
+            <h3 id="badge">Badge</h3>
+            <p>
+              License on the Font and on the Theme. Free is quiet. Open and Paid
+              are status, with the word.
+            </p>
+            <div class="handbook-switch">
+              <div class="handbook-switch-track">
+                <label
+                  ><input type="radio" name="ex-badge" checked /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  Preview</label
+                >
+                <label
+                  ><input type="radio" name="ex-badge" /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m18 16 4-4-4-4" />
+                    <path d="m6 8-4 4 4 4" />
+                    <path d="m14.5 4-5 16" />
+                  </svg>
+                  Code</label
+                >
+              </div>
+              <div class="handbook-preview">
+                <div class="es es-stage">
+                  <div class="badge-row">
+                    <span class="es-badge es-badge-open">Open</span>
+                    <span class="es-badge es-badge-free">Free</span>
+                    <span class="es-badge es-badge-paid">Paid</span>
+                  </div>
+                </div>
+              </div>
+              <div class="handbook-code">
+                <pre><code>.es-badge-open {
+  background: color-mix(in srgb, var(--success) 14%, var(--card));
+  color: var(--success);
+}</code></pre>
+              </div>
+            </div>
+
+            <h3 id="pagination">Pagination</h3>
+            <p>
+              Moves through the Registry. The current page uses the same accent
+              pill as a selected filter.
+            </p>
+            <div class="handbook-switch">
+              <div class="handbook-switch-track">
+                <label
+                  ><input type="radio" name="ex-page" checked /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  Preview</label
+                >
+                <label
+                  ><input type="radio" name="ex-page" /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m18 16 4-4-4-4" />
+                    <path d="m6 8-4 4 4 4" />
+                    <path d="m14.5 4-5 16" />
+                  </svg>
+                  Code</label
+                >
+              </div>
+              <div class="handbook-preview">
+                <div class="es es-stage">
+                  <nav class="es-pager" aria-label="Pagination">
+                    <button type="button" disabled>Previous</button>
+                    <button type="button" aria-current="page">1</button>
+                    <button type="button">2</button>
+                    <button type="button">3</button>
+                    <button type="button">Next</button>
+                  </nav>
+                </div>
+              </div>
+              <div class="handbook-code">
+                <pre><code>.es-pager button[aria-current="page"] {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <hr class="handbook-dash" />
+
+          <section id="tokens">
+            <h2>Tokens</h2>
+            <p>
+              Copy the variables. Specimens above already use them. No one-off
+              colors outside this set.
+            </p>
+            <div class="handbook-switch">
+              <div class="handbook-switch-track">
+                <label
+                  ><input type="radio" name="ex-tokens" checked /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  Preview</label
+                >
+                <label
+                  ><input type="radio" name="ex-tokens" /><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m18 16 4-4-4-4" />
+                    <path d="m6 8-4 4 4 4" />
+                    <path d="m14.5 4-5 16" />
+                  </svg>
+                  Code</label
+                >
+              </div>
+              <div class="handbook-preview">
+                <div class="es es-stage">
+                  <div class="badge-row" style="margin-bottom: 16px">
+                    <span class="es-badge es-badge-open">Open</span>
+                    <span class="es-badge es-badge-free">Free</span>
+                    <span class="es-badge es-badge-paid">Paid</span>
+                    <button class="es-btn es-btn-primary" type="button">
+                      Clear filters
+                    </button>
+                  </div>
+                  <p class="es-heading" style="margin: 0">Vitesse Dark</p>
+                  <p class="es-mono">editor.fontFamily: Inconsolata</p>
+                  <div class="radius-row" style="margin-top: 16px">
+                    <div
+                      class="radius-box"
+                      style="
+                        border-radius: var(--radius-lg);
+                        box-shadow: var(--shadow-raised);
+                      "
+                    ></div>
+                    <div
+                      class="radius-box"
+                      style="
+                        border-radius: var(--radius-pill);
+                        background: var(--primary);
+                      "
+                    ></div>
+                    <div
+                      class="radius-box"
+                      style="
+                        border-radius: var(--radius-lg);
+                        box-shadow: var(--shadow-overlay);
+                      "
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div class="handbook-code">
+                <pre><code>/* Google Fonts: Sora 600, Geist 400/500/600, Geist Mono 400/500 */
+.es {
+  --background: #f9fafb;
+  --foreground: #101828;
+  --card: #ffffff;
+  --primary: #7f56d9;
+  --primary-foreground: #ffffff;
+  --secondary: #ffffff;
+  --secondary-foreground: #344054;
+  --muted: #f2f4f7;
+  --muted-foreground: #475467;
+  --accent: #f4ebff;
+  --accent-foreground: #6941c6;
+  --border: #d0d5dd;
+  --ring: #9e77ed;
+  --success: #067647;
+  --warning: #b54708;
+  --radius: 8px;
+  --radius-sm: calc(var(--radius) / 1.618);
+  --radius-lg: calc(var(--radius) * 1.618);
+  --radius-pill: 999px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --font-display: "Sora", sans-serif;
+  --font-body: "Geist", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --shadow-rest: none;
+  --shadow-raised: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-overlay: 0px 12px 16px -4px rgba(0, 0, 0, 0.08), 0px 4px 6px -2px rgba(0, 0, 0, 0.03), 0px 2px 2px -1px rgba(0, 0, 0, 0.04);
+}
+[data-theme="dark"] .es {
+  --background: #0c111d;
+  --foreground: #f5f5f6;
+  --card: #161b26;
+  --secondary: #161b26;
+  --secondary-foreground: #cecfd2;
+  --muted: #1f242f;
+  --muted-foreground: #94969c;
+  --accent: #2c1c5f;
+  --accent-foreground: #e9d7fe;
+  --border: #333741;
+  --success: #75e0a7;
+  --warning: #fec84b;
+  --shadow-raised: 0px 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-overlay: 0px 12px 16px -4px rgba(0, 0, 0, 0.5), 0px 4px 6px -2px rgba(0, 0, 0, 0.35);
+}</code></pre>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+      <aside class="handbook-toc" aria-label="On this page">
+        <p class="handbook-toc-label">ON THIS PAGE</p>
+        <nav>
+          <a href="#brand">Brand</a>
+          <a class="sub" href="#guidelines">Guidelines</a>
+          <a class="sub" href="#logo">Logo</a>
+          <a class="sub" href="#source">Source</a>
+          <a href="#foundations">Foundations</a>
+          <a class="sub" href="#color">Color</a>
+          <a class="sub" href="#typography">Typography</a>
+          <a class="sub" href="#spacing">Spacing</a>
+          <a class="sub" href="#radius">Radius</a>
+          <a class="sub" href="#elevation">Elevation</a>
+          <a class="sub" href="#icons">Icons</a>
+          <a class="sub" href="#anti-slop">Anti-slop</a>
+          <a href="#components">Components</a>
+          <a class="sub" href="#button">Button</a>
+          <a class="sub" href="#search">Search</a>
+          <a class="sub" href="#filter">Filter</a>
+          <a class="sub" href="#card">Card</a>
+          <a class="sub" href="#badge">Badge</a>
+          <a class="sub" href="#pagination">Pagination</a>
+          <a href="#tokens">Tokens</a>
+        </nav>
+      </aside>
+      <dialog
+        class="handbook-cmd"
+        id="handbook-cmd"
+        aria-label="Search handbook"
+      >
+        <input
+          type="search"
+          placeholder="Search handbook…"
+          aria-label="Search handbook"
+          autocomplete="off"
+        />
+        <div class="handbook-cmd-list">
+          <div data-group>
+            <p>Pages</p>
+            <a href="index.html">Home</a>
+            <a href="brief.html">Brief</a>
+            <a href="system.html">Design system</a>
+          </div>
+          <div data-group>
+            <p>On this page</p>
+            <a href="#brand">Brand</a>
+            <a href="#guidelines">Guidelines</a>
+            <a href="#logo">Logo</a>
+            <a href="#source">Source</a>
+            <a href="#foundations">Foundations</a>
+            <a href="#color">Color</a>
+            <a href="#typography">Typography</a>
+            <a href="#spacing">Spacing</a>
+            <a href="#radius">Radius</a>
+            <a href="#elevation">Elevation</a>
+            <a href="#icons">Icons</a>
+            <a href="#anti-slop">Anti-slop</a>
+            <a href="#components">Components</a>
+            <a href="#button">Button</a>
+            <a href="#search">Search</a>
+            <a href="#filter">Filter</a>
+            <a href="#card">Card</a>
+            <a href="#badge">Badge</a>
+            <a href="#pagination">Pagination</a>
+            <a href="#tokens">Tokens</a>
+          </div>
+        </div>
+        <p class="handbook-cmd-empty" hidden>No matches.</p>
+      </dialog>
+    </div>
+    <script src="handbook.js"></script>
+  </body>
+</html>

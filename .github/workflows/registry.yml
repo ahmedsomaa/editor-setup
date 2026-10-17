@@ -1,0 +1,27 @@
+name: Registry check
+
+on:
+  pull_request:
+    paths:
+      - "registry/**"
+      - "packages/registry-check/**"
+      - "package.json"
+      - "bun.lock"
+  push:
+    branches: [main]
+    paths:
+      - "registry/**"
+      - "packages/registry-check/**"
+      - "package.json"
+      - "bun.lock"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.2"
+      - run: bun install --frozen-lockfile
+      - run: bun run check

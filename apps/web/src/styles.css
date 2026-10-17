@@ -1,0 +1,240 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource/instrument-serif";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource/fira-code/400.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Warm monochrome (see docs/design-system). One accent, deep teal: the logo tile,
+   the active nav label and text selection. Pale green marks an Open license. */
+@theme inline {
+  --font-heading: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, Menlo, monospace;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-text: var(--accent-text);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-pastel-green: var(--pastel-green);
+  --color-pastel-green-text: var(--pastel-green-text);
+  --color-pastel-red: var(--pastel-red);
+  --color-pastel-red-text: var(--pastel-red-text);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 12px;
+  --radius-3xl: 12px;
+  --radius-4xl: 12px;
+  --radius-pill: 9999px;
+  --shadow-raised: var(--shadow-raised-token);
+  --shadow-overlay: var(--shadow-overlay-token);
+}
+
+:root {
+  --background: #fbfbfa;
+  --foreground: #111111;
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
+  --primary: #111111;
+  --primary-hover: #333333;
+  --primary-foreground: #ffffff;
+  --secondary-foreground: #2f3437;
+  --muted: #f7f6f3;
+  --muted-foreground: #6f6e6a;
+  --accent: #00736f;
+  --accent-soft: #e7faf8;
+  --accent-foreground: #ffffff;
+  --accent-text: #00736f;
+  --pastel-green: #edf3ec;
+  --pastel-green-text: #346538;
+  --pastel-red: #fdebec;
+  --pastel-red-text: #9f2f2d;
+  --destructive: #9f2f2d;
+  --border: #eaeaea;
+  --input: #eaeaea;
+  --ring: #111111;
+  --radius: 6px;
+  --shadow-raised-token: 0 0 0 transparent;
+  --shadow-overlay-token: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.dark {
+  --background: #111111;
+  --foreground: #edeceb;
+  --card: #191919;
+  --card-foreground: #edeceb;
+  --popover: #191919;
+  --popover-foreground: #edeceb;
+  --primary: #edeceb;
+  --primary-hover: #ffffff;
+  --primary-foreground: #111111;
+  --secondary-foreground: #d3d2cf;
+  --muted: #202020;
+  --muted-foreground: #9b9a97;
+  --accent: #5cd5c7;
+  --accent-soft: #012523;
+  --accent-foreground: #111111;
+  --accent-text: #5cd5c7;
+  --pastel-green: #1b2a1c;
+  --pastel-green-text: #8fcb94;
+  --pastel-red: #331a1a;
+  --pastel-red-text: #f0908e;
+  --destructive: #f0908e;
+  --border: #2b2b2a;
+  --input: #2b2b2a;
+  --ring: #edeceb;
+  --shadow-overlay-token: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  html {
+    @apply font-sans antialiased;
+    scroll-padding-block-start: 5rem;
+  }
+  body {
+    @apply bg-background text-foreground leading-[1.6];
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading font-normal text-balance;
+    line-height: 1.1;
+  }
+  h1 {
+    @apply text-5xl tracking-[-0.03em] sm:text-6xl md:text-7xl;
+  }
+  h2 {
+    @apply text-4xl tracking-[-0.025em] md:text-5xl;
+  }
+  h3 {
+    @apply text-2xl tracking-[-0.02em];
+  }
+  p {
+    text-wrap: pretty;
+  }
+  code,
+  kbd,
+  samp,
+  pre {
+    @apply font-mono;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 28%, transparent);
+    color: var(--foreground);
+  }
+  input,
+  textarea {
+    caret-color: var(--foreground);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  a {
+    text-underline-offset: 4px;
+  }
+}
+
+@layer utilities {
+  /* A faint dot grid that fades out downward. Decoration only: it sits behind content. */
+  .bg-glyphs {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+  }
+  .bg-glyphs-up {
+    -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+    mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+  }
+  .bg-pattern {
+    background-image: radial-gradient(
+      color-mix(
+          in srgb,
+          var(--pattern-color, var(--foreground)) 16%,
+          transparent
+        )
+        1px,
+      transparent 1.5px
+    );
+    background-size: 22px 22px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+  }
+
+  /* Quiet depth: a hairline that darkens a touch, plus an ultra-diffuse shadow. */
+  .lift {
+    transition:
+      box-shadow 200ms ease-out,
+      border-color 200ms ease-out;
+  }
+  .lift:hover {
+    box-shadow: var(--shadow-overlay-token);
+    border-color: color-mix(in srgb, var(--foreground) 20%, transparent);
+  }
+
+  /* Scroll entry: only below-the-fold blocks are hidden, and only when motion is welcome. */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-pending {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    .reveal-pending,
+    .reveal-done {
+      transition:
+        opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: calc(var(--i, 0) * 80ms);
+    }
+  }
+
+  /* A new Pair in the playground comes out of a blur. */
+  @media (prefers-reduced-motion: no-preference) {
+    .pair-swap {
+      animation: pair-swap 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+  @keyframes pair-swap {
+    from {
+      opacity: 0;
+      filter: blur(12px);
+      transform: scale(0.98);
+    }
+  }
+
+  .kbd {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--muted);
+    padding: 0 6px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+    color: var(--muted-foreground);
+  }
+}

@@ -1,0 +1,79 @@
+/* EditorSetup: generated from tokens.json. Set data-theme="dark" on <html> for dark. */
+:root, [data-theme="light"] {
+  --background: #fbfbfa;
+  --foreground: #111111;
+  --card: #ffffff;
+  --muted: #f7f6f3;
+  --muted-foreground: #6f6e6a;
+  --secondary-foreground: #2f3437;
+  --border: #eaeaea;
+  --primary: #111111;
+  --primary-hover: #333333;
+  --primary-foreground: #ffffff;
+  --ring: #111111;
+  --accent: #00736f;
+  --accent-foreground: #ffffff;
+  --accent-soft: #e7faf8;
+  --accent-text: #00736f;
+  --pastel-green: #edf3ec;
+  --pastel-green-text: #346538;
+  --pastel-red: #fdebec;
+  --pastel-red-text: #9f2f2d;
+  --destructive: #9f2f2d;
+  --pair-palenight-bg: #292d3e;
+  --pair-palenight-fg: #a6accd;
+  --pair-gruvbox-bg: #1d2021;
+  --pair-gruvbox-fg: #ebdbb2;
+  --pair-aura-bg: #29263c;
+  --pair-aura-fg: #a277ff;
+  --shadow-raised: 0 0 0 transparent;
+  --shadow-overlay: 0 2px 8px rgba(0,0,0,0.04);
+}
+[data-theme="dark"] {
+  --background: #111111;
+  --foreground: #edeceb;
+  --card: #191919;
+  --muted: #202020;
+  --muted-foreground: #9b9a97;
+  --secondary-foreground: #d3d2cf;
+  --border: #2b2b2a;
+  --primary: #edeceb;
+  --primary-hover: #ffffff;
+  --primary-foreground: #111111;
+  --ring: #edeceb;
+  --accent: #5cd5c7;
+  --accent-foreground: #111111;
+  --accent-soft: #012523;
+  --accent-text: #5cd5c7;
+  --pastel-green: #1b2a1c;
+  --pastel-green-text: #8fcb94;
+  --pastel-red: #331a1a;
+  --pastel-red-text: #f0908e;
+  --destructive: #f0908e;
+  --pair-palenight-bg: #292d3e;
+  --pair-palenight-fg: #a6accd;
+  --pair-gruvbox-bg: #1d2021;
+  --pair-gruvbox-fg: #ebdbb2;
+  --pair-aura-bg: #29263c;
+  --pair-aura-fg: #a277ff;
+  --shadow-raised: 0 0 0 transparent;
+  --shadow-overlay: 0 2px 8px rgba(0,0,0,0.3);
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-10: 40px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-pill: 9999px;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, Menlo, monospace;
+}

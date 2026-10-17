@@ -1,0 +1,53 @@
+{
+  "skill_name": "carbon-snapshot",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "make me a carbon-style snapshot of JetBrains Mono with Gruvbox Dark Hard. write a typescript snippet yourself. save into ./out",
+      "expected_output": "out/*.html, 1600x900 png; gruvbox dark hard colors (#1d2021 bg), JetBrains Mono visible with ligatures, TypeScript snippet",
+      "files": [],
+      "assertions": [
+        "html_exists_self_contained",
+        "png_is_16_9",
+        "theme_bg_1d2021_in_html",
+        "typescript_snippet_used"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need a preview image for Geist Mono + Nord. theme link: https://github.com/nordtheme/visual-studio-code/blob/develop/themes/nord-color-theme.json . use a python snippet about parsing a csv of pairs",
+      "expected_output": "Theme loaded from the GitHub link via --theme-file, Nord colors, Geist Mono, Python snippet, three output files",
+      "files": [],
+      "assertions": [
+        "html_exists_self_contained",
+        "png_is_16_9",
+        "theme_bg_2e3440_in_html",
+        "python_snippet_used"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "generate the registry snapshot for Fira Code and Palenight Theme in cursor, rust snippet please",
+      "expected_output": "Palenight resolved to material-theme-palenight and reported; PNG written to registry/snapshots/fira-code--palenight-theme--cursor.png at 16:9 plus html",
+      "files": [],
+      "assertions": [
+        "html_exists_self_contained",
+        "png_is_16_9",
+        "png_named_registry_convention",
+        "palenight_bg_292d3e_in_html",
+        "report_names_resolved_theme"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "snapshot of Input Mono with Vesper in lua",
+      "expected_output": "Input Mono is not on Fontsource/Google: skill asks the user for a font file or link instead of silently substituting another font",
+      "files": [],
+      "assertions": [
+        "no_png_with_substituted_font",
+        "response_asks_for_font_file_or_link",
+        "response_does_not_claim_input_mono_rendered"
+      ]
+    }
+  ]
+}

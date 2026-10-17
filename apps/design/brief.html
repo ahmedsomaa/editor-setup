@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brief · EditorSetup Design Handbook</title>
+    <meta
+      name="description"
+      content="A git-backed Registry of Font and Theme Pairs, each with Settings and a Snapshot for an Editor."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="handbook.css" />
+  </head>
+  <body>
+    <div class="handbook">
+      <aside class="handbook-sidebar">
+        <header class="handbook-brand">
+          <div>
+            <a href="index.html">EditorSetup</a>
+            <p>Design Handbook</p>
+          </div>
+          <button type="button" class="handbook-theme" aria-label="Switch to dark theme">
+            <svg class="is-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="is-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          </button>
+        </header>
+        <button type="button" class="handbook-cmd-trigger" aria-haspopup="dialog" aria-controls="handbook-cmd" aria-keyshortcuts="Meta+K Control+K">
+          <span>Search handbook…</span>
+          <kbd>⌘K</kbd>
+        </button>
+        <hr class="handbook-sep" />
+        <nav class="handbook-nav" aria-label="Handbook">
+          <ul>
+            <li>
+              <a href="brief.html" aria-current="page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                Brief
+              </a>
+            </li>
+            <li>
+              <a href="system.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+                Design system
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="handbook-main">
+        <div class="handbook-content">
+          <h1>Brief</h1>
+          <p class="handbook-lead">Scope for the EditorSetup site.</p>
+          <section id="meta">
+            <h2>Meta</h2>
+            <dl>
+              <dt>Product</dt>
+              <dd>EditorSetup</dd>
+              <dt>Platform</dt>
+              <dd>Website first</dd>
+              <dt>Purpose</dt>
+              <dd>A git-backed Registry of Font and Theme Pairs, each with Settings and a Snapshot for an Editor.</dd>
+            </dl>
+          </section>
+          <hr class="handbook-dash" />
+          <section id="problem">
+            <h2>Problem</h2>
+            <p>A developer finds a monospace Font and a Theme that look good together, then has to reconstruct the Settings for their own Editor. Screenshots on social sites are personal, inconsistent, and missing the Settings. Paid Fonts and Themes cannot be rendered live on a public site.</p>
+          </section>
+          <hr class="handbook-dash" />
+          <section id="who">
+            <h2>Who</h2>
+            <ul>
+              <li>Visitors browse the Registry, open a Pair, copy Settings, and Compare.</li>
+            </ul>
+          </section>
+          <hr class="handbook-dash" />
+          <section id="goals">
+            <h2>Goals</h2>
+            <ul>
+              <li>User goal: find a Pair, see it in their Editor, and copy the Settings.</li>
+              <li>Product goal: keep one public Pair per Font and Theme, with a Config only when both Settings and a Snapshot exist.</li>
+              <li>Success: a visitor leaves with Settings they can paste, judged from a Snapshot of the Editor they use.</li>
+            </ul>
+          </section>
+          <hr class="handbook-dash" />
+          <section id="scope">
+            <h2>Scope</h2>
+            <div class="handbook-split">
+              <div>
+                <h3 id="in">In</h3>
+                <ul>
+                  <li>Home, Registry, Pair, and Compare.</li>
+                  <li>Search by Font and Theme. Filter by Editor, Appearance, License, Font, and Theme.</li>
+                  <li>Pagination, a 16:9 Snapshot, and Settings as plain text with copy.</li>
+                  <li>Supported Editors: VS Code and Cursor.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 id="out">Out</h3>
+                <ul>
+                  <li>Sign-in, account, profile, and admin.</li>
+                  <li>An in-app Contribution form. Contribution is a pull request.</li>
+                  <li>Score, votes, and trending.</li>
+                  <li>Live preview of Paid Fonts, a drag-slider Compare, JetBrains, Helix, and email.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <hr class="handbook-dash" />
+          <section id="features">
+            <h2>Features → Screens</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Screen</th>
+                  <th>What it shows</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Home</td>
+                  <td>Home</td>
+                  <td>Like the scratch Registry index: sticky header, centered hook with Theme chip and Font underline, See Pair, search, Editor filters, text Pair cards, footer.</td>
+                </tr>
+                <tr>
+                  <td>Registry (pilot)</td>
+                  <td>Registry</td>
+                  <td>Header, hook, search, tag filters, grid or list, Pairs, footer. No results is a state.</td>
+                </tr>
+                <tr>
+                  <td>Pair</td>
+                  <td>Pair</td>
+                  <td>Header, Font, Theme, links, License, Appearance, Editors, Snapshot, Settings, footer.</td>
+                </tr>
+                <tr>
+                  <td>Compare</td>
+                  <td>Compare</td>
+                  <td>Header, one Editor, two Pairs, Snapshots side by side, footer. A Pair with no Config for that Editor cannot be chosen.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <hr class="handbook-dash" />
+          <section id="constraints">
+            <h2>Constraints</h2>
+            <ul>
+              <li>Brand: Untitled UI family. Violet primary <code>#7F56D9</code>, pill controls, hairline borders, quiet shadow. Sora for headlines, Geist for UI, Geist Mono for Settings. Mark is Lucide pencil-sparkles: pencil in ink, sparkles in violet.</li>
+              <li>Screens take <code>.scratch/mp-cld-imp</code> as a visual reference and must diverge in layout and detail. Neutrals stay gray, not violet-tinted.</li>
+              <li>Tech: this handbook is static. The site is a later static web build. Website first, readable on a phone.</li>
+              <li>A11y: WCAG AA for text on the surfaces the product uses.</li>
+              <li>Terms: Pair, Font, Theme, Appearance, Editor, Config, Settings, Snapshot, License, Registry, Compare, Contribution.</li>
+              <li>A Snapshot is 16:9. The site does not add a frame. One Pair per Font and Theme. One Config per Editor.</li>
+            </ul>
+          </section>
+        </div>
+      </main>
+      <aside class="handbook-toc" aria-label="On this page">
+        <p class="handbook-toc-label">ON THIS PAGE</p>
+        <nav>
+          <a href="#meta">Meta</a>
+          <a href="#problem">Problem</a>
+          <a href="#who">Who</a>
+          <a href="#goals">Goals</a>
+          <a href="#scope">Scope</a>
+          <a class="sub" href="#in">In</a>
+          <a class="sub" href="#out">Out</a>
+          <a href="#features">Features → Screens</a>
+          <a href="#constraints">Constraints</a>
+        </nav>
+      </aside>
+      <dialog class="handbook-cmd" id="handbook-cmd" aria-label="Search handbook">
+        <input type="search" placeholder="Search handbook…" aria-label="Search handbook" autocomplete="off" />
+        <div class="handbook-cmd-list">
+          <div data-group>
+            <p>Pages</p>
+            <a href="index.html">Home</a>
+            <a href="brief.html">Brief</a>
+            <a href="system.html">Design system</a>
+          </div>
+          <div data-group>
+            <p>On this page</p>
+            <a href="#meta">Meta</a>
+            <a href="#problem">Problem</a>
+            <a href="#who">Who</a>
+            <a href="#goals">Goals</a>
+            <a href="#scope">Scope</a>
+            <a href="#in">In</a>
+            <a href="#out">Out</a>
+            <a href="#features">Features → Screens</a>
+            <a href="#constraints">Constraints</a>
+          </div>
+        </div>
+        <p class="handbook-cmd-empty" hidden>No matches.</p>
+      </dialog>
+    </div>
+    <script src="handbook.js"></script>
+  </body>
+</html>

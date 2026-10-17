@@ -1,0 +1,24 @@
+{
+  "font": {
+    "name": "Dank Mono",
+    "links": [
+      "https://philpl.gumroad.com/l/dank-mono"
+    ],
+    "license": "paid"
+  },
+  "theme": {
+    "name": "Night Owl",
+    "links": [
+      "https://marketplace.visualstudio.com/items?itemName=sdras.night-owl"
+    ],
+    "license": "open",
+    "appearance": "dark"
+  },
+  "editors": [
+    {
+      "id": "vscode",
+      "snapshot": "dank-mono--night-owl--vscode.png",
+      "settings": "{\n  \"editor.fontFamily\": \"Dank Mono\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Night Owl\"\n}"
+    }
+  ]
+}
