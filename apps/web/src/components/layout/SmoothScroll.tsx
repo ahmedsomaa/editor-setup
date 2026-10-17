@@ -36,7 +36,12 @@ export function SmoothScroll() {
 
       gsap.registerPlugin(ScrollTrigger);
 
-      const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+      // A lower lerp glides longer; a wheelMultiplier under 1 shortens each wheel step.
+      const lenis = new Lenis({
+        lerp: 0.075,
+        wheelMultiplier: 0.7,
+        smoothWheel: true,
+      });
       lenis.on("scroll", ScrollTrigger.update);
       const tick = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(tick);
