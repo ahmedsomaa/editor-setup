@@ -196,7 +196,7 @@ export function FeatureSections({
         flip
         icon={Scales}
         title="Compare Pairs"
-        body={`Can’t pick? Line up to ${MAX_COMPARE} Pairs side by side and keep the one you would look at all day.`}
+        body={`Line up to ${MAX_COMPARE} Pairs side by side and crown a favorite.`}
         cta={{ label: "Open Compare", to: "/compare" }}
       >
         {darkArt && lightArt ? (
@@ -219,7 +219,7 @@ export function FeatureSections({
         flip
         icon={Camera}
         title="Make your own Snapshot"
-        body="Pick a Font and Theme, see how your own code looks in them, then save a Snapshot in Snapshot Studio to share."
+        body="Preview a Pair on your own code before you change your Settings. Like it? Save a Snapshot to share."
         cta={{ label: "Open Snapshot Studio", to: "/studio" }}
       >
         <StudioVisual pairs={pairs} />
