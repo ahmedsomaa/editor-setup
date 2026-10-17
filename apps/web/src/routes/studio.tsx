@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { EditorPage } from "@/components/EditorPage";
-import { DEFAULTS, snapshotSearchSchema } from "@/lib/schemas";
+import { StudioPage } from "@/components/studio/StudioPage";
+import { DEFAULTS, snapshotSearchSchema } from "@/lib/studio/schemas";
 import { fetchThemeFn, resolveFontFn } from "@/server/assets.functions";
 import { pageHead } from "@/lib/page-head";
 
@@ -9,6 +9,7 @@ export const Route = createFileRoute("/studio")({
   head: () =>
     pageHead({
       path: "/studio",
+      name: "Snapshot Studio",
       title: "Snapshot Studio: make a Snapshot of your Font and Theme",
       description:
         "Pick an Open or Free Font and Theme, paste your code and save a 1600x900 Snapshot of your editor setup for your Registry pull request.",
@@ -26,5 +27,5 @@ export const Route = createFileRoute("/studio")({
     ]);
     return { font, theme };
   },
-  component: EditorPage,
+  component: StudioPage,
 });

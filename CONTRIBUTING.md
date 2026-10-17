@@ -1,83 +1,33 @@
 # 🤝 Contributing to editorSetup
 
-A contribution is a pull request into `main`. An issue is optional and is not a queue. There is no in-app form.
+A Contribution is a pull request that changes the project itself: the site, the registry check, the scripts, the docs. A pull request into `main` is the only route. An issue is optional and is not a queue.
+
+Want to add a Font and Theme Pair? That is not a Contribution. Follow [ADDING_A_PAIR.md](ADDING_A_PAIR.md) instead.
 
 ## 📚 Before you start
 
-- Read [GLOSSARY.md](GLOSSARY.md) for Pair, Font, Theme, Editor, Config, Settings, and Snapshot.
-- A Pair is one Font and one Theme. Supported Editors are `vscode` and `zed` for now.
-- One Pair per Font and Theme. One Snapshot per Pair. One Config per Editor, each with its Settings.
+- Read [GLOSSARY.md](GLOSSARY.md) for the words the project uses: Pair, Font, Theme, Editor, Config, Settings, Snapshot, Registry.
+- The site lives in `apps/web/` (TanStack Start on Cloudflare Workers). The registry check lives in `packages/registry-check/`. Pairs and Snapshots live in `registry/`.
+- Design rules are in `docs/design-system/`. Follow them for any UI change.
 
-## ➕ Add a new Pair
+## 🛠️ Set up
 
 1. Fork the repository and create a branch from `main`.
-2. Add `registry/pairs/<font-slug>--<theme-slug>.json`.
-3. Add one Snapshot under `registry/snapshots/` named `<pair-slug>.png`. Make it in [Snapshot Studio](https://editorsetup.som3aware.workers.dev/studio) with an Open or Free Font and Theme: it saves a 1600×900 PNG. In Claude Code, the `snapshot-studio` skill in `.claude/skills/` makes it from a Font and a Theme.
-4. Several Editors may be included in this first pull request, each with its own Settings.
-5. Run `bun run check`.
-6. Open a pull request into `main`. Name the Font, the Theme, and the Editors in the description.
+2. Install with `bun install --cwd apps/web`.
+3. Start the site with `bun run dev` (port 3000).
 
-Example layout:
+## ✅ Before you open a pull request
 
-```text
-registry/pairs/inconsolata--vitesse-dark.json
-registry/snapshots/inconsolata--vitesse-dark.png
+```bash
+bun run typecheck   # TypeScript check for apps/web
+bun test            # run inside apps/web
+bun run check       # validate registry/
+bun run build       # production build
 ```
-
-Example Pair file:
-
-```json
-{
-  "font": {
-    "name": "Inconsolata",
-    "links": ["https://fonts.google.com/specimen/Inconsolata"],
-    "license": "open"
-  },
-  "theme": {
-    "name": "Vitesse Dark",
-    "links": ["https://github.com/antfu/vscode-theme-vitesse"],
-    "license": "open",
-    "appearance": "dark"
-  },
-  "snapshot": "inconsolata--vitesse-dark.png",
-  "editors": [
-    {
-      "id": "vscode",
-      "settings": "editor.fontFamily: Inconsolata\nworkbench.colorTheme: Vitesse Dark"
-    }
-  ]
-}
-```
-
-## 🧩 Add an Editor to an existing Pair
-
-Open a separate pull request that:
-
-1. Adds one entry to the `editors` array in that Pair’s JSON file.
-2. Runs `bun run check`.
-
-The Pair keeps its one Snapshot.
-
-Do not mix an unrelated Pair into the same pull request.
-
-## ✅ Rules the check enforces
-
-- `appearance` is `dark` or `light`.
-- License is `open` or `free` on the Font and on the Theme.
-- Font and Theme each need at least one publish link.
-- Settings are a non-empty plain-text string.
-- The Snapshot file is `<pair-slug>.png`, aspect ratio 16:9.
-- `snapshot` must match that filename.
-- Only add a Pair when its Font and Theme licenses allow a public image of them. If a license asks for payment, or does not say, leave it out.
-- One Config per Editor. One Pair per Font and Theme.
-- Do not edit a central index. The site builds the list by scanning `registry/pairs/*.json`.
 
 ## 🔀 Pull request scope
 
-- One Pair per pull request.
-- Do not include sign-in, ratings, or site code changes with a Pair submission unless that is the purpose of the pull request.
-- A person merges. The Action reports schema, image size, filename, and duplicate failures; it does not judge whether the Snapshot looks like the Theme.
-
-## 🤖 What happens after you open a pull request
-
-- The **Registry check** runs on every pull request. A workflow from a first-time fork needs the maintainer to approve it first.
+- One concern per pull request. Keep unrelated changes out.
+- Do not mix a Pair into a Contribution. Send Pairs separately, following [ADDING_A_PAIR.md](ADDING_A_PAIR.md).
+- Name what changed and why in the description. Add a screenshot for UI changes.
+- A person merges. The **Registry check** runs on every pull request; a workflow from a first-time fork needs the maintainer to approve it first.

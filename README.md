@@ -1,6 +1,6 @@
 # 🎨 editorSetup
 
-A git-backed registry of monospace font and color theme pairings for code editors. Contributors add Pairs by pull request. The site reads those files.
+A git-backed registry of monospace font and color theme pairings for code editors. Anyone can add a Pair by pull request. The site reads those files.
 
 🌐 **Live site:** https://editorsetup.som3aware.workers.dev
 
@@ -31,9 +31,13 @@ bun run generate:submitters  # refresh apps/web/src/data/pair-submitters.json
 ## 🤖 Automation
 
 - ✅ **Registry check** runs on every pull request and must pass before merge.
+- 🚀 **Deploy** is handled by Cloudflare's Git integration, which ships `main` to Workers.
 - 📝 **Changelog** bot opens a pull request with a draft entry when a Pair lands on `main`.
-- 🚀 **Deploy web** ships `main` to Cloudflare Workers.
+
+## ➕ Adding a Pair
+
+See [ADDING_A_PAIR.md](ADDING_A_PAIR.md).
 
 ## 🤝 Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [GLOSSARY.md](GLOSSARY.md).
+To work on the site or tooling, see [CONTRIBUTING.md](CONTRIBUTING.md) and [GLOSSARY.md](GLOSSARY.md).

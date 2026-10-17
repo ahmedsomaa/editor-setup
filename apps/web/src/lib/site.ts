@@ -6,5 +6,8 @@ export const GITHUB_REPO = 'ahmedsomaa/editor-setup'
 
 export const GITHUB_URL = `https://github.com/${GITHUB_REPO}`
 
-/** Contribute CTA — CONTRIBUTING.md on the public repo. */
+/** Guide to working on the project (site, tooling, docs): CONTRIBUTING.md on the public repo. */
 export const CONTRIBUTE_URL = `${GITHUB_URL}/blob/main/CONTRIBUTING.md`
+
+/** Guide to adding a Pair: ADDING_A_PAIR.md on the public repo. */
+export const ADD_PAIR_URL = `${GITHUB_URL}/blob/main/ADDING_A_PAIR.md`

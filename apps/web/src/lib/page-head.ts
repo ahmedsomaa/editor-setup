@@ -22,16 +22,20 @@ export function fitTitle(candidates: string[]): string {
 export function pageHead({
   path,
   title,
+  name,
   description,
 }: {
   path: string;
+  /** Long title for link previews (Open Graph, Twitter). */
   title: string;
+  /** Page name for the browser tab, shown as "name · EditorSetup". Defaults to `title`. */
+  name?: string;
   description: string;
 }) {
   const url = path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`;
   return {
     meta: [
-      { title },
+      { title: name ? `${name} · EditorSetup` : title },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
