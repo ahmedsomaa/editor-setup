@@ -5,7 +5,7 @@ const pair = {
   project: "EditorSetup",
   font: "Geist Mono",
   theme: "Vesper",
-  editor: "VS Code",
+  editor: "Your Editor",
   functions: ["browse", "preview", "copy", "compare"],
 };
 
@@ -31,7 +31,7 @@ const pair = {
   project: "EditorSetup",
   font: "Geist Mono",
   theme: "Vesper",
-  editor: "VS Code",
+  editor: "Your Editor",
   functions: ["browse", "preview", "copy", "compare"],
 };
 
@@ -45,7 +45,7 @@ pair = {
     "project": "EditorSetup",
     "font": "Geist Mono",
     "theme": "Vesper",
-    "editor": "VS Code",
+    "editor": "Your Editor",
     "functions": ["browse", "preview", "copy", "compare"],
 }
 
@@ -59,7 +59,7 @@ let pair = Pair {
     project: "EditorSetup",
     font: "Geist Mono",
     theme: "Vesper",
-    editor: "VS Code",
+    editor: "Your Editor",
     functions: ["browse", "preview", "copy", "compare"],
 };
 
@@ -73,7 +73,7 @@ pair := Pair{
 	Project:   "EditorSetup",
 	Font:      "Geist Mono",
 	Theme:     "Vesper",
-	Editor:    "VS Code",
+	Editor:    "Your Editor",
 	Functions: []string{"browse", "preview", "copy", "compare"},
 }
 
@@ -87,7 +87,7 @@ local pair = {
   project = "EditorSetup",
   font = "Geist Mono",
   theme = "Vesper",
-  editor = "VS Code",
+  editor = "Your Editor",
   functions = { "browse", "preview", "copy", "compare" },
 }
 

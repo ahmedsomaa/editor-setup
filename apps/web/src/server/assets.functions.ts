@@ -24,5 +24,5 @@ export const resolveFontFn = createServerFn({ method: "GET" })
 export const fetchThemeFn = createServerFn({ method: "GET" })
   .validator((input: unknown) => themeUrlInput.parse(input))
   .handler(
-    async ({ data }): Promise<Result<ThemeJson>> => run(async () => (await fetchTheme(data.url)) as ThemeJson),
+    async ({ data }): Promise<Result<ThemeJson>> => run(async () => (await fetchTheme(data.url, data.editor)) as ThemeJson),
   );

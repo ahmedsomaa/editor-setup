@@ -1,11 +1,12 @@
 import type { CSSProperties } from "react";
+import { cn } from "cn";
 
-type Colors = { bg: string; fg: string };
+export type Colors = { bg: string; fg: string };
 
 const mix = (a: string, pct: number, b: string) => `color-mix(in srgb, ${a} ${pct}%, ${b})`;
 
 /** Without colours it uses the site's tokens; with a Pair's colours it is painted in that Theme. */
-function vars(c?: Colors): CSSProperties {
+export function artVars(c?: Colors): CSSProperties {
   if (!c) {
     return {
       "--a-win": "var(--card)",
@@ -34,16 +35,68 @@ function vars(c?: Colors): CSSProperties {
   } as CSSProperties;
 }
 
+/** One [x, y, width, height, radius, colour] per word-shaped bar in the code area. */
+const CODE: ReadonlyArray<readonly [number, number, number, number, number, string]> = [
+  [64, 107, 14, 8, 4, "soft"],
+  [96, 104, 46, 14, 7, "key"],
+  [152, 104, 70, 14, 7, "soft"],
+  [232, 104, 18, 14, 7, "faint"],
+  [64, 133, 14, 8, 4, "soft"],
+  [124, 130, 34, 14, 7, "key"],
+  [168, 130, 92, 14, 7, "soft"],
+  [270, 130, 34, 14, 7, "str"],
+  [64, 159, 14, 8, 4, "soft"],
+  [124, 156, 34, 14, 7, "key"],
+  [168, 156, 58, 14, 7, "soft"],
+  [236, 156, 78, 14, 7, "str"],
+  [64, 185, 14, 8, 4, "soft"],
+  [152, 182, 64, 14, 7, "soft"],
+  [226, 182, 22, 14, 7, "faint"],
+  [258, 182, 100, 14, 7, "str"],
+  [64, 211, 14, 8, 4, "soft"],
+  [152, 208, 40, 14, 7, "key"],
+  [202, 208, 84, 14, 7, "soft"],
+  [64, 237, 14, 8, 4, "soft"],
+  [124, 234, 18, 14, 7, "faint"],
+  [64, 263, 14, 8, 4, "soft"],
+  [96, 260, 46, 14, 7, "key"],
+  [152, 260, 54, 14, 7, "soft"],
+  [216, 260, 26, 14, 7, "faint"],
+  [252, 260, 70, 14, 7, "soft"],
+  [332, 260, 18, 14, 7, "faint"],
+  [64, 289, 14, 8, 4, "soft"],
+  [124, 286, 88, 14, 7, "soft"],
+  [222, 286, 30, 14, 7, "str"],
+  [64, 315, 14, 8, 4, "soft"],
+  [124, 312, 34, 14, 7, "key"],
+  [168, 312, 72, 14, 7, "soft"],
+  [250, 312, 44, 14, 7, "faint"]
+];
+
 /** Decorative editor window. Cropped by its parent; pass a Pair's colours to paint it in that Theme. */
-export function EditorArt({ className, colors, complete = false }: { className?: string; colors?: Colors; complete?: boolean }) {
+export function EditorArt({
+  className,
+  colors,
+  complete = false,
+  live = false,
+  liveKey,
+}: {
+  className?: string;
+  colors?: Colors;
+  complete?: boolean;
+  /** Types the code in, blinks the caret and fades between colours. Needs no-preference motion. */
+  live?: boolean;
+  /** Change it to type the code in again. */
+  liveKey?: string | number;
+}) {
   const h = complete ? 378 : 420;
   return (
     <svg
-      className={className}
+      className={cn(className, live && "art-live")}
       viewBox="0 0 640 380"
       fill="none"
       aria-hidden="true"
-      style={{ ...vars(colors), transition: "all 400ms ease-out" }}
+      style={artVars(colors)}
     >
       <rect x="1" y="1" width="638" height={h - 2} rx="14" strokeWidth="2" style={{ fill: "var(--a-win)", stroke: "var(--a-edge)" }} />
       <g strokeWidth="2" style={{ stroke: "var(--a-edge)" }}>
@@ -63,43 +116,12 @@ export function EditorArt({ className, colors, complete = false }: { className?:
       <rect x="36" y="166" width="64" height="10" rx="5" style={{ fill: "var(--a-soft)" }} />
       <rect x="36" y="190" width="88" height="10" rx="5" style={{ fill: "var(--a-soft)" }} />
       <rect x="169" y="150" width="470" height="26" style={{ fill: "var(--a-hl)" }} />
-      <g transform="translate(168 0)">
-        <rect x="64" y="107" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="96" y="104" width="46" height="14" rx="7" style={{ fill: "var(--a-key)" }} />
-        <rect x="152" y="104" width="70" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="232" y="104" width="18" height="14" rx="7" style={{ fill: "var(--a-faint)" }} />
-        <rect x="64" y="133" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="124" y="130" width="34" height="14" rx="7" style={{ fill: "var(--a-key)" }} />
-        <rect x="168" y="130" width="92" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="270" y="130" width="34" height="14" rx="7" style={{ fill: "var(--a-str)" }} />
-        <rect x="64" y="159" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="124" y="156" width="34" height="14" rx="7" style={{ fill: "var(--a-key)" }} />
-        <rect x="168" y="156" width="58" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="236" y="156" width="78" height="14" rx="7" style={{ fill: "var(--a-str)" }} />
-        <rect x="64" y="185" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="152" y="182" width="64" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="226" y="182" width="22" height="14" rx="7" style={{ fill: "var(--a-faint)" }} />
-        <rect x="258" y="182" width="100" height="14" rx="7" style={{ fill: "var(--a-str)" }} />
-        <rect x="64" y="211" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="152" y="208" width="40" height="14" rx="7" style={{ fill: "var(--a-key)" }} />
-        <rect x="202" y="208" width="84" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="64" y="237" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="124" y="234" width="18" height="14" rx="7" style={{ fill: "var(--a-faint)" }} />
-        <rect x="64" y="263" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="96" y="260" width="46" height="14" rx="7" style={{ fill: "var(--a-key)" }} />
-        <rect x="152" y="260" width="54" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="216" y="260" width="26" height="14" rx="7" style={{ fill: "var(--a-faint)" }} />
-        <rect x="252" y="260" width="70" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="332" y="260" width="18" height="14" rx="7" style={{ fill: "var(--a-faint)" }} />
-        <rect x="64" y="289" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="124" y="286" width="88" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="222" y="286" width="30" height="14" rx="7" style={{ fill: "var(--a-str)" }} />
-        <rect x="64" y="315" width="14" height="8" rx="4" style={{ fill: "var(--a-soft)" }} />
-        <rect x="124" y="312" width="34" height="14" rx="7" style={{ fill: "var(--a-key)" }} />
-        <rect x="168" y="312" width="72" height="14" rx="7" style={{ fill: "var(--a-soft)" }} />
-        <rect x="250" y="312" width="44" height="14" rx="7" style={{ fill: "var(--a-faint)" }} />
+      <g transform="translate(168 0)" className="art-code" key={liveKey}>
+        {CODE.map(([x, y, w, h, rx, f], n) => (
+          <rect key={n} x={x} y={y} width={w} height={h} rx={rx} style={{ fill: `var(--a-${f})`, "--n": n } as CSSProperties} />
+        ))}
       </g>
-      <rect x="462" y="154" width="3" height="18" rx="1.5" style={{ fill: "var(--a-caret)" }} />
+      <rect className="art-caret" x="462" y="154" width="3" height="18" rx="1.5" style={{ fill: "var(--a-caret)" }} />
     </svg>
   );
 }

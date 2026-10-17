@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { CompareToggle } from "@/components/CompareToggle";
+import { Reveal } from "@/components/Reveal";
 import {
   EDITOR_IDS,
   EDITOR_LABELS,
-  isPaid,
   pairLabel,
   type PairRecord,
 } from "@/lib/pairs";
@@ -14,15 +14,20 @@ import { snapshotUrl } from "@/lib/snapshots";
 export function PairGrid({ pairs }: { pairs: PairRecord[] }) {
   return (
     <ul className="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2">
-      {pairs.map((pair) => (
-        <li key={pair.slug} className="relative min-w-0">
+      {pairs.map((pair, i) => (
+        <Reveal
+          as="li"
+          index={i % 2}
+          key={pair.slug}
+          className="relative min-w-0"
+        >
           <PairCard pair={pair} />
           <CompareToggle
             slug={pair.slug}
             label={pairLabel(pair)}
             className="absolute end-3 top-3 z-10"
           />
-        </li>
+        </Reveal>
       ))}
     </ul>
   );
@@ -62,7 +67,7 @@ function PairCard({ pair }: { pair: PairRecord }) {
 
 /** The Pair's Snapshot, window only; an "Aa" tile in the Pair's colours until one exists. */
 function CardImage({ pair }: { pair: PairRecord }) {
-  const src = snapshotUrl(pair.editors[0]?.snapshot ?? "");
+  const src = snapshotUrl(pair.snapshot);
   return src ? (
     <SnapshotImage
       src={src}
@@ -76,10 +81,10 @@ function CardImage({ pair }: { pair: PairRecord }) {
       aria-hidden
       className="flex items-center justify-center text-2xl"
       style={{
-        aspectRatio: "1420 / 750",
+        aspectRatio: "16 / 9",
         background: pair.theme.bg,
         color: pair.theme.fg,
-        fontFamily: isPaid(pair) ? undefined : pair.font.fontFamily,
+        fontFamily: pair.font.fontFamily,
       }}
     >
       Aa

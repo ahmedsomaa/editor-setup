@@ -1,5 +1,6 @@
 import "@tanstack/react-start/server-only";
-import type { FontFace } from "@/lib/schemas";
+import type { FontFace, ThemeEditor } from "@/lib/schemas";
+import { checkThemeShape } from "@/lib/theme-schemas";
 
 /**
  * Outbound fetches for fonts and themes. Server only: the browser cannot reach
@@ -182,10 +183,9 @@ async function loadTheme(url: string, depth = 0): Promise<Record<string, any>> {
   return theme;
 }
 
-export async function fetchTheme(url: string) {
+export async function fetchTheme(url: string, editor: ThemeEditor = "vscode") {
   const theme = await loadTheme(url);
-  if (!theme.colors && !theme.tokenColors) {
-    throw new UserFacingError("That JSON has no colors or tokenColors, so it is not a VS Code theme.");
-  }
+  const problem = checkThemeShape(editor, theme);
+  if (problem) throw new UserFacingError(problem);
   return theme;
 }

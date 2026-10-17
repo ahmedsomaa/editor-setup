@@ -1,15 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
-  CaretDown,
-  CircleNotch as Loader2,
-  DownloadSimple as Download,
-  ImageSquare as ImageDown,
-  Link as Link2,
-  Question,
-  UploadSimple,
+  LoaderCircle as Loader2,
+  ImageDown,
+  Link2,
+  Moon,
+  Sun,
+  Upload,
   X,
-} from "@phosphor-icons/react";
+} from "lucide-react";
 import { Route } from "@/routes/studio";
 import {
   LANGUAGE_IDS,
@@ -17,24 +16,17 @@ import {
   highlight,
   type Highlighted,
 } from "@/lib/highlight";
-import { DEFAULTS, type FontFace, type ThemeEditor } from "@/lib/schemas";
+import { DEFAULTS, type FontFace } from "@/lib/schemas";
+import { EDITOR_IDS, EDITOR_LABELS, type EditorId } from "@/lib/pairs";
+import { EditorLogo } from "@/components/EditorLogo";
+import { zedToVscodeTheme, zedVariants } from "@/lib/zed-theme";
 import { sampleFor, SAMPLES } from "@/lib/samples";
+import SWATCHES from "@/lib/theme-swatches.json";
 import { buildSnapshotHtml } from "@/lib/snapshot-html";
 import { download, renderPngs } from "@/lib/export";
 import { Combobox, type Option } from "@/components/Combobox";
 import { PageHero } from "@/components/PagePattern";
 import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsiblePanel,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTitle,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { cn } from "cn";
 
 const slug = (s: string) =>
@@ -49,10 +41,11 @@ const panel = "bg-card border-border rounded-xl border p-5";
 const NO_FACES: FontFace[] = [];
 
 const OTHER = "__other";
-const THEME_EDITOR_OPTIONS: Option[] = [
-  { id: "vscode", label: "VS Code" },
-  { id: "cursor", label: "Cursor" },
-];
+const EDITOR_OPTIONS: Option[] = EDITOR_IDS.map((id) => ({
+  id,
+  label: EDITOR_LABELS[id],
+  icon: <EditorLogo id={id} />,
+}));
 /** Monospace families on Fontsource and Google Fonts. Anything else goes through "Other". */
 const FONT_PRESETS = [
   "JetBrains Mono",
@@ -89,6 +82,7 @@ const WEIGHTS: [RegExp, number][] = [
 ];
 
 /** Weight and style come from the file name, the way font files are usually named. */
+
 function faceMeta(fileName: string): Pick<FontFace, "weight" | "style"> {
   const n = fileName.toLowerCase();
   return {
@@ -137,15 +131,6 @@ function readFace(file: File): Promise<FontFace> {
   });
 }
 
-function useDebounced<T>(value: T, ms: number): T {
-  const [v, setV] = useState(value);
-  useEffect(() => {
-    const id = setTimeout(() => setV(value), ms);
-    return () => clearTimeout(id);
-  }, [value, ms]);
-  return v;
-}
-
 /** Snapshot Studio: make the Snapshot for a Pair from an Open or Free Font and Theme. */
 export function EditorPage() {
   const search = Route.useSearch();
@@ -156,15 +141,16 @@ export function EditorPage() {
   const themeId = search.theme ?? DEFAULTS.theme;
   const lang = search.lang ?? DEFAULTS.lang;
   const themeUrl = search.themeUrl?.trim() ?? "";
-  const themeEditor = search.themeEditor;
+  const editor: EditorId = search.editor ?? "vscode";
+  // Presets are VS Code themes, so a Zed theme always comes from a link.
+  const linkOnly = editor === "zed";
 
   const [fontDraft, setFontDraft] = useState(fontName);
   const [fontOther, setFontOther] = useState(
     () => !FONT_PRESETS.includes(fontName),
   );
-  const [themeOther, setThemeOther] = useState(
-    Boolean(themeUrl || themeEditor),
-  );
+  const [themeOther, setThemeOther] = useState(Boolean(themeUrl));
+  const showLink = linkOnly || themeOther;
   const [custom, setCustom] = useState<{
     name: string;
     faces: FontFace[];
@@ -174,8 +160,6 @@ export function EditorPage() {
   const fontFileRef = useRef<HTMLInputElement>(null);
   const [urlDraft, setUrlDraft] = useState(themeUrl);
   const [code, setCode] = useState(() => sampleFor(lang));
-  const [title, setTitle] = useState("");
-  const [showBar, setShowBar] = useState(true);
 
   const [srcDoc, setSrcDoc] = useState("");
   const [status, setStatus] = useState<"idle" | "busy" | "error">("busy");
@@ -183,12 +167,9 @@ export function EditorPage() {
   const [meta, setMeta] = useState<Pick<Highlighted, "themeName">>({
     themeName: themeId,
   });
-  const [renders, setRenders] = useState<{ png: Blob; pngUrl: string } | null>(
-    null,
-  );
-  const [exporting, setExporting] = useState<"" | "png" | "html">("");
+  const [tab, setTab] = useState<"preview" | "code">("preview");
+  const [exporting, setExporting] = useState<"" | "png">("");
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const renderGen = useRef(0);
   const lastSample = useRef(sampleFor(lang));
 
   const setParam = (patch: Partial<typeof search>) =>
@@ -205,7 +186,21 @@ export function EditorPage() {
       ? fontResult.data
       : NO_FACES;
   const displayFont = custom?.name.trim() || fontName;
-  const customTheme = themeResult && themeResult.ok ? themeResult.data : null;
+  const themeData = themeResult && themeResult.ok ? themeResult.data : null;
+  // A Zed file holds a family of themes; the rest are already in the shape Shiki reads.
+  const zedFamily = themeData && editor === "zed" ? themeData : null;
+  const variants = useMemo(
+    () => (zedFamily ? zedVariants(zedFamily) : []),
+    [zedFamily],
+  );
+  const variant = variants.includes(search.themeVariant ?? "")
+    ? search.themeVariant!
+    : variants[0];
+  // Stable identity: the preview effect depends on this.
+  const customTheme = useMemo(
+    () => (zedFamily ? zedToVscodeTheme(zedFamily, variant) : themeData),
+    [zedFamily, themeData, variant],
+  );
   const loaderError = [
     !custom && !fontResult.ok ? fontResult.error : "",
     themeResult && !themeResult.ok ? themeResult.error : "",
@@ -213,22 +208,33 @@ export function EditorPage() {
     .filter(Boolean)
     .join(" ");
 
-  const dCode = useDebounced(code, 250);
-  const dTitle = useDebounced(title, 250);
+  // Typing is colored after a pause; a swapped sample is colored at once (see commitLang).
+  const [hCode, setHCode] = useState(code);
+  useEffect(() => {
+    const id = setTimeout(() => setHCode(code), 250);
+    return () => clearTimeout(id);
+  }, [code]);
 
   const displayTheme = customTheme
     ? meta.themeName
     : (THEMES.find((t) => t.id === themeId)?.name ?? themeId);
-  const label = dTitle || `${displayFont} · ${displayTheme}`;
+  const label = `${displayFont} · ${displayTheme}`;
 
   useEffect(() => {
     let cancelled = false;
     setStatus("busy");
-    highlight({ code: dCode, lang, themeId, customTheme })
+    highlight({ code: hCode, lang, themeId, customTheme })
       .then((h) => {
         if (cancelled) return;
         setMeta({ themeName: h.themeName });
-        setSrcDoc(buildSnapshotHtml({ ...h, faces, label, showBar }));
+        setSrcDoc(
+          buildSnapshotHtml({
+            ...h,
+            faces,
+            label,
+            lang,
+          }),
+        );
         setStatus("idle");
         setError("");
       })
@@ -244,28 +250,7 @@ export function EditorPage() {
     return () => {
       cancelled = true;
     };
-  }, [dCode, lang, themeId, customTheme, faces, label, showBar]);
-
-  // Rasterise once per render so the image can be shown, and exports reuse it.
-  function renderImages() {
-    const frame = iframeRef.current;
-    if (!frame) return;
-    const gen = ++renderGen.current;
-    renderPngs(frame)
-      .then(({ png }) => {
-        if (gen !== renderGen.current) return;
-        setRenders({ png, pngUrl: URL.createObjectURL(png) });
-      })
-      .catch(() => {
-        if (gen === renderGen.current) setRenders(null);
-      });
-  }
-
-  useEffect(() => {
-    return () => {
-      if (renders) URL.revokeObjectURL(renders.pngUrl);
-    };
-  }, [renders]);
+  }, [hCode, lang, themeId, customTheme, faces, label]);
 
   function commitLang(next: string) {
     const id = next.trim().toLowerCase();
@@ -274,15 +259,31 @@ export function EditorPage() {
     // Swap the sample only if the visitor has not edited the current one.
     if (code === lastSample.current) {
       const s = sampleFor(id);
+      // A swapped sample is not typing, so it skips the pause.
       setCode(s);
+      setHCode(s);
       lastSample.current = s;
     }
   }
 
   const fontOptions = useMemo<Option[]>(
     () => [
-      ...FONT_PRESETS.map((f) => ({ id: f, label: f, group: "Fonts" })),
-      { id: OTHER, label: "Other", group: "Your own" },
+      ...FONT_PRESETS.map((f) => ({
+        id: f,
+        label: f,
+        group: "Fonts",
+        icon: <OptionChip className="font-mono">Aa</OptionChip>,
+      })),
+      {
+        id: OTHER,
+        label: "Other",
+        group: "Your own",
+        icon: (
+          <OptionChip>
+            <Upload className="size-3.5" />
+          </OptionChip>
+        ),
+      },
     ],
     [],
   );
@@ -292,13 +293,24 @@ export function EditorPage() {
         id: t.id,
         label: t.name,
         group: "Dark",
+        icon: <ThemeSwatch id={t.id} dark />,
       })),
       ...THEMES.filter((t) => t.type === "light").map((t) => ({
         id: t.id,
         label: t.name,
         group: "Light",
+        icon: <ThemeSwatch id={t.id} />,
       })),
-      { id: OTHER, label: "Other", group: "Your own" },
+      {
+        id: OTHER,
+        label: "Other",
+        group: "Your own",
+        icon: (
+          <OptionChip>
+            <Link2 className="size-3.5" />
+          </OptionChip>
+        ),
+      },
     ],
     [],
   );
@@ -323,20 +335,16 @@ export function EditorPage() {
     [displayFont, displayTheme],
   );
 
-  async function exportFile(kind: "png" | "html") {
-    setExporting(kind);
+  async function savePng() {
+    setExporting("png");
     try {
-      if (kind === "html") {
-        download(new Blob([srcDoc], { type: "text/html" }), `${baseName}.html`);
-      } else {
-        const frame = iframeRef.current;
-        if (!frame)
-          throw new Error(
-            "The preview is not ready yet. Wait a moment and try again.",
-          );
-        const { png } = renders ?? (await renderPngs(frame));
-        download(png, `${baseName}.png`);
-      }
+      const frame = iframeRef.current;
+      if (!frame)
+        throw new Error(
+          "The preview is not ready yet. Wait a moment and try again.",
+        );
+      const { png } = await renderPngs(frame);
+      download(png, `${baseName}.png`);
       setError("");
     } catch (e) {
       setStatus("error");
@@ -370,58 +378,30 @@ export function EditorPage() {
     if (fontFileRef.current) fontFileRef.current.value = "";
   }
 
-  const busy = !srcDoc || status !== "idle";
+  // A pause in typing is still ahead of the colors: wait for them before the PNG is made.
+  const busy = !srcDoc || status !== "idle" || code !== hCode;
   const errors = [loaderError, status === "error" ? error : ""].filter(Boolean);
   const exportDisabled = busy || exporting !== "";
 
   return (
     <main id="main">
-      <PageHero variant="studio" className="pb-4 sm:pb-6">
+      <PageHero variant="studio" className="pt-8 pb-8 sm:pt-8 sm:pb-10">
         <header>
-          <div className="flex items-center gap-2">
-            <h1>Snapshot Studio</h1>
-            <Popover>
-              <PopoverTrigger aria-label="How to make a Snapshot">
-                <Question weight="bold" aria-hidden />
-              </PopoverTrigger>
-              <PopoverContent align="start">
-                <PopoverTitle className="font-sans text-base font-medium tracking-normal">
-                  How to make a Snapshot
-                </PopoverTitle>
-                <ol className="text-muted-foreground mt-3 list-decimal space-y-2 ps-5">
-                  <li>
-                    Pick a Font and a Theme, or upload your own Font file.
-                  </li>
-                  <li>Paste about 18 lines of your own code.</li>
-                  <li>
-                    Save the PNG. Name it{" "}
-                    <code className="text-foreground">
-                      {baseName}--&lt;editor-id&gt;.png
-                    </code>
-                    , for example{" "}
-                    <code className="text-foreground">--vscode</code>.
-                  </li>
-                  <li>Add the PNG to your pull request, with the Pair file.</li>
-                </ol>
-                <p className="text-muted-foreground mt-3">
-                  Only Open and Free Fonts and Themes can be picked from the
-                  lists. If you own the license to a Paid Font, upload its file
-                  and make the Snapshot yourself.
-                </p>
-              </PopoverContent>
-            </Popover>
-          </div>
-          <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-            Make a 1600×900 Snapshot of any Font and Theme, then save it as a
-            PNG.
+          <h1>Snapshot Studio</h1>
+          <p className="text-muted-foreground mt-3 max-w-[60ch] text-lg">
+            See your own code in any open or free font and theme.
           </p>
         </header>
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
-        <div className="mt-4 grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)] xl:items-start">
+        <div className="grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)] xl:items-start">
           {/* Left: every setting */}
           <form
-            className={cn(panel, "flex min-w-0 flex-col gap-0 p-0")}
+            className={cn(
+              panel,
+              // z-10 keeps the open lists above the page content that follows, such as the footer.
+              "relative z-10 flex min-w-0 flex-col gap-0 p-0 xl:sticky xl:top-20",
+            )}
             onSubmit={(e) => {
               e.preventDefault();
               setParam({
@@ -430,7 +410,26 @@ export function EditorPage() {
               });
             }}
           >
-            <div className="flex flex-col gap-5 px-4 py-4">
+            <div className="grid items-start gap-x-4 gap-y-4 p-4 sm:grid-cols-2 xl:grid-cols-1">
+              <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
+                <legend className="mb-2 text-sm font-medium">Editor</legend>
+                <Combobox
+                  label="Editor"
+                  value={editor}
+                  options={EDITOR_OPTIONS}
+                  onChange={(id) => {
+                    if (id === editor) return;
+                    setThemeOther(false);
+                    setUrlDraft("");
+                    setParam({
+                      editor: id as EditorId,
+                      themeUrl: undefined,
+                      themeVariant: undefined,
+                    });
+                  }}
+                />
+              </fieldset>
+
               <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
                 <legend className="mb-2 text-sm font-medium">
                   Font family
@@ -465,7 +464,7 @@ export function EditorPage() {
                     <div className="flex flex-col gap-1.5">
                       <span className="flex items-center gap-2 text-sm font-medium">
                         <IconChip>
-                          <UploadSimple className="size-4" aria-hidden />
+                          <Upload className="size-4" aria-hidden />
                         </IconChip>{" "}
                         Your own font
                       </span>
@@ -514,7 +513,7 @@ export function EditorPage() {
                           variant="outline"
                           onClick={() => fontFileRef.current?.click()}
                         >
-                          <UploadSimple aria-hidden />
+                          <Upload aria-hidden />
                           Choose font files
                         </Button>
                       )}
@@ -537,87 +536,84 @@ export function EditorPage() {
                   </>
                 ) : null}
               </fieldset>
-
               <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
                 <legend className="mb-2 text-sm font-medium">
-                  Theme preset
+                  {linkOnly ? "Theme" : "Theme preset"}
                 </legend>
-                <div className="flex flex-col gap-1.5">
-                  <Combobox
-                    label="Theme"
-                    value={themeOther ? OTHER : themeId}
-                    options={themeOptions}
-                    display={
-                      themeOther && themeUrl
-                        ? `Other (${meta.themeName})`
-                        : undefined
-                    }
-                    onChange={(id) => {
-                      if (id === OTHER) {
-                        setThemeOther(true);
-                        return;
+                {linkOnly ? null : (
+                  <div className="flex flex-col gap-1.5">
+                    <Combobox
+                      label="Theme"
+                      value={themeOther ? OTHER : themeId}
+                      options={themeOptions}
+                      display={
+                        themeOther && themeUrl
+                          ? `Other (${meta.themeName})`
+                          : undefined
                       }
-                      setThemeOther(false);
-                      setUrlDraft("");
-                      setParam({
-                        theme: id,
-                        themeUrl: undefined,
-                        themeEditor: undefined,
-                      });
-                    }}
-                  />
-                </div>
-                {themeOther ? (
+                      onChange={(id) => {
+                        if (id === OTHER) {
+                          setThemeOther(true);
+                          return;
+                        }
+                        setThemeOther(false);
+                        setUrlDraft("");
+                        setParam({
+                          theme: id,
+                          themeUrl: undefined,
+                          themeVariant: undefined,
+                        });
+                      }}
+                    />
+                  </div>
+                )}
+                {showLink ? (
                   <>
-                    <div className="flex flex-col gap-1.5">
-                      <span className="text-[13px] font-medium">
-                        Editor the theme is for
+                    <label className="flex flex-col gap-1.5">
+                      <span className="flex items-center gap-2 text-[13px] font-medium">
+                        <IconChip>
+                          <Link2 className="size-4" aria-hidden />
+                        </IconChip>{" "}
+                        Theme link
                       </span>
-                      <Combobox
-                        label="Theme editor"
-                        value={themeEditor ?? ""}
-                        options={THEME_EDITOR_OPTIONS}
-                        placeholder="Choose an Editor"
-                        onChange={(id) => {
-                          setUrlDraft("");
+                      <input
+                        className={input}
+                        name="themeUrl"
+                        value={urlDraft}
+                        onChange={(e) => setUrlDraft(e.target.value)}
+                        onBlur={() =>
+                          urlDraft.trim() !== themeUrl &&
                           setParam({
-                            themeEditor: id as ThemeEditor,
-                            themeUrl: undefined,
-                          });
-                        }}
+                            themeUrl: urlDraft.trim() || undefined,
+                            themeVariant: undefined,
+                          })
+                        }
+                        placeholder="https://github.com/…/my-theme.json"
+                        autoComplete="off"
+                        spellCheck={false}
                       />
-                    </div>
-                    {themeEditor ? (
-                      <label className="flex flex-col gap-1.5">
-                        <span className="flex items-center gap-2 text-[13px] font-medium">
-                          <IconChip>
-                            <Link2 className="size-4" aria-hidden />
-                          </IconChip>{" "}
-                          Theme link
+                      <span className="text-muted-foreground text-[11px]">
+                        {editor === "zed"
+                          ? "Raw or GitHub/GitLab link to a Zed theme JSON."
+                          : "Raw or GitHub/GitLab link to a VS Code theme JSON."}
+                      </span>
+                    </label>
+                    {variants.length > 1 ? (
+                      <div className="flex flex-col gap-1.5">
+                        <span className="text-[13px] font-medium">
+                          Theme in this file
                         </span>
-                        <input
-                          className={input}
-                          name="themeUrl"
-                          value={urlDraft}
-                          onChange={(e) => setUrlDraft(e.target.value)}
-                          onBlur={() =>
-                            urlDraft.trim() !== themeUrl &&
-                            setParam({ themeUrl: urlDraft.trim() || undefined })
-                          }
-                          placeholder="https://github.com/…/my-theme.json"
-                          autoComplete="off"
-                          spellCheck={false}
+                        <Combobox
+                          label="Zed theme"
+                          value={variant ?? ""}
+                          options={variants.map((v) => ({ id: v, label: v }))}
+                          onChange={(id) => setParam({ themeVariant: id })}
                         />
-                        <span className="text-muted-foreground text-[11px]">
-                          Raw or GitHub/GitLab link to a VS Code theme JSON.
-                          Cursor uses the same files.
-                        </span>
-                      </label>
+                      </div>
                     ) : null}
                   </>
                 ) : null}
               </fieldset>
-
               <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
                 <legend className="mb-2 text-sm font-medium">
                   Code language
@@ -630,116 +626,70 @@ export function EditorPage() {
                     onChange={commitLang}
                   />
                 </div>
-                <label className="flex flex-col gap-1.5">
-                  <span className="sr-only">Code</span>
-                  <textarea
-                    className={cn(
-                      input,
-                      "h-44 resize-y rounded-xl py-2.5 font-mono text-[11px] leading-relaxed",
-                    )}
-                    name="code"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    spellCheck={false}
-                    wrap="off"
-                  />
-                </label>
               </fieldset>
-
-              <Collapsible className="min-w-0">
-                <CollapsibleTrigger>
-                  <span className="text-sm font-medium">
-                    Window{" "}
-                    <span className="text-muted-foreground font-normal">
-                      (optional)
-                    </span>
-                  </span>
-                  <CaretDown
-                    aria-hidden
-                    className="text-muted-foreground size-4 shrink-0 transition-transform duration-200 group-data-[panel-open]:rotate-180 motion-reduce:transition-none"
-                  />
-                </CollapsibleTrigger>
-                <CollapsiblePanel>
-                  <div className="flex flex-col gap-3 pt-3">
-                    <label className="flex items-center gap-2.5 text-[13px]">
-                      <input
-                        type="checkbox"
-                        checked={showBar}
-                        onChange={(e) => setShowBar(e.target.checked)}
-                        className="size-4"
-                      />
-                      Show title bar
-                    </label>
-                    <label className="flex flex-col gap-1.5">
-                      <span className="text-[13px] font-medium">Label</span>
-                      <input
-                        className={input}
-                        name="label"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder={`${displayFont} · ${displayTheme}`}
-                        disabled={!showBar}
-                      />
-                    </label>
-                  </div>
-                </CollapsiblePanel>
-              </Collapsible>
             </div>
+            <p className="text-muted-foreground border-border m-0 border-t px-4 py-3 text-xs">
+              Use an Open or Free Font and Theme. Snapshots go in a public
+              Registry, so a license that asks for payment, or does not allow
+              public images, can&rsquo;t be used.
+            </p>
             <button type="submit" className="sr-only">
               Apply
             </button>
           </form>
 
-          {/* Right: the Snapshot */}
+          {/* Right: the live window */}
           <section
             aria-label="Preview"
-            className="bg-muted border-border relative flex min-w-0 flex-col gap-3 rounded-xl border p-3 sm:p-4 xl:sticky xl:top-24"
+            className="bg-muted border-border relative flex min-w-0 flex-col gap-3 rounded-xl border p-3 sm:p-4 xl:sticky xl:top-20"
           >
-            {srcDoc ? (
-              // Offscreen render source: the Snapshot is rasterised from it.
-              <iframe
-                ref={iframeRef}
-                title="Snapshot render source"
-                srcDoc={srcDoc}
-                onLoad={renderImages}
-                sandbox="allow-scripts allow-same-origin"
-                aria-hidden
-                tabIndex={-1}
-                className="pointer-events-none fixed top-0 -left-[9999px] h-[900px] w-[1600px] border-0"
-              />
-            ) : null}
-
-            <div className="bg-card border-border flex max-w-full items-center justify-between gap-3 rounded-full border py-1.5 pr-1.5 pl-4">
-              <span className="text-muted-foreground min-w-0 truncate font-mono text-xs">
-                {baseName}.png
-              </span>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={exportDisabled}
-                  onClick={() => exportFile("html")}
-                >
-                  {exporting === "html" ? (
-                    <Loader2 className="animate-spin motion-reduce:animate-none" />
-                  ) : (
-                    <Download />
-                  )}
-                  Export HTML
-                </Button>
-                <Button
-                  size="sm"
-                  disabled={exportDisabled}
-                  onClick={() => exportFile("png")}
-                >
-                  {exporting === "png" ? (
-                    <Loader2 className="animate-spin motion-reduce:animate-none" />
-                  ) : (
-                    <ImageDown />
-                  )}
-                  Save PNG
-                </Button>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div
+                role="tablist"
+                aria-label="Editor view"
+                className="bg-card border-border inline-flex gap-1 rounded-full border p-1"
+                onKeyDown={(e) => {
+                  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+                  e.preventDefault();
+                  const next = tab === "preview" ? "code" : "preview";
+                  setTab(next);
+                  document.getElementById(`studio-tab-${next}`)?.focus();
+                }}
+              >
+                {(
+                  [
+                    ["preview", "Preview"],
+                    ["code", "Code"],
+                  ] as const
+                ).map(([id, text]) => (
+                  <button
+                    key={id}
+                    id={`studio-tab-${id}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={tab === id}
+                    aria-controls="studio-panel"
+                    tabIndex={tab === id ? 0 : -1}
+                    onClick={() => setTab(id)}
+                    className={cn(
+                      "h-8 rounded-full px-4 text-sm font-medium transition-colors duration-150",
+                      tab === id
+                        ? "bg-muted text-foreground"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {text}
+                  </button>
+                ))}
               </div>
+              <Button size="sm" disabled={exportDisabled} onClick={savePng}>
+                {exporting === "png" ? (
+                  <Loader2 className="animate-spin motion-reduce:animate-none" />
+                ) : (
+                  <ImageDown />
+                )}
+                Save PNG
+              </Button>
             </div>
 
             {errors.map((msg) => (
@@ -752,24 +702,99 @@ export function EditorPage() {
               </p>
             ))}
 
-            <div className="flex items-center justify-center">
-              {renders ? (
-                <img
-                  src={renders.pngUrl}
-                  alt="Snapshot preview, 1600 by 900"
-                  className="border-border max-h-full max-w-full rounded-xl border shadow-[var(--shadow-overlay)]"
+            <div
+              id="studio-panel"
+              role="tabpanel"
+              aria-labelledby={`studio-tab-${tab}`}
+              className="border-border relative aspect-video w-full overflow-hidden rounded-xl border shadow-[var(--shadow-overlay)]"
+            >
+              {srcDoc ? (
+                // Kept on screen, only hidden, so the window is measured and ready for Save PNG while you write.
+                <iframe
+                  ref={iframeRef}
+                  title="Snapshot preview"
+                  srcDoc={srcDoc}
+                  sandbox="allow-scripts allow-same-origin"
+                  className={cn(
+                    "absolute inset-0 size-full border-0",
+                    tab === "code" && "invisible",
+                  )}
                 />
               ) : (
-                <Rendering
-                  label="Snapshot"
-                  className="aspect-video w-full max-w-3xl rounded-xl"
-                />
+                <Rendering label="Snapshot" className="size-full" />
               )}
+              {tab === "code" ? (
+                <textarea
+                  data-lenis-prevent
+                  aria-label="Code"
+                  name="code"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="Paste or write your code here"
+                  spellCheck={false}
+                  wrap="off"
+                  autoFocus
+                  className="bg-card text-foreground placeholder:text-muted-foreground absolute inset-0 size-full resize-none border-0 p-5 font-mono text-sm leading-relaxed outline-none"
+                />
+              ) : null}
             </div>
           </section>
         </div>
       </div>
     </main>
+  );
+}
+
+/** A Theme's own colors: its background with four dots for keywords, strings, functions and numbers. */
+function ThemeSwatch({ id, dark }: { id: string; dark?: boolean }) {
+  const swatch = (SWATCHES as Record<string, { bg: string; dots: string[] }>)[
+    id
+  ];
+  if (!swatch)
+    return (
+      <OptionChip
+        className={
+          dark ? "bg-foreground text-background border-transparent" : undefined
+        }
+      >
+        {dark ? <Moon className="size-3.5" /> : <Sun className="size-3.5" />}
+      </OptionChip>
+    );
+  return (
+    <span
+      aria-hidden
+      className="border-border flex h-6 shrink-0 items-center gap-1 rounded-md border px-1.5"
+      style={{ background: swatch.bg }}
+    >
+      {swatch.dots.map((color, i) => (
+        <span
+          key={i}
+          className="size-1.5 rounded-full"
+          style={{ background: color }}
+        />
+      ))}
+    </span>
+  );
+}
+
+/** A small tile in front of an option: "Aa" for a Font, an icon for the "Other" choices. */
+function OptionChip({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "bg-card text-foreground border-border flex size-6 shrink-0 items-center justify-center rounded-md border text-[11px] leading-none",
+        className,
+      )}
+    >
+      {children}
+    </span>
   );
 }
 

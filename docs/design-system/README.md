@@ -1,6 +1,6 @@
 ## Principles
 
-- Warm monochrome. Canvas `background`, text `foreground`, edges `border`. Colour is scarce: `accent` (deep teal) marks the active nav label and the selected list option, `pastel-green` marks a Paid License, and a Pair's own colours appear only inside `PairWindow` and Pair chips.
+- Warm monochrome. Canvas `background`, text `foreground`, edges `border`. Colour is scarce: `accent` (deep teal) marks the active nav label and the selected list option, and a Pair's own colours appear only inside `PairWindow` and Pair chips.
 - One hairline everywhere. Separate sections with a 1px `border` rule, draw cards as `card` + 1px `border` at `radius-xl`, and never nest a card in a card.
 - Shapes. Anything you press or type into is `radius-pill`: buttons, tabs, inputs, selects, tags, Anything that holds content is `radius-xl`.
 - Flat. No gradients, no glass, no heavy shadows. The one exception is a dot pattern (`.bg-pattern`, `foreground` at 16%, 22px pitch) that fades out behind a hero or closing block.
@@ -14,8 +14,7 @@
 - The hook is one line, centred: "Make the place you code feel like yours." It wraps on narrow screens only.
 - Errors say what failed and how to fix it: "Could not highlight that code. Pick another language."
 - Empty states name the query and offer an exit: "No Pairs match 'quarterly'. Clear filters."
-- Every Pair has a Snapshot (16:9, shown large on the Pair page and cropped to the code window on cards and rows). Make it in Snapshot Studio.
-- Paid Fonts and Themes are never rendered live. A developer who owns the license can add a Snapshot of one.
+- Every Pair has a Snapshot (16:9, shown whole, 16:9, on the Pair page, cards and rows). Make it in Snapshot Studio.
 
 ## Visual foundations
 
@@ -37,7 +36,7 @@ Phosphor, bold weight, 16px in buttons, `foreground` or `muted-foreground`. No e
 - Primary button: `primary` on `primary-foreground`, pill, `label`. Outline: `card` fill, 1px `border`, `foreground` text, hover `muted`. Ghost: transparent, hover `muted`.
 - Tabs: pill track `muted` + 1px `border`; active thumb `card` + 1px `border`, with `aria-pressed`.
 - Nav: inactive `muted-foreground`; active label `accent-text` on `muted`, plus `aria-current`.
-- Tags: pill, 12px, uppercase, 0.05em tracking, 24px tall. Each carries an icon. Paid License: `pastel-green`, like money, with a dollar sign. Open License: `accent-soft` with an open padlock. Free License and Appearance: `muted`, with a gift and a sun or moon.
+- Tags: pill, 12px, uppercase, 0.05em tracking, 24px tall. Each carries an icon. Open License: `pastel-green` with an open padlock. Free License: `pastel-amber` with a gift. Appearance: `muted`, with a sun or moon.
 - Cards and bento tiles: `card`, 1px `border`, `radius-xl`, 24px to 32px padding.
 - Components: Button, Tabs, Tag, Logo, ThemeSwitch, PairWindow, DirectoryRow. Consumers provide the Pair (theme name, background, text colour, Font family, Settings text).
 

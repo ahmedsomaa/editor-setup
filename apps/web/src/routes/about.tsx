@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/PagePattern";
+import { Reveal } from "@/components/Reveal";
 import { LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
 import { CONTRIBUTE_URL, GITHUB_URL } from "@/lib/site";
@@ -42,13 +43,11 @@ function About() {
       <PageHero variant="about" className="pb-4 sm:pb-6">
         <h1>About</h1>
         <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-          EditorSetup is a list of Font and Theme Pairs for code editors.
-          Everything lives in a Git repository, so the history is the record of
-          who added what.
+          A small, open list of font and theme pairs, kept in Git.
         </p>
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
-        <section className="mt-20" aria-labelledby="terms">
+        <Reveal as="section" className="mt-20" aria-labelledby="terms">
           <h2 id="terms">Words we use</h2>
           <dl className="border-border mt-8 border-t">
             {TERMS.map(([term, text]) => (
@@ -61,9 +60,9 @@ function About() {
               </div>
             ))}
           </dl>
-        </section>
+        </Reveal>
 
-        <section className="mt-20" aria-labelledby="licenses">
+        <Reveal as="section" className="mt-20" aria-labelledby="licenses">
           <h2 id="licenses">Licenses</h2>
           <p className="text-muted-foreground mt-6 max-w-[60ch]">
             Every Font and Theme lists the terms it is available under.
@@ -85,19 +84,10 @@ function About() {
                 No cost, with limits such as private use only.
               </dd>
             </div>
-            <div className="border-border grid items-start gap-2 border-b py-5 sm:grid-cols-[10rem_1fr] sm:gap-8">
-              <dt>
-                <LicenseTag license="paid" />
-              </dt>
-              <dd className="text-muted-foreground max-w-[60ch]">
-                Never rendered on the site. A developer who owns the license can
-                add a Snapshot of it.
-              </dd>
-            </div>
           </dl>
-        </section>
+        </Reveal>
 
-        <section className="mt-20" aria-labelledby="add">
+        <Reveal as="section" className="mt-20" aria-labelledby="add">
           <h2 id="add">Add a Pair</h2>
           <p className="text-muted-foreground mt-6 max-w-[60ch]">
             Open a pull request with a Pair file and its Snapshot. Make the
@@ -123,7 +113,7 @@ function About() {
               <ArrowUpRight aria-hidden />
             </Button>
           </div>
-        </section>
+        </Reveal>
       </div>
     </main>
   );

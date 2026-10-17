@@ -23,7 +23,7 @@ Dark or light. Every Theme has one. The Registry filter uses this field; the The
 _Avoid_: Mode, color mode
 
 **Editor**:
-One code editor app, such as VS Code or Cursor. Apps whose Settings would be identical are still separate Editors, such as each VS Code fork and each JetBrains IDE. The supported Editors are VS Code and Cursor for now.
+One code editor app, such as VS Code or Zed. Apps whose Settings would be identical are still separate Editors, such as each VS Code fork and each JetBrains IDE. The supported Editors are VS Code and Zed for now.
 _Avoid_: IDE, editor family
 
 **Config**:
@@ -41,19 +41,19 @@ _Avoid_: Screenshot, preview, image
 ### License and Registry
 
 **License**:
-The terms a Font or Theme is available under: Open (an open license such as OFL or MIT, free to use and embed), Free (no cost but restricted, such as private use only), or Paid.
-_Avoid_: Free/paid, price
+The terms a Font or Theme is available under: Open (an open license such as OFL or MIT, free to use and embed) or Free (no cost but restricted, such as private use only). A Font or Theme whose license does not allow showing images of it on a public site is not accepted.
+_Avoid_: Free/paid, price, Paid
 
 **Registry**:
 The public list of every Pair whose file is on `main` with its Snapshot and at least one Config. Built by scanning the pair JSON files in the repository.
 _Avoid_: Community page, directory, explore
 
 **Snapshot Studio**:
-The page on the site that makes a Snapshot from an Open or Free Font and Theme. Paid Fonts and Themes are never rendered live there or anywhere on the site.
+The page on the site that makes a Snapshot from an Open or Free Font and Theme.
 _Avoid_: Editor, generator
 
 **Compare**:
-Two Pairs shown side by side for one Editor, each through that Editor's Snapshot. A Pair with no Config for that Editor can't be compared there.
+Two or more Pairs shown side by side through their Snapshots.
 _Avoid_: Slider, overlay
 
 **Contribution**:

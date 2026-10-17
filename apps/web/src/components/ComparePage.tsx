@@ -1,25 +1,13 @@
+import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { X } from "@phosphor-icons/react";
+import { Plus, X } from "lucide-react";
 import { Route } from "@/routes/compare";
+import { ComparePicker } from "@/components/ComparePicker";
 import { PageHero } from "@/components/PagePattern";
 import { SnapshotImage } from "@/components/SnapshotImage";
 import { AppearanceTag, PairLicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  EDITOR_IDS,
-  EDITOR_LABELS,
-  getEditorConfig,
-  pairLabel,
-  type EditorId,
-  type PairRecord,
-} from "@/lib/pairs";
+import { EDITOR_LABELS, pairLabel, type PairRecord } from "@/lib/pairs";
 import { snapshotUrl } from "@/lib/snapshots";
 import { MAX_COMPARE } from "@/lib/compare-store";
 
@@ -30,6 +18,7 @@ export function ComparePage() {
   const { pairs: all } = Route.useLoaderData();
   const { pairs: param } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const bySlug = new Map(all.map((p) => [p.slug, p]));
   const slugs =
@@ -40,7 +29,6 @@ export function ComparePage() {
           .filter((s, i, a) => bySlug.has(s) && a.indexOf(s) === i)
           .slice(0, MAX_PAIRS);
   const picked = slugs.map((s) => bySlug.get(s)!);
-  const rest = all.filter((p) => !slugs.includes(p.slug));
 
   const setSlugs = (next: string[]) =>
     void navigate({
@@ -49,81 +37,63 @@ export function ComparePage() {
       resetScroll: false,
     });
 
-  const shared: EditorId[] = EDITOR_IDS.filter((id) =>
-    picked.every((p) => getEditorConfig(p, id)),
-  );
-  const editor = shared[0];
-
   return (
     <main id="main">
       <PageHero variant="compare" className="pb-4 sm:pb-6">
-        <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
-          <div>
-            <h1>Compare</h1>
-            <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-              Add up to {MAX_PAIRS} Pairs and see their Snapshots side by side.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            {picked.length < MAX_PAIRS && rest.length > 0 ? (
-              <Select
-                items={rest.map((p) => ({
-                  value: p.slug,
-                  label: pairLabel(p),
-                }))}
-                value={null}
-                onValueChange={(v) => v && setSlugs([...slugs, v])}
-              >
-                <SelectTrigger
-                  aria-label="Add a Pair to compare"
-                  className="h-11 w-auto min-w-56 font-medium"
-                >
-                  <SelectValue placeholder="Add a Pair" />
-                </SelectTrigger>
-                <SelectContent>
-                  {rest.map((p) => (
-                    <SelectItem key={p.slug} value={p.slug}>
-                      {pairLabel(p)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : null}
-            {picked.length > 0 ? (
-              <Button variant="ghost" onClick={() => setSlugs([])}>
-                Clear all
-              </Button>
-            ) : null}
-          </div>
+        <header>
+          <h1>Compare</h1>
+          <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
+            Side by side, until one wins.
+          </p>
         </header>
       </PageHero>
+      <ComparePicker
+        pairs={all}
+        values={slugs}
+        max={MAX_PAIRS}
+        onChange={setSlugs}
+        open={pickerOpen}
+        onOpenChange={setPickerOpen}
+      />
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
         {picked.length === 0 ? (
           <div className="border-border mt-6 rounded-xl border border-dashed px-6 py-16">
             <p className="font-medium">No Pairs to compare yet</p>
             <p className="text-muted-foreground mt-1 max-w-[50ch] text-sm">
-              Add a Pair above, or pick one from the{" "}
+              Add Pairs to line them up, or pick one from the{" "}
               <Link to="/registry" className="text-foreground underline">
                 Registry
               </Link>
               .
             </p>
+            <Button className="mt-6" onClick={() => setPickerOpen(true)}>
+              <Plus aria-hidden />
+              Add Pairs
+            </Button>
           </div>
         ) : (
           <>
-            {!editor ? (
-              <p
-                role="status"
-                className="bg-pastel-red text-pastel-red-text mt-6 rounded-xl px-4 py-3 text-sm"
-              >
-                These Pairs share no Editor, so their Snapshots cannot be
-                compared. Remove one to continue.
+            <div className="mt-6 flex min-h-11 flex-wrap items-center justify-between gap-3">
+              <p className="text-muted-foreground m-0 text-sm" role="status">
+                {picked.length} of {MAX_PAIRS} Pairs
               </p>
-            ) : null}
-
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" onClick={() => setSlugs([])}>
+                  Clear all
+                </Button>
+                <Button
+                  disabled={picked.length >= MAX_PAIRS}
+                  onClick={() => setPickerOpen(true)}
+                >
+                  <Plus aria-hidden />
+                  Add Pairs
+                </Button>
+              </div>
+            </div>
             <CompareTable
               pairs={picked}
-              editor={editor}
+              slots={MAX_PAIRS}
+              onAdd={() => setPickerOpen(true)}
               onRemove={(slug) => setSlugs(slugs.filter((s) => s !== slug))}
             />
             {picked.length === 1 ? (
@@ -140,13 +110,17 @@ export function ComparePage() {
 
 function CompareTable({
   pairs,
-  editor,
+  slots,
+  onAdd,
   onRemove,
 }: {
   pairs: PairRecord[];
-  editor?: EditorId;
+  /** Most Pairs the table holds. An open slot shows where the next one lands. */
+  slots: number;
+  onAdd: () => void;
   onRemove: (slug: string) => void;
 }) {
+  const open = pairs.length < slots;
   const rows: { label: string; cell: (p: PairRecord) => React.ReactNode }[] = [
     { label: "Theme", cell: (p) => p.theme.name },
     { label: "Font", cell: (p) => p.font.name },
@@ -175,11 +149,11 @@ function CompareTable({
       role="region"
       aria-label="Pairs side by side"
       tabIndex={0}
-      className="mt-6 overflow-x-auto"
+      className="mt-2 overflow-x-auto"
     >
       <table
         className="w-full table-fixed border-collapse text-start text-sm"
-        style={{ minWidth: `${7 + pairs.length * 16}rem` }}
+        style={{ minWidth: `${7 + (pairs.length + (open ? 1 : 0)) * 16}rem` }}
       >
         <caption className="sr-only">Pairs side by side</caption>
         <colgroup>
@@ -187,6 +161,7 @@ function CompareTable({
           {pairs.map((p) => (
             <col key={p.slug} />
           ))}
+          {open ? <col /> : null}
         </colgroup>
         <tbody>
           <tr>
@@ -197,20 +172,19 @@ function CompareTable({
               <span className="block pt-1">Snapshot</span>
             </th>
             {pairs.map((pair) => {
-              const config = editor ? getEditorConfig(pair, editor) : undefined;
-              const src = config ? snapshotUrl(config.snapshot) : undefined;
+              const src = snapshotUrl(pair.snapshot);
               return (
                 <td key={pair.slug} className="ps-3 pb-4 align-top first:ps-0">
                   {src ? (
                     <SnapshotImage
                       src={src}
-                      alt={`${pair.theme.name} with ${pair.font.name} in ${EDITOR_LABELS[editor!]}`}
-                      className="rounded-[1.1rem]"
+                      alt={`${pair.theme.name} with ${pair.font.name}`}
+                      className="rounded-xl"
                     />
                   ) : (
                     <div
-                      className="border-border text-muted-foreground flex items-center justify-center rounded-[1.1rem] border border-dashed text-sm"
-                      style={{ aspectRatio: "1420 / 750" }}
+                      className="border-border text-muted-foreground flex items-center justify-center rounded-xl border border-dashed text-sm"
+                      style={{ aspectRatio: "16 / 9" }}
                     >
                       No Snapshot to show
                     </div>
@@ -218,6 +192,19 @@ function CompareTable({
                 </td>
               );
             })}
+            {open ? (
+              <td className="ps-3 pb-4 align-top">
+                <button
+                  type="button"
+                  onClick={onAdd}
+                  className="border-border text-muted-foreground hover:text-foreground hover:border-foreground/40 hover:bg-muted/50 flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed text-sm transition-colors duration-150"
+                  style={{ aspectRatio: "16 / 9" }}
+                >
+                  <Plus aria-hidden className="size-6" />
+                  Add a Pair
+                </button>
+              </td>
+            ) : null}
           </tr>
           <tr className="border-border border-t">
             <th

@@ -13,11 +13,12 @@ export const registryFilterSchema = z.object({
     .catch(undefined),
   editor,
   appearance: z.enum(["dark", "light"]).optional().catch(undefined),
-  license: z.enum(["free", "open", "paid"]).optional().catch(undefined),
+  license: z.enum(["free", "open"]).optional().catch(undefined),
 });
 
 export const registrySearchSchema = registryFilterSchema.extend({
   view: z.enum(["grid", "list"]).optional().catch(undefined),
+  page: z.coerce.number().int().min(1).max(999).optional().catch(undefined),
 });
 
 export const pairSearchSchema = z.object({ editor });

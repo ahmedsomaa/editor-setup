@@ -7,7 +7,7 @@ export type MarqueePair = {
   fg: string
 }
 
-/** Explore Pairs with an Open or Free Font, in site order. Paid Fonts are left out. */
+/** Explore Pairs with an Open or Free Font, in site order. */
 export const MARQUEE_PAIRS: readonly MarqueePair[] = [
   {
     theme: 'Gruvbox Light Hard',

@@ -1,9 +1,12 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
-  Check,
-  CaretUpDown as ChevronsUpDown,
-  MagnifyingGlass as Search,
-} from "@phosphor-icons/react";
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { Check, ChevronsUpDown, Search } from "lucide-react";
 import { cn } from "cn";
 
 export type Option = {
@@ -11,13 +14,21 @@ export type Option = {
   label: string;
   group?: string;
   hint?: string;
+  icon?: ReactNode;
 };
 
 type Props = {
   label: string;
-  value: string;
+  value?: string;
   options: Option[];
-  onChange: (id: string) => void;
+  onChange?: (id: string) => void;
+  /** Pick several: the list stays open and each pick toggles. `value` and `onChange` are unused. */
+  multiple?: {
+    values: string[];
+    onChange: (ids: string[]) => void;
+    /** Most that can be picked. Further options are disabled until one is removed. */
+    max?: number;
+  };
   /** Shown on the trigger instead of the selected option (e.g. a custom theme). */
   display?: string;
   disabled?: boolean;
@@ -30,6 +41,7 @@ export function Combobox({
   value,
   options,
   onChange,
+  multiple,
   display,
   disabled,
   placeholder,
@@ -42,7 +54,11 @@ export function Combobox({
   const trigger = useRef<HTMLButtonElement>(null);
   const list = useRef<HTMLUListElement>(null);
 
-  const selected = options.find((o) => o.id === value);
+  const isPicked = (id: string) =>
+    multiple ? multiple.values.includes(id) : id === value;
+  const full = Boolean(multiple?.max && multiple.values.length >= multiple.max);
+  const isLocked = (id: string) => full && !isPicked(id);
+  const selected = multiple ? undefined : options.find((o) => o.id === value);
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return q
@@ -84,7 +100,16 @@ export function Combobox({
 
   function pick(o: Option | undefined) {
     if (!o) return;
-    onChange(o.id);
+    if (multiple) {
+      if (isLocked(o.id)) return;
+      multiple.onChange(
+        isPicked(o.id)
+          ? multiple.values.filter((id) => id !== o.id)
+          : [...multiple.values, o.id],
+      );
+      return;
+    }
+    onChange?.(o.id);
     close();
   }
 
@@ -134,11 +159,20 @@ export function Combobox({
       >
         <span
           className={cn(
-            "truncate",
-            !selected && !display && "text-muted-foreground",
+            "flex min-w-0 items-center gap-2",
+            !selected &&
+              !display &&
+              !multiple?.values.length &&
+              "text-muted-foreground",
           )}
         >
-          {display ?? selected?.label ?? placeholder ?? "Select…"}
+          {selected?.icon}
+          <span className="truncate">
+            {display ??
+              (multiple && multiple.values.length > 0
+                ? `${multiple.values.length}${multiple.max ? ` of ${multiple.max}` : ""} selected`
+                : (selected?.label ?? placeholder ?? "Select…"))}
+          </span>
         </span>
         <ChevronsUpDown
           className="text-muted-foreground size-4 shrink-0"
@@ -175,7 +209,9 @@ export function Combobox({
             id={`${uid}-list`}
             ref={list}
             role="listbox"
+            aria-multiselectable={multiple ? true : undefined}
             aria-label={label}
+            data-lenis-prevent
             className="max-h-64 overflow-y-auto p-1.5"
           >
             {filtered.length === 0 ? (
@@ -196,28 +232,33 @@ export function Combobox({
                   <div
                     id={`${uid}-${o.id}`}
                     role="option"
-                    aria-selected={o.id === value}
+                    aria-selected={isPicked(o.id)}
+                    aria-disabled={isLocked(o.id) || undefined}
                     data-index={i}
                     onMouseMove={() => setActive(i)}
                     onClick={() => pick(o)}
                     className={cn(
                       "flex cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-1.5 text-[13px]",
                       "text-foreground",
-                      o.id === value
+                      isLocked(o.id) && "cursor-not-allowed opacity-50",
+                      isPicked(o.id)
                         ? "bg-accent-soft"
-                        : i === active
+                        : i === active && !isLocked(o.id)
                           ? "bg-muted"
                           : "",
                     )}
                   >
-                    <span className="truncate">{o.label}</span>
+                    <span className="flex min-w-0 items-center gap-2">
+                      {o.icon}
+                      <span className="truncate">{o.label}</span>
+                    </span>
                     <span className="flex shrink-0 items-center gap-2">
                       {o.hint ? (
                         <span className="text-muted-foreground text-xs">
                           {o.hint}
                         </span>
                       ) : null}
-                      {o.id === value ? (
+                      {isPicked(o.id) ? (
                         <Check className="size-4" aria-hidden />
                       ) : null}
                     </span>

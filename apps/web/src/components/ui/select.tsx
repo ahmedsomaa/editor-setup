@@ -1,9 +1,9 @@
-import { Select as SelectPrimitive } from "@base-ui/react/select"
-import { CaretDown, Check } from "@phosphor-icons/react"
-import { cn } from "cn"
+import { Select as SelectPrimitive } from "@base-ui/react/select";
+import { ChevronDown, Check } from "lucide-react";
+import { cn } from "cn";
 
 /** Same anatomy as the shadcn Base UI Select, drawn with this site's tokens. */
-const Select = SelectPrimitive.Root
+const Select = SelectPrimitive.Root;
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   return (
@@ -12,7 +12,7 @@ function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
       className={cn("p-1", className)}
       {...props}
     />
-  )
+  );
 }
 
 function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
@@ -22,7 +22,7 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
       className={cn("min-w-0 flex-1 truncate text-start", className)}
       {...props}
     />
-  )
+  );
 }
 
 function SelectTrigger({
@@ -41,10 +41,12 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon
-        render={<CaretDown aria-hidden className="text-muted-foreground size-4" />}
+        render={
+          <ChevronDown aria-hidden className="text-muted-foreground size-4" />
+        }
       />
     </SelectPrimitive.Trigger>
-  )
+  );
 }
 
 function SelectContent({
@@ -72,6 +74,7 @@ function SelectContent({
         className="isolate z-50"
       >
         <SelectPrimitive.Popup
+          data-lenis-prevent
           data-slot="select-content"
           className={cn(
             "border-border bg-popover text-popover-foreground max-h-(--available-height) w-(--anchor-width) min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border shadow-[var(--shadow-overlay)] outline-none motion-safe:transition-opacity motion-safe:duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0",
@@ -79,11 +82,13 @@ function SelectContent({
           )}
           {...props}
         >
-          <SelectPrimitive.List className="p-1">{children}</SelectPrimitive.List>
+          <SelectPrimitive.List className="p-1">
+            {children}
+          </SelectPrimitive.List>
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
     </SelectPrimitive.Portal>
-  )
+  );
 }
 
 function SelectItem({
@@ -111,7 +116,7 @@ function SelectItem({
         <Check aria-hidden className="size-4" />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
-  )
+  );
 }
 
 export {
@@ -121,4 +126,4 @@ export {
   SelectItem,
   SelectTrigger,
   SelectValue,
-}
+};

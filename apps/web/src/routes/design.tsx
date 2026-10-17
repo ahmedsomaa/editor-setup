@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/PagePattern";
+import { Reveal } from "@/components/Reveal";
 import { AppearanceTag, LicenseTag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
 import { GITHUB_URL } from "@/lib/site";
@@ -25,8 +26,9 @@ const COLORS = [
   ["muted-foreground", "bg-muted-foreground", "Secondary text"],
   ["border", "bg-border", "The one hairline"],
   ["accent", "bg-accent", "Active nav label, selection"],
-  ["accent-soft", "bg-accent-soft", "Open License tag"],
-  ["pastel-green", "bg-pastel-green", "Paid License tag"],
+  ["accent-soft", "bg-accent-soft", "Selected rows"],
+  ["pastel-green", "bg-pastel-green", "Open License tag"],
+  ["pastel-amber", "bg-pastel-amber", "Free License tag"],
   ["destructive", "bg-destructive", "Errors"],
 ] as const;
 
@@ -50,7 +52,11 @@ const PRINCIPLES = [
 ] as const;
 
 const TYPE = [
-  ["Heading", "Instrument Serif 400", "font-heading text-4xl tracking-[-0.025em]"],
+  [
+    "Heading",
+    "Instrument Serif 400",
+    "font-heading text-4xl tracking-[-0.025em]",
+  ],
   ["Body", "Geist, line height 1.6", "font-sans text-lg"],
   ["Code", "Geist Mono", "font-mono text-base"],
 ] as const;
@@ -61,12 +67,11 @@ function Design() {
       <PageHero variant="about" className="pb-4 sm:pb-6">
         <h1>Design system</h1>
         <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-          The colors, type and parts behind EditorSetup. Quiet by design, so the
-          Fonts and Themes in the Registry are the loudest thing on the page.
+          Quiet by design, so the pairs speak loudest.
         </p>
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
-        <section className="mt-20" aria-labelledby="principles">
+        <Reveal as="section" className="mt-20" aria-labelledby="principles">
           <h2 id="principles">Principles</h2>
           <dl className="border-border mt-8 border-t">
             {PRINCIPLES.map(([term, text]) => (
@@ -79,9 +84,9 @@ function Design() {
               </div>
             ))}
           </dl>
-        </section>
+        </Reveal>
 
-        <section className="mt-20" aria-labelledby="color">
+        <Reveal as="section" className="mt-20" aria-labelledby="color">
           <h2 id="color">Color</h2>
           <p className="text-muted-foreground mt-6 max-w-[60ch]">
             Light is the default. Dark swaps every token. Switch the theme in
@@ -104,9 +109,9 @@ function Design() {
               </li>
             ))}
           </ul>
-        </section>
+        </Reveal>
 
-        <section className="mt-20" aria-labelledby="type">
+        <Reveal as="section" className="mt-20" aria-labelledby="type">
           <h2 id="type">Type</h2>
           <dl className="border-border mt-8 border-t">
             {TYPE.map(([name, face, cls]) => (
@@ -120,13 +125,15 @@ function Design() {
                     {face}
                   </span>
                 </dt>
-                <dd className={cls}>Make the place you code feel like yours.</dd>
+                <dd className={cls}>
+                  Make the place you code feel like yours.
+                </dd>
               </div>
             ))}
           </dl>
-        </section>
+        </Reveal>
 
-        <section className="mt-20" aria-labelledby="buttons">
+        <Reveal as="section" className="mt-20" aria-labelledby="buttons">
           <h2 id="buttons">Buttons</h2>
           <p className="text-muted-foreground mt-6 max-w-[60ch]">
             One ink button per view. The rest are outline or ghost. Labels start
@@ -139,9 +146,9 @@ function Design() {
             <Button variant="ghost">Save PNG</Button>
             <Button variant="link">Read more</Button>
           </div>
-        </section>
+        </Reveal>
 
-        <section className="mt-20" aria-labelledby="tags">
+        <Reveal as="section" className="mt-20" aria-labelledby="tags">
           <h2 id="tags">Tags</h2>
           <p className="text-muted-foreground mt-6 max-w-[60ch]">
             Color is always paired with a word and an icon, never alone.
@@ -149,13 +156,12 @@ function Design() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <LicenseTag license="open" />
             <LicenseTag license="free" />
-            <LicenseTag license="paid" />
             <AppearanceTag appearance="dark" />
             <AppearanceTag appearance="light" />
           </div>
-        </section>
+        </Reveal>
 
-        <section className="mt-20" aria-labelledby="source">
+        <Reveal as="section" className="mt-20" aria-labelledby="source">
           <h2 id="source">Source</h2>
           <p className="text-muted-foreground mt-6 max-w-[60ch]">
             Tokens, component guidelines and the full rules live in the
@@ -177,7 +183,7 @@ function Design() {
               <ArrowUpRight aria-hidden />
             </Button>
           </div>
-        </section>
+        </Reveal>
       </div>
     </main>
   );

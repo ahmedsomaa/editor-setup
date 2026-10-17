@@ -17,7 +17,7 @@ export const Route = createFileRoute("/compare")({
       path: "/compare",
       title: "Compare Font and Theme Pairs side by side · EditorSetup",
       description:
-        "Put Font and Theme Pairs side by side and compare their Snapshots in VS Code or Cursor, then copy the Settings for the one you like best.",
+        "Put Font and Theme Pairs side by side and compare their Snapshots, then copy the Settings for the one you like best.",
     }),
   component: ComparePage,
 });

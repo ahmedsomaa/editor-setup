@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, ShareNetwork } from "@phosphor-icons/react";
+import { Check, Share2 } from "lucide-react";
 import { cn } from "cn";
 
 /**
@@ -46,9 +46,9 @@ export function ShareButton({
         )}
       >
         {state === "copied" ? (
-          <Check weight="bold" aria-hidden className="size-4" />
+          <Check aria-hidden className="size-4" />
         ) : (
-          <ShareNetwork weight="bold" aria-hidden className="size-4" />
+          <Share2 aria-hidden className="size-4" />
         )}
         {state === "copied"
           ? "Link copied"

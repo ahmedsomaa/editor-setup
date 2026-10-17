@@ -6,13 +6,14 @@ import {
   notFound,
   useNavigate,
 } from "@tanstack/react-router";
-import { ArrowLeft, ArrowUpRight, Check, Copy } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowUpRight, Check, Copy } from "lucide-react";
 import { AppearanceTag, LicenseTag } from "@/components/Tag";
 import { Directory } from "@/components/Directory";
 import { PairWindow, textToLines } from "@/components/PairWindow";
 import { CompareToggle } from "@/components/CompareToggle";
 import { ShareButton } from "@/components/ShareButton";
 import { PageHero } from "@/components/PagePattern";
+import { Reveal } from "@/components/Reveal";
 import { SnapshotImage } from "@/components/SnapshotImage";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,7 @@ import {
   pairLabel,
   resolveEditorId,
   type Appearance,
+  type EditorId,
   type License,
   type PairRecord,
 } from "@/lib/pairs";
@@ -53,12 +55,49 @@ export const Route = createFileRoute("/registry/$slug")({
         `${name}: Font and Theme Pair`,
         `${name} · EditorSetup`,
       ]),
-      description: `See ${name} in a real editor Snapshot, then copy the Settings for VS Code and Cursor. A Font and Theme Pair from EditorSetup.`,
+      description: `See ${name} in a real editor Snapshot, then copy the Settings for VS Code and Zed. A Font and Theme Pair from EditorSetup.`,
     });
   },
   component: PairPage,
   notFoundComponent: PairNotFound,
 });
+
+function EditorSwitch({
+  editors,
+  selectedId,
+  onSelect,
+}: {
+  editors: PairRecord["editors"];
+  selectedId: EditorId;
+  onSelect: (id: EditorId) => void;
+}) {
+  return (
+    <div role="group" aria-label="Editor" className="flex flex-wrap gap-2">
+      {editors.map((editor) => {
+        const selected = editor.id === selectedId;
+        return (
+          <button
+            key={editor.id}
+            type="button"
+            onClick={() => onSelect(editor.id)}
+            aria-pressed={selected}
+            className={cn(
+              "h-9 rounded-full border px-4 text-sm font-medium transition-colors",
+              selected
+                ? "border-foreground bg-card text-foreground"
+                : "border-border bg-card text-secondary-foreground hover:bg-muted",
+            )}
+          >
+            {selected ? (
+              <Check className="me-1.5 inline size-3.5" aria-hidden />
+            ) : null}
+            {EDITOR_LABELS[editor.id]}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 function PairPage() {
   const { pair, related } = Route.useLoaderData();
@@ -66,7 +105,7 @@ function PairPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const editorId = resolveEditorId(pair, editorParam);
   const config = getEditorConfig(pair, editorId) ?? pair.editors[0]!;
-  const snap = snapshotUrl(config.snapshot);
+  const snap = snapshotUrl(pair.snapshot);
 
   return (
     <main id="main">
@@ -134,82 +173,60 @@ function PairPage() {
       </PageHero>
 
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 sm:pb-20">
-        <figure id="snapshot" className="mt-10 min-w-0 scroll-mt-32">
-          {snap ? (
-            <SnapshotImage
-              src={snap}
-              alt={`Snapshot of ${pair.font.name} and ${pair.theme.name} in ${EDITOR_LABELS[config.id]}`}
-              className="rounded-[1.1rem]"
-            />
-          ) : (
-            <PairWindow
-              pair={{
-                fontFamily: pair.font.fontFamily,
-                bg: pair.theme.bg,
-                fg: pair.theme.fg,
-              }}
-              filename="settings.json"
-              lines={textToLines(config.settings)}
-            />
-          )}
-          <figcaption className="text-muted-foreground mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
-            <span>
-              {snap ? "Snapshot" : "Preview"} for {EDITOR_LABELS[config.id]}
-            </span>
+        <div id="snapshot" className="mt-10 min-w-0 scroll-mt-32">
+          <figure className="min-w-0">
             {snap ? (
-              <a
-                href={snap}
-                target="_blank"
-                rel="noreferrer"
-                className="text-foreground font-medium underline hover:no-underline"
-              >
-                Open full size
-              </a>
-            ) : null}
-          </figcaption>
-        </figure>
+              <SnapshotImage
+                src={snap}
+                alt={`Snapshot of ${pair.font.name} and ${pair.theme.name}`}
+                className="rounded-xl"
+              />
+            ) : (
+              <PairWindow
+                pair={{
+                  fontFamily: pair.font.fontFamily,
+                  bg: pair.theme.bg,
+                  fg: pair.theme.fg,
+                }}
+                filename="settings.json"
+                lines={textToLines(config.settings)}
+              />
+            )}
+            <figcaption className="text-muted-foreground mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
+              <span>{snap ? "Snapshot" : "Preview"}</span>
+              {snap ? (
+                <a
+                  href={snap}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-foreground font-medium underline hover:no-underline"
+                >
+                  Open full size
+                </a>
+              ) : null}
+            </figcaption>
+          </figure>
+        </div>
 
-        <section
+        <Reveal
+          as="section"
           id="settings"
           aria-labelledby="settings-heading"
           className="mt-16 scroll-mt-32"
         >
           <h2 id="settings-heading">Settings</h2>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <div
-              role="group"
-              aria-label="Editor"
-              className="flex flex-wrap gap-2"
-            >
-              {pair.editors.map((editor) => {
-                const selected = editor.id === config.id;
-                return (
-                  <button
-                    key={editor.id}
-                    type="button"
-                    onClick={() =>
-                      void navigate({
-                        search: { editor: editor.id },
-                        replace: true,
-                        resetScroll: false,
-                      })
-                    }
-                    aria-pressed={selected}
-                    className={cn(
-                      "h-9 rounded-full border px-4 text-sm font-medium transition-colors",
-                      selected
-                        ? "border-foreground bg-card text-foreground"
-                        : "border-border bg-card text-secondary-foreground hover:bg-muted",
-                    )}
-                  >
-                    {selected ? (
-                      <Check className="me-1.5 inline size-3.5" aria-hidden />
-                    ) : null}
-                    {EDITOR_LABELS[editor.id]}
-                  </button>
-                );
-              })}
-            </div>
+            <EditorSwitch
+              editors={pair.editors}
+              selectedId={config.id}
+              onSelect={(id) =>
+                void navigate({
+                  search: { editor: id },
+                  replace: true,
+                  resetScroll: false,
+                })
+              }
+            />
             <CopySettings settings={config.settings} variant="outline" />
           </div>
           <pre className="border-border bg-muted mt-4 max-h-[28rem] overflow-auto rounded-lg border p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
@@ -219,9 +236,10 @@ function PairPage() {
             Plain text for {EDITOR_LABELS[config.id]}. Paste it into your
             Editor.
           </p>
-        </section>
+        </Reveal>
 
-        <section
+        <Reveal
+          as="section"
           id="details"
           aria-labelledby="details-heading"
           className="mt-16 scroll-mt-32"
@@ -244,9 +262,10 @@ function PairPage() {
               className="border-border max-md:border-t md:ps-8"
             />
           </div>
-        </section>
+        </Reveal>
 
-        <section
+        <Reveal
+          as="section"
           className="border-border mt-20 border-t pt-16"
           aria-labelledby="related-heading"
         >
@@ -272,7 +291,7 @@ function PairPage() {
               </Await>
             </Suspense>
           </div>
-        </section>
+        </Reveal>
       </div>
     </main>
   );

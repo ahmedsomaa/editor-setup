@@ -8,6 +8,8 @@ type TokenWindowProps = {
   className?: string;
   /** Smaller type, so longer lines fit a narrow window without scrolling. */
   compact?: boolean;
+  /** Wrap long lines instead of scrolling sideways, so nothing hides past the edge on a narrow screen. */
+  wrap?: boolean;
 };
 
 /** A window painted with a real Theme's own token colours, in the Pair's Font. */
@@ -17,6 +19,7 @@ export function TokenWindow({
   filename,
   className,
   compact = false,
+  wrap = false,
 }: TokenWindowProps) {
   const mix = (pct: number) =>
     `color-mix(in srgb, ${theme.fg} ${pct}%, ${theme.bg})`;
@@ -61,7 +64,10 @@ export function TokenWindow({
         style={{ fontFamily, background: "transparent" }}
       >
         <code
-          className="block w-max min-w-full bg-transparent p-0 text-[length:inherit]"
+          className={cn(
+            "block bg-transparent p-0 text-[length:inherit]",
+            wrap ? "w-full whitespace-pre-wrap break-words" : "w-max min-w-full",
+          )}
           style={{ fontFamily: "inherit" }}
         >
           {theme.lines.map((line, i) => (
@@ -73,7 +79,7 @@ export function TokenWindow({
               >
                 {i + 1}
               </span>
-              <span>
+              <span className="min-w-0">
                 {line.length === 0
                   ? " "
                   : line.map(([text, color, style], j) => (

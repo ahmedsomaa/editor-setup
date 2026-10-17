@@ -14,15 +14,15 @@ export const Route = createFileRoute("/studio")({
         "Pick an Open or Free Font and Theme, paste your code and save a 1600x900 Snapshot of your editor setup for your Registry pull request.",
     }),
   // Only inputs that need the server drive the loader; theme id and language stay client-side.
-  loaderDeps: ({ search: { font, themeUrl, themeEditor } }) => ({
+  loaderDeps: ({ search: { font, themeUrl, editor } }) => ({
     font: font?.trim() || DEFAULTS.font,
     themeUrl: themeUrl?.trim() || undefined,
-    themeEditor,
+    editor: editor ?? "vscode",
   }),
   loader: async ({ deps }) => {
     const [font, theme] = await Promise.all([
       resolveFontFn({ data: { family: deps.font } }),
-      deps.themeUrl ? fetchThemeFn({ data: { url: deps.themeUrl, editor: deps.themeEditor } }) : null,
+      deps.themeUrl ? fetchThemeFn({ data: { url: deps.themeUrl, editor: deps.editor } }) : null,
     ]);
     return { font, theme };
   },
