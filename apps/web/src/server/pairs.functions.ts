@@ -1,9 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
-import { filterPairs } from "@/lib/pairs";
+import { filterPairs } from "@/lib/registry/pairs";
 import {
   registryFilterSchema,
   slugInputSchema,
-} from "@/lib/registry-search";
+} from "@/lib/registry/registry-search";
 import { getPairBySlug, listPairs, relatedPairs } from "./registry.server";
 
 /**

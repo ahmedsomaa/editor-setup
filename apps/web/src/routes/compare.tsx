@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { ComparePage } from "@/components/ComparePage";
+import { ComparePage } from "@/components/compare/ComparePage";
 import { listPairsFn } from "@/server/pairs.functions";
 
 export const compareSearchSchema = z.object({
@@ -15,6 +15,7 @@ export const Route = createFileRoute("/compare")({
   head: () =>
     pageHead({
       path: "/compare",
+      name: "Compare Pairs",
       title: "Compare Font and Theme Pairs side by side · EditorSetup",
       description:
         "Put Font and Theme Pairs side by side and compare their Snapshots, then copy the Settings for the one you like best.",

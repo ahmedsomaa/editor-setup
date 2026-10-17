@@ -30,3 +30,30 @@ bun run deploy
 ```
 
 Requires Wrangler auth (`bunx wrangler login`).
+
+## Code layout
+
+```
+src/
+  routes/          TanStack file routes: head, loader and a thin page
+  components/
+    layout/        Header, Footer, page heroes, scroll and reveal helpers
+    common/        Shared bits: Combobox, Tag, EditorLogo, SnapshotImage, ShareButton
+    registry/      Registry list: Directory, PairGrid, PairWindow, Pagination
+    pair/          Pair page parts: EditorSwitch, PairDetail, CopySettings
+    compare/       Compare page, picker, toggle and tray
+    studio/        Snapshot Studio: StudioPage, FontField, ThemeField, PreviewPanel
+    home/          Home page sections and their art
+    ui/            shadcn/ui primitives
+  lib/
+    registry/      Pair model, search params, snapshots, compare store
+    theme/         Shiki highlighting, Zed and VS Code theme handling, Snapshot HTML
+    studio/        Samples, search schema, font files, PNG export
+  server/          Server functions and registry loading
+```
+
+Rules of thumb:
+
+- Keep a React file under about 350 lines. Past that, pull a section into a component beside it, and logic into `lib/`.
+- A component folder is a feature. Put a component in `common/` only when two features use it.
+- Import with the `@/` alias, for example `@/components/studio/StudioPage`.

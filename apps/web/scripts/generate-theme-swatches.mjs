@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// Writes src/lib/theme-swatches.json: for each bundled Shiki theme, its background and the colors of
+// Writes src/lib/theme/theme-swatches.json: for each bundled Shiki theme, its background and the colors of
 // four token classes (keyword, string, function, number). The Studio draws them as dots in the Theme menu.
 // Run it again after Shiki is upgraded: bun scripts/generate-theme-swatches.mjs
 import { writeFileSync } from "node:fs";
@@ -24,6 +24,6 @@ for (const { id } of bundledThemesInfo) {
   }
 }
 
-const target = fileURLToPath(new URL("../src/lib/theme-swatches.json", import.meta.url));
+const target = fileURLToPath(new URL("../src/lib/theme/theme-swatches.json", import.meta.url));
 writeFileSync(target, JSON.stringify(out, null, 1) + "\n");
 console.log(`wrote ${Object.keys(out).length} themes to ${target}`);

@@ -1,4 +1,4 @@
-import type { Appearance, EditorId, License } from "@/lib/pairs";
+import type { Appearance, EditorId, License } from "@/lib/registry/pairs";
 
 export type PairFile = {
   font: { name: string; links: string[]; license: License };
