@@ -1,4 +1,4 @@
-/** Pairs from https://editor-setup.pages.dev/explore — theme colors + font faces for the marquee. */
+/** Pairs from https://editorsetup.som3aware.workers.dev/registry — theme colors + font faces for the marquee. */
 export type MarqueePair = {
   theme: string
   font: string
