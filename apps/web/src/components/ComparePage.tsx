@@ -43,7 +43,7 @@ export function ComparePage() {
         <header>
           <h1>Compare</h1>
           <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-            Line up to {MAX_PAIRS} Pairs side by side and crown a favorite.
+            Side by side, until one wins.
           </p>
         </header>
       </PageHero>

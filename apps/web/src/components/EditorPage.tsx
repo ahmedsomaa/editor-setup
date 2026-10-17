@@ -1,12 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
-  CaretDown,
   CircleNotch as Loader2,
-  DownloadSimple as Download,
   ImageSquare as ImageDown,
   Link as Link2,
-  Question,
   UploadSimple,
   X,
 } from "@phosphor-icons/react";
@@ -27,17 +24,6 @@ import { download, renderPngs } from "@/lib/export";
 import { Combobox, type Option } from "@/components/Combobox";
 import { PageHero } from "@/components/PagePattern";
 import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsiblePanel,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTitle,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { cn } from "cn";
 
 const slug = (s: string) =>
@@ -93,6 +79,7 @@ const WEIGHTS: [RegExp, number][] = [
 ];
 
 /** Weight and style come from the file name, the way font files are usually named. */
+
 function faceMeta(fileName: string): Pick<FontFace, "weight" | "style"> {
   const n = fileName.toLowerCase();
   return {
@@ -141,15 +128,6 @@ function readFace(file: File): Promise<FontFace> {
   });
 }
 
-function useDebounced<T>(value: T, ms: number): T {
-  const [v, setV] = useState(value);
-  useEffect(() => {
-    const id = setTimeout(() => setV(value), ms);
-    return () => clearTimeout(id);
-  }, [value, ms]);
-  return v;
-}
-
 /** Snapshot Studio: make the Snapshot for a Pair from an Open or Free Font and Theme. */
 export function EditorPage() {
   const search = Route.useSearch();
@@ -179,8 +157,6 @@ export function EditorPage() {
   const fontFileRef = useRef<HTMLInputElement>(null);
   const [urlDraft, setUrlDraft] = useState(themeUrl);
   const [code, setCode] = useState(() => sampleFor(lang));
-  const [title, setTitle] = useState("");
-  const [showBar, setShowBar] = useState(true);
 
   const [srcDoc, setSrcDoc] = useState("");
   const [status, setStatus] = useState<"idle" | "busy" | "error">("busy");
@@ -188,12 +164,9 @@ export function EditorPage() {
   const [meta, setMeta] = useState<Pick<Highlighted, "themeName">>({
     themeName: themeId,
   });
-  const [renders, setRenders] = useState<{ png: Blob; pngUrl: string } | null>(
-    null,
-  );
-  const [exporting, setExporting] = useState<"" | "png" | "html">("");
+  const [tab, setTab] = useState<"preview" | "code">("preview");
+  const [exporting, setExporting] = useState<"" | "png">("");
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const renderGen = useRef(0);
   const lastSample = useRef(sampleFor(lang));
 
   const setParam = (patch: Partial<typeof search>) =>
@@ -213,8 +186,13 @@ export function EditorPage() {
   const themeData = themeResult && themeResult.ok ? themeResult.data : null;
   // A Zed file holds a family of themes; the rest are already in the shape Shiki reads.
   const zedFamily = themeData && editor === "zed" ? themeData : null;
-  const variants = useMemo(() => (zedFamily ? zedVariants(zedFamily) : []), [zedFamily]);
-  const variant = variants.includes(search.themeVariant ?? "") ? search.themeVariant! : variants[0];
+  const variants = useMemo(
+    () => (zedFamily ? zedVariants(zedFamily) : []),
+    [zedFamily],
+  );
+  const variant = variants.includes(search.themeVariant ?? "")
+    ? search.themeVariant!
+    : variants[0];
   // Stable identity: the preview effect depends on this.
   const customTheme = useMemo(
     () => (zedFamily ? zedToVscodeTheme(zedFamily, variant) : themeData),
@@ -227,22 +205,33 @@ export function EditorPage() {
     .filter(Boolean)
     .join(" ");
 
-  const dCode = useDebounced(code, 250);
-  const dTitle = useDebounced(title, 250);
+  // Typing is colored after a pause; a swapped sample is colored at once (see commitLang).
+  const [hCode, setHCode] = useState(code);
+  useEffect(() => {
+    const id = setTimeout(() => setHCode(code), 250);
+    return () => clearTimeout(id);
+  }, [code]);
 
   const displayTheme = customTheme
     ? meta.themeName
     : (THEMES.find((t) => t.id === themeId)?.name ?? themeId);
-  const label = dTitle || `${displayFont} · ${displayTheme}`;
+  const label = `${displayFont} · ${displayTheme}`;
 
   useEffect(() => {
     let cancelled = false;
     setStatus("busy");
-    highlight({ code: dCode, lang, themeId, customTheme })
+    highlight({ code: hCode, lang, themeId, customTheme })
       .then((h) => {
         if (cancelled) return;
         setMeta({ themeName: h.themeName });
-        setSrcDoc(buildSnapshotHtml({ ...h, faces, label, showBar, lang }));
+        setSrcDoc(
+          buildSnapshotHtml({
+            ...h,
+            faces,
+            label,
+            lang,
+          }),
+        );
         setStatus("idle");
         setError("");
       })
@@ -258,28 +247,7 @@ export function EditorPage() {
     return () => {
       cancelled = true;
     };
-  }, [dCode, lang, themeId, customTheme, faces, label, showBar]);
-
-  // Rasterise once per render so the image can be shown, and exports reuse it.
-  function renderImages() {
-    const frame = iframeRef.current;
-    if (!frame) return;
-    const gen = ++renderGen.current;
-    renderPngs(frame)
-      .then(({ png }) => {
-        if (gen !== renderGen.current) return;
-        setRenders({ png, pngUrl: URL.createObjectURL(png) });
-      })
-      .catch(() => {
-        if (gen === renderGen.current) setRenders(null);
-      });
-  }
-
-  useEffect(() => {
-    return () => {
-      if (renders) URL.revokeObjectURL(renders.pngUrl);
-    };
-  }, [renders]);
+  }, [hCode, lang, themeId, customTheme, faces, label]);
 
   function commitLang(next: string) {
     const id = next.trim().toLowerCase();
@@ -288,7 +256,9 @@ export function EditorPage() {
     // Swap the sample only if the visitor has not edited the current one.
     if (code === lastSample.current) {
       const s = sampleFor(id);
+      // A swapped sample is not typing, so it skips the pause.
       setCode(s);
+      setHCode(s);
       lastSample.current = s;
     }
   }
@@ -337,20 +307,16 @@ export function EditorPage() {
     [displayFont, displayTheme],
   );
 
-  async function exportFile(kind: "png" | "html") {
-    setExporting(kind);
+  async function savePng() {
+    setExporting("png");
     try {
-      if (kind === "html") {
-        download(new Blob([srcDoc], { type: "text/html" }), `${baseName}.html`);
-      } else {
-        const frame = iframeRef.current;
-        if (!frame)
-          throw new Error(
-            "The preview is not ready yet. Wait a moment and try again.",
-          );
-        const { png } = renders ?? (await renderPngs(frame));
-        download(png, `${baseName}.png`);
-      }
+      const frame = iframeRef.current;
+      if (!frame)
+        throw new Error(
+          "The preview is not ready yet. Wait a moment and try again.",
+        );
+      const { png } = await renderPngs(frame);
+      download(png, `${baseName}.png`);
       setError("");
     } catch (e) {
       setStatus("error");
@@ -384,54 +350,30 @@ export function EditorPage() {
     if (fontFileRef.current) fontFileRef.current.value = "";
   }
 
-  const busy = !srcDoc || status !== "idle";
+  // A pause in typing is still ahead of the colors: wait for them before the PNG is made.
+  const busy = !srcDoc || status !== "idle" || code !== hCode;
   const errors = [loaderError, status === "error" ? error : ""].filter(Boolean);
   const exportDisabled = busy || exporting !== "";
 
   return (
     <main id="main">
-      <PageHero variant="studio" className="pb-4 sm:pb-6">
+      <PageHero variant="studio" className="pt-8 pb-8 sm:pt-8 sm:pb-10">
         <header>
-          <div className="flex items-center gap-2">
-            <h1>Snapshot Studio</h1>
-            <Popover>
-              <PopoverTrigger aria-label="How to make a Snapshot">
-                <Question weight="bold" aria-hidden />
-              </PopoverTrigger>
-              <PopoverContent align="start">
-                <PopoverTitle className="font-sans text-base font-medium tracking-normal">
-                  How to make a Snapshot
-                </PopoverTitle>
-                <ol className="text-muted-foreground mt-3 list-decimal space-y-2 ps-5">
-                  <li>
-                    Pick a Font and a Theme, or upload your own Font file.
-                  </li>
-                  <li>Paste about 18 lines of your own code.</li>
-                  <li>
-                    Save the PNG. It is named{" "}
-                    <code className="text-foreground">{baseName}.png</code>.
-                  </li>
-                  <li>Add the PNG to your pull request, with the Pair file.</li>
-                </ol>
-                <p className="text-muted-foreground mt-3">
-                  Only Open and Free Fonts and Themes can be picked from the
-                  lists. If you own the license to a Paid Font, upload its file
-                  and make the Snapshot yourself.
-                </p>
-              </PopoverContent>
-            </Popover>
-          </div>
-          <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-            Try your pair before changing your editor settings. Make a 1600×900
-            Snapshot of any Font and Theme, then save it as a PNG.
+          <h1>Snapshot Studio</h1>
+          <p className="text-muted-foreground mt-3 max-w-[60ch] text-lg">
+            See your own code in any font and theme.
           </p>
         </header>
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
-        <div className="mt-4 grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)] xl:items-start">
+        <div className="grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)] xl:items-start">
           {/* Left: every setting */}
           <form
-            className={cn(panel, "flex min-w-0 flex-col gap-0 p-0")}
+            className={cn(
+              panel,
+              // z-10 keeps the open lists above the page content that follows, such as the footer.
+              "relative z-10 flex min-w-0 flex-col gap-0 p-0 xl:sticky xl:top-20",
+            )}
             onSubmit={(e) => {
               e.preventDefault();
               setParam({
@@ -440,7 +382,7 @@ export function EditorPage() {
               });
             }}
           >
-            <div className="flex flex-col gap-5 px-4 py-4">
+            <div className="grid items-start gap-x-4 gap-y-4 p-4 sm:grid-cols-2 xl:grid-cols-1">
               <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
                 <legend className="mb-2 text-sm font-medium">Editor</legend>
                 <Combobox
@@ -566,7 +508,6 @@ export function EditorPage() {
                   </>
                 ) : null}
               </fieldset>
-
               <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
                 <legend className="mb-2 text-sm font-medium">
                   {linkOnly ? "Theme" : "Theme preset"}
@@ -600,38 +541,40 @@ export function EditorPage() {
                 )}
                 {showLink ? (
                   <>
-                      <label className="flex flex-col gap-1.5">
-                        <span className="flex items-center gap-2 text-[13px] font-medium">
-                          <IconChip>
-                            <Link2 className="size-4" aria-hidden />
-                          </IconChip>{" "}
-                          Theme link
-                        </span>
-                        <input
-                          className={input}
-                          name="themeUrl"
-                          value={urlDraft}
-                          onChange={(e) => setUrlDraft(e.target.value)}
-                          onBlur={() =>
-                            urlDraft.trim() !== themeUrl &&
-                            setParam({
-                              themeUrl: urlDraft.trim() || undefined,
-                              themeVariant: undefined,
-                            })
-                          }
-                          placeholder="https://github.com/…/my-theme.json"
-                          autoComplete="off"
-                          spellCheck={false}
-                        />
-                        <span className="text-muted-foreground text-[11px]">
-                          {editor === "zed"
-                            ? "Raw or GitHub/GitLab link to a Zed theme JSON."
-                            : "Raw or GitHub/GitLab link to a VS Code theme JSON."}
-                        </span>
-                      </label>
+                    <label className="flex flex-col gap-1.5">
+                      <span className="flex items-center gap-2 text-[13px] font-medium">
+                        <IconChip>
+                          <Link2 className="size-4" aria-hidden />
+                        </IconChip>{" "}
+                        Theme link
+                      </span>
+                      <input
+                        className={input}
+                        name="themeUrl"
+                        value={urlDraft}
+                        onChange={(e) => setUrlDraft(e.target.value)}
+                        onBlur={() =>
+                          urlDraft.trim() !== themeUrl &&
+                          setParam({
+                            themeUrl: urlDraft.trim() || undefined,
+                            themeVariant: undefined,
+                          })
+                        }
+                        placeholder="https://github.com/…/my-theme.json"
+                        autoComplete="off"
+                        spellCheck={false}
+                      />
+                      <span className="text-muted-foreground text-[11px]">
+                        {editor === "zed"
+                          ? "Raw or GitHub/GitLab link to a Zed theme JSON."
+                          : "Raw or GitHub/GitLab link to a VS Code theme JSON."}
+                      </span>
+                    </label>
                     {variants.length > 1 ? (
                       <div className="flex flex-col gap-1.5">
-                        <span className="text-[13px] font-medium">Theme in this file</span>
+                        <span className="text-[13px] font-medium">
+                          Theme in this file
+                        </span>
                         <Combobox
                           label="Zed theme"
                           value={variant ?? ""}
@@ -643,7 +586,6 @@ export function EditorPage() {
                   </>
                 ) : null}
               </fieldset>
-
               <fieldset className="m-0 flex min-w-0 flex-col gap-3 border-0 p-0">
                 <legend className="mb-2 text-sm font-medium">
                   Code language
@@ -656,116 +598,65 @@ export function EditorPage() {
                     onChange={commitLang}
                   />
                 </div>
-                <label className="flex flex-col gap-1.5">
-                  <span className="sr-only">Code</span>
-                  <textarea
-                    className={cn(
-                      input,
-                      "h-44 resize-y rounded-xl py-2.5 font-mono text-[11px] leading-relaxed",
-                    )}
-                    name="code"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    spellCheck={false}
-                    wrap="off"
-                  />
-                </label>
               </fieldset>
-
-              <Collapsible className="min-w-0">
-                <CollapsibleTrigger>
-                  <span className="text-sm font-medium">
-                    Window{" "}
-                    <span className="text-muted-foreground font-normal">
-                      (optional)
-                    </span>
-                  </span>
-                  <CaretDown
-                    aria-hidden
-                    className="text-muted-foreground size-4 shrink-0 transition-transform duration-200 group-data-[panel-open]:rotate-180 motion-reduce:transition-none"
-                  />
-                </CollapsibleTrigger>
-                <CollapsiblePanel>
-                  <div className="flex flex-col gap-3 pt-3">
-                    <label className="flex items-center gap-2.5 text-[13px]">
-                      <input
-                        type="checkbox"
-                        checked={showBar}
-                        onChange={(e) => setShowBar(e.target.checked)}
-                        className="size-4"
-                      />
-                      Show title bar
-                    </label>
-                    <label className="flex flex-col gap-1.5">
-                      <span className="text-[13px] font-medium">Label</span>
-                      <input
-                        className={input}
-                        name="label"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder={`${displayFont} · ${displayTheme}`}
-                        disabled={!showBar}
-                      />
-                    </label>
-                  </div>
-                </CollapsiblePanel>
-              </Collapsible>
             </div>
             <button type="submit" className="sr-only">
               Apply
             </button>
           </form>
 
-          {/* Right: the Snapshot */}
+          {/* Right: the live window */}
           <section
             aria-label="Preview"
-            className="bg-muted border-border relative flex min-w-0 flex-col gap-3 rounded-xl border p-3 sm:p-4 xl:sticky xl:top-24"
+            className="bg-muted border-border relative flex min-w-0 flex-col gap-3 rounded-xl border p-3 sm:p-4 xl:sticky xl:top-20"
           >
-            {srcDoc ? (
-              // Offscreen render source: the Snapshot is rasterised from it.
-              <iframe
-                ref={iframeRef}
-                title="Snapshot render source"
-                srcDoc={srcDoc}
-                onLoad={renderImages}
-                sandbox="allow-scripts allow-same-origin"
-                aria-hidden
-                tabIndex={-1}
-                className="pointer-events-none fixed top-0 -left-[9999px] h-[900px] w-[1600px] border-0"
-              />
-            ) : null}
-
-            <div className="bg-card border-border flex max-w-full items-center justify-between gap-3 rounded-full border py-1.5 pr-1.5 pl-4">
-              <span className="text-muted-foreground min-w-0 truncate font-mono text-xs">
-                {baseName}.png
-              </span>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={exportDisabled}
-                  onClick={() => exportFile("html")}
-                >
-                  {exporting === "html" ? (
-                    <Loader2 className="animate-spin motion-reduce:animate-none" />
-                  ) : (
-                    <Download />
-                  )}
-                  Export HTML
-                </Button>
-                <Button
-                  size="sm"
-                  disabled={exportDisabled}
-                  onClick={() => exportFile("png")}
-                >
-                  {exporting === "png" ? (
-                    <Loader2 className="animate-spin motion-reduce:animate-none" />
-                  ) : (
-                    <ImageDown />
-                  )}
-                  Save PNG
-                </Button>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div
+                role="tablist"
+                aria-label="Editor view"
+                className="bg-card border-border inline-flex gap-1 rounded-full border p-1"
+                onKeyDown={(e) => {
+                  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+                  e.preventDefault();
+                  const next = tab === "preview" ? "code" : "preview";
+                  setTab(next);
+                  document.getElementById(`studio-tab-${next}`)?.focus();
+                }}
+              >
+                {(
+                  [
+                    ["preview", "Preview"],
+                    ["code", "Code"],
+                  ] as const
+                ).map(([id, text]) => (
+                  <button
+                    key={id}
+                    id={`studio-tab-${id}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={tab === id}
+                    aria-controls="studio-panel"
+                    tabIndex={tab === id ? 0 : -1}
+                    onClick={() => setTab(id)}
+                    className={cn(
+                      "h-8 rounded-full px-4 text-sm font-medium transition-colors duration-150",
+                      tab === id
+                        ? "bg-muted text-foreground"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {text}
+                  </button>
+                ))}
               </div>
+              <Button size="sm" disabled={exportDisabled} onClick={savePng}>
+                {exporting === "png" ? (
+                  <Loader2 className="animate-spin motion-reduce:animate-none" />
+                ) : (
+                  <ImageDown />
+                )}
+                Save PNG
+              </Button>
             </div>
 
             {errors.map((msg) => (
@@ -778,19 +669,40 @@ export function EditorPage() {
               </p>
             ))}
 
-            <div className="flex items-center justify-center">
-              {renders ? (
-                <img
-                  src={renders.pngUrl}
-                  alt="Snapshot preview, 1600 by 900"
-                  className="border-border max-h-full max-w-full rounded-xl border shadow-[var(--shadow-overlay)]"
+            <div
+              id="studio-panel"
+              role="tabpanel"
+              aria-labelledby={`studio-tab-${tab}`}
+              className="border-border relative aspect-video w-full overflow-hidden rounded-xl border shadow-[var(--shadow-overlay)]"
+            >
+              {srcDoc ? (
+                // Kept on screen, only hidden, so the window is measured and ready for Save PNG while you write.
+                <iframe
+                  ref={iframeRef}
+                  title="Snapshot preview"
+                  srcDoc={srcDoc}
+                  sandbox="allow-scripts allow-same-origin"
+                  className={cn(
+                    "absolute inset-0 size-full border-0",
+                    tab === "code" && "invisible",
+                  )}
                 />
               ) : (
-                <Rendering
-                  label="Snapshot"
-                  className="aspect-video w-full max-w-3xl rounded-xl"
-                />
+                <Rendering label="Snapshot" className="size-full" />
               )}
+              {tab === "code" ? (
+                <textarea
+                  aria-label="Code"
+                  name="code"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="Paste or write your code here"
+                  spellCheck={false}
+                  wrap="off"
+                  autoFocus
+                  className="bg-card text-foreground placeholder:text-muted-foreground absolute inset-0 size-full resize-none border-0 p-5 font-mono text-sm leading-relaxed outline-none"
+                />
+              ) : null}
             </div>
           </section>
         </div>

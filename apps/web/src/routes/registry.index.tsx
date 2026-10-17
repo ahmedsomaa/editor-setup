@@ -119,7 +119,10 @@ function RegistryPage() {
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(search.page ?? 1, pageCount);
-  const visible = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
+  const visible = filtered.slice(
+    (current - 1) * PAGE_SIZE,
+    current * PAGE_SIZE,
+  );
 
   const hasFilters =
     query.trim().length > 0 ||
@@ -145,7 +148,7 @@ function RegistryPage() {
         <div className="mx-auto w-full max-w-6xl px-4 pt-16 pb-16 sm:pt-24 sm:pb-20">
           <h1>Registry</h1>
           <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-            The full list. Open a Pair to copy its Settings.
+            Every font and theme, already paired up.
           </p>
         </div>
       </div>
@@ -235,12 +238,20 @@ function RegistryPage() {
           </div>
         </form>
 
-        <div className="mt-8 mb-4 flex min-h-9 flex-wrap items-center justify-between gap-3">
-          <p className="text-muted-foreground text-sm" role="status">
-            {hasFilters
-              ? `${filtered.length} of ${total} Pairs`
-              : `${total} ${total === 1 ? "Pair" : "Pairs"}`}
-          </p>
+        <div className="border-border mt-10 flex min-h-12 flex-wrap items-end justify-between gap-x-4 gap-y-2 border-b pb-4">
+          <h2
+            aria-live="polite"
+            className="m-0 flex flex-wrap items-baseline gap-x-3 text-4xl leading-none sm:text-5xl"
+          >
+            <span>
+              {filtered.length} {filtered.length === 1 ? "Pair" : "Pairs"}
+            </span>
+            {hasFilters ? (
+              <span className="text-muted-foreground font-sans text-base font-normal">
+                of {total}
+              </span>
+            ) : null}
+          </h2>
           {hasFilters ? (
             <Button variant="ghost" size="sm" onClick={clearFilters}>
               Clear filters
@@ -248,32 +259,35 @@ function RegistryPage() {
           ) : null}
         </div>
 
-        {filtered.length === 0 ? (
-          <div className="border-border rounded-xl border border-dashed px-6 py-16">
-            <p className="font-medium">
-              No Pairs match{search.q ? ` “${search.q}”` : ""}
-            </p>
-            <p className="text-muted-foreground mt-1 max-w-[50ch] text-sm">
-              Try another name, or clear the filters to see the whole Registry.
-            </p>
-            <Button className="mt-6" variant="outline" onClick={clearFilters}>
-              Clear filters
-            </Button>
-          </div>
-        ) : (
-          <>
-            <PairGrid pairs={visible} />
-            <Pagination
-              className="mt-10"
-              page={current}
-              pageCount={pageCount}
-              onChange={(page) => {
-                setParam({ page: page > 1 ? page : undefined });
-                window.scrollTo({ top: 0 });
-              }}
-            />
-          </>
-        )}
+        <div className="mt-6">
+          {filtered.length === 0 ? (
+            <div className="border-border rounded-xl border border-dashed px-6 py-16">
+              <p className="font-medium">
+                No Pairs match{search.q ? ` “${search.q}”` : ""}
+              </p>
+              <p className="text-muted-foreground mt-1 max-w-[50ch] text-sm">
+                Try another name, or clear the filters to see the whole
+                Registry.
+              </p>
+              <Button className="mt-6" variant="outline" onClick={clearFilters}>
+                Clear filters
+              </Button>
+            </div>
+          ) : (
+            <>
+              <PairGrid pairs={visible} />
+              <Pagination
+                className="mt-10"
+                page={current}
+                pageCount={pageCount}
+                onChange={(page) => {
+                  setParam({ page: page > 1 ? page : undefined });
+                  window.scrollTo({ top: 0 });
+                }}
+              />
+            </>
+          )}
+        </div>
       </div>
     </main>
   );
