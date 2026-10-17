@@ -31,8 +31,8 @@ bun run generate:submitters  # refresh apps/web/src/data/pair-submitters.json
 ## 🤖 Automation
 
 - ✅ **Registry check** runs on every pull request and must pass before merge.
+- 🚀 **Deploy** is handled by Cloudflare's Git integration, which ships `main` to Workers.
 - 📝 **Changelog** bot opens a pull request with a draft entry when a Pair lands on `main`.
-- 🚀 **Deploy web** ships `main` to Cloudflare Workers.
 
 ## ➕ Adding a Pair
 
