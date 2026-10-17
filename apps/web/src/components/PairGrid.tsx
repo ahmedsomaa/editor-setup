@@ -1,7 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { AppearanceTag, PairLicenseTag } from "@/components/Tag";
 import { CompareToggle } from "@/components/CompareToggle";
-import { EDITOR_LABELS, isPaid, pairLabel, type PairRecord } from "@/lib/pairs";
+import {
+  EDITOR_IDS,
+  EDITOR_LABELS,
+  isPaid,
+  pairLabel,
+  type PairRecord,
+} from "@/lib/pairs";
 import { SnapshotImage } from "@/components/SnapshotImage";
 import { snapshotUrl } from "@/lib/snapshots";
 
@@ -33,21 +38,21 @@ function PairCard({ pair }: { pair: PairRecord }) {
       <CardImage pair={pair} />
       <span className="flex flex-1 flex-col gap-3 p-4">
         <span className="min-w-0">
-          <span className="block truncate font-medium" title={pair.theme.name}>
-            {pair.theme.name}
+          <span className="block truncate font-medium" title={pairLabel(pair)}>
+            {pairLabel(pair)}
           </span>
-          <span
-            className="text-muted-foreground block truncate text-sm"
-            title={pair.font.name}
-          >
-            {pair.font.name}
-          </span>
+          {pair.submittedBy ? (
+            <span className="text-muted-foreground block truncate font-sans text-sm">
+              by {pair.submittedBy.name}
+            </span>
+          ) : null}
         </span>
         <span className="mt-auto flex flex-wrap items-center gap-2">
-          <AppearanceTag appearance={pair.theme.appearance} />
-          <PairLicenseTag font={pair.font.license} theme={pair.theme.license} />
-          <span className="text-muted-foreground ms-auto text-xs">
-            {pair.editors.map((e) => EDITOR_LABELS[e.id]).join(", ")}
+          <span className="text-muted-foreground text-xs">
+            {pair.editors
+              .filter((e) => EDITOR_IDS.includes(e.id))
+              .map((e) => EDITOR_LABELS[e.id])
+              .join(", ")}
           </span>
         </span>
       </span>

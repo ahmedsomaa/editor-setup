@@ -418,7 +418,7 @@ export function EditorPage() {
         </header>
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
-        <div className="mt-12 grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)] xl:items-start">
+        <div className="mt-4 grid gap-4 xl:grid-cols-[22rem_minmax(0,1fr)] xl:items-start">
           {/* Left: every setting */}
           <form
             className={cn(panel, "flex min-w-0 flex-col gap-0 p-0")}

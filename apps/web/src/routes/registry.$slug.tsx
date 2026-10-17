@@ -7,7 +7,7 @@ import {
   useNavigate,
 } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, Check, Copy } from "@phosphor-icons/react";
-import { AppearanceTag, LicenseTag, PairLicenseTag } from "@/components/Tag";
+import { AppearanceTag, LicenseTag } from "@/components/Tag";
 import { Directory } from "@/components/Directory";
 import { PairWindow, textToLines } from "@/components/PairWindow";
 import { CompareToggle } from "@/components/CompareToggle";
@@ -112,14 +112,9 @@ function PairPage() {
             {pair.font.name}
           </h1>
           <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
-            <AppearanceTag appearance={pair.theme.appearance} />
-            <PairLicenseTag
-              font={pair.font.license}
-              theme={pair.theme.license}
-            />
             {pair.submittedBy ? (
-              <span className="text-muted-foreground text-sm">
-                Added by{" "}
+              <span className="text-muted-foreground font-sans text-base">
+                by{" "}
                 <a
                   href={pair.submittedBy.url}
                   target="_blank"

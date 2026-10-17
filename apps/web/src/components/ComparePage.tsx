@@ -99,7 +99,7 @@ export function ComparePage() {
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
         {picked.length === 0 ? (
-          <div className="border-border mt-10 rounded-xl border border-dashed px-6 py-16">
+          <div className="border-border mt-6 rounded-xl border border-dashed px-6 py-16">
             <p className="font-medium">No Pairs to compare yet</p>
             <p className="text-muted-foreground mt-1 max-w-[50ch] text-sm">
               Add a Pair above, or pick one from the{" "}
@@ -114,7 +114,7 @@ export function ComparePage() {
             {!editor ? (
               <p
                 role="status"
-                className="bg-pastel-red text-pastel-red-text mt-10 rounded-xl px-4 py-3 text-sm"
+                className="bg-pastel-red text-pastel-red-text mt-6 rounded-xl px-4 py-3 text-sm"
               >
                 These Pairs share no Editor, so their Snapshots cannot be
                 compared. Remove one to continue.
@@ -175,7 +175,7 @@ function CompareTable({
       role="region"
       aria-label="Pairs side by side"
       tabIndex={0}
-      className="mt-10 overflow-x-auto"
+      className="mt-6 overflow-x-auto"
     >
       <table
         className="w-full table-fixed border-collapse text-start text-sm"

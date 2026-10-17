@@ -41,14 +41,14 @@ export function ShareButton({
         type="button"
         onClick={share}
         className={cn(
-          "border-border bg-card text-foreground hover:bg-muted inline-flex h-6 shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-colors duration-150 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ring)]",
+          "border-border bg-card text-foreground hover:bg-muted inline-flex h-8 shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors duration-150 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--ring)]",
           className,
         )}
       >
         {state === "copied" ? (
-          <Check weight="bold" aria-hidden className="size-3.5" />
+          <Check weight="bold" aria-hidden className="size-4" />
         ) : (
-          <ShareNetwork weight="bold" aria-hidden className="size-3.5" />
+          <ShareNetwork weight="bold" aria-hidden className="size-4" />
         )}
         {state === "copied"
           ? "Link copied"
