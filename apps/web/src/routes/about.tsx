@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/layout/PagePattern";
 import {
   AddPairSection,
+  CreditsSection,
   LicensesSection,
   TermsSection,
 } from "@/components/about/AboutSections";
@@ -32,6 +33,7 @@ function About() {
         <TermsSection />
         <LicensesSection />
         <AddPairSection />
+        <CreditsSection />
       </div>
     </main>
   );

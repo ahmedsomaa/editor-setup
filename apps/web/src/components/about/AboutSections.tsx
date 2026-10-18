@@ -91,3 +91,37 @@ export function AddPairSection() {
     </Reveal>
   );
 }
+
+const CREDITS = [
+  ["TanStack Start", "https://tanstack.com/start"],
+  ["Fontsource", "https://fontsource.org"],
+  ["Lucide", "https://lucide.dev"],
+  ["Shiki", "https://shiki.style"],
+] as const;
+
+const CREDIT_LINK =
+  "text-foreground decoration-foreground/30 hover:decoration-foreground underline underline-offset-4 transition-colors";
+
+export function CreditsSection() {
+  return (
+    <Reveal as="section" className="mt-20" aria-labelledby="credits">
+      <h2 id="credits">Credits</h2>
+      <p className="text-muted-foreground mt-6 max-w-[60ch]">
+        Built with{" "}
+        {CREDITS.map(([name, href], i) => (
+          <span key={name}>
+            {i > 0 ? (i === CREDITS.length - 1 ? " and " : ", ") : ""}
+            <a href={href} target="_blank" rel="noreferrer" className={CREDIT_LINK}>
+              {name}
+            </a>
+          </span>
+        ))}
+        . Illustrations from{" "}
+        <a href="https://koboyo.com/icons" target="_blank" rel="noreferrer" className={CREDIT_LINK}>
+          Koboyo
+        </a>
+        .
+      </p>
+    </Reveal>
+  );
+}

@@ -13,7 +13,7 @@ export function StudioPage() {
         <header>
           <h1>Preset Studio</h1>
           <p className="text-muted-foreground mt-3 max-w-[60ch] text-lg">
-            See your own code in any open or free font and theme.
+            Preview your own mix before using it in your editor.
           </p>
         </header>
       </PageHero>

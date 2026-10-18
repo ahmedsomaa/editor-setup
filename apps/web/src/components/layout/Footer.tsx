@@ -16,13 +16,6 @@ const LAST_UPDATED = new Date(__LAST_UPDATED__).toLocaleDateString('en-US', {
   timeZone: 'UTC',
 })
 
-const CREDITS = [
-  ['TanStack Start', 'https://tanstack.com/start'],
-  ['Fontsource', 'https://fontsource.org'],
-  ['Lucide', 'https://lucide.dev'],
-  ['Shiki', 'https://shiki.style'],
-] as const
-
 const creditLink =
   'text-foreground decoration-foreground/30 hover:decoration-foreground underline underline-offset-4 transition-colors'
 
@@ -86,34 +79,21 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="border-border mt-14 flex flex-wrap items-end justify-between gap-x-8 gap-y-6 border-t py-6">
-          <div className="text-muted-foreground flex max-w-[60ch] flex-col gap-2 text-sm">
-            <p>
+        <div className="border-border mt-14 flex flex-wrap items-center justify-between gap-4 border-t py-6">
+          <p className="text-muted-foreground flex flex-wrap items-center gap-x-2 text-sm">
+            <span>
               Built in public by{" "}
               <a href={AUTHOR_URL} target="_blank" rel="noreferrer" className={creditLink}>
                 {AUTHOR}
-              </a>{" "}
-              with{" "}
-              {CREDITS.map(([name, href], i) => (
-                <span key={name}>
-                  {i > 0 ? (i === CREDITS.length - 1 ? " and " : ", ") : ""}
-                  <a href={href} target="_blank" rel="noreferrer" className={creditLink}>
-                    {name}
-                  </a>
-                </span>
-              ))}
-              , and illustrations from{" "}
-              <a href="https://koboyo.com/icons" target="_blank" rel="noreferrer" className={creditLink}>
-                Koboyo
               </a>
-              .
-            </p>
-            <p>
-              © {new Date().getFullYear()}
-              <span aria-hidden> · </span>
+            </span>
+            <span aria-hidden>·</span>
+            <span>© {new Date().getFullYear()}</span>
+            <span aria-hidden>·</span>
+            <span>
               Last updated <time dateTime={__LAST_UPDATED__}>{LAST_UPDATED}</time>
-            </p>
-          </div>
+            </span>
+          </p>
           <ThemeSwitch />
         </div>
       </div>
