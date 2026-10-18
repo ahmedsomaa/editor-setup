@@ -11,7 +11,7 @@ Adding a Preset is a pull request into `main` with a Preset file and its Snapsho
 ## ➕ Add a new Preset
 
 1. Fork the repository and create a branch from `main`.
-2. Add `presets/<font-slug>--<theme-slug>.json`. Preset Studio can start it for you: **Save JSON** downloads a draft with the Font, Theme, appearance, Editor and Settings filled in. Add your `author`, the Font and Theme links and their Licenses, which the Studio cannot know. Until you do, `bun run check` fails and says what is missing.
+2. Add `presets/<font-slug>--<theme-slug>.json`. Preset Studio can start it for you: **Export Preset** downloads a draft with the Font, Theme, appearance, Editor and Settings filled in. Add your `author`, the Font and Theme links and their Licenses, which the Studio cannot know. Until you do, `bun run check` fails and says what is missing.
 3. Add one Snapshot under `presets/snapshots/` named `<preset-slug>.png`. Make it in [Preset Studio](https://editorsetup.som3aware.workers.dev/studio) with an Open or Free Font and Theme: it saves a 1600×900 PNG. In Claude Code, the `snapshot-studio` skill in `.claude/skills/` makes it from a Font and a Theme.
 4. Several Editors may be included in this first pull request, each with its own Settings.
 5. Run `bun run check`.

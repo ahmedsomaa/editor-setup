@@ -11,7 +11,7 @@ const TABS: readonly (readonly [StudioTab, string])[] = [
   ["code", "Code"],
 ];
 
-/** The live Snapshot window: a Preview / Code switch, Save PNG, errors and the frame. */
+/** The live Snapshot window: a Preview / Code switch, the export buttons, errors and the frame. */
 export function PreviewPanel({
   tab,
   onTabChange,
@@ -76,18 +76,30 @@ export function PreviewPanel({
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-2">
-          <Button size="sm" variant="outline" disabled={exportDisabled} onClick={onSaveJson}>
+        <div role="group" aria-label="Export" className="inline-flex">
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={exportDisabled}
+            onClick={onSaveJson}
+            className="focus-visible:z-10 rounded-e-none"
+          >
             <FileJson />
-            Save JSON
+            Export Preset
           </Button>
-          <Button size="sm" disabled={exportDisabled} onClick={onSavePng}>
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={exportDisabled}
+            onClick={onSavePng}
+            className="focus-visible:z-10 -ms-px rounded-s-none"
+          >
             {exporting ? (
               <Loader2 className="animate-spin motion-reduce:animate-none" />
             ) : (
               <ImageDown />
             )}
-            Save PNG
+            Export Snapshot
           </Button>
         </div>
       </div>
@@ -109,7 +121,7 @@ export function PreviewPanel({
         className="border-border relative aspect-video w-full overflow-hidden rounded-xl border shadow-[var(--shadow-overlay)]"
       >
         {srcDoc ? (
-          // Kept on screen, only hidden, so the window is measured and ready for Save PNG while you write.
+          // Kept on screen, only hidden, so the window is measured and ready to export while you write.
           <iframe
             ref={iframeRef}
             title="Snapshot preview"

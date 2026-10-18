@@ -9,7 +9,7 @@
 ## Content fundamentals
 
 - Sentence case. Domain nouns stay capitalised and mean one thing each: Preset, Font, Theme, Editor, Config, Settings, Snapshot, License.
-- Buttons start with a verb and name the object: "Explore the Presets", "Add a Preset", "Copy Settings", "Save PNG". The same action keeps its name ("Copy", then "Copied").
+- Buttons start with a verb and name the object: "Explore the Presets", "Add a Preset", "Copy Settings", "Export Snapshot". The same action keeps its name ("Copy", then "Copied").
 - Talk to the reader as "you". Short, plain sentences. No "seamless", "elevate", "unleash", no exclamation marks, no em dashes.
 - The hook is one sentence beside the live preview: "Your next ideal editor setup is one click away." Under it, one plain line says what the site is.
 - On the home page the sections tell one story, each answering a question the visitor has just reached: "Take a look around.", "Can't pick?", "Found your favorite?", "Couldn't find what you're looking for?", "Share yours." Headings are short sentences, subheadings say why and never mention another section.
@@ -45,7 +45,7 @@ Lucide, 16px in buttons, `foreground` or `muted-foreground`. No emoji. The logo 
 
 ## Accessibility
 
-- Every control has a visible label or `aria-label`; icon-only buttons name the action ("Save PNG").
+- Every control has a visible label or `aria-label`; icon-only buttons name the action ("Export Snapshot").
 - Skip link first in the page; one `main`; the active nav link has `aria-current="page"`.
 - Result counts and copy confirmations live in `role="status"` regions that exist before their text changes.
 - Targets are at least 36px tall; inline links are underlined.

@@ -27,7 +27,7 @@ export function ButtonsSection() {
         <Button>Explore the Presets</Button>
         <Button variant="outline">Add a Preset</Button>
         <Button variant="secondary">Copy Settings</Button>
-        <Button variant="ghost">Save PNG</Button>
+        <Button variant="ghost">Export Snapshot</Button>
         <Button variant="link">Read more</Button>
       </div>
     </Reveal>
