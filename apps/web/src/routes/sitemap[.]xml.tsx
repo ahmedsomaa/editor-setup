@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SITE_URL } from "@/lib/site";
 
-const STATIC_PATHS = ["/", "/registry", "/compare", "/studio", "/about", "/changelog"];
+const STATIC_PATHS = ["/", "/presets", "/compare", "/studio", "/about", "/changelog"];
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const { listPairs } = await import("@/server/registry.server");
         const paths = [
           ...STATIC_PATHS,
-          ...listPairs().map((pair) => `/registry/${pair.slug}`),
+          ...listPairs().map((pair) => `/presets/${pair.slug}`),
         ];
         const urls = paths
           .map((path) => `  <url><loc>${SITE_URL}${path}</loc></url>`)

@@ -3,7 +3,7 @@ import { PairWindow, textToLines } from "@/components/registry/PairWindow";
 import type { EditorConfig, PairRecord } from "@/lib/registry/pairs";
 import { snapshotUrl } from "@/lib/registry/snapshots";
 
-/** The Pair's Snapshot, or a window painted in its colours until one exists. */
+/** The Preset's Snapshot, or a window painted in its colours until one exists. */
 export function PairSnapshot({
   pair,
   config,

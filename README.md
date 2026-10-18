@@ -1,13 +1,13 @@
 # 🎨 editorSetup
 
-A git-backed registry of monospace font and color theme pairings for code editors. Anyone can add a Pair by pull request. The site reads those files.
+A git-backed registry of monospace font and color theme pairings for code editors. Anyone can add a Preset by pull request. The site reads those files.
 
 🌐 **Live site:** https://editorsetup.som3aware.workers.dev
 
 ## 🗂️ Layout
 
 ```text
-registry/                 # Pair JSON + Snapshots (PR surface)
+registry/                 # Preset JSON + Snapshots (PR surface)
 apps/web/                 # TanStack Start + shadcn (Cloudflare Workers)
 packages/registry-check/  # Schema + image checks
 docs/                     # Agent conventions and ADRs
@@ -33,9 +33,9 @@ bun run generate:submitters  # refresh apps/web/src/data/pair-submitters.json
 - ✅ **Registry check** runs on every pull request and must pass before merge.
 - 🚀 **Deploy** is handled by Cloudflare's Git integration, which ships `main` to Workers.
 - 📡 **Feeds** are built by the site: `/rss.xml` from the changelog, plus `/llms.txt`, `/sitemap.xml` and `/robots.txt`.
-- 📝 **Changelog** bot opens a pull request with a draft entry when a Pair lands on `main`.
+- 📝 **Changelog** bot opens a pull request with a draft entry when a Preset lands on `main`.
 
-## ➕ Adding a Pair
+## ➕ Adding a Preset
 
 See [ADDING_A_PAIR.md](ADDING_A_PAIR.md).
 

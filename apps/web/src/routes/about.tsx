@@ -12,9 +12,9 @@ export const Route = createFileRoute("/about")({
     pageHead({
       path: "/about",
       name: "About",
-      title: "About EditorSetup: Pairs, Snapshots, Settings, Licenses",
+      title: "About EditorSetup: Presets, Snapshots, Settings, Licenses",
       description:
-        "EditorSetup is a curated list of Font and Theme Pairs. Learn what a Pair, a Snapshot and a Config are, and how each License works.",
+        "EditorSetup is a curated list of Font and Theme Presets. Learn what a Preset, a Snapshot and a Config are, and how each License works.",
     }),
   component: About,
 });
@@ -25,7 +25,7 @@ function About() {
       <PageHero variant="about" className="pb-4 sm:pb-6">
         <h1>About</h1>
         <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-          A small, open list of font and theme pairs, kept in Git.
+          A small, open list of Font and Theme Presets, kept in Git.
         </p>
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">

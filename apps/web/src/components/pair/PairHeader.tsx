@@ -2,7 +2,7 @@ import { ShareButton } from "@/components/common/ShareButton";
 import { PageHero } from "@/components/layout/PagePattern";
 import { pairLabel, type PairRecord } from "@/lib/registry/pairs";
 
-/** The Pair's title, who submitted it, and a share button. */
+/** The Preset's title, who submitted it, and a share button. */
 export function PairHeader({ pair }: { pair: PairRecord }) {
   return (
     <PageHero variant="pair" className="pt-12 pb-6 sm:pt-16 sm:pb-8">

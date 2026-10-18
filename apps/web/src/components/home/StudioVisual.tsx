@@ -5,7 +5,7 @@ import { EditorArt } from "@/components/home/EditorArt";
 import { Button } from "@/components/ui/button";
 import type { PairRecord } from "@/lib/registry/pairs";
 
-/** Studio visual: one editor window repainted in one Pair after another, its code typed in each time. */
+/** Studio visual: one editor window repainted in one Preset after another, its code typed in each time. */
 export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);

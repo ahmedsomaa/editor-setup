@@ -1,8 +1,8 @@
 # 08: Themes list page
 
-**What to build:** A `/themes` page lists every unique Theme that appears in Registry Pairs. Each row shows Appearance colors, License, publisher links, and how many Pairs use it. Clicking a Theme opens the Registry filtered to that name.
+**What to build:** A `/themes` page lists every unique Theme that appears in Registry Presets. Each row shows Appearance colors, License, publisher links, and how many Presets use it. Clicking a Theme opens the Registry filtered to that name.
 
-**Blocked by:** 01: Registry lists Pairs from the repo
+**Blocked by:** 01: Registry lists Presets from the repo
 
 **Status:** ready-for-human
 

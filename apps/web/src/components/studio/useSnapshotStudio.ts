@@ -20,7 +20,7 @@ const slug = (s: string) =>
     .replace(/^-|-$/g, "");
 
 /**
- * Everything Snapshot Studio knows: the choices in the URL, the drafts being typed, and the preview
+ * Everything Preset Studio knows: the choices in the URL, the drafts being typed, and the preview
  * built from them. The page and its controls only read this and call back.
  */
 export function useSnapshotStudio() {

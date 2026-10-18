@@ -1,11 +1,11 @@
 ---
 name: snapshot-studio
-description: Generate a Carbon-style (carbon.now.sh) code image for a given font and theme, as a self-contained 16:9 HTML page, and a 1600x900 PNG. Takes a font name and a theme name (or links to them) and writes its own code snippet in any language if none is given. Use this whenever the user wants a snapshot, screenshot, preview, "carbon" image, or showcase picture of a code font plus color theme, a Pair Snapshot for the registry, or says things like "render Fira Code with Nord", "make a Gruvbox preview image", or "generate the snapshot for this pair", even if they never mention Carbon.
+description: Generate a Carbon-style (carbon.now.sh) code image for a given font and theme, as a self-contained 16:9 HTML page, and a 1600x900 PNG. Takes a font name and a theme name (or links to them) and writes its own code snippet in any language if none is given. Use this whenever the user wants a snapshot, screenshot, preview, "carbon" image, or showcase picture of a code font plus color theme, a Preset Snapshot for the registry, or says things like "render Fira Code with Nord", "make a Gruvbox preview image", or "generate the snapshot for this preset", even if they never mention Carbon.
 ---
 
-# Snapshot Studio
+# Preset Studio
 
-Produce what carbon.now.sh produces (a code window on a colored backdrop) for one **font + theme** pair, headless, with no website involved. Colors come from the real VS Code theme and the typeface is embedded in the HTML, so the image shows the actual pair rather than an approximation.
+Produce what carbon.now.sh produces (a code window on a colored backdrop) for one **font + theme** preset, headless, with no website involved. Colors come from the real VS Code theme and the typeface is embedded in the HTML, so the image shows the actual preset rather than an approximation.
 
 ## Outputs (per run)
 
@@ -57,17 +57,17 @@ Why this matters: the point of the image is that the colors are the theme's. Nev
 - Fontsource and Google Fonts cover most open-source code fonts (JetBrains Mono, Fira Code, Geist Mono, Inconsolata, IBM Plex Mono, Source Code Pro, ...).
 - Check the license before making a registry Snapshot. The registry shows the image publicly, so the font and the theme must allow that. A paid font, or one that is free for private use only, is left out.
 - Proprietary or foundry-only fonts (Input Mono, Berkeley Mono, Operator Mono, ...) fail with a clear error. Ask for a link or file, download the `.woff2/.ttf/.otf` files (extract zips first), and pass them with `--font-file`. Never substitute a different font without telling the user.
-- Ligatures are on, because the pair is usually judged on `=>`, `!==`, `->`.
+- Ligatures are on, because the preset is usually judged on `=>`, `!==`, `->`.
 
 ## Writing a good snippet
 
-A pair is judged on how code reads in it, so the snippet should exercise the typeface and the theme, in the language the user asked for (any language; pick an idiomatic one if unspecified):
+A preset is judged on how code reads in it, so the snippet should exercise the typeface and the theme, in the language the user asked for (any language; pick an idiomatic one if unspecified):
 
 - 10 to 18 lines, lines of 70 columns or fewer, so the text stays large in 16:9.
 - Real-looking code, not lorem. A function with a type or two, a loop or a filter, an `if`, a string, a template or f-string, a number, a comment.
 - Include glyphs that stress a code font: `=> -> !== === <= >= && || :: {}[]()`, `0O 1lI`, a few capitals and digits.
 - Include every token class a theme colors: keywords, types, functions, strings, numbers, comments, operators, constants.
-- No secrets, no real company code. Keep it self-contained and the same flavor for every pair so snapshots are comparable (when the user is making several, reuse one snippet per language).
+- No secrets, no real company code. Keep it self-contained and the same flavor for every preset so snapshots are comparable (when the user is making several, reuse one snippet per language).
 
 ## Notes
 

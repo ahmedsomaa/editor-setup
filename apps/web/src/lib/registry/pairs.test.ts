@@ -26,7 +26,7 @@ mock.module("../../server/registry-files", () => ({
 const { getPairBySlug, listPairs, relatedPairs } = await import("../../server/registry.server");
 
 describe("listPairs", () => {
-  test("includes the real Pair from the registry", () => {
+  test("includes the real Preset from the registry", () => {
     const slugs = listPairs().map((p) => p.slug);
     expect(slugs).toContain("inconsolata--vitesse-dark");
   });
@@ -49,7 +49,7 @@ describe("listPairs", () => {
 });
 
 describe("getPairBySlug", () => {
-  test("returns the Pair for a known slug", () => {
+  test("returns the Preset for a known slug", () => {
     const pair = getPairBySlug("inconsolata--vitesse-dark");
     expect(pair?.font.name).toBe("Inconsolata");
     expect(pair?.theme.name).toBe("Vitesse Dark");
@@ -72,7 +72,7 @@ describe("getEditorConfig / resolveEditorId", () => {
     expect(pair.snapshot).toBe("inconsolata--vitesse-dark.png");
   });
 
-  test("returns undefined when the Pair has no Config for that Editor", () => {
+  test("returns undefined when the Preset has no Config for that Editor", () => {
     expect(getEditorConfig(vscodeOnly, "zed")).toBeUndefined();
   });
 
@@ -87,7 +87,7 @@ describe("getEditorConfig / resolveEditorId", () => {
 });
 
 describe("filterPairs", () => {
-  test("no filters returns every Pair", () => {
+  test("no filters returns every Preset", () => {
     expect(filterPairs(listPairs(), {})).toHaveLength(listPairs().length);
   });
 
@@ -103,7 +103,7 @@ describe("filterPairs", () => {
 });
 
 describe("relatedPairs", () => {
-  test("never includes the Pair itself", () => {
+  test("never includes the Preset itself", () => {
     const slug = "inconsolata--vitesse-dark";
     expect(relatedPairs(slug).map((p) => p.slug)).not.toContain(slug);
   });

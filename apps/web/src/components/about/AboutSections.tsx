@@ -7,20 +7,20 @@ import { ADD_PAIR_URL, GITHUB_URL } from "@/lib/site";
 
 const TERMS = [
   [
-    "Pair",
-    "One Font with one Theme. Each Pair is one JSON file in the repository.",
+    "Preset",
+    "One Font with one Theme. Each Preset is one JSON file in the repository.",
   ],
   [
     "Config",
-    "The Settings for one Pair in one Editor, as plain text with no color overrides.",
+    "The Settings for one Preset in one Editor, as plain text with no color overrides.",
   ],
   [
     "Snapshot",
-    "One 16:9 image of a Pair, showing its Font and Theme together.",
+    "One 16:9 image of a Preset, showing its Font and Theme together.",
   ],
   [
-    "Registry",
-    "Every Pair whose file is on main with a Snapshot and at least one Config.",
+    "Presets",
+    "The page that lists every Preset whose file is on main with a Snapshot and at least one Config.",
   ],
 ] as const;
 
@@ -65,18 +65,18 @@ export function LicensesSection() {
 export function AddPairSection() {
   return (
     <Reveal as="section" className="mt-20" aria-labelledby="add">
-      <h2 id="add">Add a Pair</h2>
+      <h2 id="add">Add a Preset</h2>
       <p className="text-muted-foreground mt-6 max-w-[60ch]">
-        Open a pull request with a Pair file and its Snapshot. Make the Snapshot
-        in Snapshot Studio, using an Open or Free Font and Theme. The
-        guide to adding a Pair lists the fields and the image size.
+        Open a pull request with a Preset file and its Snapshot. Make the Snapshot
+        in Preset Studio, using an Open or Free Font and Theme. The
+        guide to adding a Preset lists the fields and the image size.
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
         <Button
           nativeButton={false}
           render={<a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" />}
         >
-          Read the guide to adding a Pair
+          Read the guide to adding a Preset
           <ArrowUpRight aria-hidden />
         </Button>
         <Button

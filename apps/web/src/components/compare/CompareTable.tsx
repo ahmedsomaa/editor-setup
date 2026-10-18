@@ -10,7 +10,7 @@ import {
 } from "@/lib/registry/pairs";
 import { snapshotUrl } from "@/lib/registry/snapshots";
 
-/** Pairs as columns and their facts as rows, with an open slot while there is room for another. */
+/** Presets as columns and their facts as rows, with an open slot while there is room for another. */
 export function CompareTable({
   pairs,
   slots,
@@ -18,7 +18,7 @@ export function CompareTable({
   onRemove,
 }: {
   pairs: PairRecord[];
-  /** Most Pairs the table holds. An open slot shows where the next one lands. */
+  /** Most Presets the table holds. An open slot shows where the next one lands. */
   slots: number;
   onAdd: () => void;
   onRemove: (slug: string) => void;
@@ -50,7 +50,7 @@ export function CompareTable({
   return (
     <div
       role="region"
-      aria-label="Pairs side by side"
+      aria-label="Presets side by side"
       tabIndex={0}
       className="mt-2 overflow-x-auto"
     >
@@ -58,7 +58,7 @@ export function CompareTable({
         className="w-full table-fixed border-collapse text-start text-sm"
         style={{ minWidth: `${7 + (pairs.length + (open ? 1 : 0)) * 16}rem` }}
       >
-        <caption className="sr-only">Pairs side by side</caption>
+        <caption className="sr-only">Presets side by side</caption>
         <colgroup>
           <col className="w-28" />
           {pairs.map((p) => (
@@ -104,7 +104,7 @@ export function CompareTable({
                   style={{ aspectRatio: "16 / 9" }}
                 >
                   <Plus aria-hidden className="size-6" />
-                  Add a Pair
+                  Add a Preset
                 </button>
               </td>
             ) : null}
@@ -114,13 +114,13 @@ export function CompareTable({
               scope="row"
               className="text-muted-foreground py-3 pe-4 text-start align-middle font-normal"
             >
-              Pair
+              Preset
             </th>
             {pairs.map((pair) => (
               <td key={pair.slug} className="py-3 ps-3 align-middle first:ps-0">
                 <div className="flex items-center justify-between gap-3">
                   <Link
-                    to="/registry/$slug"
+                    to="/presets/$slug"
                     params={{ slug: pair.slug }}
                     className="text-foreground min-w-0 truncate font-medium no-underline hover:underline"
                   >

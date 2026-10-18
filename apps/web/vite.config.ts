@@ -20,7 +20,7 @@ function lastUpdated(): string {
 
 const config = defineConfig({
   define: { __LAST_UPDATED__: JSON.stringify(lastUpdated()) },
-  // Pair JSON and Snapshot PNGs live in the repo-root registry/, outside apps/web.
+  // Preset JSON and Snapshot PNGs live in the repo-root registry/, outside apps/web.
   server: {
     fs: {
       allow: [

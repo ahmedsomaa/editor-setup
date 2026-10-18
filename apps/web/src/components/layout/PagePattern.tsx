@@ -117,7 +117,7 @@ const TILES: Record<Variant, ReactNode> = {
       <path d="M20 112h30M20 124h20" />
     </g>
   ),
-  // A Font and a Theme as one Pair, a colour swatch row and a line of code.
+  // A Font and a Theme as one Preset, a colour swatch row and a line of code.
   pair: (
     <g {...G}>
       <circle cx="30" cy="34" r="14" />

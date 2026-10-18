@@ -1,6 +1,6 @@
 ## Principles
 
-- Warm monochrome. Canvas `background`, text `foreground`, edges `border`. Colour is scarce: `accent` (deep teal) marks the active nav label and the selected list option, and a Pair's own colours appear only inside `PairWindow` and Pair chips.
+- Warm monochrome. Canvas `background`, text `foreground`, edges `border`. Colour is scarce: `accent` (deep teal) marks the active nav label and the selected list option, and a Preset's own colours appear only inside `PairWindow` and Preset chips.
 - One hairline everywhere. Separate sections with a 1px `border` rule, draw cards as `card` + 1px `border` at `radius-xl`, and never nest a card in a card.
 - Shapes. Anything you press or type into is `radius-pill`: buttons, tabs, inputs, selects, tags, Anything that holds content is `radius-xl`.
 - Flat. No gradients, no glass, no heavy shadows. The one exception is a dot pattern (`.bg-pattern`, `foreground` at 16%, 22px pitch) that fades out behind a hero or closing block.
@@ -8,20 +8,20 @@
 
 ## Content fundamentals
 
-- Sentence case. Domain nouns stay capitalised and mean one thing each: Pair, Font, Theme, Editor, Config, Settings, Snapshot, Registry, License.
-- Buttons start with a verb and name the object: "Explore the Registry", "Add a Pair", "Copy Settings", "Save PNG". The same action keeps its name ("Copy", then "Copied").
+- Sentence case. Domain nouns stay capitalised and mean one thing each: Preset, Font, Theme, Editor, Config, Settings, Snapshot, License.
+- Buttons start with a verb and name the object: "Explore the Presets", "Add a Preset", "Copy Settings", "Save PNG". The same action keeps its name ("Copy", then "Copied").
 - Talk to the reader as "you". Short, plain sentences. No "seamless", "elevate", "unleash", no exclamation marks, no em dashes.
 - The hook is one line, centred: "Make the place you code feel like yours." It wraps on narrow screens only.
 - Errors say what failed and how to fix it: "Could not highlight that code. Pick another language."
-- Empty states name the query and offer an exit: "No Pairs match 'quarterly'. Clear filters."
-- Every Pair has a Snapshot (16:9, shown whole, 16:9, on the Pair page, cards and rows). Make it in Snapshot Studio.
+- Empty states name the query and offer an exit: "No Presets match 'quarterly'. Clear filters."
+- Every Preset has a Snapshot (16:9, shown whole, 16:9, on the Preset page, cards and rows). Make it in Preset Studio.
 
 ## Visual foundations
 
 - **Colour.** Light is default; dark swaps every token. `muted-foreground` for secondary text on `background` and `card` only. Selected state is never colour alone: pair `accent-soft` or a border with a check mark.
 - **Type.** Instrument Serif 400 for headings (`display-hero`, `display-title`, `display-card`), tracking -0.02em to -0.03em, line height 1.1. Geist for everything else, line height 1.6. Geist Mono for code. Body copy stays under 60 characters a line.
-- **Layout.** One centred column, 64rem wide (`max-w-5xl`), 16px gutters, sections 64px (mobile) and 96px (desktop) apart and divided by one rule. The nav bar is a three-part grid: logo left, links centred, GitHub stars right. There is no call-to-action in the nav and no theme switch: Light, Dark and System live in the footer. The hero fills the viewport and is centred, with the hook on one line; everything else is left-aligned. The footer follows opensourceui.in: brand and one sentence, three link columns, a rule, copyright with the theme switch, and a faded serif wordmark. Snapshot Studio is the one full-width screen.
-- **Directory rows.** The Registry is a list, not a card grid: one row per Pair with the Pair's Snapshot cropped to the code window (80px wide), the Theme name, the Font name in its own face, and tags. Pointing at or focusing a row repaints a window beside it.
+- **Layout.** One centred column, 64rem wide (`max-w-5xl`), 16px gutters, sections 64px (mobile) and 96px (desktop) apart and divided by one rule. The nav bar is a three-part grid: logo left, links centred, GitHub stars right. There is no call-to-action in the nav and no theme switch: Light, Dark and System live in the footer. The hero fills the viewport and is centred, with the hook on one line; everything else is left-aligned. The footer follows opensourceui.in: brand and one sentence, three link columns, a rule, copyright with the theme switch, and a faded serif wordmark. Preset Studio is the one full-width screen.
+- **Directory rows.** The Presets page is a list, not a card grid: one row per Preset with the Preset's Snapshot cropped to the code window (80px wide), the Theme name, the Font name in its own face, and tags. Pointing at or focusing a row repaints a window beside it.
 - **Focus.** Solid 2px `ring` with a 2px offset on every interactive element. Never remove it.
 - **Motion.** Below-the-fold blocks fade up 12px over 600ms (`cubic-bezier(0.16, 1, 0.3, 1)`), 80ms apart. Hover: 150ms colour change; cards add `shadow-overlay`. Press: scale 0.98. Nothing moves on its own. With `prefers-reduced-motion` nothing is hidden or animated.
 - **Imagery.** None. Colour and code carry the page.
@@ -29,6 +29,8 @@
 ## Iconography
 
 Phosphor, bold weight, 16px in buttons, `foreground` or `muted-foreground`. No emoji. The logo is a caret between two braces, 24px, drawn in `foreground` with no background shape.
+
+**Spot illustrations.** One style only: black line drawings of a person at work, from koboyo.com/icons (the plain set, never the `blockprint-` or `inkbrush-` ones). They head a feature or step on the Home page, at `size-24` to `size-28`, drawn in `currentColor` and hidden from assistive tech. Never use them inside buttons, tags or tables; those keep the small icons above. Source: `apps/web/src/components/home/SpotIcons.tsx`.
 
 ## Using the tokens
 
@@ -38,7 +40,7 @@ Phosphor, bold weight, 16px in buttons, `foreground` or `muted-foreground`. No e
 - Nav: inactive `muted-foreground`; active label `accent-text` on `muted`, plus `aria-current`.
 - Tags: pill, 12px, uppercase, 0.05em tracking, 24px tall. Each carries an icon. Open License: `pastel-green` with an open padlock. Free License: `pastel-amber` with a gift. Appearance: `muted`, with a sun or moon.
 - Cards and bento tiles: `card`, 1px `border`, `radius-xl`, 24px to 32px padding.
-- Components: Button, Tabs, Tag, Logo, ThemeSwitch, PairWindow, DirectoryRow. Consumers provide the Pair (theme name, background, text colour, Font family, Settings text).
+- Components: Button, Tabs, Tag, Logo, ThemeSwitch, PairWindow, DirectoryRow. Consumers provide the Preset (theme name, background, text colour, Font family, Settings text).
 
 ## Accessibility
 

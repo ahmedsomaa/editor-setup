@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://editorsetup.dev/schema/pair.json",
-  "title": "Pair",
+  "title": "Preset",
   "type": "object",
   "additionalProperties": false,
   "required": [

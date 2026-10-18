@@ -1,5 +1,5 @@
 /**
- * Resolve each Pair file's submitter from the merged PR that introduced it.
+ * Resolve each Preset file's submitter from the merged PR that introduced it.
  *
  * For every registry/pairs/*.json:
  *   1. Find the commit that first added the file (git)

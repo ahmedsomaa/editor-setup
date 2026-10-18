@@ -2,6 +2,17 @@
 export const ENTRIES = [
   {
     date: "2026-10-18",
+    title: "Presets and a new landing story",
+    changes: [
+      "Pairs are now called Presets, and Snapshot Studio is now Preset Studio.",
+      "The Registry is now the Presets page at /presets. Old /registry links redirect.",
+      "A landing page that walks you through it: take a look around, compare, copy, make your own and share.",
+      "Line illustrations for each step, and a footer that credits the tools behind the site.",
+      "The License section is now a question in the FAQ.",
+    ],
+  },
+  {
+    date: "2026-10-18",
     title: "RSS feed and llms.txt",
     changes: [
       "An RSS feed of this changelog, with an RSS button at the top of the Changelog page.",
@@ -10,10 +21,10 @@ export const ENTRIES = [
   },
   {
     date: "2026-10-18",
-    title: "Simpler Registry filters",
+    title: "Simpler Preset filters",
     changes: [
-      "Registry filters are now search, Editor and Appearance, with License dropped.",
-      "A robots.txt and a sitemap that lists every Pair.",
+      "Preset filters are now search, Editor and Appearance, with License dropped.",
+      "A robots.txt and a sitemap that lists every Preset.",
       "A Product Hunt badge in the footer.",
       "Moved the Free badge out of the heading and spaced the heading.",
       "Slower smooth scroll, plus page titles and share icons.",
@@ -21,15 +32,15 @@ export const ENTRIES = [
   },
   {
     date: "2026-10-17",
-    title: "Pair updates",
+    title: "Preset updates",
     changes: [
-      "Updated Pair: Fira Code with Palenight Theme.",
-      "Updated Pair: Geist Mono with Aura Dark.",
-      "Updated Pair: Geist Mono with Vesper.",
-      "Updated Pair: Inconsolata with Vitesse Dark.",
-      "Updated Pair: Inconsolata with Vitesse Light.",
-      "Updated Pair: JetBrains Mono with Gruvbox Dark Hard.",
-      "Updated Pair: Zed Mono with Gruvbox Light Hard.",
+      "Updated Preset: Fira Code with Palenight Theme.",
+      "Updated Preset: Geist Mono with Aura Dark.",
+      "Updated Preset: Geist Mono with Vesper.",
+      "Updated Preset: Inconsolata with Vitesse Dark.",
+      "Updated Preset: Inconsolata with Vitesse Light.",
+      "Updated Preset: JetBrains Mono with Gruvbox Dark Hard.",
+      "Updated Preset: Zed Mono with Gruvbox Light Hard.",
     ],
   },
   {
@@ -37,20 +48,20 @@ export const ENTRIES = [
     title: "Landing sections and motion",
     changes: [
       "Rebuilt landing sections with animated art for Compare and Snapshot.",
-      "A Compare drawer picker, and pagination in the Registry.",
-      "A reworked Snapshot Studio with swatches in its menus, plus new Snapshots.",
+      "A Compare drawer picker, and pagination in Presets.",
+      "A reworked Preset Studio with swatches in its menus, plus new Snapshots.",
       "Paid licenses dropped, and icons moved to Lucide.",
       "A page transition, site-wide smooth scroll and scroll motion.",
       "Open Graph image, canonical URLs and tighter page titles for sharing and search.",
-      "Fixed the Registry search on mobile.",
+      "Fixed the Preset search on mobile.",
     ],
   },
   {
     date: "2026-10-17",
-    title: "A rebuilt Registry",
+    title: "Rebuilt Presets",
     changes: [
-      "New home, Registry, Pair, Compare and Snapshot Studio pages.",
-      "Four new Pairs, and every Pair now leads with its Snapshot.",
+      "New home, Presets, Preset, Compare and Preset Studio pages.",
+      "Four new Presets, and every Preset now leads with its Snapshot.",
       "Editors narrowed to VS Code and Cursor.",
       "Thumbnails dropped in favor of cropping the Snapshot.",
       "A Design system page and a Changelog page, linked from the footer.",
@@ -58,10 +69,10 @@ export const ENTRIES = [
   },
   {
     date: "2026-10-13",
-    title: "Pair pages",
+    title: "Preset pages",
     changes: [
-      "Each Pair has its own page with a Snapshot and copyable Settings.",
-      "The home hook rotates through three open Pairs.",
+      "Each Preset has its own page with a Snapshot and copyable Settings.",
+      "The home hook rotates through three open Presets.",
       "Geist and Geist Mono join the type stack.",
     ],
   },

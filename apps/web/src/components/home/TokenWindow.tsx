@@ -12,7 +12,7 @@ type TokenWindowProps = {
   wrap?: boolean;
 };
 
-/** A window painted with a real Theme's own token colours, in the Pair's Font. */
+/** A window painted with a real Theme's own token colours, in the Preset's Font. */
 export function TokenWindow({
   theme,
   fontFamily,

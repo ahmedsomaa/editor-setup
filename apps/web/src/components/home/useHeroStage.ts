@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PLAYGROUND } from "@/lib/studio/playground-tokens";
 import type { PairRecord } from "@/lib/registry/pairs";
 
-// The playground offers four Pairs, only with Open or Free Fonts and Themes, each with its real Theme tokens.
+// The playground offers four Presets, only with Open or Free Fonts and Themes, each with its real Theme tokens.
 const PLAYGROUND_ORDER = [
   "geist-mono--vesper",
   "zed-mono--gruvbox-light-hard",
@@ -13,8 +13,8 @@ const PLAYGROUND_ORDER = [
 const ROTATE_MS = 4500;
 
 /**
- * The Pair shown on the home page and the colours it paints. It rotates through the Pairs unless the
- * visitor prefers reduced motion. Pausing is always available, and picking a Pair stops the rotation.
+ * The Preset shown on the home page and the colours it paints. It rotates through the Presets unless the
+ * visitor prefers reduced motion. Pausing is always available, and picking a Preset stops the rotation.
  */
 export function useHeroStage(pairs: PairRecord[]) {
   const [heroSlug, setHeroSlug] = useState<string | null>(null);
@@ -43,7 +43,7 @@ export function useHeroStage(pairs: PairRecord[]) {
   }, [playing, stagePairs.length]);
 
   const heroPair = stagePairs.find((p) => p.slug === heroSlug) ?? stagePairs[0];
-  // The hero is painted in the chosen Pair's own colours.
+  // The hero is painted in the chosen Preset's own colours.
   const stage = {
     bg:
       (heroPair && PLAYGROUND[heroPair.slug]?.bg) ||
@@ -62,7 +62,7 @@ export function useHeroStage(pairs: PairRecord[]) {
     stage,
     playing,
     setPlaying,
-    /** Show this Pair and stop rotating. */
+    /** Show this Preset and stop rotating. */
     choose: (slug: string) => {
       setPlaying(false);
       setHeroSlug(slug);

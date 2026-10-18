@@ -102,7 +102,7 @@ export function StudioControls({
         </Field>
       </div>
       <p className="text-muted-foreground border-border m-0 border-t px-4 py-3 text-xs">
-        Use an Open or Free Font and Theme. Snapshots go in a public Registry,
+        Use an Open or Free Font and Theme. Snapshots go in a public list,
         so a license that asks for payment, or does not allow public images,
         can&rsquo;t be used.
       </p>

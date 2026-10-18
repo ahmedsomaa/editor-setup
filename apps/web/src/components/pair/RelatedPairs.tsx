@@ -4,7 +4,7 @@ import { Reveal } from "@/components/layout/Reveal";
 import { Directory } from "@/components/registry/Directory";
 import type { PairRecord } from "@/lib/registry/pairs";
 
-/** Other Pairs, shown once the streamed list arrives. */
+/** Other Presets, shown once the streamed list arrives. */
 export function RelatedPairs({ related }: { related: Promise<PairRecord[]> }) {
   return (
     <Reveal
@@ -12,12 +12,12 @@ export function RelatedPairs({ related }: { related: Promise<PairRecord[]> }) {
       className="border-border mt-20 border-t pt-16"
       aria-labelledby="related-heading"
     >
-      <h2 id="related-heading">More Pairs</h2>
+      <h2 id="related-heading">More Presets</h2>
       <div className="mt-8">
         <Suspense
           fallback={
             <p className="text-muted-foreground text-sm" role="status">
-              Loading related Pairs
+              Loading related Presets
             </p>
           }
         >
@@ -25,7 +25,7 @@ export function RelatedPairs({ related }: { related: Promise<PairRecord[]> }) {
             {(pairs: PairRecord[]) =>
               pairs.length === 0 ? (
                 <p className="text-muted-foreground text-sm">
-                  No related Pairs yet.
+                  No related Presets yet.
                 </p>
               ) : (
                 <Directory pairs={pairs} preview={false} />

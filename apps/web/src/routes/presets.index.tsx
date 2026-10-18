@@ -7,7 +7,7 @@ import { registrySearchSchema } from "@/lib/registry/registry-search";
 import { listPairsFn } from "@/server/pairs.functions";
 import { pageHead } from "@/lib/page-head";
 
-export const Route = createFileRoute("/registry/")({
+export const Route = createFileRoute("/presets/")({
   validateSearch: registrySearchSchema,
   loaderDeps: ({ search: { q, editor, appearance } }) => ({
     q,
@@ -19,11 +19,11 @@ export const Route = createFileRoute("/registry/")({
   ssr: true,
   head: () =>
     pageHead({
-      path: "/registry",
-      name: "Registry",
-      title: "Registry: Font and Theme Pairs for VS Code and Zed",
+      path: "/presets",
+      name: "Presets",
+      title: "Font and Theme Presets for VS Code and Zed",
       description:
-        "Browse Font and Theme Pairs from real editor setups. Search by Font or Theme, filter by Appearance or Editor, open a Pair to see its Snapshot and copy its Settings.",
+        "Browse Font and Theme Presets from real editor setups. Search by Font or Theme, filter by Appearance or Editor, open a Preset to see its Snapshot and copy its Settings.",
     }),
   component: RegistryPage,
 });
@@ -39,9 +39,9 @@ function RegistryPage() {
       <div className="relative isolate overflow-hidden">
         <RegistryPattern className="bg-glyphs" />
         <div className="mx-auto w-full max-w-6xl px-4 pt-16 pb-16 sm:pt-24 sm:pb-20">
-          <h1>Registry</h1>
+          <h1>Presets</h1>
           <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-            Every font and theme, already paired up.
+            Presets from real setups. See each one, then copy its Settings.
           </p>
         </div>
       </div>

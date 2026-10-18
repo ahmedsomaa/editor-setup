@@ -2,7 +2,7 @@ import { Check, Plus } from "lucide-react";
 import { useCompare } from "@/lib/registry/compare-store";
 import { cn } from "cn";
 
-/** Adds or removes a Pair from the compare tray. Three at most. */
+/** Adds or removes a Preset from the compare tray. Three at most. */
 export function CompareToggle({
   slug,
   label,
@@ -21,7 +21,7 @@ export function CompareToggle({
       type="button"
       aria-pressed={on}
       disabled={blocked}
-      title={blocked ? "You can compare up to 3 Pairs" : undefined}
+      title={blocked ? "You can compare up to 3 Presets" : undefined}
       aria-label={on ? `Remove ${label} from the comparison` : `Compare ${label}`}
       onClick={() => toggle({ slug, label })}
       className={cn(

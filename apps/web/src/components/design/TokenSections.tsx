@@ -4,7 +4,7 @@ import { TermList } from "@/components/common/TermList";
 const PRINCIPLES = [
   [
     "Warm monochrome",
-    "Canvas, text and edges carry the page. One deep teal accent marks what is active. A Pair's own colors appear only inside its window.",
+    "Canvas, text and edges carry the page. One deep teal accent marks what is active. A Preset's own colors appear only inside its window.",
   ],
   [
     "One hairline",

@@ -1,7 +1,7 @@
 import { cn } from "cn";
 
 /**
- * A faint tile about the Registry: a Pair file, a Font and Theme pair, a Snapshot card
+ * A faint tile about the Registry: a Preset file, a Font and Theme Preset, a Snapshot card
  * and a list of rows. Decoration only: it sits behind the page heading.
  */
 export function RegistryPattern({
@@ -28,12 +28,12 @@ export function RegistryPattern({
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            {/* A Pair file: a page with a folded corner and lines of JSON */}
+            {/* A Preset file: a page with a folded corner and lines of JSON */}
             <path d="M18 16h22l10 10v34a3 3 0 0 1-3 3H18a3 3 0 0 1-3-3V19a3 3 0 0 1 3-3Z" />
             <path d="M40 16v10h10" />
             <path d="M23 36h6M23 43h18M23 50h12" />
 
-            {/* A Pair: a Font and a Theme, side by side */}
+            {/* A Preset: a Font and a Theme, side by side */}
             <circle cx="104" cy="36" r="13" />
             <circle
               cx="120"

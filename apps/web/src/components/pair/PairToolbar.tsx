@@ -16,11 +16,11 @@ export function PairToolbar({
     <div className="border-border bg-background/90 z-30 border-b backdrop-blur-sm sm:sticky sm:top-16">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
         <Link
-          to="/registry"
+          to="/presets"
           className="text-foreground inline-flex items-center gap-2 text-sm font-medium no-underline hover:underline"
         >
           <ArrowLeft aria-hidden className="size-4" />
-          <span className="max-sm:sr-only">Registry</span>
+          <span className="max-sm:sr-only">Presets</span>
         </Link>
         <nav
           aria-label="On this page"

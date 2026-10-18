@@ -12,7 +12,7 @@ const SEARCH_DEBOUNCE_MS = 200;
  * after a pause; every other change goes straight there. Any change to the filters goes back to page 1.
  */
 export function useRegistryFilters(search: RegistrySearch) {
-  const navigate = useNavigate({ from: "/registry/" });
+  const navigate = useNavigate({ from: "/presets/" });
   const [query, setQuery] = useState(search.q ?? "");
   const pushedQ = useRef(search.q);
 

@@ -3,9 +3,9 @@ import { GitHubStars } from "@/components/layout/GitHubStars";
 import { Mark } from "@/components/layout/Mark";
 
 const NAV = [
-  { to: "/registry", label: "Registry" },
+  { to: "/presets", label: "Presets" },
   { to: "/compare", label: "Compare" },
-  { to: "/studio", label: "Snapshot Studio" },
+  { to: "/studio", label: "Preset Studio" },
   { to: "/about", label: "About" },
 ] as const;
 

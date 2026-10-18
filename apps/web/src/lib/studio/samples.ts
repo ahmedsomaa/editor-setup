@@ -1,6 +1,6 @@
 /** A short intro to EditorSetup in each of a few languages, then longer samples that stress a code font and a theme. */
 export const SAMPLES: Record<string, string> = {
-  typescript: `// EditorSetup: Font and Theme Pairs you can preview and copy.
+  typescript: `// EditorSetup: Font and Theme Presets you can preview and copy.
 const pair = {
   project: "EditorSetup",
   font: "Geist Mono",
@@ -9,7 +9,7 @@ const pair = {
   functions: ["browse", "preview", "copy", "compare"],
 };
 
-console.log(pair.project, "-> preview a Pair, then copy it");
+console.log(pair.project, "-> preview a Preset, then copy it");
 console.log(pair.functions);
 // => ["browse", "preview", "copy", "compare"]
 const ok = pair.functions.length >= 4 && pair.theme !== "";
@@ -26,7 +26,7 @@ export function Badge({ name, count = 0 }: Props) {
     </button>
   );
 }`,
-  javascript: `// EditorSetup: Font and Theme Pairs you can preview and copy.
+  javascript: `// EditorSetup: Font and Theme Presets you can preview and copy.
 const pair = {
   project: "EditorSetup",
   font: "Geist Mono",
@@ -35,12 +35,12 @@ const pair = {
   functions: ["browse", "preview", "copy", "compare"],
 };
 
-console.log(pair.project, "-> preview a Pair, then copy it");
+console.log(pair.project, "-> preview a Preset, then copy it");
 console.log(pair.functions);
 // => ["browse", "preview", "copy", "compare"]
 const ok = pair.functions.length >= 4 && pair.theme !== "";
 console.log(ok); // => true`,
-  python: `# EditorSetup: Font and Theme Pairs you can preview and copy.
+  python: `# EditorSetup: Font and Theme Presets you can preview and copy.
 pair = {
     "project": "EditorSetup",
     "font": "Geist Mono",
@@ -49,13 +49,13 @@ pair = {
     "functions": ["browse", "preview", "copy", "compare"],
 }
 
-print(pair["project"], "-> preview a Pair, then copy it")
+print(pair["project"], "-> preview a Preset, then copy it")
 print(pair["functions"])
 # => ['browse', 'preview', 'copy', 'compare']
 ok = len(pair["functions"]) >= 4 and pair["theme"] != ""
 print(ok)  # => True`,
-  rust: `// EditorSetup: Font and Theme Pairs you can preview and copy.
-let pair = Pair {
+  rust: `// EditorSetup: Font and Theme Presets you can preview and copy.
+let pair = Preset {
     project: "EditorSetup",
     font: "Geist Mono",
     theme: "Vesper",
@@ -63,13 +63,13 @@ let pair = Pair {
     functions: ["browse", "preview", "copy", "compare"],
 };
 
-println!("{} -> preview a Pair, then copy it", pair.project);
+println!("{} -> preview a Preset, then copy it", pair.project);
 println!("{:?}", pair.functions);
 // => ["browse", "preview", "copy", "compare"]
 let ok = pair.functions.len() >= 4 && pair.theme != "";
 println!("{ok}"); // => true`,
-  go: `// EditorSetup: Font and Theme Pairs you can preview and copy.
-pair := Pair{
+  go: `// EditorSetup: Font and Theme Presets you can preview and copy.
+pair := Preset{
 	Project:   "EditorSetup",
 	Font:      "Geist Mono",
 	Theme:     "Vesper",
@@ -77,12 +77,12 @@ pair := Pair{
 	Functions: []string{"browse", "preview", "copy", "compare"},
 }
 
-fmt.Println(pair.Project, "-> preview a Pair, then copy it")
+fmt.Println(pair.Project, "-> preview a Preset, then copy it")
 fmt.Println(pair.Functions)
 // => [browse preview copy compare]
 ok := len(pair.Functions) >= 4 && pair.Theme != ""
 fmt.Println(ok) // => true`,
-  lua: `-- EditorSetup: Font and Theme Pairs you can preview and copy.
+  lua: `-- EditorSetup: Font and Theme Presets you can preview and copy.
 local pair = {
   project = "EditorSetup",
   font = "Geist Mono",
@@ -91,7 +91,7 @@ local pair = {
   functions = { "browse", "preview", "copy", "compare" },
 }
 
-print(pair.project, "-> preview a Pair, then copy it")
+print(pair.project, "-> preview a Preset, then copy it")
 print(table.concat(pair.functions, ", "))
 -- => browse, preview, copy, compare
 local ok = #pair.functions >= 4 and pair.theme ~= ""

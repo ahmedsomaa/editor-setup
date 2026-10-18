@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FaqSection } from "@/components/home/FaqSection";
 import { Hero } from "@/components/home/Hero";
 import { FeatureSections } from "@/components/home/FeatureSections";
-import { LicenseSection } from "@/components/home/LicenseSection";
 import { SharePairSection } from "@/components/home/SharePairSection";
 import { useHeroStage } from "@/components/home/useHeroStage";
 import { HOME_DESCRIPTION, HOME_TITLE, pageHead } from "@/lib/page-head";
@@ -30,11 +29,9 @@ function HomePage() {
         step={step}
       />
 
-      <LicenseSection />
+      <SharePairSection />
 
       <FaqSection />
-
-      <SharePairSection />
     </main>
   );
 }

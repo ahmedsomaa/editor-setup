@@ -1,17 +1,17 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  Camera,
-  Copy,
-  Search,
-  Scale,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CompareArt } from "@/components/home/CompareArt";
 import type { Colors } from "@/components/home/EditorArt";
 import { RegistryArt } from "@/components/home/RegistryArt";
 import { SettingsArt } from "@/components/home/SettingsArt";
+import {
+  ComparingVersionsSpot,
+  DuplicatingSettingsSpot,
+  RecordingSnapshotSpot,
+  SearchingListSpot,
+  type SpotProps,
+} from "@/components/home/SpotIcons";
 import { StudioVisual } from "@/components/home/StudioVisual";
 import { Reveal } from "@/components/layout/Reveal";
 import { Button } from "@/components/ui/button";
@@ -33,10 +33,10 @@ function Feature({
 }: {
   id: string;
   flip?: boolean;
-  icon: LucideIcon;
+  icon: (props: SpotProps) => ReactNode;
   title: string;
   body: string;
-  cta?: { label: string; to: "/registry" | "/compare" | "/studio" };
+  cta?: { label: string; to: "/presets" | "/compare" | "/studio" };
   children: ReactNode;
 }) {
   return (
@@ -53,8 +53,8 @@ function Feature({
           from={flip ? "end" : "start"}
           className={cn("min-w-0", flip && "lg:order-2")}
         >
-          <Icon aria-hidden className="size-8" />
-          <h2 id={id} className="mt-6 max-w-md">
+          <Icon className="-ml-2 size-28" />
+          <h2 id={id} className="mt-4 max-w-md">
             {title}
           </h2>
           <p className="text-muted-foreground mt-4 max-w-[44ch] text-lg">
@@ -91,9 +91,9 @@ export function FeatureSections({
   step,
 }: {
   pairs: PairRecord[];
-  /** The Pair the hero is showing, so the Registry art wears its Theme. */
+  /** The Preset the hero is showing, so the Registry art wears its Theme. */
   colors?: Colors;
-  /** Index of that Pair, so the Registry art moves with each change. */
+  /** Index of that Preset, so the Registry art moves with each change. */
   step?: number;
 }) {
   const open = pairs;
@@ -105,19 +105,19 @@ export function FeatureSections({
     <>
       <Feature
         id="find"
-        icon={Search}
-        title="Find a Pair"
-        body="Skip the guesswork. Filter by Appearance, License or Editor, and see each Font and Theme together before you commit."
-        cta={{ label: "Open Registry", to: "/registry" }}
+        icon={SearchingListSpot}
+        title="Take a look around."
+        body="See what we have so far. Search, or filter by Editor and Appearance to find one that suits you."
+        cta={{ label: "Open Presets", to: "/presets" }}
       >
         <RegistryArt colors={colors} step={step} />
       </Feature>
       <Feature
         id="compare"
         flip
-        icon={Scale}
-        title="Compare Pairs"
-        body={`Can’t pick? Line up to ${MAX_COMPARE} Pairs side by side and keep the one you would look at all day.`}
+        icon={ComparingVersionsSpot}
+        title="Can’t pick?"
+        body={`Line up to ${MAX_COMPARE} Presets side by side and keep the one you could look at all day.`}
         cta={{ label: "Open Compare", to: "/compare" }}
       >
         {darkArt && lightArt ? (
@@ -129,19 +129,19 @@ export function FeatureSections({
       </Feature>
       <Feature
         id="copy"
-        icon={Copy}
-        title="Copy the Settings"
-        body="Plain-text Settings for your editor. Paste a few lines and the look is yours."
+        icon={DuplicatingSettingsSpot}
+        title="Found your favorite?"
+        body="Copy its Settings, a few lines of plain text, and paste them into your editor."
       >
         <SettingsArt colors={colors} />
       </Feature>
       <Feature
         id="studio"
         flip
-        icon={Camera}
-        title="Make your own Snapshot"
-        body="Preview a Pair on your own code before you change your Settings. Like it? Save a Snapshot to share."
-        cta={{ label: "Open Snapshot Studio", to: "/studio" }}
+        icon={RecordingSnapshotSpot}
+        title="Couldn’t find what you’re looking for?"
+        body="Try Preset Studio. It comes with open Fonts and Themes, and you can bring your own."
+        cta={{ label: "Open Preset Studio", to: "/studio" }}
       >
         <StudioVisual pairs={pairs} />
       </Feature>

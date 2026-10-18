@@ -9,10 +9,10 @@ export const Route = createFileRoute("/studio")({
   head: () =>
     pageHead({
       path: "/studio",
-      name: "Snapshot Studio",
-      title: "Snapshot Studio: make a Snapshot of your Font and Theme",
+      name: "Preset Studio",
+      title: "Preset Studio: make a Snapshot of your Font and Theme",
       description:
-        "Pick an Open or Free Font and Theme, paste your code and save a 1600x900 Snapshot of your editor setup for your Registry pull request.",
+        "Pick an Open or Free Font and Theme, paste your code and save a 1600x900 Snapshot of your editor setup for your pull request.",
     }),
   // Only inputs that need the server drive the loader; theme id and language stay client-side.
   loaderDeps: ({ search: { font, themeUrl, editor } }) => ({

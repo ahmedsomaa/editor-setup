@@ -10,7 +10,7 @@ import {
 import { SnapshotImage } from "@/components/common/SnapshotImage";
 import { snapshotUrl } from "@/lib/registry/snapshots";
 
-/** The Registry as cards: each Pair's Snapshot above its Theme, Font and tags. */
+/** The Registry as cards: each Preset's Snapshot above its Theme, Font and tags. */
 export function PairGrid({ pairs }: { pairs: PairRecord[] }) {
   return (
     <ul className="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2">
@@ -36,7 +36,7 @@ export function PairGrid({ pairs }: { pairs: PairRecord[] }) {
 function PairCard({ pair }: { pair: PairRecord }) {
   return (
     <Link
-      to="/registry/$slug"
+      to="/presets/$slug"
       params={{ slug: pair.slug }}
       className="lift border-border bg-card flex h-full flex-col overflow-hidden rounded-xl border no-underline"
     >
@@ -65,7 +65,7 @@ function PairCard({ pair }: { pair: PairRecord }) {
   );
 }
 
-/** The Pair's Snapshot, window only; an "Aa" tile in the Pair's colours until one exists. */
+/** The Preset's Snapshot, window only; an "Aa" tile in the Preset's colours until one exists. */
 function CardImage({ pair }: { pair: PairRecord }) {
   const src = snapshotUrl(pair.snapshot);
   return src ? (

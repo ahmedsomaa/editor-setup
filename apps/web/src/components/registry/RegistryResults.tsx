@@ -15,9 +15,9 @@ export function RegistryResults({
   onClearFilters,
   onPageChange,
 }: {
-  /** Every Pair that matches the filters. */
+  /** Every Preset that matches the filters. */
   pairs: PairRecord[];
-  /** Every Pair in the Registry, matching or not. */
+  /** Every Preset in the Registry, matching or not. */
   total: number;
   query?: string;
   page?: number;
@@ -37,7 +37,7 @@ export function RegistryResults({
           className="m-0 flex flex-wrap items-baseline gap-x-3 text-4xl leading-none sm:text-5xl"
         >
           <span>
-            {pairs.length} {pairs.length === 1 ? "Pair" : "Pairs"}
+            {pairs.length} {pairs.length === 1 ? "Preset" : "Presets"}
           </span>
           {hasFilters ? (
             <span className="text-muted-foreground font-sans text-base font-normal">
@@ -56,10 +56,10 @@ export function RegistryResults({
         {pairs.length === 0 ? (
           <div className="border-border rounded-xl border border-dashed px-6 py-16">
             <p className="font-medium">
-              No Pairs match{query ? ` “${query}”` : ""}
+              No Presets match{query ? ` “${query}”` : ""}
             </p>
             <p className="text-muted-foreground mt-1 max-w-[50ch] text-sm">
-              Try another name, or clear the filters to see the whole Registry.
+              Try another name, or clear the filters to see every Preset.
             </p>
             <Button className="mt-6" variant="outline" onClick={onClearFilters}>
               Clear filters

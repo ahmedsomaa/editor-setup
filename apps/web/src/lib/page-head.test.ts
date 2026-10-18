@@ -5,10 +5,10 @@ const inRange = (s: string, min: number, max: number) => s.length >= min && s.le
 
 describe("pageHead", () => {
   test("ties og:url and the canonical link to one absolute URL", () => {
-    const { meta, links } = pageHead({ path: "/registry", title: "t", description: "d" });
+    const { meta, links } = pageHead({ path: "/presets", title: "t", description: "d" });
     const ogUrl = meta.find((m) => "property" in m && m.property === "og:url");
     expect(ogUrl && "content" in ogUrl ? ogUrl.content : "").toBe(links[0]!.href);
-    expect(links[0]!.href).toBe("https://editorsetup.som3aware.workers.dev/registry");
+    expect(links[0]!.href).toBe("https://editorsetup.som3aware.workers.dev/presets");
   });
 });
 

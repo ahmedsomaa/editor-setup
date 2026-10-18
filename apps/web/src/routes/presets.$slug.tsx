@@ -11,31 +11,31 @@ import { pairSearchSchema } from "@/lib/registry/registry-search";
 import { getPairFn, getRelatedPairsFn } from "@/server/pairs.functions";
 import { fitTitle, pageHead } from "@/lib/page-head";
 
-export const Route = createFileRoute("/registry/$slug")({
+export const Route = createFileRoute("/presets/$slug")({
   validateSearch: pairSearchSchema,
   loader: async ({ params }) => {
     const pair = await getPairFn({ data: { slug: params.slug } });
     if (!pair || pair.editors.length === 0) throw notFound();
-    // Not awaited: the page shell streams now, related Pairs follow in the same response.
+    // Not awaited: the page shell streams now, related Presets follow in the same response.
     const related = getRelatedPairsFn({ data: { slug: params.slug } });
     return { pair, related };
   },
-  // Per-Pair content worth indexing: full server render.
+  // Per-Preset content worth indexing: full server render.
   ssr: true,
   head: ({ loaderData }) => {
     const pair = loaderData?.pair;
     if (!pair) return {};
     const name = `${pair.theme.name} with ${pair.font.name}`;
     return pageHead({
-      path: `/registry/${pair.slug}`,
+      path: `/presets/${pair.slug}`,
       name,
       title: fitTitle([
-        `${name}: Font and Theme Pair · EditorSetup`,
-        `${name} · EditorSetup Font and Theme Pair`,
-        `${name}: Font and Theme Pair`,
+        `${name}: Font and Theme Preset · EditorSetup`,
+        `${name} · EditorSetup Font and Theme Preset`,
+        `${name}: Font and Theme Preset`,
         `${name} · EditorSetup`,
       ]),
-      description: `See ${name} in a real editor Snapshot, then copy the Settings for VS Code and Zed. A Font and Theme Pair from EditorSetup.`,
+      description: `See ${name} in a real editor Snapshot, then copy the Settings for VS Code and Zed. A Font and Theme Preset from EditorSetup.`,
     });
   },
   component: PairPage,

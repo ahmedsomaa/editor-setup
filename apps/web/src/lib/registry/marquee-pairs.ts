@@ -1,4 +1,4 @@
-/** Pairs from https://editorsetup.som3aware.workers.dev/registry — theme colors + font faces for the marquee. */
+/** Presets from https://editorsetup.som3aware.workers.dev/registry — theme colors + font faces for the marquee. */
 export type MarqueePair = {
   theme: string
   font: string
@@ -7,7 +7,7 @@ export type MarqueePair = {
   fg: string
 }
 
-/** Explore Pairs with an Open or Free Font, in site order. */
+/** Explore Presets with an Open or Free Font, in site order. */
 export const MARQUEE_PAIRS: readonly MarqueePair[] = [
   {
     theme: 'Gruvbox Light Hard',

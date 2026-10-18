@@ -8,7 +8,7 @@ import { snapshotUrl } from "@/lib/registry/snapshots";
 import { cn } from "cn";
 
 /**
- * The Registry as an index: one row per Pair, and a window beside it that
+ * The Registry as an index: one row per Preset, and a window beside it that
  * repaints in the colours and Font of whichever row you point at or focus.
  */
 export function Directory({
@@ -42,7 +42,7 @@ export function Directory({
         {pairs.map((pair) => (
           <li key={pair.slug} className="border-border border-b">
             <Link
-              to="/registry/$slug"
+              to="/presets/$slug"
               params={{ slug: pair.slug }}
               onMouseEnter={() => setActiveSlug(pair.slug)}
               onFocus={() => setActiveSlug(pair.slug)}
@@ -111,7 +111,7 @@ export function Directory({
   );
 }
 
-/** The Pair's Snapshot, window only; falls back to an "Aa" chip in the Pair's colours until one exists. */
+/** The Preset's Snapshot, window only; falls back to an "Aa" chip in the Preset's colours until one exists. */
 function CardImage({ pair }: { pair: PairRecord }) {
   const src = snapshotUrl(pair.snapshot);
   return src ? (

@@ -12,12 +12,12 @@ const ROWS = [
 
 const TAGS = { key: "var(--a-hl)", str: "var(--a-faint)", soft: "var(--a-tab)" } as const;
 
-/** Row each hero Pair lands on, and where the pointer rests on it, so the browsing does not read as a top-to-bottom scan. */
+/** Row each hero Preset lands on, and where the pointer rests on it, so the browsing does not read as a top-to-bottom scan. */
 const ROW_FOR = [0, 2, 1, 3] as const;
 const POINTER_X = [420, 250, 380, 190, 330] as const;
 
 /**
- * Decorative Registry: a highlight and a pointer move to a new row each time the hero changes Pair.
+ * Decorative Registry: a highlight and a pointer move to a new row each time the hero changes Preset.
  * It has no loop of its own, so the hero's pause button stops it too.
  */
 export function RegistryArt({
@@ -27,7 +27,7 @@ export function RegistryArt({
 }: {
   className?: string;
   colors?: Colors;
-  /** Index of the Pair the hero is showing. */
+  /** Index of the Preset the hero is showing. */
   step?: number;
 }) {
   const row = ROW_FOR[((step % ROW_FOR.length) + ROW_FOR.length) % ROW_FOR.length]!;

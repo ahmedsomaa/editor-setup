@@ -1,32 +1,32 @@
 import { Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  FileBracesCorner,
-  GitPullRequestArrow,
-  Image as ImageIcon,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { SECTION } from "@/components/home/section-styles";
+import {
+  PickingThemeSpot,
+  ReviewingPullRequestSpot,
+  SavingDocumentSpot,
+} from "@/components/home/SpotIcons";
 import { Reveal } from "@/components/layout/Reveal";
 import { Button } from "@/components/ui/button";
 import { ADD_PAIR_URL } from "@/lib/site";
 
-/** Last ask before the footer: the Pair file is the whole submission, so show one. */
+/** Last ask before the footer: the Preset file is the whole submission, so show one. */
 export function SharePairSection() {
   const steps = [
     {
-      icon: ImageIcon,
+      icon: PickingThemeSpot,
       title: "Make the Snapshot",
-      body: "Try your Font and Theme on your own code in Snapshot Studio, then save a 1600×900 image.",
+      body: "Try your Font and Theme on your own code in Preset Studio, then save a 1600×900 image.",
     },
     {
-      icon: FileBracesCorner,
-      title: "Add the Pair file",
-      body: "One JSON file with the Font, the Theme and the Settings, next to your Snapshot in the Registry.",
+      icon: SavingDocumentSpot,
+      title: "Add the Preset file",
+      body: "One JSON file with the Font, the Theme and the Settings, next to your Snapshot in the repository.",
     },
     {
-      icon: GitPullRequestArrow,
+      icon: ReviewingPullRequestSpot,
       title: "Open a pull request",
-      body: "Send both files on GitHub. Once it is merged, your Pair is in the Registry for everyone.",
+      body: "Send both files on GitHub. Once it is merged, your Preset is on the site for everyone.",
     },
   ];
 
@@ -34,10 +34,10 @@ export function SharePairSection() {
     <section className={SECTION} aria-labelledby="share">
       <div className="mx-auto max-w-6xl">
         <h2 id="share" className="max-w-md">
-          Share your Pair.
+          Share yours.
         </h2>
         <p className="text-muted-foreground mt-4 max-w-[48ch]">
-          Three steps, no account. Everything happens in a pull request.
+          Three steps, no account. Your Preset joins the others through a pull request.
         </p>
         <ol className="m-0 mt-12 grid list-none gap-4 p-0 md:grid-cols-3">
           {steps.map(({ icon: Icon, title, body }, i) => (
@@ -63,15 +63,15 @@ export function SharePairSection() {
                   {i + 1}
                 </text>
               </svg>
-              <Icon aria-hidden className="size-8" />
-              <h3 className="mt-8">{title}</h3>
+              <Icon className="-ml-2 size-24" />
+              <h3 className="mt-4">{title}</h3>
               <p className="text-muted-foreground mt-3">{body}</p>
             </Reveal>
           ))}
         </ol>
         <div className="mt-10 flex flex-wrap gap-3">
           <Button size="lg" nativeButton={false} render={<Link to="/studio" />}>
-            Open Snapshot Studio
+            Open Preset Studio
             <ArrowRight aria-hidden />
           </Button>
           <Button
@@ -82,7 +82,7 @@ export function SharePairSection() {
               <a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" />
             }
           >
-            Read the guide to adding a Pair
+            Read the guide to adding a Preset
           </Button>
         </div>
       </div>

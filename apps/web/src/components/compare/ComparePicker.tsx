@@ -16,7 +16,7 @@ import { cn } from "cn";
 
 const PAGE_SIZE = 6;
 
-/** Pick the Pairs to compare in a drawer: search and tick up to `max`. Each tick updates the page behind it. The page owns `open`, so any button can open it. */
+/** Pick the Presets to compare in a drawer: search and tick up to `max`. Each tick updates the page behind it. The page owns `open`, so any button can open it. */
 export function ComparePicker({
   pairs,
   values,
@@ -52,9 +52,9 @@ export function ComparePicker({
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Add Pairs</DrawerTitle>
+          <DrawerTitle>Add Presets</DrawerTitle>
           <DrawerDescription>
-            Pick up to {max} Pairs to line up side by side.
+            Pick up to {max} Presets to line up side by side.
           </DrawerDescription>
         </DrawerHeader>
 
@@ -70,7 +70,7 @@ export function ComparePicker({
                 setQ(e.target.value);
                 setPage(1);
               }}
-              aria-label="Search Pairs"
+              aria-label="Search Presets"
               placeholder="Search Font or Theme"
               autoComplete="off"
               spellCheck={false}
@@ -80,13 +80,13 @@ export function ComparePicker({
         </div>
 
         <ul
-          aria-label="Pairs"
+          aria-label="Presets"
           data-lenis-prevent
           className="m-0 min-h-0 flex-1 list-none overflow-y-auto overscroll-contain px-3 pb-3"
         >
           {shown.length === 0 ? (
             <li className="text-muted-foreground px-3 py-10 text-center text-sm">
-              No Pairs match. Clear a filter to see more.
+              No Presets match. Clear a filter to see more.
             </li>
           ) : null}
           {shown.map((p) => {

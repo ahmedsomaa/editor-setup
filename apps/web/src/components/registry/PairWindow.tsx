@@ -38,7 +38,7 @@ type PairWindowProps = {
   wrap?: boolean;
 };
 
-/** A window painted in one Pair's own colours and Font: the only saturated thing on a page. */
+/** A window painted in one Preset's own colours and Font: the only saturated thing on a page. */
 export function PairWindow({ pair, filename, lines, className, compact = false, wrap = false }: PairWindowProps) {
   const mix = (pct: number) => `color-mix(in srgb, ${pair.fg} ${pct}%, ${pair.bg})`;
   const tone = { k: mix(78), s: pair.fg, p: mix(45) } as const;

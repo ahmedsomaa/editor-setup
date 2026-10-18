@@ -64,7 +64,7 @@ export function LicenseTag({ license }: { license: License }) {
   );
 }
 
-/** One License for a whole Pair: Open only if both sides are Open. */
+/** One License for a whole Preset: Open only if both sides are Open. */
 export function PairLicenseTag({
   font,
   theme,

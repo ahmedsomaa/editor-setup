@@ -89,7 +89,7 @@ async function main() {
     const fontThemeKey = `${fontSlug}::${themeSlug}`;
     if (seenFontTheme.has(fontThemeKey)) {
       fail(
-        `${file}: duplicate Pair for Font+Theme already in ${seenFontTheme.get(fontThemeKey)}`,
+        `${file}: duplicate Preset for Font+Theme already in ${seenFontTheme.get(fontThemeKey)}`,
       );
     } else {
       seenFontTheme.set(fontThemeKey, file);

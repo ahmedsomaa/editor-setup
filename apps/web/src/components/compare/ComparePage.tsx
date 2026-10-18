@@ -10,7 +10,7 @@ import { MAX_COMPARE } from "@/lib/registry/compare-store";
 
 const MAX_PAIRS = MAX_COMPARE;
 
-/** Compare: up to three Pairs side by side through one Editor they all have a Config for. */
+/** Compare: up to three Presets side by side through one Editor they all have a Config for. */
 export function ComparePage() {
   const { pairs: all } = Route.useLoaderData();
   const { pairs: param } = Route.useSearch();
@@ -55,24 +55,24 @@ export function ComparePage() {
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
         {picked.length === 0 ? (
           <div className="border-border mt-6 rounded-xl border border-dashed px-6 py-16">
-            <p className="font-medium">No Pairs to compare yet</p>
+            <p className="font-medium">No Presets to compare yet</p>
             <p className="text-muted-foreground mt-1 max-w-[50ch] text-sm">
-              Add Pairs to line them up, or pick one from the{" "}
-              <Link to="/registry" className="text-foreground underline">
-                Registry
+              Add Presets to line them up, or pick one from the{" "}
+              <Link to="/presets" className="text-foreground underline">
+                Presets
               </Link>
               .
             </p>
             <Button className="mt-6" onClick={() => setPickerOpen(true)}>
               <Plus aria-hidden />
-              Add Pairs
+              Add Presets
             </Button>
           </div>
         ) : (
           <>
             <div className="mt-6 flex min-h-11 flex-wrap items-center justify-between gap-3">
               <p className="text-muted-foreground m-0 text-sm" role="status">
-                {picked.length} of {MAX_PAIRS} Pairs
+                {picked.length} of {MAX_PAIRS} Presets
               </p>
               <div className="flex items-center gap-2">
                 <Button variant="ghost" onClick={() => setSlugs([])}>
@@ -83,7 +83,7 @@ export function ComparePage() {
                   onClick={() => setPickerOpen(true)}
                 >
                   <Plus aria-hidden />
-                  Add Pairs
+                  Add Presets
                 </Button>
               </div>
             </div>
@@ -95,7 +95,7 @@ export function ComparePage() {
             />
             {picked.length === 1 ? (
               <p className="text-muted-foreground mt-6 text-sm" role="status">
-                Add another Pair to compare it side by side.
+                Add another Preset to compare it side by side.
               </p>
             ) : null}
           </>

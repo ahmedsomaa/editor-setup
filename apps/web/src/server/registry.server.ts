@@ -5,7 +5,7 @@ import { MARQUEE_PAIRS } from "@/lib/registry/marquee-pairs";
 import type { PairRecord, Submitter } from "@/lib/registry/pairs";
 
 /**
- * Registry data. Server only: the Pair JSON and submitter map stay out of the
+ * Registry data. Server only: the Preset JSON and submitter map stay out of the
  * client bundle. Everything is bundled at build time, so it runs unchanged on Workers.
  * The list is built by scanning registry/pairs/*.json, as the contribution guide says.
  */
@@ -21,7 +21,7 @@ function slugify(value: string): string {
     .replace(/^-|-$/g, "");
 }
 
-/** Colours and font stack used to paint a Pair on the site; the Pair JSON does not carry them. */
+/** Colours and font stack used to paint a Preset on the site; the Preset JSON does not carry them. */
 const STYLES = new Map<string, { fontFamily: string; bg: string; fg: string }>([
   [
     "inconsolata--vitesse-dark",
@@ -69,7 +69,7 @@ function toRecord(path: string, file: PairFile): PairRecord {
 
 const ALL: PairRecord[] = Object.entries(PAIR_FILES).map(([path, file]) => toRecord(path, file));
 
-/** Registry catalog: every Pair file on main. */
+/** Registry catalog: every Preset file on main. */
 export function listPairs(): PairRecord[] {
   return [...ALL].sort((a, b) => {
     const byFont = a.font.name.localeCompare(b.font.name);
@@ -81,7 +81,7 @@ export function getPairBySlug(slug: string): PairRecord | undefined {
   return listPairs().find((pair) => pair.slug === slug);
 }
 
-/** Same Font or Theme first, then same Appearance; never the Pair itself. */
+/** Same Font or Theme first, then same Appearance; never the Preset itself. */
 export function relatedPairs(slug: string, limit = 3): PairRecord[] {
   const all = listPairs();
   const current = all.find((p) => p.slug === slug);

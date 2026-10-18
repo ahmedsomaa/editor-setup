@@ -1,4 +1,4 @@
-/** Snapshot PNGs under registry/snapshots — keyed by filename from Pair Config. */
+/** Snapshot PNGs under registry/snapshots — keyed by filename from Preset Config. */
 const snapshotModules = import.meta.glob(
   "../../../../../registry/snapshots/*.png",
   { eager: true, query: "?url", import: "default" },

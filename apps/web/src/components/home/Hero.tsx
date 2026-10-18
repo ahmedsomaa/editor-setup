@@ -37,7 +37,7 @@ function PairChip({
   );
 }
 
-/** The first screen: headline, calls to action and a live preview that rotates through Pairs. */
+/** The first screen: headline, calls to action and a live preview that rotates through Presets. */
 export function Hero({ stage: s }: { stage: HeroStage }) {
   const { stagePairs, heroPair, stage, playing, setPlaying, choose } = s;
   return (
@@ -114,9 +114,9 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
               style={{ "--i": 1 } as React.CSSProperties}
               className="hero-in text-muted-foreground mt-6 w-0 min-w-full text-xl leading-relaxed"
             >
-              A curated list of font and theme pairings that just work. Preview
-              each setup before you try it, pick your favorite and copy the
-              config.
+              A growing list of Font and Theme Presets that developers have tried
+              and kept. Preview how each one feels, then copy its Settings into
+              your editor.
             </p>
           </div>
           <div
@@ -127,9 +127,9 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
               size="lg"
               className="h-13 px-6 text-base"
               nativeButton={false}
-              render={<Link to="/registry" />}
+              render={<Link to="/presets" />}
             >
-              Browse setups
+              Browse the Presets
               <ArrowRight aria-hidden />
             </Button>
             <Button
@@ -141,7 +141,7 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
                 <a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" />
               }
             >
-              Share a pair
+              Share a Preset
             </Button>
           </div>
         </div>
@@ -168,7 +168,7 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
           ) : null}
           <div
             role="group"
-            aria-label="Try a Pair"
+            aria-label="Try a Preset"
             className="mt-6 flex flex-wrap items-center justify-center gap-2"
           >
             <button

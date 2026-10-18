@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 
-/** Most Pairs one comparison holds. */
+/** Most Presets one comparison holds. */
 export const MAX_COMPARE = 3;
 
 export type CompareItem = { slug: string; label: string };
@@ -47,7 +47,7 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 
-/** The Pairs picked for comparison, kept across pages and visits. Empty on the server. */
+/** The Presets picked for comparison, kept across pages and visits. Empty on the server. */
 export function useCompare() {
   const selected = useSyncExternalStore(
     subscribe,

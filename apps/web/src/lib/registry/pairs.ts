@@ -14,7 +14,7 @@ export type EditorConfig = { id: EditorId; settings: string };
 
 export type PairRecord = {
   slug: string;
-  /** Set only when resolved from the merged PR (or git fallback) for a real Pair file. */
+  /** Set only when resolved from the merged PR (or git fallback) for a real Preset file. */
   submittedBy?: Submitter;
   font: {
     name: string;
@@ -30,7 +30,7 @@ export type PairRecord = {
     bg: string;
     fg: string;
   };
-  /** Filename under registry/snapshots. One image for the Pair, whatever the Editor. */
+  /** Filename under registry/snapshots. One image for the Preset, whatever the Editor. */
   snapshot: string;
   editors: EditorConfig[];
 };
@@ -50,7 +50,7 @@ export function resolveEditorId(
   if (preferred && getEditorConfig(pair, preferred)) return preferred;
   const first = pair.editors[0]?.id;
   if (!first) {
-    throw new Error(`Pair ${pair.slug} has no Editor Config`);
+    throw new Error(`Preset ${pair.slug} has no Editor Config`);
   }
   return first;
 }
@@ -89,7 +89,7 @@ export function filterPairs(
   });
 }
 
-/** How a Pair is named in dropdowns: Theme · Font. */
+/** How a Preset is named in dropdowns: Theme · Font. */
 export function pairLabel(pair: PairRecord): string {
   return `${pair.theme.name} · ${pair.font.name}`;
 }

@@ -10,9 +10,9 @@ export const Route = createFileRoute("/changelog")({
     pageHead({
       path: "/changelog",
       name: "Changelog",
-      title: "EditorSetup Changelog: new Pairs, pages and Editors",
+      title: "EditorSetup Changelog: new Presets, pages and Editors",
       description:
-        "Release notes for EditorSetup: new Pairs, pages and Editors, with the date of each change. See what is new in the Registry and Snapshot Studio.",
+        "Release notes for EditorSetup: new Presets, pages and Editors, with the date of each change. See what is new in Presets and Preset Studio.",
     }),
   component: Changelog,
 });
