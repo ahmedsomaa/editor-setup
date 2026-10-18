@@ -9,6 +9,7 @@ import { sampleFor } from "@/lib/studio/samples";
 import { buildSnapshotHtml } from "@/lib/theme/snapshot-html";
 import { download, renderPngs } from "@/lib/studio/export";
 import { buildPresetDraft, presetStem } from "@/lib/studio/preset-file";
+import type { CodeColors } from "./CodeEditor";
 import type { StudioTab } from "./PreviewPanel";
 import type { CustomFont, SetParam } from "./types";
 
@@ -49,6 +50,7 @@ export function useSnapshotStudio() {
     themeName: themeId,
     bg: "#000000",
   });
+  const [codeColors, setCodeColors] = useState<CodeColors | null>(null);
   const [tab, setTab] = useState<StudioTab>("preview");
   const [exporting, setExporting] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -109,6 +111,7 @@ export function useSnapshotStudio() {
       .then((h) => {
         if (cancelled) return;
         setMeta({ themeName: h.themeName, bg: h.bg });
+        setCodeColors({ bg: h.bg, fg: h.fg, lines: h.lines, text: hCode });
         setSrcDoc(buildSnapshotHtml({ ...h, faces, label, lang }));
         setStatus("idle");
         setError("");
@@ -200,6 +203,7 @@ export function useSnapshotStudio() {
     iframeRef,
     code,
     setCode,
+    codeColors,
     errors,
     exporting,
     exportDisabled: busy || exporting,

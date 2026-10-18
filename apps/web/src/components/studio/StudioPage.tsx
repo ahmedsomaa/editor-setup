@@ -27,6 +27,7 @@ export function StudioPage() {
             iframeRef={studio.iframeRef}
             code={studio.code}
             onCodeChange={studio.setCode}
+            codeColors={studio.codeColors}
             errors={studio.errors}
             exporting={studio.exporting}
             exportDisabled={studio.exportDisabled}

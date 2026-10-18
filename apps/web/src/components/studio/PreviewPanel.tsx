@@ -2,6 +2,7 @@ import type { RefObject } from "react";
 import { FileJson, ImageDown, LoaderCircle as Loader2 } from "lucide-react";
 import { cn } from "cn";
 import { Button } from "@/components/ui/button";
+import { CodeEditor, type CodeColors } from "./CodeEditor";
 import { Rendering } from "./chips";
 
 export type StudioTab = "preview" | "code";
@@ -19,6 +20,7 @@ export function PreviewPanel({
   iframeRef,
   code,
   onCodeChange,
+  codeColors,
   errors,
   exporting,
   exportDisabled,
@@ -31,6 +33,8 @@ export function PreviewPanel({
   iframeRef: RefObject<HTMLIFrameElement | null>;
   code: string;
   onCodeChange: (code: string) => void;
+  /** The Theme's colors for the code box; null until the first highlight is done. */
+  codeColors: CodeColors | null;
   errors: string[];
   exporting: boolean;
   exportDisabled: boolean;
@@ -136,18 +140,7 @@ export function PreviewPanel({
           <Rendering label="Snapshot" className="size-full" />
         )}
         {tab === "code" ? (
-          <textarea
-            data-lenis-prevent
-            aria-label="Code"
-            name="code"
-            value={code}
-            onChange={(e) => onCodeChange(e.target.value)}
-            placeholder="Paste or write your code here"
-            spellCheck={false}
-            wrap="off"
-            autoFocus
-            className="bg-card text-foreground placeholder:text-muted-foreground absolute inset-0 size-full resize-none border-0 p-5 font-mono text-sm leading-relaxed outline-none"
-          />
+          <CodeEditor code={code} onChange={onCodeChange} colors={codeColors} />
         ) : null}
       </div>
     </section>
