@@ -46,11 +46,9 @@ function PresetCard({ preset }: { preset: PresetRecord }) {
           <span className="block truncate font-medium" title={presetLabel(preset)}>
             {presetLabel(preset)}
           </span>
-          {preset.submittedBy ? (
-            <span className="text-muted-foreground block truncate font-sans text-sm">
-              by {preset.submittedBy.name}
-            </span>
-          ) : null}
+          <span className="text-muted-foreground block truncate font-sans text-sm">
+            by {preset.author.name}
+          </span>
         </span>
         <span className="mt-auto flex flex-wrap items-center gap-2">
           <span className="text-muted-foreground text-xs">

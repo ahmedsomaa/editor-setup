@@ -7,6 +7,7 @@
   "required": [
     "font",
     "theme",
+    "author",
     "snapshot",
     "editors"
   ],
@@ -76,6 +77,25 @@
             "dark",
             "light"
           ]
+        }
+      }
+    },
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
         }
       }
     },

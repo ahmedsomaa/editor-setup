@@ -48,6 +48,10 @@ _Avoid_: Free/paid, price, Paid
 The public page and list of every Preset whose file is on `main` with its Snapshot and at least one Config. Built by scanning the preset JSON files in the repository.
 _Avoid_: Registry, community page, directory, explore
 
+**Author**:
+The person credited on a Preset, written in its file as a name with an optional https link. Whoever adds the Preset chooses it, and the check does not verify it. Adding an Editor to an existing Preset keeps the original Author.
+_Avoid_: Submitter, Admin
+
 **Preset Studio**:
 The page on the site that makes a Snapshot from an Open or Free Font and Theme.
 _Avoid_: Snapshot Studio, Editor, generator
@@ -58,8 +62,8 @@ _Avoid_: Slider, overlay
 
 **Contribution**:
 A pull request that changes the project itself: site code, the preset check, scripts or docs. Adding a Preset is not a Contribution.
-_Avoid_: Submission, Author, Admin
+_Avoid_: Submission, Admin
 
 **Adding a Preset**:
 A pull request that adds a Preset file and its Snapshot, or adds an Editor to an existing Preset. There is no in-app form and no signed-in author on the site. Git history is the record.
-_Avoid_: Submission, Contribution, Author, Admin
+_Avoid_: Submission, Contribution, Admin

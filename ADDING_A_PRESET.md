@@ -39,6 +39,10 @@ Example Preset file:
     "license": "open",
     "appearance": "dark"
   },
+  "author": {
+    "name": "Your name",
+    "url": "https://github.com/your-username"
+  },
   "snapshot": "inconsolata--vitesse-dark.png",
   "editors": [
     {
@@ -63,6 +67,7 @@ Do not mix an unrelated Preset into the same pull request.
 ## ✅ Rules the check enforces
 
 - The file is named `<font-slug>--<theme-slug>.json`, from the Font and Theme names.
+- `author` has a `name` (required) and an optional `url` that starts with `https://`, such as your GitHub profile. It is the credit shown on the Preset page. Write the name you want shown; the check does not verify it.
 - `appearance` is `dark` or `light`.
 - License is `open` or `free` on the Font and on the Theme.
 - Font and Theme each need at least one publish link.
@@ -81,6 +86,5 @@ Do not mix an unrelated Preset into the same pull request.
 
 ## 🤖 What happens after you open a pull request
 
-- Once it merges, a maintainer refreshes the submitter list, and your Preset page then credits your GitHub name. You do not need to edit that file.
 
 - The **Preset check** runs on every pull request. A workflow from a first-time fork needs the maintainer to approve it first.

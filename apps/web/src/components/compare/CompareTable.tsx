@@ -42,8 +42,8 @@ export function CompareTable({
       cell: (p) => p.editors.map((e) => EDITOR_LABELS[e.id]).join(", "),
     },
     {
-      label: "Added by",
-      cell: (p) => (p.submittedBy ? `@${p.submittedBy.name}` : "Not recorded"),
+      label: "Author",
+      cell: (p) => p.author.name,
     },
   ];
 

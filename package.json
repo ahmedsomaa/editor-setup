@@ -5,7 +5,6 @@
   "packageManager": "bun@1.4.2",
   "scripts": {
     "check": "node packages/preset-check/check-presets.mjs",
-    "generate:submitters": "bun run scripts/resolve-preset-submitters.ts",
     "dev": "bun run --cwd apps/web dev",
     "build": "bun install --frozen-lockfile --cwd apps/web && bun run --cwd apps/web build && node scripts/write-deploy-redirect.mjs",
     "preview": "bun run --cwd apps/web preview",

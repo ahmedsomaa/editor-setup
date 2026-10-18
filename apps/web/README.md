@@ -51,7 +51,6 @@ src/
     theme/         Shiki highlighting, Zed and VS Code theme handling, Snapshot HTML
     studio/        Samples, search schema, font files, PNG export
   server/          Server functions and Preset loading
-  data/            preset-submitters.json, built by `bun run generate:submitters` from the repo root
 ```
 
 Machine-readable files are server routes beside the pages: `/rss.xml` (the changelog, from `lib/changelog.ts`), `/llms.txt` (a short hand-written map of the site for AI tools), `/sitemap.xml` (static pages plus every Preset) and `/robots.txt`. When you add a page, add it to `llms.txt` and the sitemap.

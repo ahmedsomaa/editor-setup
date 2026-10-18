@@ -4,9 +4,10 @@ export type EditorId = (typeof EDITOR_IDS)[number];
 export type License = "open" | "free";
 export type Appearance = "dark" | "light";
 
-export type Submitter = {
+/** Who made the Preset, as written in its file. The link is optional. */
+export type Author = {
   name: string;
-  url: string;
+  url?: string;
 };
 
 /** The Settings text for one Editor. */
@@ -15,7 +16,7 @@ export type EditorConfig = { id: EditorId; settings: string };
 export type PresetRecord = {
   slug: string;
   /** Set only when resolved from the merged PR (or git fallback) for a real Preset file. */
-  submittedBy?: Submitter;
+  author: Author;
   font: {
     name: string;
     links: string[];
@@ -80,7 +81,7 @@ export function filterPresets(
   return presets.filter((preset) => {
     if (needle) {
       const hay =
-        `${preset.font.name} ${preset.theme.name} ${preset.submittedBy?.name ?? ""}`.toLowerCase();
+        `${preset.font.name} ${preset.theme.name} ${preset.author.name}`.toLowerCase();
       if (!hay.includes(needle)) return false;
     }
     if (editor && !preset.editors.some((e) => e.id === editor)) return false;

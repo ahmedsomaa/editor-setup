@@ -66,7 +66,7 @@ export function PresetsFilters({
     >
       <label className="border-border bg-card focus-within:outline-ring flex h-11 min-w-0 shrink-0 items-center gap-2 rounded-full border px-4 md:flex-1 focus-within:outline-2 focus-within:outline-offset-2">
         <Search className="text-muted-foreground size-4 shrink-0" aria-hidden />
-        <span className="sr-only">Search by Font, Theme or submitter</span>
+        <span className="sr-only">Search by Font, Theme or author</span>
         <input
           ref={inputRef}
           type="search"

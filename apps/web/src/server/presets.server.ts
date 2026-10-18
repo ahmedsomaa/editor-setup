@@ -1,16 +1,13 @@
 import "@tanstack/react-start/server-only";
-import presetSubmitters from "@/data/preset-submitters.json";
 import { PRESET_FILES } from "./presets-files";
 import { MARQUEE_PRESETS } from "@/lib/presets/marquee-presets";
-import type { PresetRecord, Submitter } from "@/lib/presets/presets";
+import type { PresetRecord } from "@/lib/presets/presets";
 
 /**
- * Presets data. Server only: the Preset JSON and submitter map stay out of the
+ * Presets data. Server only: the Preset JSON stays out of the
  * client bundle. Everything is bundled at build time, so it runs unchanged on Workers.
  * The list is built by scanning presets/*.json, as the contribution guide says.
  */
-
-const SUBMITTERS = presetSubmitters as Record<string, { name: string; url: string }>;
 
 import type { PresetFile } from "./presets-files";
 
@@ -42,17 +39,12 @@ const FALLBACK_STYLE = {
   fg: "#d4d4d4",
 };
 
-function submitterFor(slug: string): Submitter | undefined {
-  const record = SUBMITTERS[slug];
-  return record ? { name: record.name, url: record.url } : undefined;
-}
-
 function toRecord(path: string, file: PresetFile): PresetRecord {
   const slug = path.split("/").pop()!.replace(/\.json$/, "");
   const style = STYLES.get(slug) ?? FALLBACK_STYLE;
   return {
     slug,
-    submittedBy: submitterFor(slug),
+    author: file.author,
     font: { name: file.font.name, links: file.font.links, license: file.font.license, fontFamily: style.fontFamily },
     theme: {
       name: file.theme.name,

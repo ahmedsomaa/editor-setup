@@ -3,6 +3,7 @@ import type { Appearance, EditorId, License } from "@/lib/presets/presets";
 export type PresetFile = {
   font: { name: string; links: string[]; license: License };
   theme: { name: string; links: string[]; license: License; appearance: Appearance };
+  author: { name: string; url?: string };
   snapshot: string;
   editors: Array<{ id: EditorId; settings: string }>;
 };
