@@ -29,6 +29,20 @@ export default function Footer() {
             <p className="text-muted-foreground mt-4 text-sm">
               Font and Theme Pairs from real setups, with Settings you can paste. Open source, kept in Git.
             </p>
+            <a
+              href="https://www.producthunt.com/products/editorsetup?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-editorsetup"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-block"
+            >
+              <img
+                alt="EditorSetup - The easiest way to make your editor look better. | Product Hunt"
+                width="250"
+                height="54"
+                loading="lazy"
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1284370&theme=light&t=1792334017554"
+              />
+            </a>
           </div>
 
           <nav aria-labelledby="footer-explore">
