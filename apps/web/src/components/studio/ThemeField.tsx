@@ -9,7 +9,7 @@ import type { SetParam } from "./types";
 const inputClass =
   "bg-muted border-border text-foreground placeholder:text-muted-foreground h-10 w-full rounded-full border px-4 text-[13px] disabled:opacity-50";
 
-/** Pick a preset Theme, or paste a link to a theme file under "Other" (always a link for Zed). */
+/** Pick a listed Theme, or paste a link to a theme file under "Other" (always a link for Zed). */
 export function ThemeField({
   editor,
   themeId,
@@ -36,12 +36,12 @@ export function ThemeField({
   variant: string | undefined;
   setParam: SetParam;
 }) {
-  // Presets are VS Code themes, so a Zed theme always comes from a link.
+  // The list holds VS Code themes, so a Zed theme always comes from a link.
   const linkOnly = editor === "zed";
   const showLink = linkOnly || other;
 
   return (
-    <Field legend={linkOnly ? "Theme" : "Theme preset"}>
+    <Field legend="Theme">
       {linkOnly ? null : (
         <div className="flex flex-col gap-1.5">
           <Combobox

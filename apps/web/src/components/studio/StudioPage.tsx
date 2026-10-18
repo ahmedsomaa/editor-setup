@@ -31,6 +31,7 @@ export function StudioPage() {
             exporting={studio.exporting}
             exportDisabled={studio.exportDisabled}
             onSavePng={studio.savePng}
+            onSaveJson={studio.savePresetJson}
           />
         </div>
       </div>

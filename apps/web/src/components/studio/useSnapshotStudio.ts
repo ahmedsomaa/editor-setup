@@ -8,16 +8,18 @@ import { zedToVscodeTheme, zedVariants } from "@/lib/theme/zed-theme";
 import { sampleFor } from "@/lib/studio/samples";
 import { buildSnapshotHtml } from "@/lib/theme/snapshot-html";
 import { download, renderPngs } from "@/lib/studio/export";
+import { buildPresetDraft, presetStem } from "@/lib/studio/preset-file";
 import type { StudioTab } from "./PreviewPanel";
 import type { CustomFont, SetParam } from "./types";
 
 const NO_FACES: FontFace[] = [];
 
-const slug = (s: string) =>
-  s
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+/** Dark when the background is closer to black than to white. */
+function isDark(hex: string): boolean {
+  const n = parseInt(hex.replace("#", "").slice(0, 6).padEnd(6, "0"), 16);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  return 0.299 * r + 0.587 * g + 0.114 * b < 128;
+}
 
 /**
  * Everything Preset Studio knows: the choices in the URL, the drafts being typed, and the preview
@@ -43,8 +45,9 @@ export function useSnapshotStudio() {
   const [srcDoc, setSrcDoc] = useState("");
   const [status, setStatus] = useState<"idle" | "busy" | "error">("busy");
   const [error, setError] = useState("");
-  const [meta, setMeta] = useState<Pick<Highlighted, "themeName">>({
+  const [meta, setMeta] = useState<Pick<Highlighted, "themeName" | "bg">>({
     themeName: themeId,
+    bg: "#000000",
   });
   const [tab, setTab] = useState<StudioTab>("preview");
   const [exporting, setExporting] = useState(false);
@@ -105,7 +108,7 @@ export function useSnapshotStudio() {
     highlight({ code: hCode, lang, themeId, customTheme })
       .then((h) => {
         if (cancelled) return;
-        setMeta({ themeName: h.themeName });
+        setMeta({ themeName: h.themeName, bg: h.bg });
         setSrcDoc(buildSnapshotHtml({ ...h, faces, label, lang }));
         setStatus("idle");
         setError("");
@@ -147,7 +150,7 @@ export function useSnapshotStudio() {
           "The preview is not ready yet. Wait a moment and try again.",
         );
       const { png } = await renderPngs(frame);
-      download(png, `${slug(displayFont)}--${slug(displayTheme)}.png`);
+      download(png, `${presetStem(displayFont, displayTheme)}.png`);
       setError("");
     } catch (e) {
       setStatus("error");
@@ -155,6 +158,17 @@ export function useSnapshotStudio() {
     } finally {
       setExporting(false);
     }
+  }
+
+  function savePresetJson() {
+    const builtIn = THEMES.find((t) => t.id === themeId);
+    const appearance = customTheme ? (isDark(meta.bg) ? "dark" : "light") : (builtIn?.type ?? "dark");
+    const json = buildPresetDraft({
+      editor,
+      font: { name: displayFont, listed: !custom },
+      theme: { name: displayTheme, appearance, url: customTheme ? themeUrl : undefined },
+    });
+    download(new Blob([json], { type: "application/json" }), `${presetStem(displayFont, displayTheme)}.json`);
   }
 
   // A pause in typing is still ahead of the colors: wait for them before the PNG is made.
@@ -190,5 +204,6 @@ export function useSnapshotStudio() {
     exporting,
     exportDisabled: busy || exporting,
     savePng,
+    savePresetJson,
   };
 }

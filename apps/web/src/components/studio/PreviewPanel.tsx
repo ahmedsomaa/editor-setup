@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import { ImageDown, LoaderCircle as Loader2 } from "lucide-react";
+import { FileJson, ImageDown, LoaderCircle as Loader2 } from "lucide-react";
 import { cn } from "cn";
 import { Button } from "@/components/ui/button";
 import { Rendering } from "./chips";
@@ -23,6 +23,7 @@ export function PreviewPanel({
   exporting,
   exportDisabled,
   onSavePng,
+  onSaveJson,
 }: {
   tab: StudioTab;
   onTabChange: (tab: StudioTab) => void;
@@ -34,6 +35,7 @@ export function PreviewPanel({
   exporting: boolean;
   exportDisabled: boolean;
   onSavePng: () => void;
+  onSaveJson: () => void;
 }) {
   return (
     <section
@@ -74,14 +76,20 @@ export function PreviewPanel({
             </button>
           ))}
         </div>
-        <Button size="sm" disabled={exportDisabled} onClick={onSavePng}>
-          {exporting ? (
-            <Loader2 className="animate-spin motion-reduce:animate-none" />
-          ) : (
-            <ImageDown />
-          )}
-          Save PNG
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="outline" disabled={exportDisabled} onClick={onSaveJson}>
+            <FileJson />
+            Save JSON
+          </Button>
+          <Button size="sm" disabled={exportDisabled} onClick={onSavePng}>
+            {exporting ? (
+              <Loader2 className="animate-spin motion-reduce:animate-none" />
+            ) : (
+              <ImageDown />
+            )}
+            Save PNG
+          </Button>
+        </div>
       </div>
 
       {errors.map((msg) => (

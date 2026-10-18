@@ -3,7 +3,7 @@ import { Upload, X } from "lucide-react";
 import { Combobox } from "@/components/common/Combobox";
 import { Button } from "@/components/ui/button";
 import {
-  FONT_PRESETS,
+  FONT_CHOICES,
   MAX_FONT_FILES,
   familyFromFile,
   readFace,
@@ -13,7 +13,7 @@ import { IconChip } from "./chips";
 import { FONT_OPTIONS, OTHER } from "./options";
 import type { CustomFont } from "./types";
 
-/** Pick a preset Font, or upload your own font files under "Other". */
+/** Pick a listed Font, or upload your own font files under "Other". */
 export function FontField({
   fontName,
   fontDraft,
@@ -27,7 +27,7 @@ export function FontField({
   onCustomChange: (custom: CustomFont | null) => void;
   onPick: (font: string) => void;
 }) {
-  const [other, setOther] = useState(() => !FONT_PRESETS.includes(fontName));
+  const [other, setOther] = useState(() => !FONT_CHOICES.includes(fontName));
   const [fileError, setFileError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -40,7 +40,7 @@ export function FontField({
       const typed = fontDraft.trim();
       onCustomChange({
         name:
-          typed && !FONT_PRESETS.includes(typed)
+          typed && !FONT_CHOICES.includes(typed)
             ? typed
             : familyFromFile(files[0]!.name),
         faces,

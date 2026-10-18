@@ -9,6 +9,7 @@ export const ENTRIES = [
       "A landing page that walks you through it: take a look around, compare, copy, make your own and share.",
       "Line illustrations for each step, and a footer that credits the tools behind the site.",
       "The License section is now a question in the FAQ.",
+      "Preset Studio can also save a draft of the Preset file, next to the PNG.",
       "Every Preset file now names its author, with optional contributors for Editor ports, and each Editor's Settings say who wrote them.",
     ],
   },

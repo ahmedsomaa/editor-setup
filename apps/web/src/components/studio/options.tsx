@@ -4,7 +4,7 @@ import { EditorLogo } from "@/components/common/EditorLogo";
 import { LANGUAGE_IDS, THEMES } from "@/lib/theme/highlight";
 import { EDITOR_IDS, EDITOR_LABELS } from "@/lib/presets/presets";
 import { SAMPLES } from "@/lib/studio/samples";
-import { FONT_PRESETS } from "@/lib/studio/font-files";
+import { FONT_CHOICES } from "@/lib/studio/font-files";
 import { OptionChip, ThemeSwatch } from "./chips";
 
 /** Value of the "Other" choice in the Font and Theme lists. */
@@ -17,7 +17,7 @@ export const EDITOR_OPTIONS: Option[] = EDITOR_IDS.map((id) => ({
 }));
 
 export const FONT_OPTIONS: Option[] = [
-  ...FONT_PRESETS.map((f) => ({
+  ...FONT_CHOICES.map((f) => ({
     id: f,
     label: f,
     group: "Fonts",
