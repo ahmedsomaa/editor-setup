@@ -31,4 +31,5 @@ bun run build       # production build
 - Do not mix a Preset into a Contribution. Send Presets separately, following [ADDING_A_PRESET.md](ADDING_A_PRESET.md).
 - Name what changed and why in the description. Add a screenshot for UI changes.
 - Changed something a visitor can see? Add an entry at the top of `apps/web/src/lib/changelog.ts`: a date, a short title and one line per change. There is no changelog bot, and the entry also feeds `/rss.xml`.
+- After a Preset merges, a maintainer runs `bun run generate:submitters` and commits `apps/web/src/data/preset-submitters.json` so the Preset page credits its author. It needs `gh auth login` and full git history.
 - A person merges. The **Preset check** runs on every pull request; a workflow from a first-time fork needs the maintainer to approve it first.

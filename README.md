@@ -23,7 +23,7 @@ bun run build       # production build
 bun run preview     # build + local Workers preview
 bun run deploy      # deploy to Cloudflare Workers
 bun run typecheck   # TypeScript check for apps/web
-bun run generate:submitters  # refresh apps/web/src/data/preset-submitters.json
+bun run generate:submitters  # refresh apps/web/src/data/preset-submitters.json (see below)
 ```
 
 📦 Site stack and deploy notes: [apps/web/README.md](apps/web/README.md). Cloudflare guide: [TanStack Start on Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/tanstack-start/).
@@ -34,6 +34,12 @@ bun run generate:submitters  # refresh apps/web/src/data/preset-submitters.json
 - 🚀 **Deploy** is handled by Cloudflare's Git integration, which ships `main` to Workers.
 - 📡 **Feeds** are built by the site: `/rss.xml` from the changelog, plus `/llms.txt`, `/sitemap.xml` and `/robots.txt`.
 - 📝 **Changelog** is written by hand, newest first, in `apps/web/src/lib/changelog.ts`. It feeds the Changelog page and `/rss.xml`.
+
+## 👤 Submitter credit
+
+Each Preset page shows who submitted it, read from `apps/web/src/data/preset-submitters.json`. The script finds the merged pull request that first added the Preset file and uses its author.
+
+After a Preset pull request merges, a maintainer pulls `main`, runs `bun run generate:submitters` and commits the updated JSON. Until then the new Preset has no submitter. The script needs `gh auth login` and full git history, so it does not work in a shallow clone.
 
 ## ➕ Adding a Preset
 

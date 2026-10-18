@@ -81,4 +81,6 @@ Do not mix an unrelated Preset into the same pull request.
 
 ## 🤖 What happens after you open a pull request
 
+- Once it merges, a maintainer refreshes the submitter list, and your Preset page then credits your GitHub name. You do not need to edit that file.
+
 - The **Preset check** runs on every pull request. A workflow from a first-time fork needs the maintainer to approve it first.
