@@ -15,7 +15,7 @@
     },
     {
       "id": 2,
-      "prompt": "I need a preview image for Geist Mono + Nord. theme link: https://github.com/nordtheme/visual-studio-code/blob/develop/themes/nord-color-theme.json . use a python snippet about parsing a csv of pairs",
+      "prompt": "I need a preview image for Geist Mono + Nord. theme link: https://github.com/nordtheme/visual-studio-code/blob/develop/themes/nord-color-theme.json . use a python snippet about parsing a csv of presets",
       "expected_output": "Theme loaded from the GitHub link via --theme-file, Nord colors, Geist Mono, Python snippet, three output files",
       "files": [],
       "assertions": [
@@ -27,13 +27,13 @@
     },
     {
       "id": 3,
-      "prompt": "generate the registry snapshot for Fira Code and Palenight Theme in cursor, rust snippet please",
-      "expected_output": "Palenight resolved to material-theme-palenight and reported; PNG written to registry/snapshots/fira-code--palenight-theme--cursor.png at 16:9 plus html",
+      "prompt": "generate the Preset snapshot for Fira Code and Palenight Theme in cursor, rust snippet please",
+      "expected_output": "Palenight resolved to material-theme-palenight and reported; PNG written to presets/snapshots/fira-code--palenight-theme--cursor.png at 16:9 plus html",
       "files": [],
       "assertions": [
         "html_exists_self_contained",
         "png_is_16_9",
-        "png_named_registry_convention",
+        "png_named_preset_convention",
         "palenight_bg_292d3e_in_html",
         "report_names_resolved_theme"
       ]

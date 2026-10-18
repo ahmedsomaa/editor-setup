@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { CompareArt } from "@/components/home/CompareArt";
 import type { Colors } from "@/components/home/EditorArt";
-import { RegistryArt } from "@/components/home/RegistryArt";
+import { PresetsArt } from "@/components/home/PresetsArt";
 import { SettingsArt } from "@/components/home/SettingsArt";
 import {
   ComparingVersionsSpot,
@@ -15,8 +15,8 @@ import {
 import { StudioVisual } from "@/components/home/StudioVisual";
 import { Reveal } from "@/components/layout/Reveal";
 import { Button } from "@/components/ui/button";
-import { MAX_COMPARE } from "@/lib/registry/compare-store";
-import type { PairRecord } from "@/lib/registry/pairs";
+import { MAX_COMPARE } from "@/lib/presets/compare-store";
+import type { PresetRecord } from "@/lib/presets/presets";
 import { cn } from "cn";
 
 const FEATURE = "border-border overflow-x-clip border-t px-4 py-24 sm:py-32";
@@ -86,17 +86,17 @@ function Feature({
 
 /** The four things the site does, each in its own section. */
 export function FeatureSections({
-  pairs,
+  presets,
   colors,
   step,
 }: {
-  pairs: PairRecord[];
-  /** The Preset the hero is showing, so the Registry art wears its Theme. */
+  presets: PresetRecord[];
+  /** The Preset the hero is showing, so the Presets page art wears its Theme. */
   colors?: Colors;
-  /** Index of that Preset, so the Registry art moves with each change. */
+  /** Index of that Preset, so the Presets page art moves with each change. */
   step?: number;
 }) {
-  const open = pairs;
+  const open = presets;
   const darkArt = open.find((p) => p.theme.appearance === "dark") ?? open[0];
   const lightArt =
     open.find((p) => p.theme.appearance === "light") ?? open[1] ?? open[0];
@@ -110,7 +110,7 @@ export function FeatureSections({
         body="See what we have so far. Search, or filter by Editor and Appearance to find one that suits you."
         cta={{ label: "Open Presets", to: "/presets" }}
       >
-        <RegistryArt colors={colors} step={step} />
+        <PresetsArt colors={colors} step={step} />
       </Feature>
       <Feature
         id="compare"
@@ -143,7 +143,7 @@ export function FeatureSections({
         body="Try Preset Studio. It comes with open Fonts and Themes, and you can bring your own."
         cta={{ label: "Open Preset Studio", to: "/studio" }}
       >
-        <StudioVisual pairs={pairs} />
+        <StudioVisual presets={presets} />
       </Feature>
     </>
   );

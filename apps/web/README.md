@@ -39,17 +39,17 @@ src/
   components/
     layout/        Header, Footer, page heroes, scroll and reveal helpers
     common/        Shared bits: Combobox, Tag, EditorLogo, SnapshotImage, ShareButton
-    registry/      Registry list: Directory, PairGrid, PairWindow, Pagination
-    pair/          Preset page parts: EditorSwitch, PairDetail, CopySettings
+    presets/      Presets list: Directory, PresetGrid, PresetWindow, Pagination
+    preset/          Preset page parts: EditorSwitch, PresetDetail, CopySettings
     compare/       Compare page, picker, toggle and tray
     studio/        Preset Studio: StudioPage, FontField, ThemeField, PreviewPanel
     home/          Home page sections and their art
     ui/            shadcn/ui primitives
   lib/
-    registry/      Preset model, search params, snapshots, compare store
+    presets/      Preset model, search params, snapshots, compare store
     theme/         Shiki highlighting, Zed and VS Code theme handling, Snapshot HTML
     studio/        Samples, search schema, font files, PNG export
-  server/          Server functions and registry loading
+  server/          Server functions and Preset loading
 ```
 
 Machine-readable files are server routes beside the pages: `/rss.xml` (the changelog, from `lib/changelog.ts`), `/llms.txt` (a short hand-written map of the site for AI tools), `/sitemap.xml` (static pages plus every Preset) and `/robots.txt`. When you add a page, add it to `llms.txt` and the sitemap.

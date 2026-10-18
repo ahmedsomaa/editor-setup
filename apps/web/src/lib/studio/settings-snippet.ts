@@ -1,14 +1,14 @@
-import type { EditorId } from "@/lib/registry/pairs";
+import type { EditorId } from "@/lib/presets/presets";
 
 export type TokenKind = "k" | "s" | "p";
 export type CodeLine = ReadonlyArray<readonly [string, TokenKind]>;
 
-type SnippetPair = { theme: string; font: string };
+type SnippetPreset = { theme: string; font: string };
 
-/** Illustrative Settings for the landing page; real Configs live in the Registry. */
+/** Illustrative Settings for the landing page; real Configs live on the Presets page. */
 export function settingsFor(
   editor: EditorId,
-  { theme, font }: SnippetPair,
+  { theme, font }: SnippetPreset,
 ): { filename: string; lines: CodeLine[] } {
   if (editor === "zed") {
     return {

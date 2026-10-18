@@ -4,7 +4,7 @@
 // the typeface is embedded as base64 so the HTML looks the same everywhere.
 //
 // Usage: bun render.mjs --code-file snippet.py --lang python \
-//          --font "JetBrains Mono" --theme "Gruvbox Dark Hard" --out ./out --name pair
+//          --font "JetBrains Mono" --theme "Gruvbox Dark Hard" --out ./out --name preset
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 import { createHighlighter, bundledThemes, bundledLanguages } from "shiki";

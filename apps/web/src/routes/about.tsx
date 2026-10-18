@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/layout/PagePattern";
 import {
-  AddPairSection,
+  AddPresetSection,
   CreditsSection,
   LicensesSection,
   TermsSection,
@@ -32,7 +32,7 @@ function About() {
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
         <TermsSection />
         <LicensesSection />
-        <AddPairSection />
+        <AddPresetSection />
         <CreditsSection />
       </div>
     </main>

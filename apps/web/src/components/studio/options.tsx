@@ -2,7 +2,7 @@ import { Link2, Upload } from "lucide-react";
 import type { Option } from "@/components/common/Combobox";
 import { EditorLogo } from "@/components/common/EditorLogo";
 import { LANGUAGE_IDS, THEMES } from "@/lib/theme/highlight";
-import { EDITOR_IDS, EDITOR_LABELS } from "@/lib/registry/pairs";
+import { EDITOR_IDS, EDITOR_LABELS } from "@/lib/presets/presets";
 import { SAMPLES } from "@/lib/studio/samples";
 import { FONT_PRESETS } from "@/lib/studio/font-files";
 import { OptionChip, ThemeSwatch } from "./chips";

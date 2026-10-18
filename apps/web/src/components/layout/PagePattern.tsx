@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "cn";
 
-type Variant = "compare" | "studio" | "about" | "pair";
+type Variant = "compare" | "studio" | "about" | "preset";
 
 const G = {
   fill: "none",
@@ -118,7 +118,7 @@ const TILES: Record<Variant, ReactNode> = {
     </g>
   ),
   // A Font and a Theme as one Preset, a colour swatch row and a line of code.
-  pair: (
+  preset: (
     <g {...G}>
       <circle cx="30" cy="34" r="14" />
       <circle

@@ -1,33 +1,33 @@
 import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
-import { PairDetails } from "@/components/pair/PairDetails";
-import { PairHeader } from "@/components/pair/PairHeader";
-import { PairNotFound } from "@/components/pair/PairNotFound";
-import { PairSettings } from "@/components/pair/PairSettings";
-import { PairSnapshot } from "@/components/pair/PairSnapshot";
-import { PairToolbar } from "@/components/pair/PairToolbar";
-import { RelatedPairs } from "@/components/pair/RelatedPairs";
-import { getEditorConfig, resolveEditorId } from "@/lib/registry/pairs";
-import { pairSearchSchema } from "@/lib/registry/registry-search";
-import { getPairFn, getRelatedPairsFn } from "@/server/pairs.functions";
+import { PresetDetails } from "@/components/preset/PresetDetails";
+import { PresetHeader } from "@/components/preset/PresetHeader";
+import { PresetNotFound } from "@/components/preset/PresetNotFound";
+import { PresetSettings } from "@/components/preset/PresetSettings";
+import { PresetSnapshot } from "@/components/preset/PresetSnapshot";
+import { PresetToolbar } from "@/components/preset/PresetToolbar";
+import { RelatedPresets } from "@/components/preset/RelatedPresets";
+import { getEditorConfig, resolveEditorId } from "@/lib/presets/presets";
+import { presetSearchSchema } from "@/lib/presets/presets-search";
+import { getPresetFn, getRelatedPresetsFn } from "@/server/presets.functions";
 import { fitTitle, pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/presets/$slug")({
-  validateSearch: pairSearchSchema,
+  validateSearch: presetSearchSchema,
   loader: async ({ params }) => {
-    const pair = await getPairFn({ data: { slug: params.slug } });
-    if (!pair || pair.editors.length === 0) throw notFound();
+    const preset = await getPresetFn({ data: { slug: params.slug } });
+    if (!preset || preset.editors.length === 0) throw notFound();
     // Not awaited: the page shell streams now, related Presets follow in the same response.
-    const related = getRelatedPairsFn({ data: { slug: params.slug } });
-    return { pair, related };
+    const related = getRelatedPresetsFn({ data: { slug: params.slug } });
+    return { preset, related };
   },
   // Per-Preset content worth indexing: full server render.
   ssr: true,
   head: ({ loaderData }) => {
-    const pair = loaderData?.pair;
-    if (!pair) return {};
-    const name = `${pair.theme.name} with ${pair.font.name}`;
+    const preset = loaderData?.preset;
+    if (!preset) return {};
+    const name = `${preset.theme.name} with ${preset.font.name}`;
     return pageHead({
-      path: `/presets/${pair.slug}`,
+      path: `/presets/${preset.slug}`,
       name,
       title: fitTitle([
         `${name}: Font and Theme Preset · EditorSetup`,
@@ -38,25 +38,25 @@ export const Route = createFileRoute("/presets/$slug")({
       description: `See ${name} in a real editor Snapshot, then copy the Settings for VS Code and Zed. A Font and Theme Preset from EditorSetup.`,
     });
   },
-  component: PairPage,
-  notFoundComponent: PairNotFound,
+  component: PresetPage,
+  notFoundComponent: PresetNotFound,
 });
 
-function PairPage() {
-  const { pair, related } = Route.useLoaderData();
+function PresetPage() {
+  const { preset, related } = Route.useLoaderData();
   const { editor: editorParam } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
-  const editorId = resolveEditorId(pair, editorParam);
-  const config = getEditorConfig(pair, editorId) ?? pair.editors[0]!;
+  const editorId = resolveEditorId(preset, editorParam);
+  const config = getEditorConfig(preset, editorId) ?? preset.editors[0]!;
 
   return (
     <main id="main">
-      <PairToolbar pair={pair} settings={config.settings} />
-      <PairHeader pair={pair} />
+      <PresetToolbar preset={preset} settings={config.settings} />
+      <PresetHeader preset={preset} />
       <div className="mx-auto w-full max-w-6xl px-4 pb-12 sm:pb-20">
-        <PairSnapshot pair={pair} config={config} />
-        <PairSettings
-          pair={pair}
+        <PresetSnapshot preset={preset} config={config} />
+        <PresetSettings
+          preset={preset}
           config={config}
           onSelectEditor={(id) =>
             void navigate({
@@ -66,8 +66,8 @@ function PairPage() {
             })
           }
         />
-        <PairDetails pair={pair} />
-        <RelatedPairs related={related} />
+        <PresetDetails preset={preset} />
+        <RelatedPresets related={related} />
       </div>
     </main>
   );

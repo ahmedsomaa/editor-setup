@@ -7,9 +7,9 @@ A git-backed list of monospace Font and Theme Presets for code editors. Anyone c
 ## 🗂️ Layout
 
 ```text
-registry/                 # Preset JSON + Snapshots (PR surface)
+presets/                  # Preset JSON + Snapshots (PR surface)
 apps/web/                 # TanStack Start + shadcn (Cloudflare Workers)
-packages/registry-check/  # Schema + image checks
+packages/preset-check/    # Schema + image checks
 docs/                     # Agent conventions and ADRs
 .scratch/                 # Specs, issues, archived experiments
 ```
@@ -17,13 +17,13 @@ docs/                     # Agent conventions and ADRs
 ## ⌨️ Commands
 
 ```bash
-bun run check       # validate registry/
+bun run check       # validate presets/
 bun run dev         # TanStack Start in apps/web
 bun run build       # production build
 bun run preview     # build + local Workers preview
 bun run deploy      # deploy to Cloudflare Workers
 bun run typecheck   # TypeScript check for apps/web
-bun run generate:submitters  # refresh apps/web/src/data/pair-submitters.json
+bun run generate:submitters  # refresh apps/web/src/data/preset-submitters.json
 ```
 
 📦 Site stack and deploy notes: [apps/web/README.md](apps/web/README.md). Cloudflare guide: [TanStack Start on Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/tanstack-start/).
@@ -37,7 +37,7 @@ bun run generate:submitters  # refresh apps/web/src/data/pair-submitters.json
 
 ## ➕ Adding a Preset
 
-See [ADDING_A_PAIR.md](ADDING_A_PAIR.md).
+See [ADDING_A_PRESET.md](ADDING_A_PRESET.md).
 
 ## 🤝 Contributing
 

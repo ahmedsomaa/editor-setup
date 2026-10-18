@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { Route } from "@/routes/studio";
 import { THEMES, highlight, type Highlighted } from "@/lib/theme/highlight";
 import { DEFAULTS, type FontFace } from "@/lib/studio/schemas";
-import type { EditorId } from "@/lib/registry/pairs";
+import type { EditorId } from "@/lib/presets/presets";
 import { zedToVscodeTheme, zedVariants } from "@/lib/theme/zed-theme";
 import { sampleFor } from "@/lib/studio/samples";
 import { buildSnapshotHtml } from "@/lib/theme/snapshot-html";

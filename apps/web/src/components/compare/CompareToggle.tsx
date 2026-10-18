@@ -1,5 +1,5 @@
 import { Check, Plus } from "lucide-react";
-import { useCompare } from "@/lib/registry/compare-store";
+import { useCompare } from "@/lib/presets/compare-store";
 import { cn } from "cn";
 
 /** Adds or removes a Preset from the compare tray. Three at most. */

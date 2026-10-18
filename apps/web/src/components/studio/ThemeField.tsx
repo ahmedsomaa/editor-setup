@@ -1,6 +1,6 @@
 import { Link2 } from "lucide-react";
 import { Combobox } from "@/components/common/Combobox";
-import type { EditorId } from "@/lib/registry/pairs";
+import type { EditorId } from "@/lib/presets/presets";
 import { Field } from "./Field";
 import { IconChip } from "./chips";
 import { OTHER, THEME_OPTIONS } from "./options";

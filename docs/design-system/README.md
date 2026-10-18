@@ -1,6 +1,6 @@
 ## Principles
 
-- Warm monochrome. Canvas `background`, text `foreground`, edges `border`. Colour is scarce: `accent` (deep teal) marks the active nav label and the selected list option, and a Preset's own colours appear only inside `PairWindow` and Preset chips.
+- Warm monochrome. Canvas `background`, text `foreground`, edges `border`. Colour is scarce: `accent` (deep teal) marks the active nav label and the selected list option, and a Preset's own colours appear only inside `PresetWindow` and Preset chips.
 - One hairline everywhere. Separate sections with a 1px `border` rule, draw cards as `card` + 1px `border` at `radius-xl`, and never nest a card in a card.
 - Shapes. Anything you press or type into is `radius-pill`: buttons, tabs, inputs, selects, tags, Anything that holds content is `radius-xl`.
 - Flat. No gradients, no glass, no heavy shadows. The one exception is a dot pattern (`.bg-pattern`, `foreground` at 16%, 22px pitch) that fades out behind a hero or closing block.
@@ -18,7 +18,7 @@
 
 ## Visual foundations
 
-- **Colour.** Light is default; dark swaps every token. `muted-foreground` for secondary text on `background` and `card` only. Selected state is never colour alone: pair `accent-soft` or a border with a check mark.
+- **Colour.** Light is default; dark swaps every token. `muted-foreground` for secondary text on `background` and `card` only. Selected state is never colour alone: preset `accent-soft` or a border with a check mark.
 - **Type.** Instrument Serif 400 for headings (`display-hero`, `display-title`, `display-card`), tracking -0.02em to -0.03em, line height 1.1. Geist for everything else, line height 1.6. Geist Mono for code. Body copy stays under 60 characters a line.
 - **Layout.** One centred column, 64rem wide (`max-w-5xl`), 16px gutters, sections 64px (mobile) and 96px (desktop) apart and divided by one rule. The nav bar is a three-part grid: logo left, links centred, GitHub stars right. There is no call-to-action in the nav and no theme switch: Light, Dark and System live in the footer. The hero fills the viewport and is centred, with the hook on one line; everything else is left-aligned. The footer follows opensourceui.in: brand and one sentence, three link columns, a rule, copyright with the theme switch, and a faded serif wordmark. Preset Studio is the one full-width screen.
 - **Directory rows.** The Presets page is a list, not a card grid: one row per Preset with the Preset's Snapshot cropped to the code window (80px wide), the Theme name, the Font name in its own face, and tags. Pointing at or focusing a row repaints a window beside it.
@@ -40,7 +40,7 @@ Phosphor, bold weight, 16px in buttons, `foreground` or `muted-foreground`. No e
 - Nav: inactive `muted-foreground`; active label `accent-text` on `muted`, plus `aria-current`.
 - Tags: pill, 12px, uppercase, 0.05em tracking, 24px tall. Each carries an icon. Open License: `pastel-green` with an open padlock. Free License: `pastel-amber` with a gift. Appearance: `muted`, with a sun or moon.
 - Cards and bento tiles: `card`, 1px `border`, `radius-xl`, 24px to 32px padding.
-- Components: Button, Tabs, Tag, Logo, ThemeSwitch, PairWindow, DirectoryRow. Consumers provide the Preset (theme name, background, text colour, Font family, Settings text).
+- Components: Button, Tabs, Tag, Logo, ThemeSwitch, PresetWindow, DirectoryRow. Consumers provide the Preset (theme name, background, text colour, Font family, Settings text).
 
 ## Accessibility
 

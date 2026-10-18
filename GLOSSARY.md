@@ -7,8 +7,8 @@ A git-backed list of monospace Font and Theme Presets for code editors, each wit
 ### Presets and Configs
 
 **Preset**:
-One Font combined with one Theme, and at most one for any Font and Theme. It lives as one JSON file in the registry and appears on the site when that file is on `main`, has its Snapshot, and has at least one Config.
-_Avoid_: Pair, pairing, combo, setup
+One Font combined with one Theme, and at most one for any Font and Theme. It lives as one JSON file in the repository and appears on the site when that file is on `main`, has its Snapshot, and has at least one Config.
+_Avoid_: Pair, Look, pairing, combo, setup
 
 **Font**:
 A monospace typeface family as its foundry publishes it. Patched builds such as Nerd Fonts are the same Font; sibling families such as Monaspace Neon and Monaspace Argon are different Fonts. People find a Font through links to where it is published.
@@ -45,7 +45,7 @@ The terms a Font or Theme is available under: Open (an open license such as OFL 
 _Avoid_: Free/paid, price, Paid
 
 **Presets**:
-The public page and list of every Preset whose file is on `main` with its Snapshot and at least one Config. Built by scanning the pair JSON files in the repository.
+The public page and list of every Preset whose file is on `main` with its Snapshot and at least one Config. Built by scanning the preset JSON files in the repository.
 _Avoid_: Registry, community page, directory, explore
 
 **Preset Studio**:
@@ -57,7 +57,7 @@ Two or more Presets shown side by side through their Snapshots.
 _Avoid_: Slider, overlay
 
 **Contribution**:
-A pull request that changes the project itself: site code, the registry check, scripts or docs. Adding a Preset is not a Contribution.
+A pull request that changes the project itself: site code, the preset check, scripts or docs. Adding a Preset is not a Contribution.
 _Avoid_: Submission, Author, Admin
 
 **Adding a Preset**:

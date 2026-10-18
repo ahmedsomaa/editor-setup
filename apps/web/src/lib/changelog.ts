@@ -4,7 +4,7 @@ export const ENTRIES = [
     date: "2026-10-18",
     title: "Presets and a new landing story",
     changes: [
-      "Pairs are now called Presets, and Snapshot Studio is now Preset Studio.",
+      "Presets are now called Presets, and Snapshot Studio is now Preset Studio.",
       "The Registry is now the Presets page at /presets. Old /registry links redirect.",
       "A landing page that walks you through it: take a look around, compare, copy, make your own and share.",
       "Line illustrations for each step, and a footer that credits the tools behind the site.",

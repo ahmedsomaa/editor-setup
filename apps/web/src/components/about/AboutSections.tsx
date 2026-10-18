@@ -3,7 +3,7 @@ import { LicenseTag } from "@/components/common/Tag";
 import { TermList } from "@/components/common/TermList";
 import { Reveal } from "@/components/layout/Reveal";
 import { Button } from "@/components/ui/button";
-import { ADD_PAIR_URL, GITHUB_URL } from "@/lib/site";
+import { ADD_PRESET_URL, GITHUB_URL } from "@/lib/site";
 
 const TERMS = [
   [
@@ -62,7 +62,7 @@ export function LicensesSection() {
   );
 }
 
-export function AddPairSection() {
+export function AddPresetSection() {
   return (
     <Reveal as="section" className="mt-20" aria-labelledby="add">
       <h2 id="add">Add a Preset</h2>
@@ -74,7 +74,7 @@ export function AddPairSection() {
       <div className="mt-8 flex flex-wrap gap-3">
         <Button
           nativeButton={false}
-          render={<a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" />}
+          render={<a href={ADD_PRESET_URL} target="_blank" rel="noreferrer" />}
         >
           Read the guide to adding a Preset
           <ArrowUpRight aria-hidden />

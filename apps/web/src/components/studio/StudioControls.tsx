@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { Combobox } from "@/components/common/Combobox";
-import type { EditorId } from "@/lib/registry/pairs";
+import type { EditorId } from "@/lib/presets/presets";
 import { Field } from "./Field";
 import { FontField } from "./FontField";
 import { ThemeField } from "./ThemeField";

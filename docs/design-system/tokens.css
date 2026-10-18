@@ -22,12 +22,12 @@
   --pastel-red: #fdebec;
   --pastel-red-text: #9f2f2d;
   --destructive: #9f2f2d;
-  --pair-palenight-bg: #292d3e;
-  --pair-palenight-fg: #a6accd;
-  --pair-gruvbox-bg: #1d2021;
-  --pair-gruvbox-fg: #ebdbb2;
-  --pair-aura-bg: #29263c;
-  --pair-aura-fg: #a277ff;
+  --preset-palenight-bg: #292d3e;
+  --preset-palenight-fg: #a6accd;
+  --preset-gruvbox-bg: #1d2021;
+  --preset-gruvbox-fg: #ebdbb2;
+  --preset-aura-bg: #29263c;
+  --preset-aura-fg: #a277ff;
   --shadow-raised: 0 0 0 transparent;
   --shadow-overlay: 0 2px 8px rgba(0,0,0,0.04);
 }
@@ -54,12 +54,12 @@
   --pastel-red: #331a1a;
   --pastel-red-text: #f0908e;
   --destructive: #f0908e;
-  --pair-palenight-bg: #292d3e;
-  --pair-palenight-fg: #a6accd;
-  --pair-gruvbox-bg: #1d2021;
-  --pair-gruvbox-fg: #ebdbb2;
-  --pair-aura-bg: #29263c;
-  --pair-aura-fg: #a277ff;
+  --preset-palenight-bg: #292d3e;
+  --preset-palenight-fg: #a6accd;
+  --preset-gruvbox-bg: #1d2021;
+  --preset-gruvbox-fg: #ebdbb2;
+  --preset-aura-bg: #29263c;
+  --preset-aura-fg: #a277ff;
   --shadow-raised: 0 0 0 transparent;
   --shadow-overlay: 0 2px 8px rgba(0,0,0,0.3);
 }

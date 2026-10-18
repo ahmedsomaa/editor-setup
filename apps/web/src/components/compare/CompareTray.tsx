@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowLeftRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { MAX_COMPARE, useCompare } from "@/lib/registry/compare-store";
+import { MAX_COMPARE, useCompare } from "@/lib/presets/compare-store";
 
 /**
  * The compare tray: Presets you add with a "Compare" button collect here, on every page,
@@ -53,7 +53,7 @@ export function CompareTray() {
           render={
             <Link
               to="/compare"
-              search={{ pairs: selected.map((i) => i.slug).join(",") }}
+              search={{ presets: selected.map((i) => i.slug).join(",") }}
             />
           }
         >

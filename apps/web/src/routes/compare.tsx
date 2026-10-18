@@ -1,17 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { ComparePage } from "@/components/compare/ComparePage";
-import { listPairsFn } from "@/server/pairs.functions";
+import { listPresetsFn } from "@/server/presets.functions";
 
 export const compareSearchSchema = z.object({
   /** Comma-separated Preset slugs. Missing means "start with the first two"; empty means none. */
-  pairs: z.string().max(600).optional().catch(undefined),
+  presets: z.string().max(600).optional().catch(undefined),
 });
 import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/compare")({
   validateSearch: compareSearchSchema,
-  loader: () => listPairsFn({ data: {} }),
+  loader: () => listPresetsFn({ data: {} }),
   head: () =>
     pageHead({
       path: "/compare",

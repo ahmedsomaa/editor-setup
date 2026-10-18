@@ -1,20 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RegistryFilters } from "@/components/registry/RegistryFilters";
-import { RegistryPattern } from "@/components/registry/RegistryPattern";
-import { RegistryResults } from "@/components/registry/RegistryResults";
-import { useRegistryFilters } from "@/components/registry/useRegistryFilters";
-import { registrySearchSchema } from "@/lib/registry/registry-search";
-import { listPairsFn } from "@/server/pairs.functions";
+import { PresetsFilters } from "@/components/presets/PresetsFilters";
+import { PresetsPattern } from "@/components/presets/PresetsPattern";
+import { PresetsResults } from "@/components/presets/PresetsResults";
+import { usePresetsFilters } from "@/components/presets/usePresetsFilters";
+import { presetsSearchSchema } from "@/lib/presets/presets-search";
+import { listPresetsFn } from "@/server/presets.functions";
 import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/presets/")({
-  validateSearch: registrySearchSchema,
+  validateSearch: presetsSearchSchema,
   loaderDeps: ({ search: { q, editor, appearance } }) => ({
     q,
     editor,
     appearance,
   }),
-  loader: ({ deps }) => listPairsFn({ data: deps }),
+  loader: ({ deps }) => listPresetsFn({ data: deps }),
   // Crawlable listing whose state lives in the URL: render fully on the server.
   ssr: true,
   head: () =>
@@ -25,19 +25,19 @@ export const Route = createFileRoute("/presets/")({
       description:
         "Browse Font and Theme Presets from real editor setups. Search by Font or Theme, filter by Appearance or Editor, open a Preset to see its Snapshot and copy its Settings.",
     }),
-  component: RegistryPage,
+  component: PresetsPage,
 });
 
-function RegistryPage() {
+function PresetsPage() {
   const search = Route.useSearch();
-  const { pairs, total } = Route.useLoaderData();
+  const { presets, total } = Route.useLoaderData();
   const { query, setQuery, setParam, hasFilters, clearFilters } =
-    useRegistryFilters(search);
+    usePresetsFilters(search);
 
   return (
     <main id="main">
       <div className="relative isolate overflow-hidden">
-        <RegistryPattern className="bg-glyphs" />
+        <PresetsPattern className="bg-glyphs" />
         <div className="mx-auto w-full max-w-6xl px-4 pt-16 pb-16 sm:pt-24 sm:pb-20">
           <h1>Presets</h1>
           <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
@@ -47,14 +47,14 @@ function RegistryPage() {
       </div>
 
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
-        <RegistryFilters
+        <PresetsFilters
           query={query}
           onQueryChange={setQuery}
           filters={search}
           onFilterChange={setParam}
         />
-        <RegistryResults
-          pairs={pairs}
+        <PresetsResults
+          presets={presets}
           total={total}
           query={search.q}
           page={search.page}

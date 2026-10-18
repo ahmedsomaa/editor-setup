@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Check, Search } from "lucide-react";
-import { Pagination } from "@/components/registry/Pagination";
+import { Pagination } from "@/components/presets/Pagination";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -11,21 +11,21 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { filterPairs, pairLabel, type PairRecord } from "@/lib/registry/pairs";
+import { filterPresets, presetLabel, type PresetRecord } from "@/lib/presets/presets";
 import { cn } from "cn";
 
 const PAGE_SIZE = 6;
 
 /** Pick the Presets to compare in a drawer: search and tick up to `max`. Each tick updates the page behind it. The page owns `open`, so any button can open it. */
 export function ComparePicker({
-  pairs,
+  presets,
   values,
   max,
   onChange,
   open,
   onOpenChange,
 }: {
-  pairs: PairRecord[];
+  presets: PresetRecord[];
   values: string[];
   max: number;
   onChange: (slugs: string[]) => void;
@@ -35,7 +35,7 @@ export function ComparePicker({
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
 
-  const matches = useMemo(() => filterPairs(pairs, { q }), [pairs, q]);
+  const matches = useMemo(() => filterPresets(presets, { q }), [presets, q]);
   const pageCount = Math.max(1, Math.ceil(matches.length / PAGE_SIZE));
   const current = Math.min(page, pageCount);
   const shown = matches.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
@@ -120,7 +120,7 @@ export function ComparePicker({
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-medium">
-                      {pairLabel(p)}
+                      {presetLabel(p)}
                     </span>
                   </span>
                   <span

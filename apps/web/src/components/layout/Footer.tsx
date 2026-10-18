@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { EditorArt } from '@/components/home/EditorArt'
 import { Mark } from '@/components/layout/Mark'
 import { ThemeSwitch } from '@/components/layout/ThemeToggle'
-import { ADD_PAIR_URL, CONTRIBUTE_URL, GITHUB_URL } from '@/lib/site'
+import { ADD_PRESET_URL, CONTRIBUTE_URL, GITHUB_URL } from '@/lib/site'
 
 const linkClass =
   'text-muted-foreground hover:text-foreground inline-flex min-h-8 items-center text-sm no-underline transition-colors'
@@ -61,7 +61,7 @@ export default function Footer() {
           <nav aria-labelledby="footer-community">
             <h2 id="footer-community" className="font-sans text-sm font-medium tracking-normal">Community</h2>
             <ul className="mt-3 flex list-none flex-col p-0">
-              <li><a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" className={linkClass}>Add a Preset</a></li>
+              <li><a href={ADD_PRESET_URL} target="_blank" rel="noreferrer" className={linkClass}>Add a Preset</a></li>
               <li><a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" className={linkClass}>Contribution guide</a></li>
               <li><a href={`${GITHUB_URL}/pulls`} target="_blank" rel="noreferrer" className={linkClass}>Pull requests</a></li>
               <li><a href={`${GITHUB_URL}/issues`} target="_blank" rel="noreferrer" className={linkClass}>Issues</a></li>

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ADD_PAIR_URL, GITHUB_URL, SITE_URL } from "@/lib/site";
+import { ADD_PRESET_URL, GITHUB_URL, SITE_URL } from "@/lib/site";
 
 const LLMS_TXT = `# EditorSetup
 
@@ -15,8 +15,8 @@ const LLMS_TXT = `# EditorSetup
 
 ## Project
 
-- [Source code](${GITHUB_URL}): the site and the registry, one JSON file per Preset
-- [Adding a Preset](${ADD_PAIR_URL}): how to submit a Preset with a pull request
+- [Source code](${GITHUB_URL}): the site and the Presets, one JSON file per Preset
+- [Adding a Preset](${ADD_PRESET_URL}): how to submit a Preset with a pull request
 
 ## Optional
 

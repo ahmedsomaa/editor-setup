@@ -7,10 +7,10 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const { listPairs } = await import("@/server/registry.server");
+        const { listPresets } = await import("@/server/presets.server");
         const paths = [
           ...STATIC_PATHS,
-          ...listPairs().map((pair) => `/presets/${pair.slug}`),
+          ...listPresets().map((preset) => `/presets/${preset.slug}`),
         ];
         const urls = paths
           .map((path) => `  <url><loc>${SITE_URL}${path}</loc></url>`)
