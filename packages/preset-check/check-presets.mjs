@@ -95,6 +95,15 @@ async function main() {
       seenFontTheme.set(fontThemeKey, file);
     }
 
+    const credited = new Set([data.author.name.toLowerCase()]);
+    for (const person of data.contributors ?? []) {
+      const key = person.name.toLowerCase();
+      if (credited.has(key)) {
+        fail(`${file}: "${person.name}" is credited twice (author and contributors)`);
+      }
+      credited.add(key);
+    }
+
     const editorIds = new Set();
     for (const editor of data.editors) {
       if (editorIds.has(editor.id)) {

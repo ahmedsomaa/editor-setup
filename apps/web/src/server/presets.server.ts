@@ -45,6 +45,7 @@ function toRecord(path: string, file: PresetFile): PresetRecord {
   return {
     slug,
     author: file.author,
+    contributors: file.contributors ?? [],
     font: { name: file.font.name, links: file.font.links, license: file.font.license, fontFamily: style.fontFamily },
     theme: {
       name: file.theme.name,

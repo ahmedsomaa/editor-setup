@@ -17,6 +17,8 @@ export type PresetRecord = {
   slug: string;
   /** Set only when resolved from the merged PR (or git fallback) for a real Preset file. */
   author: Author;
+  /** Others credited on the Preset, for example who added an Editor. */
+  contributors: Author[];
   font: {
     name: string;
     links: string[];
@@ -81,7 +83,7 @@ export function filterPresets(
   return presets.filter((preset) => {
     if (needle) {
       const hay =
-        `${preset.font.name} ${preset.theme.name} ${preset.author.name}`.toLowerCase();
+        `${preset.font.name} ${preset.theme.name} ${preset.author.name} ${preset.contributors.map((c) => c.name).join(" ")}`.toLowerCase();
       if (!hay.includes(needle)) return false;
     }
     if (editor && !preset.editors.some((e) => e.id === editor)) return false;

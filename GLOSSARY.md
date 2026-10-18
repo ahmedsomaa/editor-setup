@@ -52,6 +52,10 @@ _Avoid_: Registry, community page, directory, explore
 The person credited on a Preset, written in its file as a name with an optional https link. Whoever adds the Preset chooses it, and the check does not verify it. Adding an Editor to an existing Preset keeps the original Author.
 _Avoid_: Submitter, Admin
 
+**Contributor**:
+Someone credited on a Preset besides its Author, for example who added an Editor. Written in the Preset file as `contributors`, a list of names with optional https links. It is not a Contribution, which changes the project itself.
+_Avoid_: Co-author, Submitter
+
 **Preset Studio**:
 The page on the site that makes a Snapshot from an Open or Free Font and Theme.
 _Avoid_: Snapshot Studio, Editor, generator
