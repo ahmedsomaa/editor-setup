@@ -31,7 +31,7 @@ export const Route = createFileRoute("/rss.xml")({
   <channel>
     <title>EditorSetup Changelog</title>
     <link>${SITE_URL}/changelog</link>
-    <description>New Pairs, pages and Editors on EditorSetup, newest first.</description>
+    <description>New Presets, pages and Editors on EditorSetup, newest first.</description>
     <language>en</language>
     <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
 ${items}

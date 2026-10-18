@@ -1,30 +1,30 @@
 import { Link } from "@tanstack/react-router";
 import { Plus, X } from "lucide-react";
 import { SnapshotImage } from "@/components/common/SnapshotImage";
-import { AppearanceTag, PairLicenseTag } from "@/components/common/Tag";
+import { AppearanceTag, PresetLicenseTag } from "@/components/common/Tag";
 import { Button } from "@/components/ui/button";
 import {
   EDITOR_LABELS,
-  pairLabel,
-  type PairRecord,
-} from "@/lib/registry/pairs";
-import { snapshotUrl } from "@/lib/registry/snapshots";
+  presetLabel,
+  type PresetRecord,
+} from "@/lib/presets/presets";
+import { snapshotUrl } from "@/lib/presets/snapshots";
 
-/** Pairs as columns and their facts as rows, with an open slot while there is room for another. */
+/** Presets as columns and their facts as rows, with an open slot while there is room for another. */
 export function CompareTable({
-  pairs,
+  presets,
   slots,
   onAdd,
   onRemove,
 }: {
-  pairs: PairRecord[];
-  /** Most Pairs the table holds. An open slot shows where the next one lands. */
+  presets: PresetRecord[];
+  /** Most Presets the table holds. An open slot shows where the next one lands. */
   slots: number;
   onAdd: () => void;
   onRemove: (slug: string) => void;
 }) {
-  const open = pairs.length < slots;
-  const rows: { label: string; cell: (p: PairRecord) => React.ReactNode }[] = [
+  const open = presets.length < slots;
+  const rows: { label: string; cell: (p: PresetRecord) => React.ReactNode }[] = [
     { label: "Theme", cell: (p) => p.theme.name },
     { label: "Font", cell: (p) => p.font.name },
     {
@@ -34,7 +34,7 @@ export function CompareTable({
     {
       label: "License",
       cell: (p) => (
-        <PairLicenseTag font={p.font.license} theme={p.theme.license} />
+        <PresetLicenseTag font={p.font.license} theme={p.theme.license} />
       ),
     },
     {
@@ -42,26 +42,26 @@ export function CompareTable({
       cell: (p) => p.editors.map((e) => EDITOR_LABELS[e.id]).join(", "),
     },
     {
-      label: "Added by",
-      cell: (p) => (p.submittedBy ? `@${p.submittedBy.name}` : "Not recorded"),
+      label: "Author",
+      cell: (p) => p.author.name,
     },
   ];
 
   return (
     <div
       role="region"
-      aria-label="Pairs side by side"
+      aria-label="Presets side by side"
       tabIndex={0}
       className="mt-2 overflow-x-auto"
     >
       <table
         className="w-full table-fixed border-collapse text-start text-sm"
-        style={{ minWidth: `${7 + (pairs.length + (open ? 1 : 0)) * 16}rem` }}
+        style={{ minWidth: `${7 + (presets.length + (open ? 1 : 0)) * 16}rem` }}
       >
-        <caption className="sr-only">Pairs side by side</caption>
+        <caption className="sr-only">Presets side by side</caption>
         <colgroup>
           <col className="w-28" />
-          {pairs.map((p) => (
+          {presets.map((p) => (
             <col key={p.slug} />
           ))}
           {open ? <col /> : null}
@@ -74,14 +74,14 @@ export function CompareTable({
             >
               <span className="block pt-1">Snapshot</span>
             </th>
-            {pairs.map((pair) => {
-              const src = snapshotUrl(pair.snapshot);
+            {presets.map((preset) => {
+              const src = snapshotUrl(preset.snapshot);
               return (
-                <td key={pair.slug} className="ps-3 pb-4 align-top first:ps-0">
+                <td key={preset.slug} className="ps-3 pb-4 align-top first:ps-0">
                   {src ? (
                     <SnapshotImage
                       src={src}
-                      alt={`${pair.theme.name} with ${pair.font.name}`}
+                      alt={`${preset.theme.name} with ${preset.font.name}`}
                       className="rounded-xl"
                     />
                   ) : (
@@ -104,7 +104,7 @@ export function CompareTable({
                   style={{ aspectRatio: "16 / 9" }}
                 >
                   <Plus aria-hidden className="size-6" />
-                  Add a Pair
+                  Add a Preset
                 </button>
               </td>
             ) : null}
@@ -114,23 +114,23 @@ export function CompareTable({
               scope="row"
               className="text-muted-foreground py-3 pe-4 text-start align-middle font-normal"
             >
-              Pair
+              Preset
             </th>
-            {pairs.map((pair) => (
-              <td key={pair.slug} className="py-3 ps-3 align-middle first:ps-0">
+            {presets.map((preset) => (
+              <td key={preset.slug} className="py-3 ps-3 align-middle first:ps-0">
                 <div className="flex items-center justify-between gap-3">
                   <Link
-                    to="/registry/$slug"
-                    params={{ slug: pair.slug }}
+                    to="/presets/$slug"
+                    params={{ slug: preset.slug }}
                     className="text-foreground min-w-0 truncate font-medium no-underline hover:underline"
                   >
-                    {pairLabel(pair)}
+                    {presetLabel(preset)}
                   </Link>
                   <Button
                     variant="outline"
                     size="icon-sm"
-                    aria-label={`Remove ${pairLabel(pair)} from the comparison`}
-                    onClick={() => onRemove(pair.slug)}
+                    aria-label={`Remove ${presetLabel(preset)} from the comparison`}
+                    onClick={() => onRemove(preset.slug)}
                   >
                     <X aria-hidden />
                   </Button>
@@ -146,7 +146,7 @@ export function CompareTable({
               >
                 {row.label}
               </th>
-              {pairs.map((p) => (
+              {presets.map((p) => (
                 <td key={p.slug} className="py-3 ps-3 align-middle first:ps-0">
                   {row.cell(p)}
                 </td>

@@ -4,16 +4,16 @@ import { GlyphPattern } from "@/components/home/GlyphPattern";
 import { TokenWindow } from "@/components/home/TokenWindow";
 import type { HeroStage } from "@/components/home/useHeroStage";
 import { Button } from "@/components/ui/button";
-import type { PairRecord } from "@/lib/registry/pairs";
-import { ADD_PAIR_URL } from "@/lib/site";
+import type { PresetRecord } from "@/lib/presets/presets";
+import { ADD_PRESET_URL } from "@/lib/site";
 import { PLAYGROUND } from "@/lib/studio/playground-tokens";
 
-function PairChip({
-  pair,
+function PresetChip({
+  preset,
   on,
   onChoose,
 }: {
-  pair: PairRecord;
+  preset: PresetRecord;
   on: boolean;
   onChoose: (slug: string) => void;
 }) {
@@ -21,25 +21,25 @@ function PairChip({
     <button
       type="button"
       aria-pressed={on}
-      onClick={() => onChoose(pair.slug)}
+      onClick={() => onChoose(preset.slug)}
       className="inline-flex h-10 items-center rounded-full px-4 text-sm transition-[box-shadow,transform] duration-150 ease-out motion-safe:active:scale-[0.96]"
       style={{
-        background: PLAYGROUND[pair.slug]?.bg ?? pair.theme.bg,
-        color: PLAYGROUND[pair.slug]?.fg ?? pair.theme.fg,
-        fontFamily: pair.font.fontFamily,
+        background: PLAYGROUND[preset.slug]?.bg ?? preset.theme.bg,
+        color: PLAYGROUND[preset.slug]?.fg ?? preset.theme.fg,
+        fontFamily: preset.font.fontFamily,
         boxShadow: on
           ? "0 0 0 2px var(--background), 0 0 0 4px var(--foreground)"
           : "0 0 0 1px color-mix(in srgb, var(--foreground) 14%, transparent)",
       }}
     >
-      {pair.theme.name} · {pair.font.name}
+      {preset.theme.name} · {preset.font.name}
     </button>
   );
 }
 
-/** The first screen: headline, calls to action and a live preview that rotates through Pairs. */
+/** The first screen: headline, calls to action and a live preview that rotates through Presets. */
 export function Hero({ stage: s }: { stage: HeroStage }) {
-  const { stagePairs, heroPair, stage, playing, setPlaying, choose } = s;
+  const { stagePresets, heroPreset, stage, playing, setPlaying, choose } = s;
   return (
     <section
       data-hero
@@ -114,9 +114,9 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
               style={{ "--i": 1 } as React.CSSProperties}
               className="hero-in text-muted-foreground mt-6 w-0 min-w-full text-xl leading-relaxed"
             >
-              A curated list of font and theme pairings that just work. Preview
-              each setup before you try it, pick your favorite and copy the
-              config.
+              A growing list of Font and Theme Presets that developers have tried
+              and kept. Preview how each one feels, then copy its Settings into
+              your editor.
             </p>
           </div>
           <div
@@ -127,9 +127,9 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
               size="lg"
               className="h-13 px-6 text-base"
               nativeButton={false}
-              render={<Link to="/registry" />}
+              render={<Link to="/presets" />}
             >
-              Browse setups
+              Browse the Presets
               <ArrowRight aria-hidden />
             </Button>
             <Button
@@ -138,10 +138,10 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
               className="h-13 px-6 text-base"
               nativeButton={false}
               render={
-                <a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" />
+                <a href={ADD_PRESET_URL} target="_blank" rel="noreferrer" />
               }
             >
-              Share a pair
+              Share a Preset
             </Button>
           </div>
         </div>
@@ -150,17 +150,17 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
           style={{ "--i": 3 } as React.CSSProperties}
           className="hero-in min-w-0"
         >
-          {heroPair && PLAYGROUND[heroPair.slug] ? (
+          {heroPreset && PLAYGROUND[heroPreset.slug] ? (
             <div
-              key={heroPair.slug}
-              className="pair-swap"
-              aria-label={`${heroPair.theme.name} with ${heroPair.font.name}`}
+              key={heroPreset.slug}
+              className="preset-swap"
+              aria-label={`${heroPreset.theme.name} with ${heroPreset.font.name}`}
               role="img"
             >
               <TokenWindow
-                theme={PLAYGROUND[heroPair.slug]!}
+                theme={PLAYGROUND[heroPreset.slug]!}
                 fontFamily={stage.family ?? "ui-monospace, monospace"}
-                filename="pair.ts"
+                filename="preset.ts"
                 compact
                 className="min-h-[24rem]"
               />
@@ -168,7 +168,7 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
           ) : null}
           <div
             role="group"
-            aria-label="Try a Pair"
+            aria-label="Try a Preset"
             className="mt-6 flex flex-wrap items-center justify-center gap-2"
           >
             <button
@@ -189,11 +189,11 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
                 <Play className="size-4" aria-hidden />
               )}
             </button>
-            {stagePairs.map((pair) => (
-              <PairChip
-                key={pair.slug}
-                pair={pair}
-                on={pair.slug === heroPair?.slug}
+            {stagePresets.map((preset) => (
+              <PresetChip
+                key={preset.slug}
+                preset={preset}
+                on={preset.slug === heroPreset?.slug}
                 onChoose={choose}
               />
             ))}

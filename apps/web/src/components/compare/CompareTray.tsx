@@ -1,10 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowLeftRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { MAX_COMPARE, useCompare } from "@/lib/registry/compare-store";
+import { MAX_COMPARE, useCompare } from "@/lib/presets/compare-store";
 
 /**
- * The compare tray: Pairs you add with a "Compare" button collect here, on every page,
+ * The compare tray: Presets you add with a "Compare" button collect here, on every page,
  * and the button opens the comparison once two or more are picked.
  */
 export function CompareTray() {
@@ -15,7 +15,7 @@ export function CompareTray() {
   const ready = selected.length >= 2;
   return (
     <section
-      aria-label="Pairs to compare"
+      aria-label="Presets to compare"
       className="border-border bg-card fixed start-1/2 bottom-4 z-40 flex max-w-[calc(100vw-1.5rem)] -translate-x-1/2 items-center gap-2 rounded-full border p-1.5 shadow-[var(--shadow-overlay)] sm:bottom-6 rtl:translate-x-1/2"
     >
       <ul className="m-0 flex min-w-0 list-none items-center gap-1.5 overflow-x-auto p-0 ps-1">
@@ -53,7 +53,7 @@ export function CompareTray() {
           render={
             <Link
               to="/compare"
-              search={{ pairs: selected.map((i) => i.slug).join(",") }}
+              search={{ presets: selected.map((i) => i.slug).join(",") }}
             />
           }
         >

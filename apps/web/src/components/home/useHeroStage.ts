@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { PLAYGROUND } from "@/lib/studio/playground-tokens";
-import type { PairRecord } from "@/lib/registry/pairs";
+import type { PresetRecord } from "@/lib/presets/presets";
 
-// The playground offers four Pairs, only with Open or Free Fonts and Themes, each with its real Theme tokens.
+// The playground offers four Presets, only with Open or Free Fonts and Themes, each with its real Theme tokens.
 const PLAYGROUND_ORDER = [
   "geist-mono--vesper",
   "zed-mono--gruvbox-light-hard",
@@ -13,16 +13,16 @@ const PLAYGROUND_ORDER = [
 const ROTATE_MS = 4500;
 
 /**
- * The Pair shown on the home page and the colours it paints. It rotates through the Pairs unless the
- * visitor prefers reduced motion. Pausing is always available, and picking a Pair stops the rotation.
+ * The Preset shown on the home page and the colours it paints. It rotates through the Presets unless the
+ * visitor prefers reduced motion. Pausing is always available, and picking a Preset stops the rotation.
  */
-export function useHeroStage(pairs: PairRecord[]) {
+export function useHeroStage(presets: PresetRecord[]) {
   const [heroSlug, setHeroSlug] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
 
-  const stagePairs = PLAYGROUND_ORDER.map((slug) =>
-    pairs.find((p) => p.slug === slug),
-  ).filter((p): p is PairRecord => Boolean(p));
+  const stagePresets = PLAYGROUND_ORDER.map((slug) =>
+    presets.find((p) => p.slug === slug),
+  ).filter((p): p is PresetRecord => Boolean(p));
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -30,46 +30,46 @@ export function useHeroStage(pairs: PairRecord[]) {
   }, []);
 
   useEffect(() => {
-    if (!playing || stagePairs.length < 2) return;
+    if (!playing || stagePresets.length < 2) return;
     const id = window.setInterval(() => {
       setHeroSlug((cur) => {
-        const i = stagePairs.findIndex(
-          (p) => p.slug === (cur ?? stagePairs[0]?.slug),
+        const i = stagePresets.findIndex(
+          (p) => p.slug === (cur ?? stagePresets[0]?.slug),
         );
-        return stagePairs[(i + 1) % stagePairs.length]?.slug ?? null;
+        return stagePresets[(i + 1) % stagePresets.length]?.slug ?? null;
       });
     }, ROTATE_MS);
     return () => window.clearInterval(id);
-  }, [playing, stagePairs.length]);
+  }, [playing, stagePresets.length]);
 
-  const heroPair = stagePairs.find((p) => p.slug === heroSlug) ?? stagePairs[0];
-  // The hero is painted in the chosen Pair's own colours.
+  const heroPreset = stagePresets.find((p) => p.slug === heroSlug) ?? stagePresets[0];
+  // The hero is painted in the chosen Preset's own colours.
   const stage = {
     bg:
-      (heroPair && PLAYGROUND[heroPair.slug]?.bg) ||
-      heroPair?.theme.bg ||
+      (heroPreset && PLAYGROUND[heroPreset.slug]?.bg) ||
+      heroPreset?.theme.bg ||
       "#111111",
     fg:
-      (heroPair && PLAYGROUND[heroPair.slug]?.fg) ||
-      heroPair?.theme.fg ||
+      (heroPreset && PLAYGROUND[heroPreset.slug]?.fg) ||
+      heroPreset?.theme.fg ||
       "#edeceb",
-    family: heroPair?.font.fontFamily,
+    family: heroPreset?.font.fontFamily,
   };
 
   return {
-    stagePairs,
-    heroPair,
+    stagePresets,
+    heroPreset,
     stage,
     playing,
     setPlaying,
-    /** Show this Pair and stop rotating. */
+    /** Show this Preset and stop rotating. */
     choose: (slug: string) => {
       setPlaying(false);
       setHeroSlug(slug);
     },
     step: Math.max(
       0,
-      stagePairs.findIndex((p) => p.slug === heroPair?.slug),
+      stagePresets.findIndex((p) => p.slug === heroPreset?.slug),
     ),
   };
 }

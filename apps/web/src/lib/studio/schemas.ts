@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EDITOR_IDS, type EditorId } from "@/lib/registry/pairs";
+import { EDITOR_IDS, type EditorId } from "@/lib/presets/presets";
 
 export const familyInput = z.object({ family: z.string().trim().min(1).max(80) });
 export const THEME_EDITORS = EDITOR_IDS;

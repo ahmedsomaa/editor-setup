@@ -55,10 +55,10 @@ export const Route = createRootRoute({
       <p className="text-muted-foreground mt-4 max-w-[65ch] text-lg">
         That address does not exist. Try the{" "}
         <Link
-          to="/registry"
+          to="/presets"
           className="text-foreground underline hover:no-underline"
         >
-          Registry
+          Presets
         </Link>
         .
       </p>

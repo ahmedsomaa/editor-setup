@@ -3,7 +3,7 @@ import { PreviewPanel } from "./PreviewPanel";
 import { StudioControls } from "./StudioControls";
 import { useSnapshotStudio } from "./useSnapshotStudio";
 
-/** Snapshot Studio: make the Snapshot for a Pair from an Open or Free Font and Theme. */
+/** Preset Studio: make the Snapshot for a Preset from an Open or Free Font and Theme. */
 export function StudioPage() {
   const studio = useSnapshotStudio();
 
@@ -11,9 +11,9 @@ export function StudioPage() {
     <main id="main">
       <PageHero variant="studio" className="pt-8 pb-8 sm:pt-8 sm:pb-10">
         <header>
-          <h1>Snapshot Studio</h1>
+          <h1>Preset Studio</h1>
           <p className="text-muted-foreground mt-3 max-w-[60ch] text-lg">
-            See your own code in any open or free font and theme.
+            Preview your own mix before using it in your editor.
           </p>
         </header>
       </PageHero>
@@ -27,10 +27,12 @@ export function StudioPage() {
             iframeRef={studio.iframeRef}
             code={studio.code}
             onCodeChange={studio.setCode}
+            codeColors={studio.codeColors}
             errors={studio.errors}
             exporting={studio.exporting}
             exportDisabled={studio.exportDisabled}
             onSavePng={studio.savePng}
+            onSaveJson={studio.savePresetJson}
           />
         </div>
       </div>

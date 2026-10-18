@@ -1,4 +1,4 @@
-import type { EditorId } from "@/lib/registry/pairs";
+import type { EditorId } from "@/lib/presets/presets";
 import { EDITOR_LOGO_PATHS } from "@/lib/editor-logos";
 
 /** One-color mark for an Editor. It follows the surrounding text color. */

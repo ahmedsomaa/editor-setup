@@ -1,7 +1,7 @@
 import type { FontFace } from "@/lib/studio/schemas";
 
-/** Monospace families on Fontsource and Google Fonts. Anything else goes through "Other". */
-export const FONT_PRESETS = [
+/** Monospace families on Fontsource and Google Fonts. Anything else goes through "Custom". */
+export const FONT_CHOICES = [
   "JetBrains Mono",
   "Fira Code",
   "Geist Mono",

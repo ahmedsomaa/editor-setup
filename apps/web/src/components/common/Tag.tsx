@@ -5,8 +5,8 @@ import {
   Moon,
   Sun,
 } from "lucide-react";
-import type { Appearance, License } from "@/lib/registry/pairs";
-import { LICENSE_LABELS } from "@/lib/registry/pairs";
+import type { Appearance, License } from "@/lib/presets/presets";
+import { LICENSE_LABELS } from "@/lib/presets/presets";
 import { cn } from "cn";
 
 type Tone = "neutral" | "green" | "amber" | "accent";
@@ -64,8 +64,8 @@ export function LicenseTag({ license }: { license: License }) {
   );
 }
 
-/** One License for a whole Pair: Open only if both sides are Open. */
-export function PairLicenseTag({
+/** One License for a whole Preset: Open only if both sides are Open. */
+export function PresetLicenseTag({
   font,
   theme,
 }: {

@@ -1,6 +1,17 @@
+import type { ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { AppearanceTag, LicenseTag } from "@/components/common/Tag";
 import { Reveal } from "@/components/layout/Reveal";
+import {
+  ComparingVersionsSpot,
+  DuplicatingSettingsSpot,
+  PickingThemeSpot,
+  RecordingSnapshotSpot,
+  ReviewingPullRequestSpot,
+  SavingDocumentSpot,
+  SearchingListSpot,
+  type SpotProps,
+} from "@/components/home/SpotIcons";
 import { Button } from "@/components/ui/button";
 import { GITHUB_URL } from "@/lib/site";
 
@@ -13,10 +24,10 @@ export function ButtonsSection() {
         with a verb.
       </p>
       <div className="mt-8 flex flex-wrap items-center gap-3">
-        <Button>Explore the Registry</Button>
-        <Button variant="outline">Add a Pair</Button>
+        <Button>Explore the Presets</Button>
+        <Button variant="outline">Add a Preset</Button>
         <Button variant="secondary">Copy Settings</Button>
-        <Button variant="ghost">Save PNG</Button>
+        <Button variant="ghost">Export Snapshot</Button>
         <Button variant="link">Read more</Button>
       </div>
     </Reveal>
@@ -36,6 +47,40 @@ export function TagsSection() {
         <AppearanceTag appearance="dark" />
         <AppearanceTag appearance="light" />
       </div>
+    </Reveal>
+  );
+}
+
+const SPOTS: [string, string, (props: SpotProps) => ReactNode][] = [
+  ["Take a look around", "Searching a list", SearchingListSpot],
+  ["Can’t pick?", "Comparing two versions", ComparingVersionsSpot],
+  ["Found your favorite?", "Duplicating a settings panel", DuplicatingSettingsSpot],
+  ["Couldn’t find what you’re looking for?", "Recording a visual snapshot", RecordingSnapshotSpot],
+  ["Make the Snapshot", "Picking a theme", PickingThemeSpot],
+  ["Add the Preset file", "Saving a document", SavingDocumentSpot],
+  ["Open a pull request", "Reviewing a pull request", ReviewingPullRequestSpot],
+];
+
+export function IconsSection() {
+  return (
+    <Reveal as="section" className="mt-20" aria-labelledby="icons">
+      <h2 id="icons">Spot illustrations</h2>
+      <p className="text-muted-foreground mt-6 max-w-[60ch]">
+        One style: black line drawings of a person at work. They head a feature
+        or a step, never a button or a tag.
+      </p>
+      <ul className="m-0 mt-8 grid list-none grid-cols-2 gap-4 p-0 md:grid-cols-4">
+        {SPOTS.map(([use, name, Spot]) => (
+          <li
+            key={use}
+            className="border-border bg-card flex flex-col items-start rounded-2xl border p-6"
+          >
+            <Spot className="size-28" />
+            <p className="mt-4 font-medium">{use}</p>
+            <p className="text-muted-foreground mt-1 text-sm">{name}</p>
+          </li>
+        ))}
+      </ul>
     </Reveal>
   );
 }

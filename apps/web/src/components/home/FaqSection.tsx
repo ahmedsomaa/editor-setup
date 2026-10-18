@@ -1,23 +1,27 @@
 const FAQS = [
   {
     q: "What is EditorSetup?",
-    a: "A list of Font and Theme Pairs from real editor setups. Each Pair has Settings you can copy and a Snapshot of how it looks.",
+    a: "A list of Font and Theme Presets from real editor setups. Each Preset has Settings you can copy and a Snapshot of how it looks.",
   },
   {
     q: "Do I need an account?",
-    a: "No. Browse the Registry, open a Pair and copy its Settings. Adding a Pair is a pull request on GitHub.",
+    a: "No. Browse the Presets, open a Preset and copy its Settings. Adding a Preset is a pull request on GitHub.",
   },
   {
     q: "Which Editors are supported?",
-    a: "VS Code and Zed for now. A Pair can have a Config for one or both.",
+    a: "VS Code and Zed for now. A Preset can have a Config for one or both.",
   },
   {
     q: "Is it free?",
-    a: "The site is free. Each Font and Theme has its own License, shown on every Pair as Open or Free.",
+    a: "The site is free. Each Font and Theme has its own License, shown on every Preset as Open or Free.",
   },
   {
-    q: "How do I add a Pair?",
-    a: "Open a pull request with a Pair file and its Snapshot. Make the Snapshot in Snapshot Studio, or with the snapshot-studio skill in Claude Code. There is no form on the site.",
+    q: "Can I use a Preset at work?",
+    a: "It depends on its Font and Theme. Open means free to use and to embed. Free means no cost but restricted, for example to private use. A Preset shows the strictest of the two, so read its terms before you use it for work.",
+  },
+  {
+    q: "How do I add a Preset?",
+    a: "Open a pull request with a Preset file and its Snapshot. Make the Snapshot in Preset Studio, or with the snapshot-studio skill in Claude Code. There is no form on the site.",
   },
 ] as const;
 

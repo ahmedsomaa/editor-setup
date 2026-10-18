@@ -2,9 +2,9 @@ import { SITE_URL } from "./site";
 
 export const OG_IMAGE = `${SITE_URL}/og.png`;
 
-export const HOME_TITLE = "EditorSetup: Font and Theme Pairs for VS Code and Zed";
+export const HOME_TITLE = "EditorSetup: Font and Theme Presets for VS Code and Zed";
 export const HOME_DESCRIPTION =
-  "Font and Theme Pairs from real editor setups, shown in their own colors. Preview each Snapshot, then copy the Settings for VS Code and Zed.";
+  "Font and Theme Presets from real editor setups, shown in their own colors. Preview each Snapshot, then copy the Settings for VS Code and Zed.";
 
 /** Link-preview checkers want titles of 50 to 60 characters and descriptions of 120 to 160. */
 const TITLE_RANGE = [50, 60] as const;

@@ -1,4 +1,4 @@
-import type { EditorId } from "@/lib/registry/pairs";
+import type { EditorId } from "@/lib/presets/presets";
 
 /** 24x24 one-color marks from Simple Icons (CC0), one per Editor. The marks belong to their owners. */
 export const EDITOR_LOGO_PATHS: Record<EditorId, string> = {

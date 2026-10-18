@@ -5,7 +5,7 @@ export type Colors = { bg: string; fg: string };
 
 const mix = (a: string, pct: number, b: string) => `color-mix(in srgb, ${a} ${pct}%, ${b})`;
 
-/** Without colours it uses the site's tokens; with a Pair's colours it is painted in that Theme. */
+/** Without colours it uses the site's tokens; with a Preset's colours it is painted in that Theme. */
 export function artVars(c?: Colors): CSSProperties {
   if (!c) {
     return {
@@ -73,7 +73,7 @@ const CODE: ReadonlyArray<readonly [number, number, number, number, number, stri
   [250, 312, 44, 14, 7, "faint"]
 ];
 
-/** Decorative editor window. Cropped by its parent; pass a Pair's colours to paint it in that Theme. */
+/** Decorative editor window. Cropped by its parent; pass a Preset's colours to paint it in that Theme. */
 export function EditorArt({
   className,
   colors,

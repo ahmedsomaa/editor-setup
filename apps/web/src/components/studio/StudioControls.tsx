@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { Combobox } from "@/components/common/Combobox";
-import type { EditorId } from "@/lib/registry/pairs";
+import type { EditorId } from "@/lib/presets/presets";
 import { Field } from "./Field";
 import { FontField } from "./FontField";
 import { ThemeField } from "./ThemeField";
@@ -23,8 +23,8 @@ export function StudioControls({
     themeId,
     themeUrl,
     themeName,
-    themeOther,
-    setThemeOther,
+    themeCustom,
+    setThemeCustom,
     urlDraft,
     setUrlDraft,
     variants,
@@ -57,7 +57,7 @@ export function StudioControls({
             options={EDITOR_OPTIONS}
             onChange={(id) => {
               if (id === editor) return;
-              setThemeOther(false);
+              setThemeCustom(false);
               setUrlDraft("");
               setParam({
                 editor: id as EditorId,
@@ -82,8 +82,8 @@ export function StudioControls({
           themeId={themeId}
           themeUrl={themeUrl}
           themeName={themeName}
-          other={themeOther}
-          onOtherChange={setThemeOther}
+          custom={themeCustom}
+          onCustomChange={setThemeCustom}
           urlDraft={urlDraft}
           onUrlDraftChange={setUrlDraft}
           variants={variants}
@@ -102,7 +102,7 @@ export function StudioControls({
         </Field>
       </div>
       <p className="text-muted-foreground border-border m-0 border-t px-4 py-3 text-xs">
-        Use an Open or Free Font and Theme. Snapshots go in a public Registry,
+        Use an Open or Free Font and Theme. Snapshots go in a public list,
         so a license that asks for payment, or does not allow public images,
         can&rsquo;t be used.
       </p>

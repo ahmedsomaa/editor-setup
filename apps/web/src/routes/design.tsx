@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/layout/PagePattern";
 import {
   ButtonsSection,
+  IconsSection,
   SourceSection,
   TagsSection,
 } from "@/components/design/ComponentSections";
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/design")({
       name: "Design system",
       title: "EditorSetup design system: colors, type, spacing, tags",
       description:
-        "The colors, type, spacing and tags behind EditorSetup, a warm monochrome system where a Pair own colors are the only saturated surface on a page.",
+        "The colors, type, spacing and tags behind EditorSetup, a warm monochrome system where a Preset own colors are the only saturated surface on a page.",
     }),
   component: Design,
 });
@@ -30,7 +31,7 @@ function Design() {
       <PageHero variant="about" className="pb-4 sm:pb-6">
         <h1>Design system</h1>
         <p className="text-muted-foreground mt-6 max-w-[60ch] text-lg">
-          Quiet by design, so the pairs speak loudest.
+          Quiet by design, so the Presets speak loudest.
         </p>
       </PageHero>
       <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:pb-24">
@@ -39,6 +40,7 @@ function Design() {
         <TypeSection />
         <ButtonsSection />
         <TagsSection />
+        <IconsSection />
         <SourceSection />
       </div>
     </main>

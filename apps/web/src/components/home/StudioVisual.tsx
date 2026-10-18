@@ -3,13 +3,13 @@ import { Pause, Play } from "lucide-react";
 import { cn } from "cn";
 import { EditorArt } from "@/components/home/EditorArt";
 import { Button } from "@/components/ui/button";
-import type { PairRecord } from "@/lib/registry/pairs";
+import type { PresetRecord } from "@/lib/presets/presets";
 
-/** Studio visual: one editor window repainted in one Pair after another, its code typed in each time. */
-export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
+/** Studio visual: one editor window repainted in one Preset after another, its code typed in each time. */
+export function StudioVisual({ presets }: { presets: PresetRecord[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
-  const open = pairs;
+  const open = presets;
   const [i, setI] = useState(0);
   const [playing, setPlaying] = useState(false);
 
@@ -36,7 +36,7 @@ export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
   }, [playing, active]);
 
   if (!open.length) return null;
-  const pair = open[i % open.length]!;
+  const preset = open[i % open.length]!;
   return (
     <div ref={ref} data-paused={!playing}>
       <div aria-hidden className="relative">
@@ -45,12 +45,12 @@ export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
           live
           liveKey={i}
           className="w-full"
-          colors={{ bg: pair.theme.bg, fg: pair.theme.fg }}
+          colors={{ bg: preset.theme.bg, fg: preset.theme.fg }}
         />
         <div key={i} className="pointer-events-none absolute inset-0">
           <div
             className="snap-frame absolute inset-[3%]"
-            style={{ color: pair.theme.fg }}
+            style={{ color: preset.theme.fg }}
           >
             {(
               [
@@ -70,7 +70,7 @@ export function StudioVisual({ pairs }: { pairs: PairRecord[] }) {
           <div className="snap-chip bg-card border-border text-foreground absolute right-3 bottom-3 flex items-center gap-2 rounded-full border py-1.5 ps-1.5 pe-3 font-mono text-xs shadow-[var(--shadow-overlay)]">
             <span
               className="border-border block h-[18px] w-8 rounded-[4px] border"
-              style={{ background: pair.theme.bg }}
+              style={{ background: preset.theme.bg }}
             />
             snapshot.png · 1600×900
           </div>

@@ -20,12 +20,12 @@ function lastUpdated(): string {
 
 const config = defineConfig({
   define: { __LAST_UPDATED__: JSON.stringify(lastUpdated()) },
-  // Pair JSON and Snapshot PNGs live in the repo-root registry/, outside apps/web.
+  // Preset JSON and Snapshot PNGs live in the repo-root presets/, outside apps/web.
   server: {
     fs: {
       allow: [
         searchForWorkspaceRoot(process.cwd()),
-        fileURLToPath(new URL('../../registry', import.meta.url)),
+        fileURLToPath(new URL('../../presets', import.meta.url)),
       ],
     },
   },

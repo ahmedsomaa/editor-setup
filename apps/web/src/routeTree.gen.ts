@@ -15,13 +15,14 @@ import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as DesignRouteImport } from './routes/design'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
-import { Route as RegistryRouteImport } from './routes/registry'
+import { Route as PresetsRouteImport } from './routes/presets'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StudioRouteImport } from './routes/studio'
-import { Route as RegistryIndexRouteImport } from './routes/registry.index'
-import { Route as RegistrySlugRouteImport } from './routes/registry.$slug'
+import { Route as PresetsIndexRouteImport } from './routes/presets.index'
+import { Route as PresetsSlugRouteImport } from './routes/presets.$slug'
+import { Route as RegistrySplatRouteImport } from './routes/registry.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,9 +54,9 @@ const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
   path: '/llms.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RegistryRoute = RegistryRouteImport.update({
-  id: '/registry',
-  path: '/registry',
+const PresetsRoute = PresetsRouteImport.update({
+  id: '/presets',
+  path: '/presets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -78,15 +79,20 @@ const StudioRoute = StudioRouteImport.update({
   path: '/studio',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RegistryIndexRoute = RegistryIndexRouteImport.update({
+const PresetsIndexRoute = PresetsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => RegistryRoute,
+  getParentRoute: () => PresetsRoute,
 } as any)
-const RegistrySlugRoute = RegistrySlugRouteImport.update({
+const PresetsSlugRoute = PresetsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
-  getParentRoute: () => RegistryRoute,
+  getParentRoute: () => PresetsRoute,
+} as any)
+const RegistrySplatRoute = RegistrySplatRouteImport.update({
+  id: '/registry/$',
+  path: '/registry/$',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -96,13 +102,14 @@ export interface FileRoutesByFullPath {
   '/compare': typeof CompareRoute
   '/design': typeof DesignRoute
   '/llms.txt': typeof LlmsDottxtRoute
-  '/registry': typeof RegistryRouteWithChildren
+  '/presets': typeof PresetsRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
-  '/registry/$slug': typeof RegistrySlugRoute
-  '/registry/': typeof RegistryIndexRoute
+  '/presets/$slug': typeof PresetsSlugRoute
+  '/registry/$': typeof RegistrySplatRoute
+  '/presets/': typeof PresetsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -115,8 +122,9 @@ export interface FileRoutesByTo {
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
-  '/registry/$slug': typeof RegistrySlugRoute
-  '/registry': typeof RegistryIndexRoute
+  '/presets/$slug': typeof PresetsSlugRoute
+  '/registry/$': typeof RegistrySplatRoute
+  '/presets': typeof PresetsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -126,13 +134,14 @@ export interface FileRoutesById {
   '/compare': typeof CompareRoute
   '/design': typeof DesignRoute
   '/llms.txt': typeof LlmsDottxtRoute
-  '/registry': typeof RegistryRouteWithChildren
+  '/presets': typeof PresetsRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
-  '/registry/$slug': typeof RegistrySlugRoute
-  '/registry/': typeof RegistryIndexRoute
+  '/presets/$slug': typeof PresetsSlugRoute
+  '/registry/$': typeof RegistrySplatRoute
+  '/presets/': typeof PresetsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -143,13 +152,14 @@ export interface FileRouteTypes {
     | '/compare'
     | '/design'
     | '/llms.txt'
-    | '/registry'
+    | '/presets'
     | '/robots.txt'
     | '/rss.xml'
     | '/sitemap.xml'
     | '/studio'
-    | '/registry/$slug'
-    | '/registry/'
+    | '/presets/$slug'
+    | '/registry/$'
+    | '/presets/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -162,8 +172,9 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/sitemap.xml'
     | '/studio'
-    | '/registry/$slug'
-    | '/registry'
+    | '/presets/$slug'
+    | '/registry/$'
+    | '/presets'
   id:
     | '__root__'
     | '/'
@@ -172,13 +183,14 @@ export interface FileRouteTypes {
     | '/compare'
     | '/design'
     | '/llms.txt'
-    | '/registry'
+    | '/presets'
     | '/robots.txt'
     | '/rss.xml'
     | '/sitemap.xml'
     | '/studio'
-    | '/registry/$slug'
-    | '/registry/'
+    | '/presets/$slug'
+    | '/registry/$'
+    | '/presets/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -188,11 +200,12 @@ export interface RootRouteChildren {
   CompareRoute: typeof CompareRoute
   DesignRoute: typeof DesignRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
-  RegistryRoute: typeof RegistryRouteWithChildren
+  PresetsRoute: typeof PresetsRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StudioRoute: typeof StudioRoute
+  RegistrySplatRoute: typeof RegistrySplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -239,11 +252,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LlmsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/registry': {
-      id: '/registry'
-      path: '/registry'
-      fullPath: '/registry'
-      preLoaderRoute: typeof RegistryRouteImport
+    '/presets': {
+      id: '/presets'
+      path: '/presets'
+      fullPath: '/presets'
+      preLoaderRoute: typeof PresetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -274,36 +287,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudioRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/registry/': {
-      id: '/registry/'
+    '/presets/': {
+      id: '/presets/'
       path: '/'
-      fullPath: '/registry/'
-      preLoaderRoute: typeof RegistryIndexRouteImport
-      parentRoute: typeof RegistryRoute
+      fullPath: '/presets/'
+      preLoaderRoute: typeof PresetsIndexRouteImport
+      parentRoute: typeof PresetsRoute
     }
-    '/registry/$slug': {
-      id: '/registry/$slug'
+    '/presets/$slug': {
+      id: '/presets/$slug'
       path: '/$slug'
-      fullPath: '/registry/$slug'
-      preLoaderRoute: typeof RegistrySlugRouteImport
-      parentRoute: typeof RegistryRoute
+      fullPath: '/presets/$slug'
+      preLoaderRoute: typeof PresetsSlugRouteImport
+      parentRoute: typeof PresetsRoute
+    }
+    '/registry/$': {
+      id: '/registry/$'
+      path: '/registry/$'
+      fullPath: '/registry/$'
+      preLoaderRoute: typeof RegistrySplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface RegistryRouteChildren {
-  RegistrySlugRoute: typeof RegistrySlugRoute
-  RegistryIndexRoute: typeof RegistryIndexRoute
+interface PresetsRouteChildren {
+  PresetsSlugRoute: typeof PresetsSlugRoute
+  PresetsIndexRoute: typeof PresetsIndexRoute
 }
 
-const RegistryRouteChildren: RegistryRouteChildren = {
-  RegistrySlugRoute: RegistrySlugRoute,
-  RegistryIndexRoute: RegistryIndexRoute,
+const PresetsRouteChildren: PresetsRouteChildren = {
+  PresetsSlugRoute: PresetsSlugRoute,
+  PresetsIndexRoute: PresetsIndexRoute,
 }
 
-const RegistryRouteWithChildren = RegistryRoute._addFileChildren(
-  RegistryRouteChildren,
-)
+const PresetsRouteWithChildren =
+  PresetsRoute._addFileChildren(PresetsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -312,11 +331,12 @@ const rootRouteChildren: RootRouteChildren = {
   CompareRoute: CompareRoute,
   DesignRoute: DesignRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
-  RegistryRoute: RegistryRouteWithChildren,
+  PresetsRoute: PresetsRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StudioRoute: StudioRoute,
+  RegistrySplatRoute: RegistrySplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

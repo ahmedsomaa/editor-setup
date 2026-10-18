@@ -2,13 +2,13 @@ import { Link2, Upload } from "lucide-react";
 import type { Option } from "@/components/common/Combobox";
 import { EditorLogo } from "@/components/common/EditorLogo";
 import { LANGUAGE_IDS, THEMES } from "@/lib/theme/highlight";
-import { EDITOR_IDS, EDITOR_LABELS } from "@/lib/registry/pairs";
+import { EDITOR_IDS, EDITOR_LABELS } from "@/lib/presets/presets";
 import { SAMPLES } from "@/lib/studio/samples";
-import { FONT_PRESETS } from "@/lib/studio/font-files";
+import { FONT_CHOICES } from "@/lib/studio/font-files";
 import { OptionChip, ThemeSwatch } from "./chips";
 
-/** Value of the "Other" choice in the Font and Theme lists. */
-export const OTHER = "__other";
+/** Value of the "Custom" choice in the Font and Theme lists. */
+export const CUSTOM_OPTION = "__custom";
 
 export const EDITOR_OPTIONS: Option[] = EDITOR_IDS.map((id) => ({
   id,
@@ -17,15 +17,15 @@ export const EDITOR_OPTIONS: Option[] = EDITOR_IDS.map((id) => ({
 }));
 
 export const FONT_OPTIONS: Option[] = [
-  ...FONT_PRESETS.map((f) => ({
+  ...FONT_CHOICES.map((f) => ({
     id: f,
     label: f,
     group: "Fonts",
     icon: <OptionChip className="font-mono">Aa</OptionChip>,
   })),
   {
-    id: OTHER,
-    label: "Other",
+    id: CUSTOM_OPTION,
+    label: "Custom",
     group: "Your own",
     icon: (
       <OptionChip>
@@ -49,8 +49,8 @@ export const THEME_OPTIONS: Option[] = [
     icon: <ThemeSwatch id={t.id} />,
   })),
   {
-    id: OTHER,
-    label: "Other",
+    id: CUSTOM_OPTION,
+    label: "Custom",
     group: "Your own",
     icon: (
       <OptionChip>

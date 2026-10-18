@@ -1,0 +1,32 @@
+{
+  "font": {
+    "name": "Inconsolata",
+    "links": [
+      "https://fonts.google.com/specimen/Inconsolata"
+    ],
+    "license": "open"
+  },
+  "theme": {
+    "name": "Vitesse Light",
+    "links": [
+      "https://github.com/antfu/vscode-theme-vitesse"
+    ],
+    "license": "open",
+    "appearance": "light"
+  },
+  "author": {
+    "name": "ahmedsomaa",
+    "url": "https://github.com/ahmedsomaa"
+  },
+  "snapshot": "inconsolata--vitesse-light.png",
+  "editors": [
+    {
+      "id": "vscode",
+      "settings": "{\n  \"editor.fontFamily\": \"Inconsolata\",\n  \"editor.fontSize\": 14,\n  \"editor.fontWeight\": \"400\",\n  \"editor.lineHeight\": 1.5,\n  \"editor.fontLigatures\": true,\n  \"workbench.colorTheme\": \"Vitesse Light\"\n}"
+    },
+    {
+      "id": "zed",
+      "settings": "{\n  \"buffer_font_family\": \"Inconsolata\",\n  \"buffer_font_size\": 14,\n  \"buffer_font_weight\": 400,\n  \"buffer_line_height\": {\n    \"custom\": 1.5\n  },\n  \"buffer_font_features\": {\n    \"calt\": true\n  },\n  \"theme\": \"Vitesse Light\"\n}"
+    }
+  ]
+}

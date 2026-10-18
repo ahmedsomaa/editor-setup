@@ -4,8 +4,7 @@
   "type": "module",
   "packageManager": "bun@1.4.2",
   "scripts": {
-    "check": "node packages/registry-check/check-registry.mjs",
-    "generate:submitters": "bun run scripts/resolve-pair-submitters.ts",
+    "check": "node packages/preset-check/check-presets.mjs",
     "dev": "bun run --cwd apps/web dev",
     "build": "bun install --frozen-lockfile --cwd apps/web && bun run --cwd apps/web build && node scripts/write-deploy-redirect.mjs",
     "preview": "bun run --cwd apps/web preview",

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Check, Search } from "lucide-react";
-import { Pagination } from "@/components/registry/Pagination";
+import { Pagination } from "@/components/presets/Pagination";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -11,21 +11,21 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { filterPairs, pairLabel, type PairRecord } from "@/lib/registry/pairs";
+import { filterPresets, presetLabel, type PresetRecord } from "@/lib/presets/presets";
 import { cn } from "cn";
 
 const PAGE_SIZE = 6;
 
-/** Pick the Pairs to compare in a drawer: search and tick up to `max`. Each tick updates the page behind it. The page owns `open`, so any button can open it. */
+/** Pick the Presets to compare in a drawer: search and tick up to `max`. Each tick updates the page behind it. The page owns `open`, so any button can open it. */
 export function ComparePicker({
-  pairs,
+  presets,
   values,
   max,
   onChange,
   open,
   onOpenChange,
 }: {
-  pairs: PairRecord[];
+  presets: PresetRecord[];
   values: string[];
   max: number;
   onChange: (slugs: string[]) => void;
@@ -35,7 +35,7 @@ export function ComparePicker({
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
 
-  const matches = useMemo(() => filterPairs(pairs, { q }), [pairs, q]);
+  const matches = useMemo(() => filterPresets(presets, { q }), [presets, q]);
   const pageCount = Math.max(1, Math.ceil(matches.length / PAGE_SIZE));
   const current = Math.min(page, pageCount);
   const shown = matches.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
@@ -52,9 +52,9 @@ export function ComparePicker({
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Add Pairs</DrawerTitle>
+          <DrawerTitle>Add Presets</DrawerTitle>
           <DrawerDescription>
-            Pick up to {max} Pairs to line up side by side.
+            Pick up to {max} Presets to line up side by side.
           </DrawerDescription>
         </DrawerHeader>
 
@@ -70,7 +70,7 @@ export function ComparePicker({
                 setQ(e.target.value);
                 setPage(1);
               }}
-              aria-label="Search Pairs"
+              aria-label="Search Presets"
               placeholder="Search Font or Theme"
               autoComplete="off"
               spellCheck={false}
@@ -80,13 +80,13 @@ export function ComparePicker({
         </div>
 
         <ul
-          aria-label="Pairs"
+          aria-label="Presets"
           data-lenis-prevent
           className="m-0 min-h-0 flex-1 list-none overflow-y-auto overscroll-contain px-3 pb-3"
         >
           {shown.length === 0 ? (
             <li className="text-muted-foreground px-3 py-10 text-center text-sm">
-              No Pairs match. Clear a filter to see more.
+              No Presets match. Clear a filter to see more.
             </li>
           ) : null}
           {shown.map((p) => {
@@ -120,7 +120,7 @@ export function ComparePicker({
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-medium">
-                      {pairLabel(p)}
+                      {presetLabel(p)}
                     </span>
                   </span>
                   <span

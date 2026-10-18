@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { EditorArt } from '@/components/home/EditorArt'
 import { Mark } from '@/components/layout/Mark'
 import { ThemeSwitch } from '@/components/layout/ThemeToggle'
-import { ADD_PAIR_URL, CONTRIBUTE_URL, GITHUB_URL } from '@/lib/site'
+import { ADD_PRESET_URL, CONTRIBUTE_URL, GITHUB_URL } from '@/lib/site'
 
 const linkClass =
   'text-muted-foreground hover:text-foreground inline-flex min-h-8 items-center text-sm no-underline transition-colors'
@@ -16,6 +16,9 @@ const LAST_UPDATED = new Date(__LAST_UPDATED__).toLocaleDateString('en-US', {
   timeZone: 'UTC',
 })
 
+const creditLink =
+  'text-foreground decoration-foreground/30 hover:decoration-foreground underline underline-offset-4 transition-colors'
+
 export default function Footer() {
   return (
     <footer className="border-border relative overflow-hidden border-t">
@@ -27,7 +30,7 @@ export default function Footer() {
               EditorSetup
             </Link>
             <p className="text-muted-foreground mt-4 text-sm">
-              Font and Theme Pairs from real setups, with Settings you can paste. Open source, kept in Git.
+              The easiest way to make your editor look better.
             </p>
             <a
               href="https://www.producthunt.com/products/editorsetup?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-editorsetup"
@@ -48,8 +51,8 @@ export default function Footer() {
           <nav aria-labelledby="footer-explore">
             <h2 id="footer-explore" className="font-sans text-sm font-medium tracking-normal">Explore</h2>
             <ul className="mt-3 flex list-none flex-col p-0">
-              <li><Link to="/registry" className={linkClass}>Registry</Link></li>
-              <li><Link to="/studio" className={linkClass}>Snapshot Studio</Link></li>
+              <li><Link to="/presets" className={linkClass}>Presets</Link></li>
+              <li><Link to="/studio" className={linkClass}>Preset Studio</Link></li>
               <li><Link to="/about" className={linkClass}>About</Link></li>
               <li><Link to="/changelog" className={linkClass}>Changelog</Link></li>
             </ul>
@@ -58,7 +61,7 @@ export default function Footer() {
           <nav aria-labelledby="footer-community">
             <h2 id="footer-community" className="font-sans text-sm font-medium tracking-normal">Community</h2>
             <ul className="mt-3 flex list-none flex-col p-0">
-              <li><a href={ADD_PAIR_URL} target="_blank" rel="noreferrer" className={linkClass}>Add a Pair</a></li>
+              <li><a href={ADD_PRESET_URL} target="_blank" rel="noreferrer" className={linkClass}>Add a Preset</a></li>
               <li><a href={CONTRIBUTE_URL} target="_blank" rel="noreferrer" className={linkClass}>Contribution guide</a></li>
               <li><a href={`${GITHUB_URL}/pulls`} target="_blank" rel="noreferrer" className={linkClass}>Pull requests</a></li>
               <li><a href={`${GITHUB_URL}/issues`} target="_blank" rel="noreferrer" className={linkClass}>Issues</a></li>
@@ -80,12 +83,7 @@ export default function Footer() {
           <p className="text-muted-foreground flex flex-wrap items-center gap-x-2 text-sm">
             <span>
               Built in public by{" "}
-              <a
-                href={AUTHOR_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="text-foreground underline hover:no-underline"
-              >
+              <a href={AUTHOR_URL} target="_blank" rel="noreferrer" className={creditLink}>
                 {AUTHOR}
               </a>
             </span>
@@ -93,8 +91,7 @@ export default function Footer() {
             <span>© {new Date().getFullYear()}</span>
             <span aria-hidden>·</span>
             <span>
-              Last updated{" "}
-              <time dateTime={__LAST_UPDATED__}>{LAST_UPDATED}</time>
+              Last updated <time dateTime={__LAST_UPDATED__}>{LAST_UPDATED}</time>
             </span>
           </p>
           <ThemeSwitch />
