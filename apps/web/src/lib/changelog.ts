@@ -4,13 +4,15 @@ export const ENTRIES = [
     date: "2026-10-18",
     title: "Presets and a new landing story",
     changes: [
-      "Presets are now called Presets, and Snapshot Studio is now Preset Studio.",
+      "Pairs are now called Presets, and Snapshot Studio is now Preset Studio.",
       "The Registry is now the Presets page at /presets. Old /registry links redirect.",
       "A landing page that walks you through it: take a look around, compare, copy, make your own and share.",
-      "Line illustrations for each step, and a footer that credits the tools behind the site.",
+      "Line illustrations for each step, and a Credits section on the About page.",
       "The License section is now a question in the FAQ.",
-      "Preset Studio can also save a draft of the Preset file, next to the PNG.",
       "Every Preset file now names its author, with optional contributors for Editor ports, and each Editor's Settings say who wrote them.",
+      "Preset Studio exports the Preset file and the Snapshot from one button group.",
+      "The Studio's Code tab now has syntax colors, and each language loads its own sample.",
+      "The Studio's Other option is now called Custom.",
     ],
   },
   {
