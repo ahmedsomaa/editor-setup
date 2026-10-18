@@ -9,11 +9,10 @@ import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/registry/")({
   validateSearch: registrySearchSchema,
-  loaderDeps: ({ search: { q, editor, appearance, license } }) => ({
+  loaderDeps: ({ search: { q, editor, appearance } }) => ({
     q,
     editor,
     appearance,
-    license,
   }),
   loader: ({ deps }) => listPairsFn({ data: deps }),
   // Crawlable listing whose state lives in the URL: render fully on the server.
@@ -24,7 +23,7 @@ export const Route = createFileRoute("/registry/")({
       name: "Registry",
       title: "Registry: Font and Theme Pairs for VS Code and Zed",
       description:
-        "Browse Font and Theme Pairs from real editor setups. Filter by Appearance, License or Editor, open a Pair to see its Snapshot and copy its Settings.",
+        "Browse Font and Theme Pairs from real editor setups. Search by Font or Theme, filter by Appearance or Editor, open a Pair to see its Snapshot and copy its Settings.",
     }),
   component: RegistryPage,
 });

@@ -51,18 +51,19 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
         className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12"
       >
         <div className="min-w-0">
-          <div className="w-fit max-w-full">
+          <div className="relative w-fit max-w-full pt-8">
+            <span
+              aria-hidden="true"
+              style={{ "--i": 0 } as React.CSSProperties}
+              className="hero-in border-border bg-card text-pastel-green-text absolute -top-1 right-4 rotate-6 rounded-full border px-2.5 pt-1 pb-0.5 font-sans text-xs leading-none font-medium tracking-[0.05em] uppercase shadow-[var(--shadow-overlay)] sm:right-10"
+            >
+              Free
+            </span>
             <h1
               style={{ "--i": 0 } as React.CSSProperties}
-              className="hero-in relative mt-8 text-balance text-[clamp(2.5rem,4.6vw,4.5rem)]"
+              className="hero-in text-balance text-[clamp(2.5rem,4.6vw,4.5rem)]"
             >
-              <span
-                aria-hidden="true"
-                className="border-border bg-card text-pastel-green-text absolute -top-9 right-4 rotate-6 rounded-full border px-2.5 pt-1 pb-0.5 font-sans text-xs leading-none font-medium tracking-[0.05em] uppercase shadow-[var(--shadow-overlay)] sm:right-10"
-              >
-                Free
-              </span>
-              <span className="block">Your next ideal editor</span>
+              <span className="block">Your next ideal editor</span>{" "}
               setup is{" "}
               <span className="relative inline-block whitespace-nowrap">
                 <svg className="absolute h-0 w-0" aria-hidden="true">

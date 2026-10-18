@@ -15,6 +15,8 @@ import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as DesignRouteImport } from './routes/design'
 import { Route as RegistryRouteImport } from './routes/registry'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as RegistryIndexRouteImport } from './routes/registry.index'
 import { Route as RegistrySlugRouteImport } from './routes/registry.$slug'
@@ -49,6 +51,16 @@ const RegistryRoute = RegistryRouteImport.update({
   path: '/registry',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
   path: '/studio',
@@ -72,6 +84,8 @@ export interface FileRoutesByFullPath {
   '/compare': typeof CompareRoute
   '/design': typeof DesignRoute
   '/registry': typeof RegistryRouteWithChildren
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
   '/registry/': typeof RegistryIndexRoute
@@ -82,6 +96,8 @@ export interface FileRoutesByTo {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/design': typeof DesignRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
   '/registry': typeof RegistryIndexRoute
@@ -94,6 +110,8 @@ export interface FileRoutesById {
   '/compare': typeof CompareRoute
   '/design': typeof DesignRoute
   '/registry': typeof RegistryRouteWithChildren
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
   '/registry/': typeof RegistryIndexRoute
@@ -107,6 +125,8 @@ export interface FileRouteTypes {
     | '/compare'
     | '/design'
     | '/registry'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/studio'
     | '/registry/$slug'
     | '/registry/'
@@ -117,6 +137,8 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/design'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/studio'
     | '/registry/$slug'
     | '/registry'
@@ -128,6 +150,8 @@ export interface FileRouteTypes {
     | '/compare'
     | '/design'
     | '/registry'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/studio'
     | '/registry/$slug'
     | '/registry/'
@@ -140,6 +164,8 @@ export interface RootRouteChildren {
   CompareRoute: typeof CompareRoute
   DesignRoute: typeof DesignRoute
   RegistryRoute: typeof RegistryRouteWithChildren
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StudioRoute: typeof StudioRoute
 }
 
@@ -187,6 +213,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegistryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/studio': {
       id: '/studio'
       path: '/studio'
@@ -232,6 +272,8 @@ const rootRouteChildren: RootRouteChildren = {
   CompareRoute: CompareRoute,
   DesignRoute: DesignRoute,
   RegistryRoute: RegistryRouteWithChildren,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   StudioRoute: StudioRoute,
 }
 export const routeTree = rootRouteImport
