@@ -7,8 +7,8 @@ import { SAMPLES } from "@/lib/studio/samples";
 import { FONT_CHOICES } from "@/lib/studio/font-files";
 import { OptionChip, ThemeSwatch } from "./chips";
 
-/** Value of the "Other" choice in the Font and Theme lists. */
-export const OTHER = "__other";
+/** Value of the "Custom" choice in the Font and Theme lists. */
+export const CUSTOM_OPTION = "__custom";
 
 export const EDITOR_OPTIONS: Option[] = EDITOR_IDS.map((id) => ({
   id,
@@ -24,8 +24,8 @@ export const FONT_OPTIONS: Option[] = [
     icon: <OptionChip className="font-mono">Aa</OptionChip>,
   })),
   {
-    id: OTHER,
-    label: "Other",
+    id: CUSTOM_OPTION,
+    label: "Custom",
     group: "Your own",
     icon: (
       <OptionChip>
@@ -49,8 +49,8 @@ export const THEME_OPTIONS: Option[] = [
     icon: <ThemeSwatch id={t.id} />,
   })),
   {
-    id: OTHER,
-    label: "Other",
+    id: CUSTOM_OPTION,
+    label: "Custom",
     group: "Your own",
     icon: (
       <OptionChip>

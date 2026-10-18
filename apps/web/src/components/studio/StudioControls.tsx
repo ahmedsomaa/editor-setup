@@ -23,8 +23,8 @@ export function StudioControls({
     themeId,
     themeUrl,
     themeName,
-    themeOther,
-    setThemeOther,
+    themeCustom,
+    setThemeCustom,
     urlDraft,
     setUrlDraft,
     variants,
@@ -57,7 +57,7 @@ export function StudioControls({
             options={EDITOR_OPTIONS}
             onChange={(id) => {
               if (id === editor) return;
-              setThemeOther(false);
+              setThemeCustom(false);
               setUrlDraft("");
               setParam({
                 editor: id as EditorId,
@@ -82,8 +82,8 @@ export function StudioControls({
           themeId={themeId}
           themeUrl={themeUrl}
           themeName={themeName}
-          other={themeOther}
-          onOtherChange={setThemeOther}
+          custom={themeCustom}
+          onCustomChange={setThemeCustom}
           urlDraft={urlDraft}
           onUrlDraftChange={setUrlDraft}
           variants={variants}

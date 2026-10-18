@@ -3,20 +3,20 @@ import { Combobox } from "@/components/common/Combobox";
 import type { EditorId } from "@/lib/presets/presets";
 import { Field } from "./Field";
 import { IconChip } from "./chips";
-import { OTHER, THEME_OPTIONS } from "./options";
+import { CUSTOM_OPTION, THEME_OPTIONS } from "./options";
 import type { SetParam } from "./types";
 
 const inputClass =
   "bg-muted border-border text-foreground placeholder:text-muted-foreground h-10 w-full rounded-full border px-4 text-[13px] disabled:opacity-50";
 
-/** Pick a listed Theme, or paste a link to a theme file under "Other" (always a link for Zed). */
+/** Pick a listed Theme, or paste a link to a theme file under "Custom" (always a link for Zed). */
 export function ThemeField({
   editor,
   themeId,
   themeUrl,
   themeName,
-  other,
-  onOtherChange,
+  custom,
+  onCustomChange,
   urlDraft,
   onUrlDraftChange,
   variants,
@@ -28,8 +28,8 @@ export function ThemeField({
   themeUrl: string;
   /** Name read from the theme file, shown once a link is loaded. */
   themeName: string;
-  other: boolean;
-  onOtherChange: (other: boolean) => void;
+  custom: boolean;
+  onCustomChange: (custom: boolean) => void;
   urlDraft: string;
   onUrlDraftChange: (url: string) => void;
   variants: string[];
@@ -38,7 +38,7 @@ export function ThemeField({
 }) {
   // The list holds VS Code themes, so a Zed theme always comes from a link.
   const linkOnly = editor === "zed";
-  const showLink = linkOnly || other;
+  const showLink = linkOnly || custom;
 
   return (
     <Field legend="Theme">
@@ -46,15 +46,15 @@ export function ThemeField({
         <div className="flex flex-col gap-1.5">
           <Combobox
             label="Theme"
-            value={other ? OTHER : themeId}
+            value={custom ? CUSTOM_OPTION : themeId}
             options={THEME_OPTIONS}
-            display={other && themeUrl ? `Other (${themeName})` : undefined}
+            display={custom && themeUrl ? `Custom (${themeName})` : undefined}
             onChange={(id) => {
-              if (id === OTHER) {
-                onOtherChange(true);
+              if (id === CUSTOM_OPTION) {
+                onCustomChange(true);
                 return;
               }
-              onOtherChange(false);
+              onCustomChange(false);
               onUrlDraftChange("");
               setParam({
                 theme: id,

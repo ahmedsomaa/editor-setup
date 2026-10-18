@@ -10,10 +10,10 @@ import {
 } from "@/lib/studio/font-files";
 import { Field } from "./Field";
 import { IconChip } from "./chips";
-import { FONT_OPTIONS, OTHER } from "./options";
+import { FONT_OPTIONS, CUSTOM_OPTION } from "./options";
 import type { CustomFont } from "./types";
 
-/** Pick a listed Font, or upload your own font files under "Other". */
+/** Pick a listed Font, or upload your own font files under "Custom". */
 export function FontField({
   fontName,
   fontDraft,
@@ -27,7 +27,7 @@ export function FontField({
   onCustomChange: (custom: CustomFont | null) => void;
   onPick: (font: string) => void;
 }) {
-  const [other, setOther] = useState(() => !FONT_CHOICES.includes(fontName));
+  const [pickedCustom, setPickedCustom] = useState(() => !FONT_CHOICES.includes(fontName));
   const [fileError, setFileError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -65,27 +65,27 @@ export function FontField({
       <div className="flex flex-col gap-1.5">
         <Combobox
           label="Font"
-          value={other ? OTHER : fontName}
+          value={pickedCustom ? CUSTOM_OPTION : fontName}
           options={FONT_OPTIONS}
           display={
-            other
+            pickedCustom
               ? custom
-                ? `Other (${custom.name.trim() || "your font"})`
-                : "Other"
+                ? `Custom (${custom.name.trim() || "your font"})`
+                : "Custom"
               : undefined
           }
           onChange={(id) => {
-            if (id === OTHER) {
-              setOther(true);
+            if (id === CUSTOM_OPTION) {
+              setPickedCustom(true);
               return;
             }
-            setOther(false);
+            setPickedCustom(false);
             removeCustom();
             onPick(id);
           }}
         />
       </div>
-      {other ? (
+      {pickedCustom ? (
         <div className="flex flex-col gap-1.5">
           <span className="flex items-center gap-2 text-sm font-medium">
             <IconChip>

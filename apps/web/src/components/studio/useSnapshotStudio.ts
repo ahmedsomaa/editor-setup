@@ -38,7 +38,7 @@ export function useSnapshotStudio() {
 
   const [fontDraft, setFontDraft] = useState(fontName);
   const [custom, setCustom] = useState<CustomFont | null>(null);
-  const [themeOther, setThemeOther] = useState(Boolean(themeUrl));
+  const [themeCustom, setThemeCustom] = useState(Boolean(themeUrl));
   const [urlDraft, setUrlDraft] = useState(themeUrl);
   const [code, setCode] = useState(() => sampleFor(lang));
 
@@ -185,8 +185,8 @@ export function useSnapshotStudio() {
     themeId,
     themeUrl,
     themeName: meta.themeName,
-    themeOther,
-    setThemeOther,
+    themeCustom,
+    setThemeCustom,
     urlDraft,
     setUrlDraft,
     variants,

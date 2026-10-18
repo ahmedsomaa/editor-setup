@@ -2,7 +2,7 @@ import { LoaderCircle as Loader2, Moon, Sun } from "lucide-react";
 import { cn } from "cn";
 import SWATCHES from "@/lib/theme/theme-swatches.json";
 
-/** A small tile in front of an option: "Aa" for a Font, an icon for the "Other" choices. */
+/** A small tile in front of an option: "Aa" for a Font, an icon for the "Custom" choices. */
 export function OptionChip({
   children,
   className,
