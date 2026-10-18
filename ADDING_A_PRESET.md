@@ -62,11 +62,12 @@ Do not mix an unrelated Preset into the same pull request.
 
 ## ✅ Rules the check enforces
 
+- The file is named `<font-slug>--<theme-slug>.json`, from the Font and Theme names.
 - `appearance` is `dark` or `light`.
 - License is `open` or `free` on the Font and on the Theme.
 - Font and Theme each need at least one publish link.
 - Settings are a non-empty plain-text string.
-- The Snapshot file is `<preset-slug>.png`, aspect ratio 16:9.
+- The Snapshot file is `<preset-slug>.png` (the same name as the Preset file), a valid PNG at 16:9.
 - `snapshot` must match that filename.
 - Only add a Preset when its Font and Theme licenses allow a public image of them. If a license asks for payment, or does not say, leave it out.
 - One Config per Editor. One Preset per Font and Theme.

@@ -39,17 +39,19 @@ src/
   components/
     layout/        Header, Footer, page heroes, scroll and reveal helpers
     common/        Shared bits: Combobox, Tag, EditorLogo, SnapshotImage, ShareButton
-    presets/      Presets list: Directory, PresetGrid, PresetWindow, Pagination
-    preset/          Preset page parts: EditorSwitch, PresetDetail, CopySettings
+    presets/       Presets page: PresetGrid, PresetsFilters, PresetWindow, Directory, Pagination
+    preset/        One Preset page: PresetHeader, PresetSnapshot, PresetSettings, EditorSwitch, CopySettings
     compare/       Compare page, picker, toggle and tray
     studio/        Preset Studio: StudioPage, FontField, ThemeField, PreviewPanel
-    home/          Home page sections and their art
+    home/          Home page: Hero, the four feature sections, SharePresetSection, FAQ, their art and SpotIcons
+    about/, changelog/, design/   The About, Changelog and Design system pages
     ui/            shadcn/ui primitives
   lib/
-    presets/      Preset model, search params, snapshots, compare store
+    presets/       Preset model, search params, Snapshots, compare store
     theme/         Shiki highlighting, Zed and VS Code theme handling, Snapshot HTML
     studio/        Samples, search schema, font files, PNG export
   server/          Server functions and Preset loading
+  data/            preset-submitters.json, built by `bun run generate:submitters` from the repo root
 ```
 
 Machine-readable files are server routes beside the pages: `/rss.xml` (the changelog, from `lib/changelog.ts`), `/llms.txt` (a short hand-written map of the site for AI tools), `/sitemap.xml` (static pages plus every Preset) and `/robots.txt`. When you add a page, add it to `llms.txt` and the sitemap.

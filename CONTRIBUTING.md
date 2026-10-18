@@ -6,7 +6,7 @@ Want to add a Font and Theme Preset? That is not a Contribution. Follow [ADDING_
 
 ## 📚 Before you start
 
-- Read [GLOSSARY.md](GLOSSARY.md) for the words the project uses: Preset, Font, Theme, Editor, Config, Settings, Snapshot, Presets.
+- Read [GLOSSARY.md](GLOSSARY.md) for the words the project uses: Preset, Font, Theme, Editor, Config, Settings, Snapshot, Presets (the page), Preset Studio.
 - The site lives in `apps/web/` (TanStack Start on Cloudflare Workers). The preset check lives in `packages/preset-check/`. Presets and Snapshots live in `presets/`.
 - Design rules are in `docs/design-system/`. Follow them for any UI change.
 
@@ -30,4 +30,5 @@ bun run build       # production build
 - One concern per pull request. Keep unrelated changes out.
 - Do not mix a Preset into a Contribution. Send Presets separately, following [ADDING_A_PRESET.md](ADDING_A_PRESET.md).
 - Name what changed and why in the description. Add a screenshot for UI changes.
+- Changed something a visitor can see? Add an entry at the top of `apps/web/src/lib/changelog.ts`: a date, a short title and one line per change. There is no changelog bot, and the entry also feeds `/rss.xml`.
 - A person merges. The **Preset check** runs on every pull request; a workflow from a first-time fork needs the maintainer to approve it first.
