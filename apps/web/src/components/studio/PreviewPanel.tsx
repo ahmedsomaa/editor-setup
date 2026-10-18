@@ -85,7 +85,7 @@ export function PreviewPanel({
             variant="outline"
             disabled={exportDisabled}
             onClick={onSaveJson}
-            className="h-10.5 px-4 focus-visible:z-10 rounded-e-none"
+            className="h-10.5 px-4 enabled:cursor-pointer focus-visible:z-10 rounded-e-none"
           >
             <FileJson />
             Export Preset
@@ -94,7 +94,7 @@ export function PreviewPanel({
             variant="outline"
             disabled={exportDisabled}
             onClick={onSavePng}
-            className="h-10.5 px-4 focus-visible:z-10 -ms-px rounded-s-none"
+            className="h-10.5 px-4 enabled:cursor-pointer focus-visible:z-10 -ms-px rounded-s-none"
           >
             {exporting ? (
               <Loader2 className="animate-spin motion-reduce:animate-none" />
