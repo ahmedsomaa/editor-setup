@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://editorsetup.dev/schema/pair.json",
+  "$id": "https://editorsetup.dev/schema/preset.json",
   "title": "Preset",
   "type": "object",
   "additionalProperties": false,

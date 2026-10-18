@@ -3,7 +3,7 @@ import { ADD_PAIR_URL, GITHUB_URL, SITE_URL } from "@/lib/site";
 
 const LLMS_TXT = `# EditorSetup
 
-> A git-backed registry of monospace font and color theme pairings for code editors. Each Preset has the settings that apply it and a snapshot of how it looks. VS Code and Zed are supported.
+> A git-backed list of monospace Font and Theme Presets for code editors. Each Preset has the settings that apply it and a snapshot of how it looks. VS Code and Zed are supported.
 
 ## Site
 

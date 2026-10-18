@@ -30,4 +30,4 @@ bun run build       # production build
 - One concern per pull request. Keep unrelated changes out.
 - Do not mix a Preset into a Contribution. Send Presets separately, following [ADDING_A_PAIR.md](ADDING_A_PAIR.md).
 - Name what changed and why in the description. Add a screenshot for UI changes.
-- A person merges. The **Registry check** runs on every pull request; a workflow from a first-time fork needs the maintainer to approve it first.
+- A person merges. The **Preset check** runs on every pull request; a workflow from a first-time fork needs the maintainer to approve it first.

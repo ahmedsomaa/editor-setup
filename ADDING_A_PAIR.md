@@ -80,4 +80,4 @@ Do not mix an unrelated Preset into the same pull request.
 
 ## 🤖 What happens after you open a pull request
 
-- The **Registry check** runs on every pull request. A workflow from a first-time fork needs the maintainer to approve it first.
+- The **Preset check** runs on every pull request. A workflow from a first-time fork needs the maintainer to approve it first.

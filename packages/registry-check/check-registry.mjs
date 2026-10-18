@@ -7,7 +7,7 @@ import addFormats from "ajv-formats";
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const pairsDir = join(root, "registry/pairs");
 const snapshotsDir = join(root, "registry/snapshots");
-const schemaPath = join(root, "registry/schema/pair.schema.json");
+const schemaPath = join(root, "registry/schema/preset.schema.json");
 
 const errors = [];
 
@@ -135,11 +135,11 @@ async function main() {
 
 function report() {
   if (errors.length) {
-    console.error("Registry check failed:\n");
+    console.error("Preset check failed:\n");
     for (const error of errors) console.error(`- ${error}`);
     process.exit(1);
   }
-  console.log("Registry check passed.");
+  console.log("Preset check passed.");
 }
 
 main().catch((error) => {

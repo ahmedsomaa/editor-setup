@@ -1,4 +1,4 @@
-name: Registry check
+name: Preset check
 
 on:
   pull_request:

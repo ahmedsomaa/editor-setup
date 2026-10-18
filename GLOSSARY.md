@@ -1,6 +1,6 @@
 # editorSetup
 
-A git-backed registry of monospace font and color theme pairings for code editors, each with the settings that apply it and a snapshot of how it looks.
+A git-backed list of monospace Font and Theme Presets for code editors, each with the settings that apply it and a snapshot of how it looks.
 
 ## Language
 
