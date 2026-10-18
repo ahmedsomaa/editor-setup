@@ -2,6 +2,14 @@
 export const ENTRIES = [
   {
     date: "2026-10-18",
+    title: "RSS feed and llms.txt",
+    changes: [
+      "An RSS feed of this changelog, with an RSS button at the top of the Changelog page.",
+      "An llms.txt that gives AI tools a short map of the site, linked in the footer.",
+    ],
+  },
+  {
+    date: "2026-10-18",
     title: "Simpler Registry filters",
     changes: [
       "Registry filters are now search, Editor and Appearance, with License dropped.",
