@@ -33,13 +33,13 @@ export function PresetSnapshot({
           />
         )}
         <figcaption className="text-muted-foreground mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
-          <span>{snap ? "Snapshot" : "Preview"}</span>
+          {snap ? null : <span>Preview</span>}
           {snap ? (
             <a
               href={snap}
               target="_blank"
               rel="noreferrer"
-              className="text-foreground font-medium underline hover:no-underline"
+              className="text-foreground ms-auto font-medium underline hover:no-underline"
             >
               Open full size
             </a>

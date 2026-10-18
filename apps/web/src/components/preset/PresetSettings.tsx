@@ -60,7 +60,7 @@ export function PresetSettings({
       </pre>
       <p className="text-muted-foreground mt-2 text-xs">
         {EDITOR_LABELS[config.id]} Settings by{" "}
-        <PersonName person={settingsAuthor(preset, config.id)} />. Plain text, paste it into your editor.
+        <PersonName person={settingsAuthor(preset, config.id)} />
       </p>
     </Reveal>
   );
