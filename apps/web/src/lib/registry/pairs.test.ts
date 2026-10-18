@@ -2,7 +2,6 @@ import { describe, expect, test } from "bun:test";
 import {
   filterPairs,
   getEditorConfig,
-  matchesLicenseFilter,
   resolveEditorId,
 } from "@/lib/registry/pairs";
 import { mock } from "bun:test";
@@ -84,15 +83,6 @@ describe("getEditorConfig / resolveEditorId", () => {
 
   test("resolveEditorId falls back when preferred has no Config", () => {
     expect(resolveEditorId(vscodeOnly, "zed")).toBe("vscode");
-  });
-});
-
-describe("matchesLicenseFilter", () => {
-  const pair = getPairBySlug("inconsolata--vitesse-dark")!;
-
-  test("matches the License of the Font or the Theme", () => {
-    expect(matchesLicenseFilter(pair, "open")).toBe(true);
-    expect(matchesLicenseFilter(pair, "free")).toBe(false);
   });
 });
 

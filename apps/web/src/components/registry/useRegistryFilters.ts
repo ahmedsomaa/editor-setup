@@ -45,7 +45,7 @@ export function useRegistryFilters(search: RegistrySearch) {
 
   const hasFilters =
     query.trim().length > 0 ||
-    Boolean(search.editor || search.appearance || search.license);
+    Boolean(search.editor || search.appearance);
 
   function clearFilters() {
     pushedQ.current = undefined;
@@ -54,7 +54,6 @@ export function useRegistryFilters(search: RegistrySearch) {
       q: undefined,
       editor: undefined,
       appearance: undefined,
-      license: undefined,
     });
   }
 

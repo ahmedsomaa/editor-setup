@@ -11,7 +11,6 @@ import {
   EDITOR_LABELS,
   type Appearance,
   type EditorId,
-  type License,
 } from "@/lib/registry/pairs";
 
 const EDITOR_OPTIONS = Object.entries(EDITOR_LABELS) as [EditorId, string][];
@@ -19,18 +18,13 @@ const APPEARANCE_OPTIONS: { id: Appearance; label: string }[] = [
   { id: "dark", label: "Dark" },
   { id: "light", label: "Light" },
 ];
-const LICENSE_OPTIONS: { id: License; label: string }[] = [
-  { id: "open", label: "Open" },
-  { id: "free", label: "Free" },
-];
 
 type Filters = {
   editor?: EditorId;
   appearance?: Appearance;
-  license?: License;
 };
 
-/** The search box and the Editor, Appearance and License filters above the Registry list. */
+/** The search box and the Editor and Appearance filters above the Registry list. */
 export function RegistryFilters({
   query,
   onQueryChange,
@@ -79,7 +73,7 @@ export function RegistryFilters({
           name="q"
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          placeholder="Fira Code"
+          placeholder="Search by Font or Theme"
           autoComplete="off"
           spellCheck={false}
           className="placeholder:text-muted-foreground min-w-0 flex-1 bg-transparent text-sm outline-none"
@@ -99,7 +93,7 @@ export function RegistryFilters({
           </kbd>
         )}
       </label>
-      <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap [&>:last-child]:col-span-2 md:[&>:last-child]:col-span-1">
+      <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap">
         <FilterSelect
           label="Editor"
           value={filters.editor ?? ""}
@@ -122,20 +116,6 @@ export function RegistryFilters({
           options={[
             { value: "", label: "Dark and light" },
             ...APPEARANCE_OPTIONS.map(({ id, label }) => ({
-              value: id,
-              label,
-            })),
-          ]}
-        />
-        <FilterSelect
-          label="License"
-          value={filters.license ?? ""}
-          onChange={(v) =>
-            onFilterChange({ license: (v || undefined) as License | undefined })
-          }
-          options={[
-            { value: "", label: "Any License" },
-            ...LICENSE_OPTIONS.map(({ id, label }) => ({
               value: id,
               label,
             })),

@@ -65,24 +65,16 @@ export const LICENSE_LABELS: Record<License, string> = {
   free: "Free",
 };
 
-export function matchesLicenseFilter(
-  pair: PairRecord,
-  filter: License,
-): boolean {
-  return pair.font.license === filter || pair.theme.license === filter;
-}
-
 export type PairFilters = {
   q?: string;
   editor?: EditorId;
   appearance?: Appearance;
-  license?: License;
 };
 
 /** Pure filter shared by the server function and tests. */
 export function filterPairs(
   pairs: PairRecord[],
-  { q, editor, appearance, license }: PairFilters,
+  { q, editor, appearance }: PairFilters,
 ): PairRecord[] {
   const needle = q?.trim().toLowerCase();
   return pairs.filter((pair) => {
@@ -93,7 +85,6 @@ export function filterPairs(
     }
     if (editor && !pair.editors.some((e) => e.id === editor)) return false;
     if (appearance && pair.theme.appearance !== appearance) return false;
-    if (license && !matchesLicenseFilter(pair, license)) return false;
     return true;
   });
 }

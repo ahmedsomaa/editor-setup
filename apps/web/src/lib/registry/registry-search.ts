@@ -13,7 +13,6 @@ export const registryFilterSchema = z.object({
     .catch(undefined),
   editor,
   appearance: z.enum(["dark", "light"]).optional().catch(undefined),
-  license: z.enum(["free", "open"]).optional().catch(undefined),
 });
 
 export const registrySearchSchema = registryFilterSchema.extend({
