@@ -96,12 +96,23 @@ async function main() {
     }
 
     const credited = new Set([data.author.name.toLowerCase()]);
+    const claimed = new Map();
+    const presetEditors = new Set(data.editors.map((e) => e.id));
     for (const person of data.contributors ?? []) {
       const key = person.name.toLowerCase();
       if (credited.has(key)) {
         fail(`${file}: "${person.name}" is credited twice (author and contributors)`);
       }
       credited.add(key);
+      for (const id of person.editors) {
+        if (!presetEditors.has(id)) {
+          fail(`${file}: contributor "${person.name}" lists "${id}", which this Preset has no Config for`);
+        } else if (claimed.has(id)) {
+          fail(`${file}: "${id}" is claimed by both "${claimed.get(id)}" and "${person.name}"`);
+        } else {
+          claimed.set(id, person.name);
+        }
+      }
     }
 
     const editorIds = new Set();

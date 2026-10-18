@@ -4,7 +4,7 @@ export type PresetFile = {
   font: { name: string; links: string[]; license: License };
   theme: { name: string; links: string[]; license: License; appearance: Appearance };
   author: { name: string; url?: string };
-  contributors?: Array<{ name: string; url?: string }>;
+  contributors?: Array<{ name: string; url?: string; editors: EditorId[] }>;
   snapshot: string;
   editors: Array<{ id: EditorId; settings: string }>;
 };

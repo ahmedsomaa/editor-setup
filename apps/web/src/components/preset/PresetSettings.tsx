@@ -3,10 +3,31 @@ import { CopySettings } from "@/components/preset/CopySettings";
 import { EditorSwitch } from "@/components/preset/EditorSwitch";
 import {
   EDITOR_LABELS,
+  type Author,
   type EditorConfig,
   type EditorId,
   type PresetRecord,
 } from "@/lib/presets/presets";
+
+/** Who wrote the Settings for an Editor: the contributor who added it, otherwise the author. */
+function settingsAuthor(preset: PresetRecord, editor: EditorId): Author {
+  return preset.contributors.find((c) => c.editors.includes(editor)) ?? preset.author;
+}
+
+function PersonName({ person }: { person: Author }) {
+  return person.url ? (
+    <a
+      href={person.url}
+      target="_blank"
+      rel="noreferrer"
+      className="text-foreground underline underline-offset-4 hover:no-underline"
+    >
+      {person.name}
+    </a>
+  ) : (
+    <span className="text-foreground">{person.name}</span>
+  );
+}
 
 /** The Settings text for one Editor, with a switch between Editors and a copy button. */
 export function PresetSettings({
@@ -38,7 +59,8 @@ export function PresetSettings({
         {config.settings}
       </pre>
       <p className="text-muted-foreground mt-2 text-xs">
-        Plain text for {EDITOR_LABELS[config.id]}. Paste it into your Editor.
+        {EDITOR_LABELS[config.id]} Settings by{" "}
+        <PersonName person={settingsAuthor(preset, config.id)} />. Plain text, paste it into your editor.
       </p>
     </Reveal>
   );

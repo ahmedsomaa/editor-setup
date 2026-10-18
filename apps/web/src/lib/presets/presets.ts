@@ -10,15 +10,18 @@ export type Author = {
   url?: string;
 };
 
+/** Someone who added Settings for one or more Editors, beyond the author. */
+export type Contributor = Author & { editors: EditorId[] };
+
 /** The Settings text for one Editor. */
 export type EditorConfig = { id: EditorId; settings: string };
 
 export type PresetRecord = {
   slug: string;
-  /** Set only when resolved from the merged PR (or git fallback) for a real Preset file. */
+  /** Made the Preset, and wrote the Settings for every Editor no contributor claims. */
   author: Author;
-  /** Others credited on the Preset, for example who added an Editor. */
-  contributors: Author[];
+  /** Others credited on the Preset, each with the Editors they added. */
+  contributors: Contributor[];
   font: {
     name: string;
     links: string[];

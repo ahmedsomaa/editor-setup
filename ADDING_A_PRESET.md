@@ -53,7 +53,7 @@ Example Preset file:
 }
 ```
 
-An Editor port adds `"contributors": [{ "name": "Sara", "url": "https://github.com/sara" }]` to the same file.
+An Editor port adds `"contributors": [{ "name": "Sara", "url": "https://github.com/sara", "editors": ["zed"] }]` to the same file. The Preset page then says "Zed Settings by Sara" under the Settings, and "by Ahmed and 1 contributor" in the header.
 
 ## 🧩 Add an Editor to an existing Preset
 
@@ -62,14 +62,14 @@ Open a separate pull request that:
 1. Adds one entry to the `editors` array in that Preset’s JSON file.
 2. Runs `bun run check`.
 
-The Preset keeps its one Snapshot. Add yourself to `contributors` in the same file, so the Preset page credits you. The original `author` stays.
+The Preset keeps its one Snapshot. Add yourself to `contributors` in the same file, listing the Editor you added, so the Preset page credits you for it. The original `author` stays.
 
 Do not mix an unrelated Preset into the same pull request.
 
 ## ✅ Rules the check enforces
 
 - The file is named `<font-slug>--<theme-slug>.json`, from the Font and Theme names.
-- `contributors` is optional: a list of up to 10 people in the same shape as `author`. It is for others, such as someone who added an Editor, so do not repeat the author.
+- `contributors` is optional: a list of up to 10 people in the same shape as `author`, plus `editors`, the Editor IDs they wrote Settings for. Every Editor must exist in the Preset, and each Editor has at most one contributor. Do not repeat the author. Editors no contributor claims are credited to the author.
 - `author` has a `name` (required) and an optional `url` that starts with `https://`, such as your GitHub profile. It is the credit shown on the Preset page. Write the name you want shown; the check does not verify it.
 - `appearance` is `dark` or `light`.
 - License is `open` or `free` on the Font and on the Theme.

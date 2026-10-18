@@ -107,7 +107,8 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "name"
+          "name",
+          "editors"
         ],
         "properties": {
           "name": {
@@ -119,6 +120,18 @@
             "type": "string",
             "format": "uri",
             "pattern": "^https://"
+          },
+          "editors": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "vscode",
+                "zed"
+              ]
+            }
           }
         }
       }

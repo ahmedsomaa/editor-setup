@@ -19,24 +19,21 @@ function Person({ person }: { person: Author }) {
   );
 }
 
-/** "by Ahmed, with Sara and Omar": the author first, then anyone who added an Editor. */
+const CONTRIBUTORS = new Intl.PluralRules("en");
+
+/** "by Ahmed and 2 contributors": the author, then a link to the Settings, where each Editor names who wrote it. */
 function Credits({ preset }: { preset: PresetRecord }) {
-  const others = preset.contributors;
+  const count = preset.contributors.length;
   return (
     <span className="text-muted-foreground font-sans text-base">
       by <Person person={preset.author} />
-      {others.length > 0 ? (
+      {count > 0 ? (
         <>
-          , with{" "}
-          {new Intl.ListFormat("en", { type: "conjunction" })
-            .formatToParts(others.map((_, i) => String(i)))
-            .map((part, i) =>
-              part.type === "element" ? (
-                <Person key={i} person={others[Number(part.value)]!} />
-              ) : (
-                <span key={i}>{part.value}</span>
-              ),
-            )}
+          {" "}
+          and{" "}
+          <a href="#settings" className="text-foreground underline underline-offset-4 hover:no-underline">
+            {count} {CONTRIBUTORS.select(count) === "one" ? "contributor" : "contributors"}
+          </a>
         </>
       ) : null}
     </span>

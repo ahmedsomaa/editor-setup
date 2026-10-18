@@ -53,7 +53,7 @@ The person credited on a Preset, written in its file as a name with an optional 
 _Avoid_: Submitter, Admin
 
 **Contributor**:
-Someone credited on a Preset besides its Author, for example who added an Editor. Written in the Preset file as `contributors`, a list of names with optional https links. It is not a Contribution, which changes the project itself.
+Someone credited on a Preset besides its Author for the Editors they added. Written in the Preset file as `contributors`: a name, an optional https link and the Editor IDs they wrote Settings for. The Preset page says "Zed Settings by Sara" under the Settings. It is not a Contribution, which changes the project itself.
 _Avoid_: Co-author, Submitter
 
 **Preset Studio**:
