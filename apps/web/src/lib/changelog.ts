@@ -1,6 +1,17 @@
 /** Release notes, newest first. */
 export const ENTRIES = [
   {
+    date: "2026-10-18",
+    title: "Simpler Registry filters",
+    changes: [
+      "Registry filters are now search, Editor and Appearance, with License dropped.",
+      "A robots.txt and a sitemap that lists every Pair.",
+      "A Product Hunt badge in the footer.",
+      "Moved the Free badge out of the heading and spaced the heading.",
+      "Slower smooth scroll, plus page titles and share icons.",
+    ],
+  },
+  {
     date: "2026-10-17",
     title: "Pair updates",
     changes: [
