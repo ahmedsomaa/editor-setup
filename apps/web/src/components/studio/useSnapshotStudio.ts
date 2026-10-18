@@ -54,7 +54,6 @@ export function useSnapshotStudio() {
   const [tab, setTab] = useState<StudioTab>("preview");
   const [exporting, setExporting] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const lastSample = useRef(sampleFor(lang));
 
   const setParam: SetParam = (patch) =>
     void navigate({
@@ -134,14 +133,10 @@ export function useSnapshotStudio() {
     const id = next.trim().toLowerCase();
     if (!id) return;
     setParam({ lang: id });
-    // Swap the sample only if the visitor has not edited the current one.
-    if (code === lastSample.current) {
-      const s = sampleFor(id);
-      // A swapped sample is not typing, so it skips the pause.
-      setCode(s);
-      setHCode(s);
-      lastSample.current = s;
-    }
+    // Every language starts from its own sample, even if the code was edited. A swapped sample is not typing, so it skips the pause.
+    const s = sampleFor(id);
+    setCode(s);
+    setHCode(s);
   }
 
   async function savePng() {

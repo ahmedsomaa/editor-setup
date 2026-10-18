@@ -82,21 +82,19 @@ export function PreviewPanel({
         </div>
         <div role="group" aria-label="Export" className="inline-flex">
           <Button
-            size="sm"
             variant="outline"
             disabled={exportDisabled}
             onClick={onSaveJson}
-            className="focus-visible:z-10 rounded-e-none"
+            className="h-10.5 px-4 focus-visible:z-10 rounded-e-none"
           >
             <FileJson />
             Export Preset
           </Button>
           <Button
-            size="sm"
             variant="outline"
             disabled={exportDisabled}
             onClick={onSavePng}
-            className="focus-visible:z-10 -ms-px rounded-s-none"
+            className="h-10.5 px-4 focus-visible:z-10 -ms-px rounded-s-none"
           >
             {exporting ? (
               <Loader2 className="animate-spin motion-reduce:animate-none" />
