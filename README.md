@@ -32,6 +32,7 @@ bun run generate:submitters  # refresh apps/web/src/data/pair-submitters.json
 
 - ✅ **Registry check** runs on every pull request and must pass before merge.
 - 🚀 **Deploy** is handled by Cloudflare's Git integration, which ships `main` to Workers.
+- 📡 **Feeds** are built by the site: `/rss.xml` from the changelog, plus `/llms.txt`, `/sitemap.xml` and `/robots.txt`.
 - 📝 **Changelog** bot opens a pull request with a draft entry when a Pair lands on `main`.
 
 ## ➕ Adding a Pair

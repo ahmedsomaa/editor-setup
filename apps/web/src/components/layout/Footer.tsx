@@ -71,6 +71,7 @@ export default function Footer() {
               <li><a href={GITHUB_URL} target="_blank" rel="noreferrer" className={linkClass}>GitHub</a></li>
               <li><a href={`${GITHUB_URL}/blob/main/GLOSSARY.md`} target="_blank" rel="noreferrer" className={linkClass}>Glossary</a></li>
               <li><Link to="/design" className={linkClass}>Design system</Link></li>
+              <li><a href="/llms.txt" className={linkClass}>llms.txt</a></li>
             </ul>
           </nav>
         </div>

@@ -14,8 +14,10 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as DesignRouteImport } from './routes/design'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as RegistryRouteImport } from './routes/registry'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as RegistryIndexRouteImport } from './routes/registry.index'
@@ -46,6 +48,11 @@ const DesignRoute = DesignRouteImport.update({
   path: '/design',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegistryRoute = RegistryRouteImport.update({
   id: '/registry',
   path: '/registry',
@@ -54,6 +61,11 @@ const RegistryRoute = RegistryRouteImport.update({
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RssDotxmlRoute = RssDotxmlRouteImport.update({
+  id: '/rss.xml',
+  path: '/rss.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -83,8 +95,10 @@ export interface FileRoutesByFullPath {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/design': typeof DesignRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/registry': typeof RegistryRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
@@ -96,7 +110,9 @@ export interface FileRoutesByTo {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/design': typeof DesignRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
@@ -109,8 +125,10 @@ export interface FileRoutesById {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/design': typeof DesignRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/registry': typeof RegistryRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/studio': typeof StudioRoute
   '/registry/$slug': typeof RegistrySlugRoute
@@ -124,8 +142,10 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/design'
+    | '/llms.txt'
     | '/registry'
     | '/robots.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/studio'
     | '/registry/$slug'
@@ -137,7 +157,9 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/design'
+    | '/llms.txt'
     | '/robots.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/studio'
     | '/registry/$slug'
@@ -149,8 +171,10 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/design'
+    | '/llms.txt'
     | '/registry'
     | '/robots.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/studio'
     | '/registry/$slug'
@@ -163,8 +187,10 @@ export interface RootRouteChildren {
   ChangelogRoute: typeof ChangelogRoute
   CompareRoute: typeof CompareRoute
   DesignRoute: typeof DesignRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
   RegistryRoute: typeof RegistryRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
+  RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StudioRoute: typeof StudioRoute
 }
@@ -206,6 +232,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DesignRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/registry': {
       id: '/registry'
       path: '/registry'
@@ -218,6 +251,13 @@ declare module '@tanstack/react-router' {
       path: '/robots.txt'
       fullPath: '/robots.txt'
       preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rss.xml': {
+      id: '/rss.xml'
+      path: '/rss.xml'
+      fullPath: '/rss.xml'
+      preLoaderRoute: typeof RssDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -271,8 +311,10 @@ const rootRouteChildren: RootRouteChildren = {
   ChangelogRoute: ChangelogRoute,
   CompareRoute: CompareRoute,
   DesignRoute: DesignRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
   RegistryRoute: RegistryRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
+  RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StudioRoute: StudioRoute,
 }

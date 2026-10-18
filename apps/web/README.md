@@ -52,6 +52,8 @@ src/
   server/          Server functions and registry loading
 ```
 
+Machine-readable files are server routes beside the pages: `/rss.xml` (the changelog, from `lib/changelog.ts`), `/llms.txt` (a short hand-written map of the site for AI tools), `/sitemap.xml` (static pages plus every Pair) and `/robots.txt`. When you add a page, add it to `llms.txt` and the sitemap.
+
 Rules of thumb:
 
 - Keep a React file under about 350 lines. Past that, pull a section into a component beside it, and logic into `lib/`.

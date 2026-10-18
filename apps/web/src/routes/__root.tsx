@@ -40,6 +40,12 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      {
+        rel: "alternate",
+        type: "application/rss+xml",
+        title: "EditorSetup Changelog",
+        href: "/rss.xml",
+      },
       { rel: "stylesheet", href: appCss },
     ],
   }),
