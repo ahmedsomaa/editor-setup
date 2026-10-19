@@ -51,7 +51,7 @@ export function Hero({ stage: s }: { stage: HeroStage }) {
         className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12"
       >
         <div className="min-w-0">
-          <div className="relative w-fit max-w-full pt-8">
+          <div className="relative w-fit max-w-full pt-8 max-sm:w-full max-sm:text-center">
             <span
               aria-hidden="true"
               style={{ "--i": 0 } as React.CSSProperties}
