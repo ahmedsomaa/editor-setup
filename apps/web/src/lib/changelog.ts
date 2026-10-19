@@ -1,6 +1,14 @@
 /** Release notes, newest first. */
 export const ENTRIES = [
   {
+    date: "2026-10-19",
+    title: "Mobile polish",
+    changes: [
+      "On mobile, the landing heading and sub title are now centered.",
+      "More space between the items in the Compare drawer on mobile.",
+    ],
+  },
+  {
     date: "2026-10-18",
     title: "Presets and a new landing story",
     changes: [
