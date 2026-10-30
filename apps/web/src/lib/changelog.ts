@@ -1,6 +1,16 @@
 /** Release notes, newest first. */
 export const ENTRIES = [
   {
+    date: "2026-10-30",
+    title: "Language icons",
+    changes: [
+      "The Studio's Code language list shows each language's own mark in its brand color.",
+      "The Editor and Appearance filters on the Presets page now have icons.",
+      "More space between the items in the Compare drawer on desktop.",
+      "Preset Studio now loads in the browser instead of on the server.",
+    ],
+  },
+  {
     date: "2026-10-19",
     title: "Mobile polish",
     changes: [

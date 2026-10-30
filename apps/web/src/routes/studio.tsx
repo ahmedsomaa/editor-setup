@@ -5,6 +5,8 @@ import { fetchThemeFn, resolveFontFn } from "@/server/assets.functions";
 import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/studio")({
+  // Studio is a client-only tool (editor, canvas, file reads), so it renders in the browser. Other pages stay server-rendered.
+  ssr: false,
   validateSearch: snapshotSearchSchema,
   head: () =>
     pageHead({
