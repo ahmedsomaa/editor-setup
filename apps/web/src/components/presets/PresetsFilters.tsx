@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
-import { Search, X } from "lucide-react";
+import type { ReactNode } from "react";
+import { Contrast, LayoutGrid, Moon, Search, Sun, X } from "lucide-react";
+import { EditorLogo } from "@/components/common/EditorLogo";
 import {
   Select,
   SelectContent,
@@ -101,8 +103,16 @@ export function PresetsFilters({
             onFilterChange({ editor: (v || undefined) as EditorId | undefined })
           }
           options={[
-            { value: "", label: "All Editors" },
-            ...EDITOR_OPTIONS.map(([id, label]) => ({ value: id, label })),
+            {
+              value: "",
+              label: "All Editors",
+              icon: <LayoutGrid className="size-4" aria-hidden />,
+            },
+            ...EDITOR_OPTIONS.map(([id, label]) => ({
+              value: id,
+              label,
+              icon: <EditorLogo id={id} />,
+            })),
           ]}
         />
         <FilterSelect
@@ -114,10 +124,20 @@ export function PresetsFilters({
             })
           }
           options={[
-            { value: "", label: "Dark and light" },
+            {
+              value: "",
+              label: "Dark and light",
+              icon: <Contrast className="size-4" aria-hidden />,
+            },
             ...APPEARANCE_OPTIONS.map(({ id, label }) => ({
               value: id,
               label,
+              icon:
+                id === "dark" ? (
+                  <Moon className="size-4" aria-hidden />
+                ) : (
+                  <Sun className="size-4" aria-hidden />
+                ),
             })),
           ]}
         />
@@ -137,10 +157,18 @@ function FilterSelect({
   label: string;
   value: string;
   onChange: (value: string) => void;
-  options: { value: string; label: string }[];
+  options: { value: string; label: string; icon: ReactNode }[];
 }) {
   // An empty value means "no filter"; the Select needs a real value for that option.
-  const items = options.map((o) => ({ value: o.value || ALL, label: o.label }));
+  const items = options.map((o) => ({
+    value: o.value || ALL,
+    label: (
+      <span className="flex min-w-0 items-center gap-2">
+        <span className="shrink-0">{o.icon}</span>
+        <span className="truncate">{o.label}</span>
+      </span>
+    ),
+  }));
   return (
     <Select
       items={items}

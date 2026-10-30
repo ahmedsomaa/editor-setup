@@ -82,7 +82,7 @@ export function ComparePicker({
         <ul
           aria-label="Presets"
           data-lenis-prevent
-          className="m-0 min-h-0 flex-1 list-none overflow-y-auto overscroll-contain px-3 pb-3 max-sm:flex max-sm:flex-col max-sm:gap-1.5"
+          className="m-0 min-h-0 flex-1 list-none overflow-y-auto overscroll-contain flex flex-col gap-1.5 px-3 pb-3"
         >
           {shown.length === 0 ? (
             <li className="text-muted-foreground px-3 py-10 text-center text-sm">
